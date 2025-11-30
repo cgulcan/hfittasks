@@ -151,7 +151,7 @@
         .quick-actions { display: flex; gap: 5px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
         .q-btn { flex: 1; background: var(--bg-col); border: 1px solid var(--border); padding: 6px; border-radius: 4px; font-size: 11px; text-align: center; color: var(--text-main); }
 
-        /* TAKVİM, AJANDA */
+        /* DİĞER GÖRÜNÜMLER */
         .calendar-wrapper, .agenda-container { background: var(--bg-card); border-radius: 8px; padding: 10px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .cal-header, .agenda-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: var(--text-main); }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; flex: 1; overflow-y: auto; }
@@ -165,10 +165,10 @@
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
         .modal-box { background: var(--bg-card); width: 550px; max-height: 90vh; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; color: var(--text-main); }
         @media (max-width: 768px) { .modal-box { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; } }
+        
         .m-head { background: var(--bg-col); padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-weight: bold; }
         .m-body { padding: 15px; overflow-y: auto; flex: 1; }
         .m-foot { background: var(--bg-col); padding: 15px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
-        
         .frm-grp { margin-bottom: 15px; }
         .frm-lbl { display: block; font-size: 11px; font-weight: bold; color: var(--text-sec); margin-bottom: 4px; }
         .frm-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: var(--input-bg); color: var(--text-main); }
@@ -548,13 +548,13 @@
 
         if (fileIn.files.length > 0) {
             const file = fileIn.files[0];
-            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
+            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; return; }
             uploadStatus.style.display = 'inline';
             try {
                 const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
                 await uploadBytes(storageRef, file);
                 downloadUrl = await getDownloadURL(storageRef);
-            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
+            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; return; }
         }
 
         const data = {
