@@ -9,8 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="BT Portal">
     
-    <link rel="apple-touch-icon" href="./logo.jpg">
-    <link rel="icon" type="image/jpeg" href="./logo.jpg">
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -61,17 +61,16 @@
             display: none; background: none; border: none; font-size: 20px; color: var(--text-main); cursor: pointer; padding: 5px;
         }
 
-        .brand { display: flex; align-items: center; gap: 8px; }
+        .brand { display: flex; align-items: center; gap: 10px; }
         
-        /* LOGO STİLİ GÜNCELLENDİ: Yuvarlak yerine hafif kavisli kare (App icon gibi) */
+        /* LOGO STİLİ */
         .logo-img { 
-            height: 42px; /* Biraz büyüttük */
-            width: 42px; 
-            object-fit: cover; 
-            border-radius: 10px; /* Kare ikon olduğu için tam yuvarlak yapmadık, köşeleri yumuşattık */
-            border: 1px solid var(--border); 
+            height: 44px;
+            width: 44px; 
+            object-fit: contain; 
+            border-radius: 8px; /* PNG logonun köşelerine uyum sağlar */
         }
-        .brand-text { font-size: 14px; font-weight: bold; color: var(--text-main); }
+        .brand-text { font-size: 15px; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px; }
 
         /* MASAÜSTÜ NAVİGASYON */
         .nav-wrapper { margin: 0 15px; flex: 1; display: flex; justify-content: center; }
@@ -107,7 +106,7 @@
             .nav-wrapper { display: none; }
             .mobile-menu-btn { display: block; }
             .user-select { display: none; }
-            .brand-text { font-size: 13px; } /* Mobilde yazıyı biraz küçülttük */
+            .brand-text { font-size: 14px; } 
         }
 
         /* FİLTRE PANELİ */
@@ -187,7 +186,7 @@
         </button>
 
         <div class="brand">
-            <img src="./logo.jpg" alt="Halk Faktoring" class="logo-img">
+            <img src="logo.png" alt="Halk Faktoring" class="logo-img" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/906/906309.png';">
             <div class="brand-text">BT YÖNETİM</div>
         </div>
     </div>
@@ -548,13 +547,13 @@
 
         if (fileIn.files.length > 0) {
             const file = fileIn.files[0];
-            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; return; }
+            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
             uploadStatus.style.display = 'inline';
             try {
                 const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
                 await uploadBytes(storageRef, file);
                 downloadUrl = await getDownloadURL(storageRef);
-            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; return; }
+            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
         }
 
         const data = {
@@ -641,7 +640,6 @@
     }
     window.showView = function(mode, btn) {
         currentMode = mode;
-        // Mobilde butona tıklanınca menü kapansın
         if(document.getElementById('mobileDropdown').style.display === 'flex') toggleMobileMenu();
         
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
