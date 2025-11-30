@@ -8,8 +8,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="BT Portal">
-    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Halkbank_logo.png/600px-Halkbank_logo.png">
-    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Halkbank_logo.png/600px-Halkbank_logo.png">
+    
+    <link rel="apple-touch-icon" href="./logo.jpg">
+    <link rel="icon" type="image/jpeg" href="./logo.jpg">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -49,23 +50,30 @@
 
         /* HEADER */
         header {
-            background-color: var(--bg-card); padding: 0 15px; height: 60px;
+            background-color: var(--bg-card); padding: 0 15px; height: 65px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between;
             border-bottom: 3px solid var(--primary); flex-shrink: 0; z-index: 50; position: relative;
         }
         
         .header-left { display: flex; align-items: center; gap: 10px; }
         
-        /* MOBİL MENÜ BUTONU (Başlangıçta gizli, mobilde görünür) */
         .mobile-menu-btn {
             display: none; background: none; border: none; font-size: 20px; color: var(--text-main); cursor: pointer; padding: 5px;
         }
 
         .brand { display: flex; align-items: center; gap: 8px; }
-        .logo-img { height: 34px; width: 34px; object-fit: cover; border-radius: 50%; border: 1px solid var(--border); }
+        
+        /* LOGO STİLİ GÜNCELLENDİ: Yuvarlak yerine hafif kavisli kare (App icon gibi) */
+        .logo-img { 
+            height: 42px; /* Biraz büyüttük */
+            width: 42px; 
+            object-fit: cover; 
+            border-radius: 10px; /* Kare ikon olduğu için tam yuvarlak yapmadık, köşeleri yumuşattık */
+            border: 1px solid var(--border); 
+        }
         .brand-text { font-size: 14px; font-weight: bold; color: var(--text-main); }
 
-        /* MASAÜSTÜ NAVİGASYON (Mobilde gizlenecek) */
+        /* MASAÜSTÜ NAVİGASYON */
         .nav-wrapper { margin: 0 15px; flex: 1; display: flex; justify-content: center; }
         .nav-pills { display: inline-flex; background: var(--bg-col); padding: 3px; border-radius: 8px; gap: 2px; }
         .nav-btn {
@@ -76,12 +84,11 @@
         .nav-btn:hover { color: var(--primary); }
         .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
-        /* KULLANICI & EKLE BUTONU */
         .user-area { display: flex; align-items: center; gap: 8px; }
         .user-select { padding: 5px; border: 1px solid var(--border); border-radius: 4px; font-size: 12px; font-weight: bold; max-width: 100px; background: var(--bg-card); color: var(--text-main); }
         .btn-new { background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
 
-        /* --- MOBİL MENÜ DROPDOWN (YENİ) --- */
+        /* MOBİL MENÜ DROPDOWN */
         .mobile-dropdown {
             position: absolute; top: 60px; left: 0; width: 100%; background: var(--bg-card);
             border-bottom: 1px solid var(--border); box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -96,15 +103,14 @@
         .mobile-item:active { background: var(--bg-col); }
         .mobile-item i { width: 20px; color: var(--primary); text-align: center; }
 
-        /* MEDIA QUERY: SADECE MOBİLDE DEĞİŞİKLİKLER */
         @media (max-width: 768px) {
-            .nav-wrapper { display: none; } /* Masaüstü menüyü gizle */
-            .mobile-menu-btn { display: block; } /* Hamburger butonunu göster */
-            .user-select { display: none; } /* Mobilde yer kazanmak için dropdown'ı gizleyebiliriz veya küçültebiliriz */
-            .brand-text { display: none; } /* Logoyu öne çıkarmak için yazıyı gizle */
+            .nav-wrapper { display: none; }
+            .mobile-menu-btn { display: block; }
+            .user-select { display: none; }
+            .brand-text { font-size: 13px; } /* Mobilde yazıyı biraz küçülttük */
         }
 
-        /* DİĞER PANALLER */
+        /* FİLTRE PANELİ */
         .filter-panel {
             position: absolute; top: 60px; left: 0; width: 100%; background: var(--bg-card); border-bottom: 1px solid var(--border);
             padding: 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); z-index: 15; display: none;
@@ -145,7 +151,7 @@
         .quick-actions { display: flex; gap: 5px; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
         .q-btn { flex: 1; background: var(--bg-col); border: 1px solid var(--border); padding: 6px; border-radius: 4px; font-size: 11px; text-align: center; color: var(--text-main); }
 
-        /* DİĞER GÖRÜNÜMLER */
+        /* TAKVİM, AJANDA */
         .calendar-wrapper, .agenda-container { background: var(--bg-card); border-radius: 8px; padding: 10px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .cal-header, .agenda-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: var(--text-main); }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; flex: 1; overflow-y: auto; }
@@ -159,10 +165,10 @@
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
         .modal-box { background: var(--bg-card); width: 550px; max-height: 90vh; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; color: var(--text-main); }
         @media (max-width: 768px) { .modal-box { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; } }
-        
         .m-head { background: var(--bg-col); padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-weight: bold; }
         .m-body { padding: 15px; overflow-y: auto; flex: 1; }
         .m-foot { background: var(--bg-col); padding: 15px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+        
         .frm-grp { margin-bottom: 15px; }
         .frm-lbl { display: block; font-size: 11px; font-weight: bold; color: var(--text-sec); margin-bottom: 4px; }
         .frm-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: var(--input-bg); color: var(--text-main); }
@@ -181,7 +187,7 @@
         </button>
 
         <div class="brand">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Halkbank_logo.png/600px-Halkbank_logo.png" alt="Halkbank" class="logo-img">
+            <img src="./logo.jpg" alt="Halk Faktoring" class="logo-img">
             <div class="brand-text">BT YÖNETİM</div>
         </div>
     </div>
@@ -207,9 +213,9 @@
     <div class="mobile-item" onclick="mobileNav('kanban')"><i class="fa-solid fa-columns"></i> Pano</div>
     <div class="mobile-item" onclick="mobileNav('month')"><i class="fa-solid fa-calendar-days"></i> Takvim</div>
     <div class="mobile-item" onclick="mobileNav('week')"><i class="fa-solid fa-list-ul"></i> Liste</div>
-    <div class="mobile-item" onclick="mobileNav('dashboard')"><i class="fa-solid fa-chart-pie"></i> Rapor (Dashboard)</div>
-    <div class="mobile-item" onclick="toggleTheme(); toggleMobileMenu()"><i class="fa-solid fa-moon"></i> Tema Değiştir</div>
-    <div class="mobile-item" onclick="toggleFilter(); toggleMobileMenu()"><i class="fa-solid fa-filter"></i> Filtrele</div>
+    <div class="mobile-item" onclick="mobileNav('dashboard')"><i class="fa-solid fa-chart-pie"></i> Rapor</div>
+    <div class="mobile-item" onclick="toggleTheme(); toggleMobileMenu()"><i class="fa-solid fa-moon"></i> Tema</div>
+    <div class="mobile-item" onclick="toggleFilter(); toggleMobileMenu()"><i class="fa-solid fa-filter"></i> Filtre</div>
     <div class="mobile-item" style="border-top:1px solid var(--border); margin-top:5px; padding-top:10px;">
         <i class="fa-solid fa-user"></i>
         <select id="mobileUserSelect" class="filter-inp" onchange="localStorage.setItem('btUser', this.value); document.getElementById('activeUser').value=this.value;">
@@ -304,7 +310,7 @@
     import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-    // >>>>> FIREBASE AYARLARI <<<<<
+    // >>>>> CONFIG <<<<<
     const firebaseConfig = {
         apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s",
         authDomain: "it-tasks-bc974.firebaseapp.com",
@@ -327,34 +333,26 @@
     let chartStatusInst = null;
     let chartUserInst = null;
 
-    // --- TEMA MANTIĞI ---
+    // --- TEMA & MOBİL MENÜ ---
     window.loadTheme = function() {
         const t = localStorage.getItem('btTheme');
         if(t === 'dark') applyTheme(true);
     }
     function applyTheme(isDark) {
-        if(isDark) {
-            document.body.setAttribute('data-theme', 'dark');
-            localStorage.setItem('btTheme', 'dark');
-        } else {
-            document.body.removeAttribute('data-theme');
-            localStorage.setItem('btTheme', 'light');
-        }
+        document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        const icon = document.getElementById('themeToggleBtn').querySelector('i');
+        icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        localStorage.setItem('btTheme', isDark ? 'dark' : 'light');
     }
     window.toggleTheme = function() {
-        const isDark = !document.body.hasAttribute('data-theme');
+        const isDark = !document.body.getAttribute('data-theme');
         applyTheme(isDark);
     }
-
-    // --- MOBİL MENÜ ---
     window.toggleMobileMenu = function() {
         const m = document.getElementById('mobileDropdown');
-        m.style.display = m.style.display==='flex' ? 'none' : 'flex';
+        m.style.display = m.style.display==='flex'?'none':'flex';
     }
-    window.mobileNav = function(view) {
-        showView(view);
-        toggleMobileMenu();
-    }
+    window.mobileNav = function(v) { showView(v); toggleMobileMenu(); }
 
     // --- BAŞLANGIÇ ---
     window.onload = () => {
@@ -406,7 +404,6 @@
         else renderAgenda(tasks);
     }
 
-    // --- DASHBOARD ---
     function renderDashboard(tasks) {
         const counts = { todo: 0, progress: 0, done: 0 };
         const userCounts = {};
@@ -445,7 +442,6 @@
         });
     }
 
-    // --- KANBAN ---
     function renderKanban(tasks) {
         const cols = { todo: document.getElementById('lst-todo'), progress: document.getElementById('lst-progress'), done: document.getElementById('lst-done') };
         const counts = { todo: 0, progress: 0, done: 0 };
@@ -539,7 +535,6 @@
         }
     }
 
-    // --- SAVE ---
     window.saveTask = async function() {
         const btnSave = document.getElementById('btnSave');
         const uploadStatus = document.getElementById('uploadStatus');
@@ -553,13 +548,13 @@
 
         if (fileIn.files.length > 0) {
             const file = fileIn.files[0];
-            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; return; }
+            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
             uploadStatus.style.display = 'inline';
             try {
                 const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
                 await uploadBytes(storageRef, file);
                 downloadUrl = await getDownloadURL(storageRef);
-            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; return; }
+            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
         }
 
         const data = {
