@@ -22,15 +22,15 @@
         :root {
             --primary: #0099d8;
             --primary-soft: #e0f2fe;
-            --bg-body: #f4f7f6;
+            --bg-body: #f3f4f6;
             --bg-card: #ffffff;
             --bg-col: #f9fafb;
             --border: #e5e7eb;
             --text-main: #1f2937;
             --text-sec: #6b7280;
             --input-bg: #ffffff;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(16, 24, 40, 0.1);
             --radius: 12px;
         }
 
@@ -49,11 +49,14 @@
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); margin: 0; padding: 0; color: var(--text-main); height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s, color 0.3s; font-size: 14px; }
+        body { 
+            font-family: 'Inter', sans-serif; background-color: var(--bg-body); margin: 0; padding: 0; color: var(--text-main); height: 100vh; display: flex; flex-direction: column; transition: background-color 0.3s, color 0.3s; font-size: 14px; 
+        }
 
         /* HEADER */
         header { background-color: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 0 16px; height: 64px; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 50; position: relative; }
         [data-theme="dark"] header { background-color: rgba(31, 41, 55, 0.9); border-bottom-color: var(--border); }
+        
         .header-left { display: flex; align-items: center; gap: 12px; }
         .mobile-menu-btn { display: none; background: transparent; border: none; font-size: 20px; color: var(--text-main); cursor: pointer; padding: 5px; }
         .brand { display: flex; align-items: center; gap: 10px; }
@@ -71,41 +74,41 @@
         .btn-logout { background: transparent; border: 1px solid var(--border); color: #ef4444; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; transition: 0.2s; }
         .btn-new { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 6px rgba(0, 153, 216, 0.2); }
         
+        /* LOGIN OVERLAY */
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--border); }
+
+        /* UYGULAMA İÇERİĞİ KONTROLÜ (GÖRÜNÜRLÜK İÇİN) */
+        #appContainer { visibility: hidden; opacity: 0; transition: opacity 0.5s; flex-direction: column; flex: 1; width: 100%; }
+
+        /* KANBAN KARTLARI */
+        .kanban-container { display: flex; gap: 20px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
+        .k-col { flex: 1; min-width: 300px; background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); }
+        .k-header { font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; display: flex; justify-content: space-between; padding: 0 5px; color: var(--text-sec); border-bottom: 2px solid var(--border); }
+        .task-card { background: var(--bg-card); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); border-left: 4px solid transparent; cursor: pointer; transition: all 0.2s; }
+        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; }
+
+        /* MODAL */
+        .modal-box { background: var(--bg-card); width: 700px; max-height: 90vh; border-radius: 20px; box-shadow: var(--shadow-md); }
+        .m-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .frm-inp { padding: 12px 15px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--input-bg); color: var(--text-main); }
+        .span-full { grid-column: span 2; }
+        .admin-only { display: none; } /* JS tarafından kontrol edilir */
+
         /* MOBİL UYUM */
         @media (max-width: 768px) {
             .nav-wrapper { display: none; }
             .mobile-menu-btn { display: block; }
-            .user-info { display: none; } /* Mobilde yer kazanmak için email gizlenir */
+            .user-select { display: none; }
             .brand-text { display: none; }
             header { padding: 0 10px; }
             .modal-box { width: 100%; height: 100%; border-radius: 0; }
             .m-body { grid-template-columns: 1fr; }
             .span-full { grid-column: span 1; }
         }
-
-        /* LOGIN OVERLAY */
-        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--border); }
-        .login-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 20px; border-radius: 15px; }
-        .login-title { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
-        .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 10px; background: var(--input-bg); color: var(--text-main); font-size: 15px; }
-        .login-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; }
         
-        /* KANBAN KARTLARI */
-        .kanban-container { display: flex; gap: 20px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
-        .k-col { background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); }
-        .task-card { background: var(--bg-card); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); border-left: 4px solid transparent; cursor: pointer; transition: all 0.2s; position: relative; }
-        .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
-
-        /* MODAL */
-        .modal-box { background: var(--bg-card); width: 700px; max-height: 90vh; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
-        .m-head { padding: 20px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .m-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .m-foot { padding: 20px 30px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; background: var(--bg-col); }
-        .span-full { grid-column: span 2; }
-        .admin-only { display: none; } /* JS tarafından kontrol edilir */
-
-        /* Diğer CSS'ler değişmedi */
+        .hidden { display: none !important; }
+        .loading { color: var(--primary); font-weight: 600; font-size: 13px; display: none; }
     </style>
 </head>
 <body onload="initApp()">
@@ -122,6 +125,8 @@
         <div id="loginError" style="color:red; margin-top:10px; font-size:12px;"></div>
     </div>
 </div>
+
+<div id="appContainer">
 
 <header>
     <div class="header-left">
@@ -146,7 +151,7 @@
     </div>
 
     <div class="user-area">
-        <div class="user-info" id="displayUserName">Giriş Yapılmadı</div>
+        <div class="user-info" id="displayUserName"></div>
         <button class="btn-logout" onclick="logout()" title="Çıkış"><i class="fa-solid fa-power-off"></i></button>
         <button class="btn-new" onclick="newTask()"><i class="fa-solid fa-plus"></i></button>
     </div>
@@ -222,12 +227,9 @@
     </div>
 </div>
 
-<div id="modal" class="modal">
+</div> <div id="modal" class="modal">
     <div class="modal-box">
-        <div class="m-head">
-            <span id="mHeadTitle">Görev Detayı</span>
-            <span style="cursor:pointer; padding:5px; color:var(--text-sec);" onclick="closeModal()"><i class="fa-solid fa-xmark fa-lg"></i></span>
-        </div>
+        <div class="m-head"><span id="mHeadTitle">Görev Detayı</span><span style="cursor:pointer; padding:5px; color:var(--text-sec);" onclick="closeModal()"><i class="fa-solid fa-xmark fa-lg"></i></span></div>
         <div class="m-body">
             <input type="hidden" id="tId">
             <div class="frm-grp">
@@ -298,12 +300,6 @@
         measurementId: "G-S88XX2L83L"
     };
 
-    const USER_MAP = {
-        "cengiz.gulcan@halkfaktoring.com.tr": { name: "Cengiz GÜLCAN", role: "admin" },
-        "enis@hf.com": { name: "Enis BİRCAN", role: "user" },
-        "cagri@hf.com": { name: "Çağrı Can DÜNDAR", role: "user" }
-    };
-
     let app, db, storage, auth;
     try { 
         app = initializeApp(firebaseConfig); 
@@ -312,10 +308,17 @@
         auth = getAuth(app);
     } catch (e) { console.error("Firebase Init Error:", e); }
 
-    const USERS = Object.values(USER_MAP).map(u => u.name); // Sadece isimler
+    const USER_MAP = {
+        "cengiz.gulcan@halkfaktoring.com.tr": { name: "Cengiz GÜLCAN", role: "admin" },
+        "enis@hf.com": { name: "Enis BİRCAN", role: "user" },
+        "cagri@hf.com": { name: "Çağrı Can DÜNDAR", role: "user" }
+    };
+
+    const USERS = Object.values(USER_MAP).map(u => u.name);
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank"];
     let allTasks = []; let calDate = new Date(); let currentMode = 'kanban';
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '' };
+    
     let currentUser = null; 
     let chartStatusInst = null; let chartUserInst = null;
 
@@ -325,21 +328,28 @@
         
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const userData = USER_MAP[user.email] || { name: "Misafir", role: "guest" };
+                const userData = USER_MAP[user.email] || { name: user.email, role: "user" };
                 currentUser = { ...user, ...userData };
                 document.getElementById('loginOverlay').style.display = 'none';
                 
-                // GÖRÜNTÜLEME GÜNCELLEMESİ: SAĞ ÜSTTE E-POSTA GÖRÜNÜR
+                // UYGULAMAYI GÖSTER
+                const appContainer = document.getElementById('appContainer');
+                appContainer.style.visibility = 'visible';
+                appContainer.style.opacity = '1';
+                
                 document.getElementById('displayUserName').innerText = user.email;
 
-                // YETKİ KONTROLÜ VE BUTON GÖRÜNÜRLÜĞÜ
                 const deleteBtn = document.getElementById('deleteTaskBtn');
                 if (deleteBtn) {
                     deleteBtn.style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
                 }
                 
                 listenTasks();
+                // GÖRÜNÜRLÜK DEĞİŞTİKTEN SONRA RAPORU YENİDEN ÇİZ (BOZULMAYI ENGELLER)
+                showView(currentMode);
             } else {
+                document.getElementById('appContainer').style.visibility = 'hidden';
+                document.getElementById('appContainer').style.opacity = '0';
                 document.getElementById('loginOverlay').style.display = 'flex';
                 currentUser = null;
             }
@@ -379,15 +389,15 @@
     }
     window.mobileNav = function(v) { showView(v); toggleMobileMenu(); }
 
-    // --- SİSTEM ---
+    // --- BAŞLANGIÇ ---
     function initSelects() {
         const uOpts = '<option value="">Seçiniz</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
         const fOpts = '<option value="">Tümü</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
         document.getElementById('tAssignee').innerHTML = uOpts;
         document.getElementById('fltAssignee').innerHTML = fOpts;
         const tOpts = '<option value="">Seçiniz</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
-        document.getElementById('tTitle').innerHTML = tOpts;
         document.getElementById('fltTopic').innerHTML = '<option value="">Tümü</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('tTitle').innerHTML = tOpts;
     }
 
     function listenTasks() {
@@ -602,7 +612,7 @@
             return;
         }
         const id = document.getElementById('tId').value;
-        if(id && confirm('Silinsin mi?')) { await deleteDoc(doc(db, "tasks", id)); closeModal(); }
+        if(id && confirm('Bu görevi silmek istediğinize emin misiniz?')) { await deleteDoc(doc(db, "tasks", id)); closeModal(); }
     }
 
     window.quickMove = async function(id, status, e) {
@@ -638,10 +648,9 @@
         if (t.fileUrl) { fileLink.href = t.fileUrl; fileLink.classList.remove('hidden'); }
         else { fileLink.classList.add('hidden'); }
         
-        // SİLME BUTONUNU YETKİYE GÖRE GÖSTER/GİZLE
         const deleteBtn = document.getElementById('deleteTaskBtn');
         if (currentUser && currentUser.role === 'admin') {
-            deleteBtn.style.display = 'inline-block';
+            deleteBtn.style.display = 'inline-flex';
         } else {
             deleteBtn.style.display = 'none';
         }
