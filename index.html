@@ -29,7 +29,7 @@
             --border: #e5e7eb;
             --text-main: #1f2937;
             --text-sec: #6b7280;
-            --input-bg: #f8fafc; /* Inputlar için hafif gri fon */
+            --input-bg: #f8fafc; 
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             --radius: 12px;
@@ -69,7 +69,10 @@
         .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); font-weight: 600; }
 
         .user-area { display: flex; align-items: center; gap: 10px; }
-        .user-select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 500; background: var(--bg-card); color: var(--text-main); }
+        /* Kullanıcı Adı Gösterimi */
+        .user-info { font-weight: 600; font-size: 12px; color: var(--primary); max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+        .btn-logout { background: transparent; border: 1px solid var(--border); color: #ef4444; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; transition: 0.2s; }
+        .btn-logout:hover { background: #ef4444; color: white; }
         .btn-new { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 6px rgba(0, 153, 216, 0.2); }
 
         /* MOBIL */
@@ -78,12 +81,24 @@
         @media (max-width: 768px) {
             .nav-wrapper { display: none; }
             .mobile-menu-btn { display: block; }
-            .user-select { display: none; }
+            .user-info { display: none; } /* Mobilde ismi gizle */
             .brand-text { display: none; }
             header { padding: 0 10px; }
         }
 
-        /* ANA İÇERİK */
+        /* LOGIN OVERLAY */
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: var(--shadow-md); width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--border); }
+        .login-logo { width: 80px; height: 80px; object-fit: contain; margin-bottom: 20px; border-radius: 15px; }
+        .login-title { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 10px; }
+        .login-sub { color: var(--text-sec); margin-bottom: 30px; font-size: 14px; }
+        .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 10px; background: var(--input-bg); color: var(--text-main); font-size: 15px; }
+        .login-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.2s; }
+        .login-btn:hover { background: #0088c2; }
+
+        /* ANA İÇERİK (Görünürlük kontrolü için) */
+        #appContainer { visibility: hidden; opacity: 0; transition: opacity 0.5s; flex-direction: column; flex: 1; width: 100%; }
+
         .main-content { flex: 1; overflow: hidden; position: relative; padding: 20px; }
         .view-section { display: none; height: 100%; width: 100%; }
         .view-section.active { display: flex; flex-direction: column; }
@@ -108,52 +123,18 @@
         .q-btn { flex: 1; background: var(--bg-col); padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; color: var(--text-sec); border: 1px solid transparent; }
         .q-btn:hover { background: var(--primary-soft); color: var(--primary); }
 
-        /* --- YENİLENEN MODAL TASARIMI --- */
+        /* MODAL TASARIMI */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
-        
-        /* Modal Kutu Genişletildi */
-        .modal-box { 
-            background: var(--bg-card); width: 700px; max-height: 90vh; border-radius: 20px; 
-            display: flex; flex-direction: column; overflow: hidden; color: var(--text-main); 
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
+        .modal-box { background: var(--bg-card); width: 700px; max-height: 90vh; border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; color: var(--text-main); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
         .m-head { padding: 20px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
         .m-head span { font-size: 18px; font-weight: 700; color: var(--text-main); }
-        
-        /* Modal Body - IZGARA SİSTEMİ (FERAH TASARIM) */
-        .m-body { 
-            padding: 30px; overflow-y: auto; flex: 1; 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-        }
-        
-        .span-full { grid-column: span 2; } /* Tam genişlik kaplayanlar */
-
+        .m-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .span-full { grid-column: span 2; }
         .frm-grp { display: flex; flex-direction: column; gap: 8px; }
         .frm-lbl { font-size: 13px; font-weight: 600; color: var(--text-sec); }
-        
-        /* Inputları Güzelleştirme */
-        .frm-inp { 
-            width: 100%; padding: 12px 15px; border: 1px solid var(--border); 
-            border-radius: 10px; font-size: 14px; background: var(--input-bg); 
-            color: var(--text-main); transition: all 0.2s;
-        }
-        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
-        .frm-inp:disabled { background: var(--bg-col); opacity: 0.7; }
-        
-        /* Dosya Yükleme Alanı */
-        .file-upload-box {
-            border: 2px dashed var(--border); padding: 20px; border-radius: 12px;
-            background: var(--bg-col); text-align: center; transition: 0.2s;
-        }
-        .file-upload-box:hover { border-color: var(--primary); background: var(--primary-soft); }
-
-        .m-foot { 
-            padding: 20px 30px; border-top: 1px solid var(--border); 
-            display: flex; justify-content: space-between; background: var(--bg-col); 
-        }
-
-        /* Mobilde Modal Tam Ekran ve Tek Sütun */
+        .frm-inp { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--input-bg); color: var(--text-main); transition: all 0.2s; }
+        .file-upload-box { border: 2px dashed var(--border); padding: 20px; border-radius: 12px; background: var(--bg-col); text-align: center; transition: 0.2s; }
+        .m-foot { padding: 20px 30px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; background: var(--bg-col); }
         @media (max-width: 768px) {
             .modal-box { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; }
             .m-body { grid-template-columns: 1fr; padding: 20px; gap: 15px; }
@@ -175,10 +156,26 @@
         .t-item { background: var(--bg-col); padding: 10px; border-radius: 8px; margin-bottom: 5px; border-left: 3px solid #ccc; font-size: 13px; color: var(--text-main); }
 
         .hidden { display: none !important; }
+        .admin-only { display: none; } /* Admin kontrolü için */
         .loading { color: var(--primary); font-weight: 600; font-size: 13px; display: none; }
     </style>
 </head>
-<body onload="loadTheme()">
+<body onload="initApp()">
+
+<div id="loginOverlay">
+    <div class="login-card">
+        <img src="logo.png" alt="Logo" class="login-logo">
+        <div class="login-title">BT Portal Giriş</div>
+        <div class="login-sub">Devam etmek için lütfen e-posta ve şifrenizle giriş yapın.</div>
+        
+        <input type="email" id="email" class="login-input" placeholder="E-posta Adresi (örn: cengiz@hf.com)">
+        <input type="password" id="password" class="login-input" placeholder="Şifre">
+        <button class="login-btn" onclick="login()">Giriş Yap</button>
+        <div id="loginError" style="color:red; margin-top:10px; font-size:12px;"></div>
+    </div>
+</div>
+
+<div id="appContainer">
 
 <header>
     <div class="header-left">
@@ -203,7 +200,8 @@
     </div>
 
     <div class="user-area">
-        <select id="activeUser" class="user-select" onchange="localStorage.setItem('btUser', this.value)"></select>
+        <div class="user-info" id="displayUserName"></div>
+        <button class="btn-logout" onclick="logout()" title="Çıkış"><i class="fa-solid fa-power-off"></i></button>
         <button class="btn-new" onclick="newTask()"><i class="fa-solid fa-plus"></i> Yeni Görev</button>
     </div>
 </header>
@@ -214,10 +212,10 @@
     <div class="mobile-item" onclick="mobileNav('week')"><i class="fa-solid fa-list-ul"></i> Liste</div>
     <div class="mobile-item" onclick="mobileNav('dashboard')"><i class="fa-solid fa-chart-pie"></i> Rapor</div>
     <div class="mobile-item" onclick="toggleTheme(); toggleMobileMenu()"><i class="fa-solid fa-moon"></i> Tema</div>
+    <div class="mobile-item" onclick="toggleFilter(); toggleMobileMenu()"><i class="fa-solid fa-filter"></i> Filtre</div>
     <div class="mobile-item" style="border-top:1px solid var(--border); margin-top:5px; padding-top:10px;">
-        <i class="fa-solid fa-user"></i>
-        <select id="mobileUserSelect" class="filter-inp" onchange="localStorage.setItem('btUser', this.value); document.getElementById('activeUser').value=this.value;">
-        </select>
+        <i class="fa-solid fa-power-off" style="color:#ef4444"></i>
+        <span onclick="logout()" style="color:#ef4444">Çıkış Yap</span>
     </div>
 </div>
 
@@ -276,26 +274,22 @@
     </div>
 </div>
 
-<div id="modal" class="modal">
+</div> <div id="modal" class="modal">
     <div class="modal-box">
         <div class="m-head">
             <span id="mHeadTitle">Görev Detayı</span>
             <span style="cursor:pointer; padding:5px; color:var(--text-sec);" onclick="closeModal()"><i class="fa-solid fa-xmark fa-lg"></i></span>
         </div>
-        
         <div class="m-body">
             <input type="hidden" id="tId">
-            
             <div class="frm-grp">
                 <span class="frm-lbl">Görev No</span>
                 <input type="text" id="tCode" class="frm-inp" disabled style="background:var(--bg-col); font-weight:bold; color:var(--primary);">
             </div>
-            
             <div class="frm-grp">
                 <span class="frm-lbl">Konu / Başlık</span>
                 <select id="tTitle" class="frm-inp"></select>
             </div>
-
             <div class="frm-grp">
                 <span class="frm-lbl">Durum</span>
                 <select id="tStatus" class="frm-inp">
@@ -304,7 +298,6 @@
                     <option value="done">Tamamlandı</option>
                 </select>
             </div>
-
             <div class="frm-grp">
                 <span class="frm-lbl">Öncelik</span>
                 <select id="tPriority" class="frm-inp">
@@ -313,22 +306,18 @@
                     <option value="Yüksek">Yüksek</option>
                 </select>
             </div>
-
             <div class="frm-grp">
                 <span class="frm-lbl">Sorumlu</span>
                 <select id="tAssignee" class="frm-inp"></select>
             </div>
-
             <div class="frm-grp">
                 <span class="frm-lbl">Hedef Tarih</span>
                 <input type="date" id="tDate" class="frm-inp">
             </div>
-
             <div class="frm-grp span-full">
                 <span class="frm-lbl">Açıklama</span>
                 <textarea id="tDesc" class="frm-inp" rows="4" placeholder="Detayları buraya girin..."></textarea>
             </div>
-            
             <div class="frm-grp span-full file-upload-box">
                 <span class="frm-lbl" style="margin-bottom:10px; display:block;">Dosya Ekle (Max 15MB)</span>
                 <div style="display:flex; gap:10px; align-items:center; justify-content:center;">
@@ -338,9 +327,8 @@
                 <a id="tFileLink" href="#" target="_blank" class="btn-new hidden" style="display:inline-flex; align-items:center; gap:5px; margin-top:15px; background:#10b981; text-decoration:none;"><i class="fa-solid fa-file-arrow-down"></i> Dosyayı İndir</a>
             </div>
         </div>
-
         <div class="m-foot">
-            <button class="btn-new" style="background:#ef4444; color:white; padding:12px 20px;" onclick="delTask()"><i class="fa-solid fa-trash"></i> Sil</button>
+            <button class="btn-new admin-only" style="background:#ef4444; color:white; padding:12px 20px;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button>
             <button class="btn-new" style="padding:12px 25px;" onclick="saveTask()" id="btnSave"><i class="fa-solid fa-check"></i> Kaydet</button>
         </div>
     </div>
@@ -350,6 +338,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s",
@@ -361,17 +350,79 @@
         measurementId: "G-S88XX2L83L"
     };
 
-    let app, db, storage;
-    try { app = initializeApp(firebaseConfig); db = getFirestore(app); storage = getStorage(app); } 
-    catch (e) { alert("Bağlantı Hatası!"); }
+    // KULLANICI VE YETKİ HARİTASI
+    const USER_MAP = {
+        "cengiz.gulcan@halkfaktoring.com.tr": { name: "Cengiz GÜLCAN", role: "admin" },
+        "enis@hf.com": { name: "Enis BİRCAN", role: "user" },
+        "cagri@hf.com": { name: "Çağrı Can DÜNDAR", role: "user" }
+    };
 
-    const USERS = ["Cengiz GÜLCAN", "Enis BİRCAN", "Çağrı Can DÜNDAR"];
+    let app, db, storage, auth;
+    try { 
+        app = initializeApp(firebaseConfig); 
+        db = getFirestore(app); 
+        storage = getStorage(app); 
+        auth = getAuth(app);
+    } catch (e) { console.error("Firebase Init Error:", e); }
+
+    const USERS = Object.values(USER_MAP).map(u => u.name);
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank"];
     let allTasks = []; let calDate = new Date(); let currentMode = 'kanban';
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '' };
-    
-    let chartStatusInst = null;
-    let chartUserInst = null;
+    let currentUser = null; 
+    let chartStatusInst = null; let chartUserInst = null;
+
+    window.initApp = function() {
+        loadTheme();
+        initSelects();
+        
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Kullanıcıyı tanımla, yoksa varsayılan ata
+                const userData = USER_MAP[user.email] || { name: user.email, role: "user" };
+                currentUser = { ...user, ...userData };
+                
+                // Giriş ekranını gizle
+                document.getElementById('loginOverlay').style.display = 'none';
+                
+                // Ana uygulamayı göster (Animasyonlu)
+                const appContainer = document.getElementById('appContainer');
+                appContainer.style.visibility = 'visible';
+                appContainer.style.opacity = '1';
+                
+                // Kullanıcı adını/mailini yaz
+                document.getElementById('displayUserName').innerText = user.email;
+
+                // Admin butonunu ayarla
+                const deleteBtn = document.getElementById('deleteTaskBtn');
+                if (deleteBtn) {
+                    deleteBtn.style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
+                }
+                
+                listenTasks();
+                // Dashboard ve grafikleri yeniden çiz (Bozulmayı önler)
+                showView(currentMode);
+            } else {
+                // Çıkış yapılmışsa
+                document.getElementById('appContainer').style.visibility = 'hidden';
+                document.getElementById('appContainer').style.opacity = '0';
+                document.getElementById('loginOverlay').style.display = 'flex';
+                currentUser = null;
+            }
+        });
+    }
+
+    window.login = function() {
+        const e = document.getElementById('email').value;
+        const p = document.getElementById('password').value;
+        signInWithEmailAndPassword(auth, e, p).catch((err) => {
+            document.getElementById('loginError').innerText = "Hatalı e-posta veya şifre!";
+        });
+    }
+
+    window.logout = function() {
+        signOut(auth).then(() => window.location.reload());
+    }
 
     window.loadTheme = function() {
         const t = localStorage.getItem('btTheme');
@@ -393,30 +444,14 @@
     }
     window.mobileNav = function(v) { showView(v); toggleMobileMenu(); }
 
-    window.onload = () => {
-        loadTheme();
-        initSelects();
-        listenTasks(); 
-    };
-
     function initSelects() {
         const uOpts = '<option value="">Seçiniz</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
         const fOpts = '<option value="">Tümü</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
-        document.getElementById('activeUser').innerHTML = uOpts;
-        document.getElementById('mobileUserSelect').innerHTML = uOpts;
         document.getElementById('tAssignee').innerHTML = uOpts;
         document.getElementById('fltAssignee').innerHTML = fOpts;
-        
-        const last = localStorage.getItem('btUser');
-        if(last && USERS.includes(last)) {
-            document.getElementById('activeUser').value = last;
-            document.getElementById('mobileUserSelect').value = last;
-        }
-
         const tOpts = '<option value="">Seçiniz</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
-        const ftOpts = '<option value="">Tümü</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('fltTopic').innerHTML = '<option value="">Tümü</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
         document.getElementById('tTitle').innerHTML = tOpts;
-        document.getElementById('fltTopic').innerHTML = ftOpts;
     }
 
     function listenTasks() {
@@ -463,7 +498,7 @@
             type: 'doughnut',
             data: {
                 labels: ['Bekleyen', 'İşlemde', 'Biten'],
-                datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: ['#f39c12', '#0099d8', '#10b981'], borderWidth:0 }]
+                datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: ['#f59e0b', '#0099d8', '#10b981'], borderWidth:0 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
@@ -608,8 +643,7 @@
         try {
             if(id) { await updateDoc(doc(db, "tasks", id), data); }
             else {
-                const user = document.getElementById('activeUser').value;
-                if(!user) { alert('Kullanıcı seçin'); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
+                if(!currentUser) { alert('Giriş yapmalısınız!'); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
                 await runTransaction(db, async (transaction) => {
                     const metaRef = doc(db, "meta", "counters");
                     const metaDoc = await transaction.get(metaRef);
@@ -617,7 +651,7 @@
                     if(metaDoc.exists()) newSeq = metaDoc.data().taskSeq + 1;
                     transaction.set(metaRef, { taskSeq: newSeq }, { merge: true });
                     const newTaskRef = doc(collection(db, "tasks"));
-                    transaction.set(newTaskRef, { ...data, code: 'GRV' + newSeq, creator: user, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' });
+                    transaction.set(newTaskRef, { ...data, code: 'GRV' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' });
                 });
             }
             closeModal();
@@ -626,15 +660,20 @@
     }
 
     window.delTask = async function() {
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert("Yetkisiz işlem! Görev silme yetkisi sadece Admin kullanıcısındadır.");
+            return;
+        }
         const id = document.getElementById('tId').value;
-        if(id && confirm('Silinsin mi?')) { await deleteDoc(doc(db, "tasks", id)); closeModal(); }
+        if(id && confirm('Bu görevi silmek istediğinize emin misiniz?')) { await deleteDoc(doc(db, "tasks", id)); closeModal(); }
     }
+
     window.quickMove = async function(id, status, e) {
         e.stopPropagation(); await updateDoc(doc(db, "tasks", id), { status: status });
     }
 
     window.newTask = function() {
-        if(!document.getElementById('activeUser').value) { alert("Kullanıcı seçiniz!"); return; }
+        if(!currentUser) { alert("Giriş yapmalısınız!"); return; }
         document.getElementById('tId').value = '';
         document.getElementById('tCode').value = 'OTOMATİK';
         document.getElementById('tTitle').value = '';
@@ -661,6 +700,14 @@
         const fileLink = document.getElementById('tFileLink');
         if (t.fileUrl) { fileLink.href = t.fileUrl; fileLink.classList.remove('hidden'); }
         else { fileLink.classList.add('hidden'); }
+        
+        const deleteBtn = document.getElementById('deleteTaskBtn');
+        if (currentUser && currentUser.role === 'admin') {
+            deleteBtn.style.display = 'inline-flex';
+        } else {
+            deleteBtn.style.display = 'none';
+        }
+
         document.getElementById('modal').style.display = 'flex';
     }
 
