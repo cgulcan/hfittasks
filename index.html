@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halk Faktoring | BT Portal</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BT Portal">
+    
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            /* Light Tema */
+            --primary: #0099d8;
+            --primary-soft: #e0f2fe;
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --bg-col: #f9fafb;
+            --border: #e5e7eb;
+            --text-main: #1f2937;
+            --text-sec: #6b7280;
+            --input-bg: #f8fafc; /* Inputlar için hafif gri fon */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        [data-theme="dark"] {
+            --primary: #3b82f6;
+            --primary-soft: #1e3a8a;
+            --bg-body: #111827;
+            --bg-card: #1f2937;
+            --bg-col: #374151;
+            --border: #374151;
+            --text-main: #f9fafb;
+            --text-sec: #9ca3af;
+            --input-bg: #111827;
+            --shadow-sm: none;
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); margin: 0; padding: 0; color: var(--text-main); height: 100vh; display: flex; flex-direction: column; transition: 0.3s; font-size: 14px; }
+
+        /* HEADER */
+        header { background-color: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 0 16px; height: 64px; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 50; }
+        [data-theme="dark"] header { background-color: rgba(31, 41, 55, 0.9); }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .mobile-menu-btn { display: none; background: transparent; border: none; font-size: 20px; color: var(--text-main); cursor: pointer; }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .logo-img { height: 36px; width: 36px; object-fit: contain; border-radius: 8px; }
+        .brand-text { font-size: 15px; font-weight: 700; color: var(--text-main); }
+
+        /* NAV */
+        .nav-wrapper { margin: 0 20px; flex: 1; display: flex; justify-content: center; }
+        .nav-pills { display: inline-flex; background: var(--bg-col); padding: 4px; border-radius: 12px; gap: 2px; border: 1px solid var(--border); }
+        .nav-btn { border: none; background: transparent; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-sec); display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .nav-btn:hover { color: var(--primary); }
+        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); font-weight: 600; }
+
+        .user-area { display: flex; align-items: center; gap: 10px; }
+        .user-select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-weight: 500; background: var(--bg-card); color: var(--text-main); }
+        .btn-new { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: 0 4px 6px rgba(0, 153, 216, 0.2); }
+
+        /* MOBIL */
+        .mobile-dropdown { position: absolute; top: 65px; left: 0; width: 100%; background: var(--bg-card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-md); display: none; flex-direction: column; padding: 10px; z-index: 40; }
+        .mobile-item { padding: 12px 16px; border-radius: 8px; color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 12px; }
+        @media (max-width: 768px) {
+            .nav-wrapper { display: none; }
+            .mobile-menu-btn { display: block; }
+            .user-select { display: none; }
+            .brand-text { display: none; }
+            header { padding: 0 10px; }
+        }
+
+        /* ANA İÇERİK */
+        .main-content { flex: 1; overflow: hidden; position: relative; padding: 20px; }
+        .view-section { display: none; height: 100%; width: 100%; }
+        .view-section.active { display: flex; flex-direction: column; }
+
+        /* KANBAN */
+        .kanban-container { display: flex; gap: 20px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
+        .k-col { flex: 1; min-width: 300px; background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); }
+        .k-header { font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; display: flex; justify-content: space-between; padding: 0 5px; color: var(--text-sec); }
+        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; }
+
+        .task-card { background: var(--bg-card); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); border-left: 4px solid transparent; cursor: pointer; transition: 0.2s; }
+        .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        .p-Yüksek { border-left-color: #ef4444; } .p-Orta { border-left-color: #f59e0b; } .p-Düşük { border-left-color: #10b981; }
+        
+        .c-top { display: flex; justify-content: space-between; margin-bottom: 6px; }
+        .c-id { background: var(--bg-col); padding: 4px 8px; border-radius: 6px; font-weight: 700; color: var(--text-main); font-size: 11px; }
+        .c-title { font-weight: 700; font-size: 15px; color: var(--text-main); margin-bottom: 8px; }
+        .c-desc { font-size: 12px; color: var(--text-sec); margin-bottom: 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-left: 8px; border-left: 2px solid var(--border); }
+        .c-dates { display: flex; gap: 15px; font-size: 11px; color: var(--text-sec); margin-bottom: 10px; }
+        .c-assignee { font-size: 11px; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .quick-actions { display: flex; gap: 8px; margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+        .q-btn { flex: 1; background: var(--bg-col); padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; color: var(--text-sec); border: 1px solid transparent; }
+        .q-btn:hover { background: var(--primary-soft); color: var(--primary); }
+
+        /* --- YENİLENEN MODAL TASARIMI --- */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
+        
+        /* Modal Kutu Genişletildi */
+        .modal-box { 
+            background: var(--bg-card); width: 700px; max-height: 90vh; border-radius: 20px; 
+            display: flex; flex-direction: column; overflow: hidden; color: var(--text-main); 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .m-head { padding: 20px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .m-head span { font-size: 18px; font-weight: 700; color: var(--text-main); }
+        
+        /* Modal Body - IZGARA SİSTEMİ (FERAH TASARIM) */
+        .m-body { 
+            padding: 30px; overflow-y: auto; flex: 1; 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        }
+        
+        .span-full { grid-column: span 2; } /* Tam genişlik kaplayanlar */
+
+        .frm-grp { display: flex; flex-direction: column; gap: 8px; }
+        .frm-lbl { font-size: 13px; font-weight: 600; color: var(--text-sec); }
+        
+        /* Inputları Güzelleştirme */
+        .frm-inp { 
+            width: 100%; padding: 12px 15px; border: 1px solid var(--border); 
+            border-radius: 10px; font-size: 14px; background: var(--input-bg); 
+            color: var(--text-main); transition: all 0.2s;
+        }
+        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+        .frm-inp:disabled { background: var(--bg-col); opacity: 0.7; }
+        
+        /* Dosya Yükleme Alanı */
+        .file-upload-box {
+            border: 2px dashed var(--border); padding: 20px; border-radius: 12px;
+            background: var(--bg-col); text-align: center; transition: 0.2s;
+        }
+        .file-upload-box:hover { border-color: var(--primary); background: var(--primary-soft); }
+
+        .m-foot { 
+            padding: 20px 30px; border-top: 1px solid var(--border); 
+            display: flex; justify-content: space-between; background: var(--bg-col); 
+        }
+
+        /* Mobilde Modal Tam Ekran ve Tek Sütun */
+        @media (max-width: 768px) {
+            .modal-box { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; }
+            .m-body { grid-template-columns: 1fr; padding: 20px; gap: 15px; }
+            .span-full { grid-column: span 1; }
+        }
+
+        /* DİĞER PANALLER */
+        .filter-panel { position: absolute; top: 65px; left: 0; width: 100%; background: var(--bg-card); border-bottom: 1px solid var(--border); padding: 20px; box-shadow: var(--shadow-md); z-index: 15; display: none; flex-wrap: wrap; gap: 15px; }
+        .dash-container { overflow-y: auto; padding-bottom: 20px; }
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); text-align: center; }
+        .stat-num { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .chart-wrapper { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); height: 300px; margin-bottom: 15px; }
+        .calendar-wrapper, .agenda-container { background: var(--bg-card); border-radius: 16px; padding: 20px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .cal-cell { background: var(--bg-card); min-height: 70px; padding: 6px; font-size: 11px; color: var(--text-main); }
+        .cal-cell.today { background: var(--primary-soft); color: var(--primary); font-weight: bold; }
+        .cal-task { background: var(--primary); color: white; padding: 3px 6px; margin-top: 3px; border-radius: 4px; font-size: 10px; white-space: nowrap; overflow: hidden; display: block; }
+        .t-item { background: var(--bg-col); padding: 10px; border-radius: 8px; margin-bottom: 5px; border-left: 3px solid #ccc; font-size: 13px; color: var(--text-main); }
+
+        .hidden { display: none !important; }
+        .loading { color: var(--primary); font-weight: 600; font-size: 13px; display: none; }
+    </style>
+</head>
+<body onload="loadTheme()">
+
+<header>
+    <div class="header-left">
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="brand">
+            <img src="logo.png" alt="Logo" class="logo-img" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/906/906309.png';">
+            <div class="brand-text">BT YÖNETİM</div>
+        </div>
+    </div>
+
+    <div class="nav-wrapper">
+        <div class="nav-pills">
+            <button class="nav-btn active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</button>
+            <button class="nav-btn" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i> Takvim</button>
+            <button class="nav-btn" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
+            <button class="nav-btn" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
+            <button class="nav-btn" onclick="toggleTheme()" id="themeToggleBtn"><i class="fa-solid fa-moon"></i></button>
+            <button class="nav-btn" onclick="toggleFilter()"><i class="fa-solid fa-filter"></i></button>
+        </div>
+    </div>
+
+    <div class="user-area">
+        <select id="activeUser" class="user-select" onchange="localStorage.setItem('btUser', this.value)"></select>
+        <button class="btn-new" onclick="newTask()"><i class="fa-solid fa-plus"></i> Yeni Görev</button>
+    </div>
+</header>
+
+<div id="mobileDropdown" class="mobile-dropdown">
+    <div class="mobile-item" onclick="mobileNav('kanban')"><i class="fa-solid fa-columns"></i> Pano</div>
+    <div class="mobile-item" onclick="mobileNav('month')"><i class="fa-solid fa-calendar-days"></i> Takvim</div>
+    <div class="mobile-item" onclick="mobileNav('week')"><i class="fa-solid fa-list-ul"></i> Liste</div>
+    <div class="mobile-item" onclick="mobileNav('dashboard')"><i class="fa-solid fa-chart-pie"></i> Rapor</div>
+    <div class="mobile-item" onclick="toggleTheme(); toggleMobileMenu()"><i class="fa-solid fa-moon"></i> Tema</div>
+    <div class="mobile-item" style="border-top:1px solid var(--border); margin-top:5px; padding-top:10px;">
+        <i class="fa-solid fa-user"></i>
+        <select id="mobileUserSelect" class="filter-inp" onchange="localStorage.setItem('btUser', this.value); document.getElementById('activeUser').value=this.value;">
+        </select>
+    </div>
+</div>
+
+<div id="filterPanel" class="filter-panel">
+    <div class="filter-group"><label class="filter-label">Başlangıç</label><input type="date" id="fltStart" class="filter-inp"></div>
+    <div class="filter-group"><label class="filter-label">Bitiş</label><input type="date" id="fltEnd" class="filter-inp"></div>
+    <div class="filter-group"><label class="filter-label">Konu</label><select id="fltTopic" class="filter-inp"><option value="">Tümü</option></select></div>
+    <div class="filter-group"><label class="filter-label">Atanan</label><select id="fltAssignee" class="filter-inp"><option value="">Tümü</option></select></div>
+    <div style="width:100%; display:flex; gap:10px; margin-top:10px;">
+        <button class="btn-new" style="flex:1" onclick="applyFilter()">Uygula</button>
+        <button class="btn-new" style="flex:1; background:#ef4444" onclick="clearFilter()">Temizle</button>
+    </div>
+</div>
+
+<div class="main-content">
+    <div id="view-dashboard" class="view-section dash-container">
+        <div class="stats-row">
+            <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span></div>
+            <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span></div>
+            <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#0099d8" id="dProg">0</span></div>
+            <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span></div>
+        </div>
+        <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
+        <div class="chart-wrapper"><canvas id="chartUser"></canvas></div>
+    </div>
+
+    <div id="view-kanban" class="view-section active">
+        <div class="kanban-container">
+            <div class="k-col">
+                <div class="k-header"><span>BEKLEYENLER</span> <span id="cnt-todo" style="background:#fef3c7; color:#d97706; padding:2px 8px; border-radius:10px; font-size:11px;">0</span></div>
+                <div class="k-list" id="lst-todo"></div>
+            </div>
+            <div class="k-col">
+                <div class="k-header"><span style="color:#0099d8">İŞLEMDE</span> <span id="cnt-progress" style="background:#e0f2fe; color:#0099d8; padding:2px 8px; border-radius:10px; font-size:11px;">0</span></div>
+                <div class="k-list" id="lst-progress"></div>
+            </div>
+            <div class="k-col">
+                <div class="k-header"><span style="color:#10b981">BİTEN</span> <span id="cnt-done" style="background:#dcfce7; color:#166534; padding:2px 8px; border-radius:10px; font-size:11px;">0</span></div>
+                <div class="k-list" id="lst-done"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-month" class="view-section">
+        <div class="calendar-wrapper">
+            <div class="cal-header"><button class="nav-btn" onclick="navMonth(-1)"><</button><div style="font-weight:bold; font-size:16px;" id="calTitle"></div><button class="nav-btn" onclick="navMonth(1)">></button></div>
+            <div class="cal-grid" id="calGrid"></div>
+        </div>
+    </div>
+
+    <div id="view-agenda" class="view-section">
+        <div class="agenda-container">
+            <div class="agenda-header"><div style="font-weight:bold; color:var(--primary); font-size:16px;" id="agendaTitle"></div></div>
+            <div id="agendaList"></div>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-box">
+        <div class="m-head">
+            <span id="mHeadTitle">Görev Detayı</span>
+            <span style="cursor:pointer; padding:5px; color:var(--text-sec);" onclick="closeModal()"><i class="fa-solid fa-xmark fa-lg"></i></span>
+        </div>
+        
+        <div class="m-body">
+            <input type="hidden" id="tId">
+            
+            <div class="frm-grp">
+                <span class="frm-lbl">Görev No</span>
+                <input type="text" id="tCode" class="frm-inp" disabled style="background:var(--bg-col); font-weight:bold; color:var(--primary);">
+            </div>
+            
+            <div class="frm-grp">
+                <span class="frm-lbl">Konu / Başlık</span>
+                <select id="tTitle" class="frm-inp"></select>
+            </div>
+
+            <div class="frm-grp">
+                <span class="frm-lbl">Durum</span>
+                <select id="tStatus" class="frm-inp">
+                    <option value="todo">Bekliyor</option>
+                    <option value="progress">İşlemde</option>
+                    <option value="done">Tamamlandı</option>
+                </select>
+            </div>
+
+            <div class="frm-grp">
+                <span class="frm-lbl">Öncelik</span>
+                <select id="tPriority" class="frm-inp">
+                    <option value="Düşük">Düşük</option>
+                    <option value="Orta">Orta</option>
+                    <option value="Yüksek">Yüksek</option>
+                </select>
+            </div>
+
+            <div class="frm-grp">
+                <span class="frm-lbl">Sorumlu</span>
+                <select id="tAssignee" class="frm-inp"></select>
+            </div>
+
+            <div class="frm-grp">
+                <span class="frm-lbl">Hedef Tarih</span>
+                <input type="date" id="tDate" class="frm-inp">
+            </div>
+
+            <div class="frm-grp span-full">
+                <span class="frm-lbl">Açıklama</span>
+                <textarea id="tDesc" class="frm-inp" rows="4" placeholder="Detayları buraya girin..."></textarea>
+            </div>
+            
+            <div class="frm-grp span-full file-upload-box">
+                <span class="frm-lbl" style="margin-bottom:10px; display:block;">Dosya Ekle (Max 15MB)</span>
+                <div style="display:flex; gap:10px; align-items:center; justify-content:center;">
+                    <input type="file" id="tFile" class="frm-inp" style="max-width:300px;">
+                    <span id="uploadStatus" class="loading"><i class="fa-solid fa-circle-notch fa-spin"></i></span>
+                </div>
+                <a id="tFileLink" href="#" target="_blank" class="btn-new hidden" style="display:inline-flex; align-items:center; gap:5px; margin-top:15px; background:#10b981; text-decoration:none;"><i class="fa-solid fa-file-arrow-down"></i> Dosyayı İndir</a>
+            </div>
+        </div>
+
+        <div class="m-foot">
+            <button class="btn-new" style="background:#ef4444; color:white; padding:12px 20px;" onclick="delTask()"><i class="fa-solid fa-trash"></i> Sil</button>
+            <button class="btn-new" style="padding:12px 25px;" onclick="saveTask()" id="btnSave"><i class="fa-solid fa-check"></i> Kaydet</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s",
+        authDomain: "it-tasks-bc974.firebaseapp.com",
+        projectId: "it-tasks-bc974",
+        storageBucket: "it-tasks-bc974.firebasestorage.app",
+        messagingSenderId: "978679373454",
+        appId: "1:978679373454:web:3ee1c689cf1ca321af33df",
+        measurementId: "G-S88XX2L83L"
+    };
+
+    let app, db, storage;
+    try { app = initializeApp(firebaseConfig); db = getFirestore(app); storage = getStorage(app); } 
+    catch (e) { alert("Bağlantı Hatası!"); }
+
+    const USERS = ["Cengiz GÜLCAN", "Enis BİRCAN", "Çağrı Can DÜNDAR"];
+    const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank"];
+    let allTasks = []; let calDate = new Date(); let currentMode = 'kanban';
+    let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '' };
+    
+    let chartStatusInst = null;
+    let chartUserInst = null;
+
+    window.loadTheme = function() {
+        const t = localStorage.getItem('btTheme');
+        if(t === 'dark') applyTheme(true);
+    }
+    function applyTheme(isDark) {
+        document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        const icon = document.getElementById('themeToggleBtn').querySelector('i');
+        icon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        localStorage.setItem('btTheme', isDark ? 'dark' : 'light');
+    }
+    window.toggleTheme = function() {
+        const isDark = !document.body.getAttribute('data-theme');
+        applyTheme(isDark);
+    }
+    window.toggleMobileMenu = function() {
+        const m = document.getElementById('mobileDropdown');
+        m.style.display = m.style.display==='flex'?'none':'flex';
+    }
+    window.mobileNav = function(v) { showView(v); toggleMobileMenu(); }
+
+    window.onload = () => {
+        loadTheme();
+        initSelects();
+        listenTasks(); 
+    };
+
+    function initSelects() {
+        const uOpts = '<option value="">Seçiniz</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
+        const fOpts = '<option value="">Tümü</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
+        document.getElementById('activeUser').innerHTML = uOpts;
+        document.getElementById('mobileUserSelect').innerHTML = uOpts;
+        document.getElementById('tAssignee').innerHTML = uOpts;
+        document.getElementById('fltAssignee').innerHTML = fOpts;
+        
+        const last = localStorage.getItem('btUser');
+        if(last && USERS.includes(last)) {
+            document.getElementById('activeUser').value = last;
+            document.getElementById('mobileUserSelect').value = last;
+        }
+
+        const tOpts = '<option value="">Seçiniz</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
+        const ftOpts = '<option value="">Tümü</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('tTitle').innerHTML = tOpts;
+        document.getElementById('fltTopic').innerHTML = ftOpts;
+    }
+
+    function listenTasks() {
+        if(!db) return;
+        const q = query(collection(db, "tasks"), orderBy("code", "desc"));
+        onSnapshot(q, (snapshot) => {
+            allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderAll(); 
+        });
+    }
+
+    function renderAll() {
+        let tasks = [...allTasks];
+        if(filterConfig.active) {
+            if(filterConfig.topic) tasks = tasks.filter(t => t.title === filterConfig.topic);
+            if(filterConfig.assignee) tasks = tasks.filter(t => t.assignee === filterConfig.assignee);
+            if(filterConfig.start) tasks = tasks.filter(t => t.date >= filterConfig.start);
+            if(filterConfig.end) tasks = tasks.filter(t => t.date <= filterConfig.end);
+        }
+        if(currentMode==='kanban') renderKanban(tasks);
+        else if(currentMode==='month') renderCalendar(tasks);
+        else if(currentMode==='dashboard') renderDashboard(tasks);
+        else renderAgenda(tasks);
+    }
+
+    function renderDashboard(tasks) {
+        const counts = { todo: 0, progress: 0, done: 0 };
+        const userCounts = {};
+        USERS.forEach(u => userCounts[u] = 0);
+
+        tasks.forEach(t => {
+            if(counts[t.status] !== undefined) counts[t.status]++;
+            if(t.assignee && userCounts[t.assignee] !== undefined) userCounts[t.assignee]++;
+        });
+
+        document.getElementById('dTotal').innerText = tasks.length;
+        document.getElementById('dTodo').innerText = counts.todo;
+        document.getElementById('dProg').innerText = counts.progress;
+        document.getElementById('dDone').innerText = counts.done;
+
+        if(chartStatusInst) chartStatusInst.destroy();
+        const ctx1 = document.getElementById('chartStatus').getContext('2d');
+        chartStatusInst = new Chart(ctx1, {
+            type: 'doughnut',
+            data: {
+                labels: ['Bekleyen', 'İşlemde', 'Biten'],
+                datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: ['#f39c12', '#0099d8', '#10b981'], borderWidth:0 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        if(chartUserInst) chartUserInst.destroy();
+        const ctx2 = document.getElementById('chartUser').getContext('2d');
+        chartUserInst = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: USERS.map(u => u.split(' ')[0]),
+                datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: '#0099d8', borderRadius: 4 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } }
+        });
+    }
+
+    function renderKanban(tasks) {
+        const cols = { todo: document.getElementById('lst-todo'), progress: document.getElementById('lst-progress'), done: document.getElementById('lst-done') };
+        const counts = { todo: 0, progress: 0, done: 0 };
+        Object.values(cols).forEach(c => c.innerHTML = '');
+
+        tasks.forEach(t => {
+            if(cols[t.status]) {
+                counts[t.status]++;
+                const cDate = t.createdAt ? t.createdAt.split('-').reverse().join('.') : '-';
+                const tDate = t.date ? t.date.split('-').reverse().join('.') : '-';
+                const descPrev = t.desc ? t.desc.split(/[.!?\n]/)[0].substring(0,60) : '';
+
+                let btns = '';
+                if(t.status === 'todo') btns = `<div class="q-btn" onclick="quickMove('${t.id}', 'progress', event)">Başla</div>`;
+                else if(t.status === 'progress') btns = `<div class="q-btn" onclick="quickMove('${t.id}', 'todo', event)">Beklet</div><div class="q-btn" onclick="quickMove('${t.id}', 'done', event)">Bitir</div>`;
+                else btns = `<div class="q-btn" onclick="quickMove('${t.id}', 'progress', event)">Geri</div>`;
+
+                const card = document.createElement('div');
+                card.className = `task-card p-${t.priority}`;
+                card.onclick = () => openModal(t.id);
+                card.innerHTML = `
+                    <div class="c-top"><span class="c-id">${t.code}</span></div>
+                    <div class="c-title">${t.title}</div>
+                    ${descPrev ? `<div class="c-desc">"${descPrev}..."</div>` : ''}
+                    <div class="c-dates"><span><i class="fa-regular fa-clock"></i> ${cDate}</span><span><i class="fa-solid fa-flag-checkered"></i> ${tDate}</span></div>
+                    <div class="c-assignee"><i class="fa-solid fa-user-circle"></i> ${t.assignee || '-'}</div>
+                    <div class="quick-actions" onclick="event.stopPropagation()">${btns}</div>
+                `;
+                cols[t.status].appendChild(card);
+            }
+        });
+        document.getElementById('cnt-todo').innerText = counts.todo;
+        document.getElementById('cnt-progress').innerText = counts.progress;
+        document.getElementById('cnt-done').innerText = counts.done;
+    }
+
+    function renderCalendar(tasks) {
+        const grid = document.getElementById('calGrid');
+        grid.innerHTML = '';
+        ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'].forEach(d => grid.innerHTML += `<div style="text-align:center;font-weight:bold;font-size:12px; color:var(--text-sec)">${d}</div>`);
+
+        const y = calDate.getFullYear();
+        const m = calDate.getMonth();
+        document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
+
+        const firstDay = new Date(y, m, 1).getDay();
+        const offset = firstDay === 0 ? 6 : firstDay - 1;
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+        for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
+        const todayStr = new Date().toLocaleDateString('en-CA');
+
+        for(let i=1; i<=daysInMonth; i++) {
+            const mStr = String(m + 1).padStart(2, '0');
+            const dStr = String(i).padStart(2, '0');
+            const fullDate = `${y}-${mStr}-${dStr}`;
+            const dayTasks = tasks.filter(t => t.date === fullDate);
+            let html = '';
+            dayTasks.forEach(t => {
+                const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0099d8':'#f59e0b');
+                html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')"><strong>${t.code}</strong> - ${t.title}</div>`;
+            });
+            const isToday = fullDate === todayStr ? 'today' : '';
+            grid.innerHTML += `<div class="cal-cell ${isToday}"><span style="font-weight:bold">${i}</span>${html}</div>`;
+        }
+    }
+
+    function renderAgenda(tasks) {
+        const container = document.getElementById('agendaList');
+        container.innerHTML = '';
+        const temp = new Date(calDate);
+        const day = temp.getDay() || 7;
+        temp.setDate(temp.getDate() - day + 1);
+        const start = new Date(temp);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 6);
+        document.getElementById('agendaTitle').innerText = `${start.toLocaleDateString('tr-TR')} - ${end.toLocaleDateString('tr-TR')}`;
+
+        for(let d = new Date(start); d <= end; d.setDate(d.getDate()+1)) {
+            const dateKey = d.toLocaleDateString('en-CA');
+            const dayTasks = tasks.filter(t => t.date === dateKey);
+            if(dayTasks.length > 0) {
+                const dName = d.toLocaleDateString('tr-TR', {weekday:'long'});
+                let html = '';
+                dayTasks.forEach(t => {
+                    const c = t.status==='done'?'#10b981':(t.status==='progress'?'#0099d8':'#f59e0b');
+                    html += `<div class="t-item" style="border-left-color:${c}" onclick="openModal('${t.id}')"><strong>${t.code}</strong> ${t.title} <span style="font-size:10px">(${t.assignee})</span></div>`;
+                });
+                container.innerHTML += `<div class="t-row"><div class="t-date"><span class="t-day">${d.getDate()}</span><span>${dName.substr(0,3)}</span></div><div class="t-data">${html}</div></div>`;
+            }
+        }
+    }
+
+    window.saveTask = async function() {
+        const btnSave = document.getElementById('btnSave');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const id = document.getElementById('tId').value;
+        const title = document.getElementById('tTitle').value;
+        if(!title) { alert('Konu seçiniz'); return; }
+
+        btnSave.disabled = true; btnSave.innerText = "Kaydediliyor...";
+        const fileIn = document.getElementById('tFile');
+        let downloadUrl = null;
+
+        if (fileIn.files.length > 0) {
+            const file = fileIn.files[0];
+            if (file.size > 15 * 1024 * 1024) { alert("Dosya 15 MB'dan büyük olamaz!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
+            uploadStatus.style.display = 'inline-block';
+            try {
+                const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
+                await uploadBytes(storageRef, file);
+                downloadUrl = await getDownloadURL(storageRef);
+            } catch (err) { alert("Dosya yüklenemedi!"); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
+        }
+
+        const data = {
+            title: title,
+            status: document.getElementById('tStatus').value,
+            priority: document.getElementById('tPriority').value,
+            assignee: document.getElementById('tAssignee').value,
+            date: document.getElementById('tDate').value,
+            desc: document.getElementById('tDesc').value
+        };
+        if (downloadUrl) data.fileUrl = downloadUrl;
+
+        try {
+            if(id) { await updateDoc(doc(db, "tasks", id), data); }
+            else {
+                const user = document.getElementById('activeUser').value;
+                if(!user) { alert('Kullanıcı seçin'); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
+                await runTransaction(db, async (transaction) => {
+                    const metaRef = doc(db, "meta", "counters");
+                    const metaDoc = await transaction.get(metaRef);
+                    let newSeq = 1;
+                    if(metaDoc.exists()) newSeq = metaDoc.data().taskSeq + 1;
+                    transaction.set(metaRef, { taskSeq: newSeq }, { merge: true });
+                    const newTaskRef = doc(collection(db, "tasks"));
+                    transaction.set(newTaskRef, { ...data, code: 'GRV' + newSeq, creator: user, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' });
+                });
+            }
+            closeModal();
+        } catch(e) { console.error(e); alert("Hata!"); }
+        btnSave.disabled = false; btnSave.innerText = "Kaydet"; uploadStatus.style.display = 'none';
+    }
+
+    window.delTask = async function() {
+        const id = document.getElementById('tId').value;
+        if(id && confirm('Silinsin mi?')) { await deleteDoc(doc(db, "tasks", id)); closeModal(); }
+    }
+    window.quickMove = async function(id, status, e) {
+        e.stopPropagation(); await updateDoc(doc(db, "tasks", id), { status: status });
+    }
+
+    window.newTask = function() {
+        if(!document.getElementById('activeUser').value) { alert("Kullanıcı seçiniz!"); return; }
+        document.getElementById('tId').value = '';
+        document.getElementById('tCode').value = 'OTOMATİK';
+        document.getElementById('tTitle').value = '';
+        document.getElementById('tStatus').value = 'todo';
+        document.getElementById('tAssignee').value = '';
+        document.getElementById('tDate').value = '';
+        document.getElementById('tDesc').value = '';
+        document.getElementById('tFile').value = ''; 
+        document.getElementById('tFileLink').classList.add('hidden');
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    window.openModal = function(id) {
+        const t = allTasks.find(x => x.id === id);
+        if(!t) return;
+        document.getElementById('tId').value = t.id;
+        document.getElementById('tCode').value = t.code;
+        document.getElementById('tTitle').value = t.title;
+        document.getElementById('tStatus').value = t.status;
+        document.getElementById('tPriority').value = t.priority;
+        document.getElementById('tAssignee').value = t.assignee;
+        document.getElementById('tDate').value = t.date;
+        document.getElementById('tDesc').value = t.desc;
+        const fileLink = document.getElementById('tFileLink');
+        if (t.fileUrl) { fileLink.href = t.fileUrl; fileLink.classList.remove('hidden'); }
+        else { fileLink.classList.add('hidden'); }
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    window.closeModal = function() { document.getElementById('modal').style.display = 'none'; }
+    window.toggleFilter = function() { const p = document.getElementById('filterPanel'); p.style.display = p.style.display==='flex'?'none':'flex'; }
+    window.applyFilter = function() {
+        filterConfig.start = document.getElementById('fltStart').value;
+        filterConfig.end = document.getElementById('fltEnd').value;
+        filterConfig.topic = document.getElementById('fltTopic').value;
+        filterConfig.assignee = document.getElementById('fltAssignee').value;
+        filterConfig.active = true; renderAll();
+    }
+    window.clearFilter = function() {
+        document.getElementById('fltStart').value = ''; document.getElementById('fltEnd').value = ''; document.getElementById('fltTopic').value = ''; document.getElementById('fltAssignee').value = '';
+        filterConfig = {active:false, start:'', end:'', topic:'', assignee:''}; renderAll();
+    }
+    window.showView = function(mode, btn) {
+        currentMode = mode;
+        if(document.getElementById('mobileDropdown').style.display === 'flex') toggleMobileMenu();
+        
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+        if(mode==='kanban') { document.getElementById('view-kanban').classList.add('active'); renderKanban(allTasks); }
+        else if(mode==='month') { document.getElementById('view-month').classList.add('active'); renderCalendar(allTasks); }
+        else if(mode==='dashboard') { document.getElementById('view-dashboard').classList.add('active'); renderDashboard(allTasks); }
+        else { document.getElementById('view-agenda').classList.add('active'); renderAgenda(allTasks); }
+    }
+    window.navMonth = function(d) { calDate.setMonth(calDate.getMonth()+d); renderAll(); }
+</script>
+</body>
+</html>
