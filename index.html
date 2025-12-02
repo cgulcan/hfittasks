@@ -19,7 +19,6 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
     <style>
         :root {
@@ -76,7 +75,7 @@
         .login-input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid var(--border); border-radius: 10px; background: var(--input-bg); color: var(--text-main); font-size: 15px; }
         .login-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; }
 
-        /* APP CONTAINER (Visibility control for loading) */
+        /* APP CONTAINER (Visibility control) */
         #appContainer { visibility: hidden; opacity: 0; transition: opacity 0.5s; flex-direction: column; flex: 1; width: 100%; height: 100%; }
         
         .main-content { flex: 1; overflow: hidden; position: relative; padding: 20px; }
@@ -110,13 +109,12 @@
         .q-btn { flex: 1; background: var(--bg-col); padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 600; text-align: center; color: var(--text-sec); border: 1px solid transparent; cursor: pointer; }
         .q-btn:hover { background: var(--primary-soft); color: var(--primary); }
 
-        /* MODAL & COMMENTS */
+        /* MODAL */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); align-items: center; justify-content: center; }
         .modal-box { background: var(--bg-card); width: 700px; max-height: 90vh; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; }
         .m-head { padding: 20px 25px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .m-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; -webkit-overflow-scrolling: touch; }
         .m-foot { padding: 20px 30px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; background: var(--bg-col); flex-shrink: 0; }
-        
         .span-full { grid-column: span 2; }
         .frm-inp { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--input-bg); color: var(--text-main); }
         .frm-lbl { font-size: 12px; font-weight: 600; color: var(--text-sec); margin-bottom: 5px; display: block; }
@@ -138,6 +136,13 @@
         .skeleton { background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; margin-bottom: 8px; }
         .skeleton-card { padding: 15px; background: var(--bg-card); border-radius: 12px; margin-bottom: 10px; border: 1px solid var(--border); }
         .sk-title { height: 16px; width: 70%; margin-bottom: 10px; } .sk-text { height: 12px; width: 100%; margin-bottom: 5px; }
+        
+        /* TAKVİM */
+        .calendar-wrapper, .agenda-container { background: var(--bg-card); border-radius: 16px; padding: 20px; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .cal-cell { background: var(--bg-card); min-height: 70px; padding: 6px; font-size: 11px; color: var(--text-main); }
+        .cal-cell.today { background: var(--primary-soft); color: var(--primary); font-weight: bold; }
+        .cal-task { background: var(--primary); color: white; padding: 3px 6px; margin-top: 3px; border-radius: 4px; font-size: 10px; white-space: nowrap; overflow: hidden; display: block; }
 
         /* MOBILE */
         .mobile-dropdown { position: absolute; top: 65px; left: 0; width: 100%; background: var(--bg-card); border-bottom: 1px solid var(--border); box-shadow: var(--shadow-md); display: none; flex-direction: column; padding: 10px; z-index: 40; }
@@ -163,8 +168,9 @@
 
 <div id="loginOverlay">
     <div class="login-card">
-        <img src="logo.png" alt="Logo" class="login-logo">
+        <img src="logo.png" alt="Logo" class="login-logo" style="width:80px; margin-bottom:20px;">
         <div class="login-title">BT Portal Giriş</div>
+        <div class="login-sub" style="color:var(--text-sec); margin-bottom:30px;">Devam etmek için giriş yapın.</div>
         <input type="email" id="email" class="login-input" placeholder="E-posta Adresi">
         <input type="password" id="password" class="login-input" placeholder="Şifre">
         <button class="login-btn" onclick="login()">Giriş Yap</button>
@@ -292,9 +298,6 @@
 
     let app, db, storage, auth;
     try { app = initializeApp(firebaseConfig); db = getFirestore(app); storage = getStorage(app); auth = getAuth(app); } catch (e) {}
-
-    // >>>>> EMAILJS CONFIG <<<<<
-    emailjs.init("heO68BPyrWRHN3R4U");
 
     const USER_MAP = {
         "cengiz.gulcan@halkfaktoring.com.tr": { name: "Cengiz GÜLCAN", role: "admin" },
@@ -425,53 +428,102 @@
         document.getElementById('cnt-todo').innerText = counts.todo; document.getElementById('cnt-progress').innerText = counts.progress; document.getElementById('cnt-done').innerText = counts.done;
     }
 
-    // --- EMAIL SENDER ---
-    async function sendEmailNotification(taskData) {
-        const targetUserKey = Object.keys(USER_MAP).find(key => USER_MAP[key].name === taskData.assignee);
-        if (!targetUserKey) return;
+    function renderCalendar(tasks) {
+        const grid = document.getElementById('calGrid');
+        grid.innerHTML = '';
+        ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'].forEach(d => grid.innerHTML += `<div style="text-align:center;font-weight:bold;font-size:12px; color:var(--text-sec)">${d}</div>`);
+        const y = calDate.getFullYear();
+        const m = calDate.getMonth();
+        document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
+        const firstDay = new Date(y, m, 1).getDay();
+        const offset = firstDay === 0 ? 6 : firstDay - 1;
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
+        const todayStr = new Date().toLocaleDateString('en-CA');
+        for(let i=1; i<=daysInMonth; i++) {
+            const mStr = String(m + 1).padStart(2, '0');
+            const dStr = String(i).padStart(2, '0');
+            const fullDate = `${y}-${mStr}-${dStr}`;
+            const dayTasks = tasks.filter(t => t.date === fullDate);
+            let html = '';
+            dayTasks.forEach(t => {
+                const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0099d8':'#f59e0b');
+                html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')"><strong>${t.code}</strong> - ${t.title}</div>`;
+            });
+            const isToday = fullDate === todayStr ? 'today' : '';
+            grid.innerHTML += `<div class="cal-cell ${isToday}"><span style="font-weight:bold">${i}</span>${html}</div>`;
+        }
+    }
 
-        const templateParams = {
-            to_name: taskData.assignee,
-            to_email: targetUserKey,
-            task_title: taskData.title,
-            task_desc: taskData.desc || "Açıklama yok",
-            assigner_name: taskData.creator
-        };
+    function renderAgenda(tasks) {
+        const container = document.getElementById('agendaList');
+        container.innerHTML = '';
+        const temp = new Date(calDate);
+        const day = temp.getDay() || 7;
+        temp.setDate(temp.getDate() - day + 1);
+        const start = new Date(temp);
+        const end = new Date(start);
+        end.setDate(end.getDate() + 6);
+        document.getElementById('agendaTitle').innerText = `${start.toLocaleDateString('tr-TR')} - ${end.toLocaleDateString('tr-TR')}`;
 
-        try {
-            await emailjs.send("service_4yemji2", "template_00e38zj", templateParams);
-            showToast("İlgili kişiye e-posta gönderildi.", "success");
-        } catch (error) {
-            console.error("E-posta hatası:", error);
+        for(let d = new Date(start); d <= end; d.setDate(d.getDate()+1)) {
+            const dateKey = d.toLocaleDateString('en-CA');
+            const dayTasks = tasks.filter(t => t.date === dateKey);
+            if(dayTasks.length > 0) {
+                let html = '';
+                dayTasks.forEach(t => {
+                    const c = t.status==='done'?'#10b981':(t.status==='progress'?'#0099d8':'#f59e0b');
+                    html += `<div class="t-item" style="border-left-color:${c}" onclick="openModal('${t.id}')"><strong>${t.code}</strong> ${t.title} <span style="font-size:10px">(${t.assignee})</span></div>`;
+                });
+                container.innerHTML += `<div class="t-row"><div class="t-date"><span class="t-day">${d.getDate()}</span><span>${d.toLocaleDateString('tr-TR',{weekday:'short'})}</span></div><div class="t-data">${html}</div></div>`;
+            }
         }
     }
 
     window.saveTask = async function() {
-        const btnSave = document.getElementById('btnSave'); const uploadStatus = document.getElementById('uploadStatus');
-        const id = document.getElementById('tId').value; const title = document.getElementById('tTitle').value;
+        const btnSave = document.getElementById('btnSave');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const id = document.getElementById('tId').value;
+        const title = document.getElementById('tTitle').value;
         if(!title) { showToast('Konu seçiniz!','error'); return; }
+
         btnSave.disabled = true; btnSave.innerText = "Kaydediliyor...";
-        const fileIn = document.getElementById('tFile'); let downloadUrl = null;
+        const fileIn = document.getElementById('tFile');
+        let downloadUrl = null;
+
         if (fileIn.files.length > 0) {
             const file = fileIn.files[0];
-            if (file.size > 15 * 1024 * 1024) { showToast("Dosya 15 MB'dan büyük olamaz!", 'error'); btnSave.disabled=false; return; }
+            if (file.size > 15 * 1024 * 1024) { showToast("Dosya 15 MB'dan büyük olamaz!", 'error'); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
             uploadStatus.style.display = 'inline-block';
-            try { const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name); await uploadBytes(storageRef, file); downloadUrl = await getDownloadURL(storageRef); } 
-            catch { showToast("Dosya yüklenemedi!", 'error'); btnSave.disabled=false; return; }
+            try {
+                const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
+                await uploadBytes(storageRef, file);
+                downloadUrl = await getDownloadURL(storageRef);
+            } catch (err) { showToast("Dosya yüklenemedi!", 'error'); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
         }
-        const data = { title, status: document.getElementById('tStatus').value, priority: document.getElementById('tPriority').value, assignee: document.getElementById('tAssignee').value, date: document.getElementById('tDate').value, desc: document.getElementById('tDesc').value };
+
+        const data = {
+            title: title,
+            status: document.getElementById('tStatus').value,
+            priority: document.getElementById('tPriority').value,
+            assignee: document.getElementById('tAssignee').value,
+            date: document.getElementById('tDate').value,
+            desc: document.getElementById('tDesc').value
+        };
         if (downloadUrl) data.fileUrl = downloadUrl;
+
         try {
             if(id) { await updateDoc(doc(db, "tasks", id), data); showToast("Görev güncellendi"); }
             else {
+                if(!currentUser) { showToast('Giriş yapmalısınız!', 'error'); btnSave.disabled=false; btnSave.innerText="Kaydet"; return; }
                 await runTransaction(db, async (transaction) => {
-                    const metaRef = doc(db, "meta", "counters"); const metaDoc = await transaction.get(metaRef);
-                    let newSeq = metaDoc.exists() ? metaDoc.data().taskSeq + 1 : 1;
+                    const metaRef = doc(db, "meta", "counters");
+                    const metaDoc = await transaction.get(metaRef);
+                    let newSeq = 1;
+                    if(metaDoc.exists()) newSeq = metaDoc.data().taskSeq + 1;
                     transaction.set(metaRef, { taskSeq: newSeq }, { merge: true });
                     const newTaskRef = doc(collection(db, "tasks"));
-                    const newTaskData = { ...data, code: 'GRV' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' };
-                    transaction.set(newTaskRef, newTaskData);
-                    sendEmailNotification(newTaskData);
+                    transaction.set(newTaskRef, { ...data, code: 'GRV' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' });
                 });
                 showToast("Yeni görev oluşturuldu");
             }
@@ -480,9 +532,21 @@
         btnSave.disabled = false; btnSave.innerText = "Kaydet"; uploadStatus.style.display = 'none';
     }
 
-    window.delTask = async function() { if(currentUser.role !== 'admin') return; if(confirm('Silinsin mi?')) { await deleteDoc(doc(db, "tasks", document.getElementById('tId').value)); closeModal(); showToast("Silindi"); } }
+    window.delTask = async function() {
+        if (!currentUser || currentUser.role !== 'admin') {
+            showToast("Yetkisiz işlem! Sadece Admin silebilir.", 'error');
+            return;
+        }
+        const id = document.getElementById('tId').value;
+        if(id && confirm('Bu görevi silmek istediğinize emin misiniz?')) { 
+            await deleteDoc(doc(db, "tasks", id)); 
+            closeModal(); 
+            showToast("Görev silindi", 'success');
+        }
+    }
+
     window.quickMove = async function(id, status, e) { e.stopPropagation(); await updateDoc(doc(db, "tasks", id), { status: status }); showToast("Durum güncellendi"); }
-    window.newTask = function() { if(!currentUser) return; document.getElementById('tId').value = ''; document.getElementById('tCode').value = 'YENİ'; document.getElementById('tTitle').value = ''; document.getElementById('tStatus').value = 'todo'; document.getElementById('tAssignee').value = ''; document.getElementById('tDate').value = ''; document.getElementById('tDesc').value = ''; document.getElementById('commentList').innerHTML = ''; document.getElementById('modal').style.display = 'flex'; }
+    window.newTask = function() { if(!currentUser) { showToast("Giriş yapmalısınız!", 'error'); return; } document.getElementById('tId').value = ''; document.getElementById('tCode').value = 'YENİ'; document.getElementById('tTitle').value = ''; document.getElementById('tStatus').value = 'todo'; document.getElementById('tAssignee').value = ''; document.getElementById('tDate').value = ''; document.getElementById('tDesc').value = ''; document.getElementById('commentList').innerHTML = ''; document.getElementById('modal').style.display = 'flex'; }
     window.openModal = function(id) { const t = allTasks.find(x => x.id === id); if(!t) return; document.getElementById('tId').value = t.id; document.getElementById('tCode').value = t.code; document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; document.getElementById('tPriority').value = t.priority; document.getElementById('tAssignee').value = t.assignee; document.getElementById('tDate').value = t.date; document.getElementById('tDesc').value = t.desc; const l = document.getElementById('tFileLink'); if(t.fileUrl) { l.href = t.fileUrl; l.classList.remove('hidden'); } else l.classList.add('hidden'); renderComments(t.history); document.getElementById('modal').style.display = 'flex'; }
     window.closeModal = function() { document.getElementById('modal').style.display = 'none'; }
     window.toggleFilter = function() { const p = document.getElementById('filterPanel'); p.style.display = p.style.display==='flex'?'none':'flex'; }
@@ -493,8 +557,6 @@
     window.addComment = async function() { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(!txt || !id) return; const t = allTasks.find(x => x.id == id); const h = t.history || []; h.push({ user: currentUser.name, text: txt, date: new Date().toLocaleString('tr-TR') }); await updateDoc(doc(db, "tasks", id), { history: h }); document.getElementById('newComment').value = ''; openModal(id); }
     function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.forEach(h => { list.innerHTML += `<div class="comment-box"><div class="comment-header"><span>${h.user}</span> <span>${h.date}</span></div><div class="comment-text">${h.text}</div></div>`; }); }
     window.exportExcel = function() { const rows = allTasks.map(t => ({ "Kod": t.code, "Konu": t.title, "Durum": t.status, "Öncelik": t.priority, "Sorumlu": t.assignee, "Tarih": t.date, "Açıklama": t.desc, "Oluşturan": t.creator })); const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Görevler"); XLSX.writeFile(wb, "BT_Gorevler.xlsx"); }
-    function renderCalendar(tasks) { /* Omitted for brevity - same as before */ }
-    function renderAgenda(tasks) { /* Omitted for brevity - same as before */ }
 </script>
 </body>
 </html>
