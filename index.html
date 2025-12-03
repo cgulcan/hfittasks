@@ -28,12 +28,11 @@
     
     <style>
         :root {
-            /* V4.4 NEON & LIVE PALET */
+            /* V5.0 PLATINUM PALET */
             --primary-grad: linear-gradient(135deg, #0099d8 0%, #0284c7 100%);
             --primary: #0099d8; 
             --primary-soft: rgba(0, 153, 216, 0.08);
             
-            /* Glass & Cards */
             --bg-card: rgba(255, 255, 255, 0.95); 
             --bg-glass: rgba(255, 255, 255, 0.75);
             --bg-col: rgba(248, 250, 252, 0.8);
@@ -45,7 +44,7 @@
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
             --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
             --shadow-float: 0 12px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            --glow-primary: 0 4px 15px rgba(0, 153, 216, 0.3); /* Soft Glow Light Mode */
+            --glow-primary: 0 4px 15px rgba(0, 153, 216, 0.3);
             
             --todo-line: #f59e0b;
             --prog-line: #0ea5e9;
@@ -53,7 +52,6 @@
         }
 
         [data-theme="dark"] {
-            /* NEON DARK MODE */
             --primary-grad: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
             --primary: #38bdf8; 
             --primary-soft: rgba(56, 189, 248, 0.15);
@@ -68,36 +66,40 @@
             
             --shadow-sm: none;
             --shadow-card: 0 4px 6px rgba(0,0,0,0.3);
-            --glow-primary: 0 0 25px rgba(56, 189, 248, 0.5); /* NEON GLOW */
+            --glow-primary: 0 0 25px rgba(56, 189, 248, 0.5);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         
-        /* CANLI ARKA PLAN (Live Mesh Gradient) */
+        /* CANLI ARKA PLAN & BODY */
         body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; padding: 0; color: var(--text-main); 
+            font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
             height: 100vh; overflow: hidden; letter-spacing: 0.01em;
-            
-            /* Hareketli Arkaplan */
             background: linear-gradient(-45deg, #f1f5f9, #e0f2fe, #f0f9ff, #eff6ff);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
         }
-
         [data-theme="dark"] body {
             background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #172554);
             background-size: 400% 400%;
         }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        /* CUSTOM SCROLLBARS (YENİ) */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--text-sec); border-radius: 10px; opacity: 0.3; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.03em; }
         p, .c-desc { line-height: 1.6; }
+
+        /* RIPPLE EFFECT (YENİ) */
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        .btn-grad, .nav-btn, .task-card, .btn-icon { position: relative; overflow: hidden; }
 
         /* SKELETON */
         .skeleton { background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
@@ -121,8 +123,6 @@
         .nav-pills { display: inline-flex; background: var(--bg-col); padding: 5px; border-radius: 18px; gap: 4px; border: 1px solid var(--border); }
         .nav-btn { color: var(--text-sec); padding: 9px 18px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
         .nav-btn:hover { color: var(--primary); background: rgba(0,0,0,0.03); }
-        
-        /* Aktif buton parlaması */
         .nav-btn.active { background: var(--primary-grad); color: white; box-shadow: var(--glow-primary); transform: translateY(-1px); }
 
         .user-area { display: flex; align-items: center; gap: 12px; }
@@ -166,6 +166,7 @@
         .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; }
         .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; min-height: 100px; -webkit-overflow-scrolling: touch; }
 
+        /* TASK CARDS - EĞİK SÜRÜKLEME (YENİ) */
         .task-card { 
             background: var(--bg-card); border-radius: 16px; padding: 16px; 
             box-shadow: var(--shadow-sm); border: 1px solid var(--border); 
@@ -173,13 +174,14 @@
             position: relative; flex-shrink: 0;
         }
         .task-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-float); }
-        
-        /* Dark Mode Hover Glow */
         [data-theme="dark"] .task-card:hover { box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); border-color: #38bdf8; }
-
         .task-card::after { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
         .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
         
+        /* Sortable Styles */
+        .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
+        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05) rotate(3deg); box-shadow: var(--shadow-float); } /* YENİ TILT ANIMATION */
+
         .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .c-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main); }
         .c-desc { font-size: 12px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -198,9 +200,7 @@
         .badge-Yüksek { background: #fef2f2; color: #ef4444; } .badge-Orta { background: #fffbeb; color: #f59e0b; } .badge-Düşük { background: #ecfdf5; color: #10b981; }
         .avatar { width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 800; }
         
-        .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
-        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05); box-shadow: var(--shadow-float); }
-
+        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 100%; max-width: 600px; height: 90%; max-height: 800px; border-radius: 24px; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
@@ -260,7 +260,7 @@
         <p style="color:#64748b; margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Güvenli BT Yönetim Sistemi</p>
         <input type="email" id="email" class="login-input" placeholder="Kurumsal E-posta">
         <input type="password" id="password" class="login-input" placeholder="Şifre">
-        <button class="btn-grad" style="width:100%; justify-content:center; padding:16px; font-size:15px; margin-top:10px;" onclick="login()">Giriş Yap</button>
+        <button class="btn-grad" style="width:100%; justify-content:center; padding:16px; font-size:15px; margin-top:10px;" onclick="createRipple(event); login()">Giriş Yap</button>
         <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:13px; font-weight:700;"></div>
     </div>
 </div>
@@ -270,10 +270,10 @@
         <div class="brand"><img src="logo.png" alt="Logo" class="logo-img"><div class="brand-text">BT YÖNETİM</div></div>
         <div class="nav-wrapper">
             <div class="nav-pills">
-                <button class="nav-btn active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</button>
-                <button class="nav-btn" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i> Takvim</button>
-                <button class="nav-btn" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
-                <button class="nav-btn" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
+                <button class="nav-btn active" onclick="createRipple(event); showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</button>
+                <button class="nav-btn" onclick="createRipple(event); showView('month', this)"><i class="fa-solid fa-calendar-days"></i> Takvim</button>
+                <button class="nav-btn" onclick="createRipple(event); showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
+                <button class="nav-btn" onclick="createRipple(event); showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
             </div>
         </div>
         <div class="user-area">
@@ -281,7 +281,7 @@
             <div class="user-info"><div id="displayUserName"></div><span class="user-role" id="displayUserRole">Yetkili</span></div>
             <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
             <button class="btn-icon btn-logout" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
-            <button class="btn-grad" onclick="newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">Yeni</span></button>
+            <button class="btn-grad" onclick="createRipple(event); newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">Yeni</span></button>
         </div>
     </header>
 
@@ -301,7 +301,7 @@
     <div class="main-content">
         <div id="view-dashboard" class="view-section dash-container">
             <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
-                <button class="btn-grad" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel İndir</button>
+                <button class="btn-grad" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel İndir</button>
             </div>
             <div class="stats-row">
                 <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
@@ -384,10 +384,10 @@
             </div>
             <div class="frm-grp span-full comments-section">
                 <span class="frm-lbl">Notlar & Tarihçe</span><div id="commentList" style="max-height:150px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
-                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 20px;" onclick="addComment()">Gönder</button></div>
+                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 20px;" onclick="createRipple(event); addComment()">Gönder</button></div>
             </div>
         </div>
-        <div class="m-foot"><button class="q-btn admin-only" style="color:#ef4444; background:#fef2f2;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button><button class="btn-grad" onclick="saveTask()" id="btnSave">Kaydet</button></div>
+        <div class="m-foot"><button class="q-btn admin-only" style="color:#ef4444; background:#fef2f2;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button><button class="btn-grad" onclick="createRipple(event); saveTask()" id="btnSave">Kaydet</button></div>
     </div>
 </div>
 
@@ -423,6 +423,21 @@
     let allTasks = []; let calDate = new Date(); let currentMode = 'kanban';
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '', text: '' };
     let currentUser = null; let chartStatusInst = null; let chartUserInst = null;
+
+    /* RIPPLE EFFECT FUNC */
+    window.createRipple = function(event) {
+        const button = event.currentTarget;
+        const circle = document.createElement("span");
+        const diameter = Math.max(button.clientWidth, button.clientHeight);
+        const radius = diameter / 2;
+        circle.style.width = circle.style.height = `${diameter}px`;
+        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+        circle.classList.add("ripple");
+        const ripple = button.getElementsByClassName("ripple")[0];
+        if (ripple) { ripple.remove(); }
+        button.appendChild(circle);
+    }
 
     window.showToast = function(msg, type='success') {
         const c = document.getElementById('toast-container'); const t = document.createElement('div');
@@ -491,7 +506,7 @@
     function initSortable() {
         ['lst-todo', 'lst-progress', 'lst-done'].forEach(id => {
             new Sortable(document.getElementById(id), {
-                group: 'shared', animation: 150, ghostClass: 'sortable-ghost', dragClass: 'sortable-drag', delay: 200, delayOnTouchOnly: true,
+                group: 'shared', animation: 200, ghostClass: 'sortable-ghost', dragClass: 'sortable-drag', delay: 150, delayOnTouchOnly: true,
                 onEnd: async function (evt) {
                     if (evt.to !== evt.from) {
                         await updateDoc(doc(db, "tasks", evt.item.getAttribute('data-id')), { status: evt.to.getAttribute('data-status') });
@@ -544,6 +559,7 @@
         else renderAgenda(tasks);
     }
 
+    /* GRADIENT CHARTS (YENİ) */
     function renderDashboard(tasks) {
         const counts = { todo: 0, progress: 0, done: 0 };
         const userCounts = {};
@@ -553,17 +569,25 @@
         
         const commonOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } };
         
+        const ctx1 = document.getElementById('chartStatus').getContext('2d');
+        const gradTodo = ctx1.createLinearGradient(0,0,0,400); gradTodo.addColorStop(0,'#fcd34d'); gradTodo.addColorStop(1,'#d97706');
+        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#38bdf8'); gradProg.addColorStop(1,'#0284c7');
+        const gradDone = ctx1.createLinearGradient(0,0,0,400); gradDone.addColorStop(0,'#34d399'); gradDone.addColorStop(1,'#059669');
+
         if(chartStatusInst) chartStatusInst.destroy();
-        chartStatusInst = new Chart(document.getElementById('chartStatus').getContext('2d'), { 
+        chartStatusInst = new Chart(ctx1, { 
             type: 'doughnut', 
-            data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: ['#f59e0b', '#0ea5e9', '#10b981'], borderWidth:0 }] }, 
-            options: { ...commonOpts, cutout: '70%' } 
+            data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: [gradTodo, gradProg, gradDone], borderWidth:0, hoverOffset: 10 }] }, 
+            options: { ...commonOpts, cutout: '75%' } 
         });
         
+        const ctx2 = document.getElementById('chartUser').getContext('2d');
+        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#0099d8'); gradBar.addColorStop(1,'#1e3a8a');
+
         if(chartUserInst) chartUserInst.destroy();
-        chartUserInst = new Chart(document.getElementById('chartUser').getContext('2d'), { 
+        chartUserInst = new Chart(ctx2, { 
             type: 'bar', 
-            data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: '#0099d8', borderRadius: 8 }] }, 
+            data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 8 }] }, 
             options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } 
         });
     }
