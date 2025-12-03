@@ -1,6 +1,34 @@
-<style>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Halk Faktoring | BT Portal</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BT Portal">
+    
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
         :root {
-            /* V4.3 FINAL PALET - SCROLL FIXED */
+            /* V4.3 FINAL PALET */
             --primary-grad: linear-gradient(135deg, #0099d8 0%, #0284c7 100%);
             --primary: #0099d8; 
             --primary-soft: rgba(0, 153, 216, 0.08);
@@ -37,7 +65,7 @@
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         
-        /* 1. ADIM: Body Scroll'u Kapalı, AppContainer Yönetiyor */
+        /* SCROLL FIX: Body scroll kapalı, AppContainer yönetiyor */
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); margin: 0; padding: 0; color: var(--text-main); height: 100vh; overflow: hidden; letter-spacing: 0.01em; }
 
         h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.03em; }
@@ -83,12 +111,12 @@
         .greeting-text p { margin: 4px 0 0 0; color: var(--text-sec); font-size: 13px; }
         .greeting-icon { font-size: 32px; }
 
-        /* 2. ADIM: Main Layout - SCROLL BURADA AÇILIYOR */
+        /* MAIN LAYOUT - SCROLL BURADA AÇIK */
         #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         
         .main-content { 
             flex: 1; 
-            overflow-y: auto; /* DİKEY KAYDIRMA AÇIK */
+            overflow-y: auto; 
             overflow-x: hidden;
             padding: 24px; 
             max-width: 1600px; 
@@ -99,41 +127,19 @@
             position: relative;
         }
 
-        .view-section { 
-            display: none; 
-            width: 100%; 
-            flex-direction: column; 
-        }
+        .view-section { display: none; width: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* DASHBOARD & LISTE */
-        .dash-container, .agenda-container { 
-            width: 100%; 
-            padding-bottom: 50px; 
-        }
-
-        /* 3. ADIM: Kanban Container (Yatay Scroll) */
+        /* KANBAN SCROLL & LAYOUT */
         .kanban-container { 
-            display: flex; 
-            gap: 24px; 
-            overflow-x: auto; /* Sütunlar sağa giderse kaydır */
-            padding-bottom: 20px; 
-            align-items: flex-start;
-            min-height: 600px; /* En az bu kadar yer kaplasın */
+            display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start;
+            min-height: 600px;
         }
         
         .k-col { 
-            flex: 1; 
-            min-width: 300px; 
-            max-width: 400px; 
-            background: var(--bg-col); 
-            border-radius: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            padding: 16px; 
-            border: 1px solid var(--border); 
-            /* Sütun içi scroll */
-            max-height: 70vh; 
+            flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 20px; 
+            display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--border); 
+            height: 100%; max-height: 70vh;
         }
         
         #col-todo { border-top: 4px solid var(--todo-line); }
@@ -143,13 +149,8 @@
         .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; }
         
         .k-list { 
-            overflow-y: auto; /* Liste içinde çok görev varsa kaydır */
-            flex: 1; 
-            padding-right: 4px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            min-height: 100px;
+            overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; min-height: 100px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .task-card { 
@@ -167,32 +168,31 @@
         .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
         .c-assignee { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-main); }
         
-        /* CALENDAR */
-        .calendar-wrapper { 
-            background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--border); 
-            min-height: 600px; display: flex; flex-direction: column; 
-        }
-        .cal-grid { 
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); 
-            border-radius: 16px; overflow: hidden; border: 1px solid var(--border); flex: 1;
-        }
+        /* EXTRAS */
+        .dash-container, .agenda-container { width: 100%; padding-bottom: 50px; }
+        .calendar-wrapper { background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); flex: 1; }
         .cal-cell { background: var(--bg-card); padding: 4px; font-size: 12px; min-height: 80px; }
         .cal-cell.today { background: var(--primary-soft); }
         .cal-task { background: var(--primary); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; }
         
-        /* EXTRAS */
         .badge { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
         .badge-Yüksek { background: #fef2f2; color: #ef4444; } .badge-Orta { background: #fffbeb; color: #f59e0b; } .badge-Düşük { background: #ecfdf5; color: #10b981; }
         .avatar { width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 800; }
         
+        /* SORTABLE & SKELETON */
+        .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
+        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05); box-shadow: var(--shadow-float); }
+
+        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 100%; max-width: 600px; height: 90%; max-height: 800px; border-radius: 24px; display: flex; flex-direction: column; }
         .m-head, .m-foot { padding: 15px 20px; flex-shrink: 0; } .m-body { padding: 20px; overflow-y: auto; flex: 1; }
-        
-        .dash-container .stat-card { margin-bottom: 0; }
-        .stats-row { gap: 15px; }
-        .chart-wrapper { height: 350px; margin-bottom: 20px; }
+        .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-sec); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
+        .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--bg-body); color: var(--text-main); transition: 0.2s; }
+        .span-full { grid-column: span 2; }
+        .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
 
         /* LOGIN */
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; }
@@ -211,34 +211,483 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         /* MOBILE */
-        .bottom-nav { display: none; }
-        .mobile-filter-btn { display: none; }
-
+        .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
             header { padding: 0 16px; height: 60px; }
             .main-content { padding: 16px; padding-bottom: 80px; overflow-x: hidden; }
-            
             .greeting-card { padding: 16px; margin-bottom: 16px; }
-            .greeting-text h2 { font-size: 18px; }
-            .greeting-icon { font-size: 24px; }
-            
             .kanban-container { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; }
             .k-col { min-width: 85vw; scroll-snap-align: center; margin-right: 10px; }
-            
-            .bottom-nav { 
-                display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; 
-                background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-                border: 1px solid rgba(0,0,0,0.1); border-radius: 24px; height: 65px; z-index: 1000; 
-                justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            }
+            .bottom-nav { display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(0,0,0,0.1); border-radius: 24px; height: 65px; z-index: 1000; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
             [data-theme="dark"] .bottom-nav { background: rgba(30, 41, 59, 0.95); border-color: rgba(255,255,255,0.1); }
-            
             .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-sec); font-size: 10px; font-weight: 600; gap: 3px; }
             .b-nav-item.active { color: var(--primary); }
-            .b-nav-item i { font-size: 20px; }
-            
             .modal-box { height: 100%; border-radius: 0; }
             .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: var(--bg-col); border: 1px solid var(--border); }
         }
     </style>
+</head>
+<body onload="initApp()">
+
+<div id="toast-container"></div>
+
+<div id="loginOverlay">
+    <div class="login-card">
+        <img src="logo.png" alt="Logo" class="login-logo" style="width:100px; margin-bottom:20px; border-radius:20px; box-shadow:0 15px 30px rgba(0,0,0,0.2);">
+        <h2 style="margin:0 0 10px 0; color:#1e293b; font-size:26px;">BT Portal</h2>
+        <p style="color:#64748b; margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Güvenli BT Yönetim Sistemi</p>
+        <input type="email" id="email" class="login-input" placeholder="Kurumsal E-posta">
+        <input type="password" id="password" class="login-input" placeholder="Şifre">
+        <button class="btn-grad" style="width:100%; justify-content:center; padding:16px; font-size:15px; margin-top:10px;" onclick="login()">Giriş Yap</button>
+        <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:13px; font-weight:700;"></div>
+    </div>
+</div>
+
+<div id="appContainer">
+    <header>
+        <div class="brand"><img src="logo.png" alt="Logo" class="logo-img"><div class="brand-text">BT YÖNETİM</div></div>
+        <div class="nav-wrapper">
+            <div class="nav-pills">
+                <button class="nav-btn active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</button>
+                <button class="nav-btn" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i> Takvim</button>
+                <button class="nav-btn" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
+                <button class="nav-btn" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
+            </div>
+        </div>
+        <div class="user-area">
+            <button class="mobile-filter-btn" onclick="toggleFilter()"><i class="fa-solid fa-filter"></i></button>
+            <div class="user-info"><div id="displayUserName"></div><span class="user-role" id="displayUserRole">Yetkili</span></div>
+            <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+            <button class="btn-icon btn-logout" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
+            <button class="btn-grad" onclick="newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">Yeni</span></button>
+        </div>
+    </header>
+
+    <div id="filterPanel" class="filter-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:800; font-size:16px;">Filtrele</span><span style="cursor:pointer; padding:5px;" onclick="toggleFilter()">✕</span>
+        </div>
+        <div class="frm-grp"><span class="frm-lbl">Ara</span><input type="text" id="fltText" class="frm-inp" placeholder="Kelime..."></div>
+        <div class="frm-grp"><span class="frm-lbl">Konu</span><select id="fltTopic" class="frm-inp"></select></div>
+        <div class="frm-grp"><span class="frm-lbl">Atanan</span><select id="fltAssignee" class="frm-inp"></select></div>
+        <div style="display:flex; gap:12px; margin-top:10px;">
+            <button class="btn-grad" style="flex:1; justify-content:center;" onclick="applyFilter()">Uygula</button>
+            <button class="q-btn" style="flex:1; text-align:center; background:#fee2e2; color:#ef4444;" onclick="clearFilter()">Temizle</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="view-dashboard" class="view-section dash-container">
+            <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
+                <button class="btn-grad" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel İndir</button>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#0099d8" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:24px;">
+                <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
+                <div class="chart-wrapper"><canvas id="chartUser"></canvas></div>
+            </div>
+        </div>
+
+        <div id="view-kanban" class="view-section active">
+            <div class="greeting-card">
+                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p></div>
+                <div class="greeting-icon" id="greetingIcon">⛅</div>
+            </div>
+
+            <div class="kanban-container">
+                <div class="k-col" id="col-todo">
+                    <div class="k-header">Bekleyenler <span class="badge-count" id="cnt-todo">0</span></div>
+                    <div class="k-list" id="lst-todo" data-status="todo"></div>
+                </div>
+                <div class="k-col" id="col-progress">
+                    <div class="k-header" style="color:var(--primary)">İşlemde <span class="badge-count" id="cnt-progress">0</span></div>
+                    <div class="k-list" id="lst-progress" data-status="progress"></div>
+                </div>
+                <div class="k-col" id="col-done">
+                    <div class="k-header" style="color:#10b981">Bitenler <span class="badge-count" id="cnt-done">0</span></div>
+                    <div class="k-list" id="lst-done" data-status="done"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-month" class="view-section">
+            <div class="calendar-wrapper">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                    <button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div style="font-size:20px; font-weight:800; letter-spacing:-0.03em;" id="calTitle"></div>
+                    <button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+            </div>
+        </div>
+
+        <div id="view-agenda" class="view-section">
+            <div class="calendar-wrapper">
+                <div class="m-title" style="margin-bottom:24px;" id="agendaTitle">Haftalık Liste</div>
+                <div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <button class="b-nav-item active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
+        <button class="b-nav-item" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i><span>Takvim</span></button>
+        <button class="b-nav-item" onclick="newTask()"><div style="background:var(--primary-grad); width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; color:white; margin-top:-24px; box-shadow:0 8px 20px rgba(0,153,216,0.4);"><i class="fa-solid fa-plus" style="font-size:20px;"></i></div></button>
+        <button class="b-nav-item" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i><span>Liste</span></button>
+        <button class="b-nav-item" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Rapor</span></button>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-box">
+        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title">Görev Detayı</span><span id="tCodeDisplay" style="background:var(--bg-col); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:800; color:var(--text-sec);"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
+        <div class="m-body">
+            <input type="hidden" id="tId"><input type="hidden" id="tCode">
+            <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp"></select></div>
+            <div class="frm-grp"><span class="frm-lbl">Durum</span><select id="tStatus" class="frm-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
+            <div class="frm-grp"><span class="frm-lbl">Öncelik</span><select id="tPriority" class="frm-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
+            <div class="frm-grp"><span class="frm-lbl">Sorumlu Kişi</span><select id="tAssignee" class="frm-inp"></select></div>
+            <div class="frm-grp"><span class="frm-lbl">Hedef Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
+            <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="4"></textarea></div>
+            <div class="frm-grp span-full" style="background:var(--bg-col); padding:16px; border-radius:16px; border:2px dashed var(--border); text-align:center;">
+                <span class="frm-lbl">Ek Dosya</span><input type="file" id="tFile" style="display:none;" onchange="document.getElementById('fileName').innerText = this.files[0].name">
+                <label for="tFile" class="q-btn" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:8px 16px;"><i class="fa-solid fa-cloud-upload"></i> Dosya Seç</label>
+                <div id="fileName" style="margin-top:6px; font-size:12px; color:var(--text-sec); font-weight:500;"></div><span id="uploadStatus" class="loading">Yükleniyor...</span>
+                <a id="tFileLink" href="#" target="_blank" class="btn-grad hidden" style="margin:10px auto 0; width:fit-content; padding:8px 16px;">Dosyayı İndir</a>
+            </div>
+            <div class="frm-grp span-full comments-section">
+                <span class="frm-lbl">Notlar & Tarihçe</span><div id="commentList" style="max-height:150px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
+                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 20px;" onclick="addComment()">Gönder</button></div>
+            </div>
+        </div>
+        <div class="m-foot"><button class="q-btn admin-only" style="color:#ef4444; background:#fef2f2;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button><button class="btn-grad" onclick="saveTask()" id="btnSave">Kaydet</button></div>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    /* CACHE KILLER */
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(r => r.forEach(reg => reg.unregister())); }
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s",
+        authDomain: "it-tasks-bc974.firebaseapp.com",
+        projectId: "it-tasks-bc974",
+        storageBucket: "it-tasks-bc974.firebasestorage.app",
+        messagingSenderId: "978679373454",
+        appId: "1:978679373454:web:3ee1c689cf1ca321af33df",
+        measurementId: "G-S88XX2L83L"
+    };
+
+    let app, db, storage, auth;
+    try { app = initializeApp(firebaseConfig); db = getFirestore(app); storage = getStorage(app); auth = getAuth(app); } catch (e) {}
+
+    const USER_MAP = {
+        "cengiz.gulcan@halkfaktoring.com.tr": { name: "Cengiz GÜLCAN", role: "admin" },
+        "enis@hf.com": { name: "Enis BİRCAN", role: "user" },
+        "cagri@hf.com": { name: "Çağrı Can DÜNDAR", role: "user" }
+    };
+    const USERS = Object.values(USER_MAP).map(u => u.name);
+    const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank"];
+    let allTasks = []; let calDate = new Date(); let currentMode = 'kanban';
+    let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '', text: '' };
+    let currentUser = null; let chartStatusInst = null; let chartUserInst = null;
+
+    window.showToast = function(msg, type='success') {
+        const c = document.getElementById('toast-container'); const t = document.createElement('div');
+        t.className = `toast ${type}`; t.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-circle-exclamation'}"></i> <span>${msg}</span>`;
+        c.appendChild(t); setTimeout(() => { t.style.animation='slideOut 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards'; setTimeout(()=>t.remove(), 300); }, 3000);
+    }
+    
+    function getAvatar(name) {
+        if(!name) return '<div class="avatar" style="background:#cbd5e1; color:#64748b">?</div>';
+        const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+        const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#6366f1'];
+        return `<div class="avatar" style="background:${colors[name.length%colors.length]}">${initials}</div>`;
+    }
+    function getEmptyState() { return `<div style="text-align:center; padding:40px; color:var(--text-sec); opacity:0.6;"><i class="fa-solid fa-clipboard-check" style="font-size:30px; margin-bottom:10px; display:block;"></i>Görev Yok</div>`; }
+
+    function renderSkeletons() {
+        const skHtml = '<div class="skeleton sk-card"><div class="skeleton sk-line"></div><div class="skeleton sk-line short"></div></div>'.repeat(3);
+        ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
+    }
+
+    function updateGreeting() {
+        if(!currentUser) return;
+        const h = new Date().getHours();
+        let msg = "Merhaba", sub = "Bugün neler yapıyoruz?", icon = "☀️";
+        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Kahveler hazır, sistemler açık mı? ☕"; icon = "🌅"; }
+        else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Projeler hızla ilerliyor! 🚀"; icon = "☀️"; }
+        else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]} Bey`; sub = "Günü harika yönettiniz. 🌙"; icon = "✨"; }
+        document.getElementById('greetingMsg').innerText = msg;
+        document.getElementById('greetingSub').innerText = sub;
+        document.getElementById('greetingIcon').innerText = icon;
+    }
+
+    function fireConfetti() {
+        const count = 200; const defaults = { origin: { y: 0.7 } };
+        function fire(particleRatio, opts) { confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) })); }
+        fire(0.25, { spread: 26, startVelocity: 55 }); fire(0.2, { spread: 60 });
+        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 }); fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+        fire(0.1, { spread: 120, startVelocity: 45 });
+    }
+
+    window.initApp = function() {
+        loadTheme(); initSelects(); renderSkeletons();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uData = USER_MAP[user.email] || { name: user.email, role: "user" };
+                currentUser = { ...user, ...uData };
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('appContainer').style.visibility = 'visible';
+                document.getElementById('appContainer').style.opacity = '1';
+                document.getElementById('displayUserName').innerText = uData.name;
+                document.getElementById('displayUserRole').innerText = uData.role === 'admin' ? 'Yönetici' : 'BT Uzmanı';
+                if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
+                updateGreeting();
+                listenTasks();
+                initSortable();
+                if(currentMode === 'dashboard') renderDashboard(allTasks);
+            } else {
+                document.getElementById('appContainer').style.visibility = 'hidden';
+                document.getElementById('appContainer').style.opacity = '0';
+                document.getElementById('loginOverlay').style.display = 'flex';
+                currentUser = null;
+            }
+        });
+    }
+
+    function initSortable() {
+        ['lst-todo', 'lst-progress', 'lst-done'].forEach(id => {
+            new Sortable(document.getElementById(id), {
+                group: 'shared', animation: 150, ghostClass: 'sortable-ghost', dragClass: 'sortable-drag', delay: 200, delayOnTouchOnly: true,
+                onEnd: async function (evt) {
+                    if (evt.to !== evt.from) {
+                        await updateDoc(doc(db, "tasks", evt.item.getAttribute('data-id')), { status: evt.to.getAttribute('data-status') });
+                        if(evt.to.getAttribute('data-status') === 'done') { fireConfetti(); showToast("Tebrikler! Görev tamamlandı.", "success"); } else { showToast("Görev taşındı"); }
+                    }
+                }
+            });
+        });
+    }
+
+    window.login = function() {
+        const e = document.getElementById('email').value;
+        const p = document.getElementById('password').value;
+        signInWithEmailAndPassword(auth, e, p).catch(() => document.getElementById('loginError').innerText = "Hatalı e-posta veya şifre!");
+    }
+    window.logout = function() { signOut(auth).then(() => window.location.reload()); }
+    window.loadTheme = function() { if(localStorage.getItem('btTheme') === 'dark') document.body.setAttribute('data-theme', 'dark'); }
+    window.toggleTheme = function() { 
+        const isDark = !document.body.getAttribute('data-theme');
+        document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('btTheme', isDark ? 'dark' : 'light');
+    }
+
+    function initSelects() {
+        const uOpts = '<option value="">Seçiniz</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
+        const fOpts = '<option value="">Tümü</option>' + USERS.map(u => `<option value="${u}">${u}</option>`).join('');
+        document.getElementById('tAssignee').innerHTML = uOpts;
+        document.getElementById('fltAssignee').innerHTML = fOpts;
+        const tOpts = '<option value="">Seçiniz</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('fltTopic').innerHTML = '<option value="">Tümü</option>' + TOPICS.map(t => `<option value="${t}">${t}</option>`).join('');
+        document.getElementById('tTitle').innerHTML = tOpts;
+    }
+
+    function listenTasks() {
+        if(!db) return;
+        const q = query(collection(db, "tasks"), orderBy("code", "desc"));
+        onSnapshot(q, (snapshot) => { allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderAll(); });
+    }
+
+    function renderAll() {
+        let tasks = [...allTasks];
+        if(filterConfig.active) {
+            if(filterConfig.text) { const txt = filterConfig.text.toLowerCase(); tasks = tasks.filter(t => (t.title && t.title.toLowerCase().includes(txt)) || (t.desc && t.desc.toLowerCase().includes(txt)) || (t.code && t.code.toLowerCase().includes(txt))); }
+            if(filterConfig.topic) tasks = tasks.filter(t => t.title === filterConfig.topic);
+            if(filterConfig.assignee) tasks = tasks.filter(t => t.assignee === filterConfig.assignee);
+        }
+        if(currentMode==='kanban') renderKanban(tasks);
+        else if(currentMode==='month') renderCalendar(tasks);
+        else if(currentMode==='dashboard') renderDashboard(tasks);
+        else renderAgenda(tasks);
+    }
+
+    function renderDashboard(tasks) {
+        const counts = { todo: 0, progress: 0, done: 0 };
+        const userCounts = {};
+        USERS.forEach(u => userCounts[u] = 0);
+        tasks.forEach(t => { if(counts[t.status] !== undefined) counts[t.status]++; if(t.assignee && userCounts[t.assignee] !== undefined) userCounts[t.assignee]++; });
+        document.getElementById('dTotal').innerText = tasks.length; document.getElementById('dTodo').innerText = counts.todo; document.getElementById('dProg').innerText = counts.progress; document.getElementById('dDone').innerText = counts.done;
+        
+        const commonOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } };
+        
+        if(chartStatusInst) chartStatusInst.destroy();
+        chartStatusInst = new Chart(document.getElementById('chartStatus').getContext('2d'), { 
+            type: 'doughnut', 
+            data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: ['#f59e0b', '#0ea5e9', '#10b981'], borderWidth:0 }] }, 
+            options: { ...commonOpts, cutout: '70%' } 
+        });
+        
+        if(chartUserInst) chartUserInst.destroy();
+        chartUserInst = new Chart(document.getElementById('chartUser').getContext('2d'), { 
+            type: 'bar', 
+            data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: '#0099d8', borderRadius: 8 }] }, 
+            options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } 
+        });
+    }
+
+    function renderKanban(tasks) {
+        const cols = { todo: document.getElementById('lst-todo'), progress: document.getElementById('lst-progress'), done: document.getElementById('lst-done') };
+        const counts = { todo: 0, progress: 0, done: 0 }; Object.values(cols).forEach(c => c.innerHTML = '');
+        tasks.forEach(t => {
+            if(cols[t.status]) {
+                counts[t.status]++;
+                const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
+                const card = document.createElement('div'); 
+                card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); card.onclick = () => openModal(t.id);
+                card.innerHTML = `<div class="c-top"><span class="badge badge-${t.priority}">${t.priority}</span> <span class="c-id">${t.code}</span></div><div class="c-title">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
+                cols[t.status].appendChild(card);
+            }
+        });
+        Object.keys(cols).forEach(key => { if(cols[key].children.length === 0) cols[key].innerHTML = getEmptyState(); });
+        document.getElementById('cnt-todo').innerText = counts.todo; document.getElementById('cnt-progress').innerText = counts.progress; document.getElementById('cnt-done').innerText = counts.done;
+    }
+
+    function renderCalendar(tasks) {
+        const grid = document.getElementById('calGrid');
+        grid.innerHTML = '';
+        ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].forEach(d => grid.innerHTML += `<div style="text-align:center;font-weight:700;font-size:12px; color:var(--text-sec); padding:10px 0;">${d}</div>`);
+        const y = calDate.getFullYear(); const m = calDate.getMonth();
+        document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
+        const firstDay = new Date(y, m, 1).getDay(); const offset = firstDay === 0 ? 6 : firstDay - 1; const daysInMonth = new Date(y, m + 1, 0).getDate();
+        for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
+        const todayStr = new Date().toLocaleDateString('en-CA');
+        for(let i=1; i<=daysInMonth; i++) {
+            const mStr = String(m + 1).padStart(2, '0'); const dStr = String(i).padStart(2, '0'); const fullDate = `${y}-${mStr}-${dStr}`;
+            const dayTasks = tasks.filter(t => t.date === fullDate);
+            let html = '';
+            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0ea5e9':'#f59e0b'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.title.substring(0,10)}..</div>`; });
+            const isToday = fullDate === todayStr ? 'today' : ''; grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:700; margin-bottom:4px;">${i}</div>${html}</div>`;
+        }
+    }
+
+    function renderAgenda(tasks) {
+        const container = document.getElementById('agendaList');
+        container.innerHTML = '';
+        const sorted = tasks.sort((a,b) => new Date(b.date) - new Date(a.date));
+        sorted.forEach(t => {
+             const c = t.status==='done'?'#10b981':(t.status==='progress'?'#0ea5e9':'#f59e0b');
+             const row = document.createElement('div');
+             row.style = `background:var(--bg-card); padding:18px; border-radius:16px; border-left:5px solid ${c}; box-shadow:var(--shadow-sm); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:4px;`;
+             row.onclick = () => openModal(t.id);
+             row.innerHTML = `<div><div style="font-weight:700; color:var(--text-main); font-size:15px;">${t.code} - ${t.title}</div><div style="font-size:12px; color:var(--text-sec); margin-top:4px;">${t.date} | ${t.assignee}</div></div><div class="badge badge-${t.priority}">${t.priority}</div>`;
+             container.appendChild(row);
+        });
+    }
+
+    window.saveTask = async function() {
+        const btnSave = document.getElementById('btnSave');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const id = document.getElementById('tId').value;
+        const title = document.getElementById('tTitle').value;
+        if(!title) { showToast('Konu seçiniz!','error'); return; }
+
+        btnSave.disabled = true; btnSave.innerText = "Kaydediliyor...";
+        const fileIn = document.getElementById('tFile');
+        let downloadUrl = null;
+
+        if (fileIn.files.length > 0) {
+            const file = fileIn.files[0];
+            uploadStatus.style.display = 'inline-block';
+            try {
+                const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
+                await uploadBytes(storageRef, file);
+                downloadUrl = await getDownloadURL(storageRef);
+            } catch (err) { showToast("Dosya yüklenemedi!", 'error'); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
+        }
+
+        const data = {
+            title: title, status: document.getElementById('tStatus').value,
+            priority: document.getElementById('tPriority').value,
+            assignee: document.getElementById('tAssignee').value,
+            date: document.getElementById('tDate').value,
+            desc: document.getElementById('tDesc').value
+        };
+        if (downloadUrl) data.fileUrl = downloadUrl;
+
+        try {
+            if(id) { await updateDoc(doc(db, "tasks", id), data); showToast("Kayıt güncellendi"); }
+            else {
+                await runTransaction(db, async (transaction) => {
+                    const metaRef = doc(db, "meta", "counters");
+                    const metaDoc = await transaction.get(metaRef);
+                    let newSeq = 1;
+                    if(metaDoc.exists()) newSeq = metaDoc.data().taskSeq + 1;
+                    transaction.set(metaRef, { taskSeq: newSeq }, { merge: true });
+                    const newTaskRef = doc(collection(db, "tasks"));
+                    const newTaskData = { ...data, code: 'GRV-' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' };
+                    transaction.set(newTaskRef, newTaskData);
+                });
+                showToast("Yeni görev oluşturuldu");
+            }
+            closeModal();
+        } catch(e) { console.error(e); showToast("Hata oluştu!", 'error'); }
+        btnSave.disabled = false; btnSave.innerText = "Kaydet"; uploadStatus.style.display = 'none';
+    }
+
+    window.delTask = async function() {
+        if (!currentUser || currentUser.role !== 'admin') { showToast("Yetkiniz yok!", 'error'); return; }
+        if(confirm('Silmek istiyor musunuz?')) { 
+            await deleteDoc(doc(db, "tasks", document.getElementById('tId').value)); 
+            closeModal(); showToast("Görev silindi", 'success');
+        }
+    }
+
+    window.newTask = function() { 
+        if(!currentUser) { showToast("Lütfen giriş yapın!", 'error'); return; } 
+        document.getElementById('tId').value = ''; document.getElementById('tCode').value = 'YENİ'; document.getElementById('tCodeDisplay').innerText = 'YENİ';
+        document.getElementById('tTitle').value = ''; document.getElementById('tStatus').value = 'todo'; 
+        document.getElementById('tAssignee').value = ''; document.getElementById('tDate').value = new Date().toLocaleDateString('en-CA'); 
+        document.getElementById('tDesc').value = ''; document.getElementById('commentList').innerHTML = ''; 
+        document.getElementById('modal').classList.add('show'); document.getElementById('modal').style.display = 'flex'; 
+    }
+    window.openModal = function(id) { 
+        const t = allTasks.find(x => x.id === id); if(!t) return; 
+        document.getElementById('tId').value = t.id; document.getElementById('tCode').value = t.code; document.getElementById('tCodeDisplay').innerText = t.code;
+        document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; 
+        document.getElementById('tPriority').value = t.priority; document.getElementById('tAssignee').value = t.assignee; 
+        document.getElementById('tDate').value = t.date; document.getElementById('tDesc').value = t.desc; 
+        const l = document.getElementById('tFileLink'); if(t.fileUrl) { l.href = t.fileUrl; l.classList.remove('hidden'); } else l.classList.add('hidden'); 
+        renderComments(t.history); 
+        document.getElementById('modal').style.display = 'flex'; setTimeout(()=>document.getElementById('modal').classList.add('show'), 10);
+    }
+    window.closeModal = function() { document.getElementById('modal').classList.remove('show'); setTimeout(()=>document.getElementById('modal').style.display = 'none', 300); }
+    window.toggleFilter = function() { const p = document.getElementById('filterPanel'); p.style.display = p.style.display==='flex'?'none':'flex'; }
+    window.applyFilter = function() { filterConfig.text = document.getElementById('fltText').value; filterConfig.topic = document.getElementById('fltTopic').value; filterConfig.assignee = document.getElementById('fltAssignee').value; filterConfig.active = true; renderAll(); document.getElementById('filterPanel').style.display='none'; }
+    window.clearFilter = function() { document.getElementById('fltText').value = ''; document.getElementById('fltTopic').value = ''; document.getElementById('fltAssignee').value = ''; filterConfig = {active:false}; renderAll(); document.getElementById('filterPanel').style.display='none'; }
+    window.showView = function(mode, btn) { 
+        currentMode = mode; 
+        document.querySelectorAll('.nav-btn, .b-nav-item').forEach(b => b.classList.remove('active')); 
+        if(btn) btn.classList.add('active'); 
+        document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active')); 
+        document.getElementById('view-'+mode).classList.add('active');
+        renderAll();
+    }
+    window.navMonth = function(d) { calDate.setMonth(calDate.getMonth()+d); renderCalendar(allTasks); }
+    window.addComment = async function() { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(!txt || !id) return; const t = allTasks.find(x => x.id == id); const h = t.history || []; h.push({ user: currentUser.name, text: txt, date: new Date().toLocaleString('tr-TR') }); await updateDoc(doc(db, "tasks", id), { history: h }); document.getElementById('newComment').value = ''; openModal(id); }
+    function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.reverse().forEach(h => { list.innerHTML += `<div style="background:white; padding:12px; border-radius:12px; border:1px solid var(--border); font-size:13px; box-shadow:var(--shadow-sm);"><div style="font-weight:700; color:var(--primary); font-size:11px; display:flex; justify-content:space-between; margin-bottom:4px;"><span>${h.user}</span> <span>${h.date}</span></div><div>${h.text}</div></div>`; }); }
+    window.exportExcel = function() { const rows = allTasks.map(t => ({ "Kod": t.code, "Konu": t.title, "Durum": t.status, "Öncelik": t.priority, "Sorumlu": t.assignee, "Tarih": t.date, "Açıklama": t.desc })); const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Görevler"); XLSX.writeFile(wb, "BT_Gorevler.xlsx"); }
+</script>
+</body>
+</html>
