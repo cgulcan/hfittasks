@@ -28,7 +28,7 @@
     
     <style>
         :root {
-            /* V4 ULTRA PREMIUM PALET */
+            /* V4.1 PALET */
             --primary-grad: linear-gradient(135deg, #0099d8 0%, #0284c7 100%);
             --primary: #0099d8; 
             --primary-soft: rgba(0, 153, 216, 0.08);
@@ -68,44 +68,32 @@
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); margin: 0; padding: 0; color: var(--text-main); height: 100vh; display: flex; flex-direction: column; font-size: 14px; overflow: hidden; letter-spacing: 0.01em; }
 
-        /* TYPOGRAPHY */
         h1, h2, h3, .brand-text, .stat-num, .m-title, .greeting-title { letter-spacing: -0.03em; }
         p, .c-desc { line-height: 1.6; }
 
-        /* --- SKELETON LOADING (İskelet Animasyonu) --- */
-        .skeleton {
-            background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-        }
+        /* SKELETON */
+        .skeleton { background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .sk-card { padding: 15px; background: var(--bg-card); border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); height: 100px; }
         .sk-line { height: 10px; width: 60%; margin-bottom: 8px; border-radius: 4px; }
         .sk-line.short { width: 40%; }
-        .sk-line.long { width: 90%; }
 
-        /* --- HEADER --- */
+        /* LAYOUT COMPONENTS */
         header { 
-            background-color: var(--bg-glass); 
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            padding: 0 24px; height: 72px; 
-            display: flex; align-items: center; justify-content: space-between; 
-            border-bottom: 1px solid var(--border); 
-            flex-shrink: 0; z-index: 50; position: relative;
+            background-color: var(--bg-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; 
+            border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 50; position: relative;
         }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { height: 42px; width: 42px; object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm); background: white; padding: 4px; }
         .brand-text { font-size: 18px; font-weight: 800; color: var(--text-main); }
 
-        /* --- NAV PILLS --- */
         .nav-wrapper { flex: 1; display: flex; justify-content: center; }
         .nav-pills { display: inline-flex; background: var(--bg-col); padding: 5px; border-radius: 18px; gap: 4px; border: 1px solid var(--border); }
         .nav-btn { color: var(--text-sec); padding: 9px 18px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
         .nav-btn:hover { color: var(--primary); background: rgba(0,0,0,0.03); }
         .nav-btn.active { background: var(--primary-grad); color: white; box-shadow: var(--glow-primary); transform: translateY(-1px); }
 
-        /* --- USER AREA --- */
         .user-area { display: flex; align-items: center; gap: 12px; }
         .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; }
         .user-role { font-size: 11px; color: var(--text-sec); font-weight: 500; display: block; }
@@ -114,9 +102,9 @@
         .btn-grad { background: var(--primary-grad); color: white; border: none; padding: 10px 22px; border-radius: 14px; font-weight: 600; cursor: pointer; font-size: 13px; box-shadow: var(--glow-primary); transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; }
         .btn-grad:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 153, 216, 0.4); }
 
-        /* --- SMART GREETING (Yeni) --- */
+        /* GREETING (ANA EKRAN) */
         .greeting-card {
-            background: var(--bg-card); padding: 24px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 24px;
+            background: var(--bg-card); padding: 24px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 24px; flex-shrink: 0;
             display: flex; justify-content: space-between; align-items: center;
             background-image: linear-gradient(to right, var(--bg-card), var(--primary-soft));
         }
@@ -124,8 +112,8 @@
         .greeting-text p { margin: 5px 0 0 0; color: var(--text-sec); font-size: 14px; }
         .greeting-icon { font-size: 40px; }
 
-        /* --- KANBAN & DRAG DROP --- */
-        .kanban-container { display: flex; gap: 24px; height: 100%; overflow-x: auto; padding-bottom: 10px; align-items: flex-start; }
+        /* KANBAN */
+        .kanban-container { display: flex; gap: 24px; overflow-x: auto; align-items: flex-start; flex: 1; padding-bottom: 10px; }
         .k-col { flex: 1; min-width: 320px; max-width: 420px; background: var(--bg-col); border-radius: 20px; display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--border); height: 100%; }
         #col-todo { border-top: 4px solid var(--todo-line); }
         #col-progress { border-top: 4px solid var(--prog-line); }
@@ -134,24 +122,19 @@
         .badge-count { background: var(--bg-card); padding: 3px 10px; border-radius: 12px; font-size: 11px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
         .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 16px; padding-bottom: 20px; min-height: 100px; }
 
-        /* Sortable Ghost Class (Sürüklerken oluşan görüntü) */
         .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
         .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05); box-shadow: var(--shadow-float); }
 
-        /* --- TASK CARDS --- */
         .task-card { 
             background: var(--bg-card); border-radius: 18px; padding: 18px; 
             box-shadow: var(--shadow-sm); border: 1px solid var(--border); 
             cursor: grab; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
             position: relative; overflow: hidden; user-select: none;
         }
-        .task-card:active { cursor: grabbing; }
         .task-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); border-color: var(--primary); }
         .task-card::after { content: ''; position: absolute; left: 0; top: 15px; bottom: 15px; width: 4px; border-radius: 0 4px 4px 0; }
-        .p-Yüksek::after { background: #ef4444; } 
-        .p-Orta::after { background: #f59e0b; } 
-        .p-Düşük::after { background: #10b981; }
-
+        .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
+        
         .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; padding-left: 10px; }
         .c-id { background: var(--bg-col); padding: 4px 8px; border-radius: 6px; font-weight: 700; color: var(--text-sec); font-size: 10px; letter-spacing: 0.5px; }
         .c-title { font-weight: 700; font-size: 15px; color: var(--text-main); line-height: 1.4; margin-bottom: 8px; padding-left: 10px; }
@@ -159,18 +142,10 @@
         .c-meta { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; padding-left: 10px; }
         .c-assignee { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-main); }
 
-        /* --- LOGIN & LAYOUT --- */
-        #loginOverlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; 
-            display: flex; align-items: center; justify-content: center; 
-            background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; 
-            background-size: cover;
-        }
+        /* VIEW & LAYOUT */
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; display: flex; align-items: center; justify-content: center; background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; }
         #loginOverlay::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); }
-        .login-card { 
-            position: relative; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 40px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.4); 
-        }
+        .login-card { position: relative; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.4); }
         .login-input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 14px; background: rgba(255,255,255,0.8); color: #1e293b; font-size: 15px; transition: 0.3s; }
         .login-input:focus { border-color: #0099d8; box-shadow: 0 0 0 4px rgba(0, 153, 216, 0.2); background: white; }
 
@@ -188,10 +163,9 @@
         .stat-icon-bg { position: absolute; right: -15px; bottom: -15px; font-size: 90px; opacity: 0.06; transform: rotate(-15deg); color: var(--text-main); pointer-events: none; }
         .chart-wrapper { background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border); height: 380px; margin-bottom: 24px; box-shadow: var(--shadow-card); }
 
-        /* --- MODALS & EXTRAS --- */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
         .modal.show { opacity: 1; }
-        .modal-box { background: var(--bg-card); width: 750px; max-height: 85vh; border-radius: 28px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; overflow: hidden; transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .modal-box { background: var(--bg-card); width: 750px; max-height: 85vh; border-radius: 28px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; overflow: hidden; transform: scale(0.95); transition: transform 0.3s; }
         .modal.show .modal-box { transform: scale(1); }
         .m-head { padding: 20px 30px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--bg-glass); }
         .m-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -199,32 +173,32 @@
         .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-sec); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
         .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--bg-body); color: var(--text-main); transition: 0.2s; }
         .span-full { grid-column: span 2; }
+        .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
 
         .avatar { width: 30px; height: 30px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
         .badge { padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
         .badge-Yüksek { background: #fef2f2; color: #ef4444; border: 1px solid #fee2e2; }
         .badge-Orta { background: #fffbeb; color: #f59e0b; border: 1px solid #fef3c7; }
         .badge-Düşük { background: #ecfdf5; color: #10b981; border: 1px solid #d1fae5; }
-        
-        .bottom-nav { display: none; }
-        .mobile-filter-btn { display: none; }
+
         .hidden { display: none !important; } .admin-only { display: none; }
         .filter-panel { position: absolute; top: 80px; right: 24px; width: 320px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-float); z-index: 40; display: none; flex-direction: column; gap: 16px; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        
         #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
-        .toast { pointer-events: auto; background: var(--bg-card); color: var(--text-main); padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow-float); border-left: 5px solid; min-width: 320px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); font-weight: 600; font-size: 14px; backdrop-filter: blur(10px); }
+        .toast { pointer-events: auto; background: var(--bg-card); color: var(--text-main); padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow-float); border-left: 5px solid; min-width: 320px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s ease; font-weight: 600; font-size: 14px; backdrop-filter: blur(10px); }
         .toast.success { border-color: #10b981; } .toast.success i { color: #10b981; font-size: 18px; }
         .toast.error { border-color: #ef4444; } .toast.error i { color: #ef4444; font-size: 18px; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* CALENDAR */
         .calendar-wrapper { background: var(--bg-card); border-radius: 24px; padding: 24px; border: 1px solid var(--border); height: 100%; display: flex; flex-direction: column; box-shadow: var(--shadow-card); }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
         .cal-cell { background: var(--bg-card); min-height: 90px; padding: 10px; font-size: 13px; font-weight: 500; }
         .cal-cell.today { background: var(--primary-soft); }
         .cal-task { background: var(--primary); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        
+        .bottom-nav { display: none; }
+        .mobile-filter-btn { display: none; }
 
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
@@ -296,11 +270,6 @@
 
     <div class="main-content">
         <div id="view-dashboard" class="view-section dash-container">
-            <div class="greeting-card">
-                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p></div>
-                <div class="greeting-icon" id="greetingIcon">⛅</div>
-            </div>
-            
             <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
                 <button class="btn-grad" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel İndir</button>
             </div>
@@ -317,6 +286,11 @@
         </div>
 
         <div id="view-kanban" class="view-section active">
+            <div class="greeting-card">
+                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p></div>
+                <div class="greeting-icon" id="greetingIcon">⛅</div>
+            </div>
+
             <div class="kanban-container">
                 <div class="k-col" id="col-todo">
                     <div class="k-header">Bekleyenler <span class="badge-count" id="cnt-todo">0</span></div>
@@ -434,13 +408,11 @@
     }
     function getEmptyState() { return `<div style="text-align:center; padding:40px; color:var(--text-sec); opacity:0.6;"><i class="fa-solid fa-clipboard-check" style="font-size:30px; margin-bottom:10px; display:block;"></i>Görev Yok</div>`; }
 
-    // --- SKELETON RENDER ---
     function renderSkeletons() {
         const skHtml = '<div class="skeleton sk-card"><div class="skeleton sk-line"></div><div class="skeleton sk-line short"></div></div>'.repeat(3);
         ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
     }
 
-    // --- SMART GREETING ---
     function updateGreeting() {
         if(!currentUser) return;
         const h = new Date().getHours();
@@ -453,17 +425,11 @@
         document.getElementById('greetingIcon').innerText = icon;
     }
 
-    // --- KONFETİ PATLAMASI ---
     function fireConfetti() {
-        const count = 200;
-        const defaults = { origin: { y: 0.7 } };
-        function fire(particleRatio, opts) {
-            confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) }));
-        }
-        fire(0.25, { spread: 26, startVelocity: 55 });
-        fire(0.2, { spread: 60 });
-        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+        const count = 200; const defaults = { origin: { y: 0.7 } };
+        function fire(particleRatio, opts) { confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) })); }
+        fire(0.25, { spread: 26, startVelocity: 55 }); fire(0.2, { spread: 60 });
+        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 }); fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
         fire(0.1, { spread: 120, startVelocity: 45 });
     }
 
@@ -481,7 +447,7 @@
                 if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
                 updateGreeting();
                 listenTasks();
-                initSortable(); // Sürükle Bırak Başlat
+                initSortable();
                 if(currentMode === 'dashboard') renderDashboard(allTasks);
             } else {
                 document.getElementById('appContainer').style.visibility = 'hidden';
@@ -492,28 +458,14 @@
         });
     }
 
-    // --- DRAG & DROP INIT (SortableJS) ---
     function initSortable() {
         ['lst-todo', 'lst-progress', 'lst-done'].forEach(id => {
-            const el = document.getElementById(id);
-            new Sortable(el, {
-                group: 'shared', // Listeler arası geçiş için
-                animation: 150,
-                ghostClass: 'sortable-ghost',
-                dragClass: 'sortable-drag',
-                delay: 200, // Mobil için yanlışlıkla sürüklemeyi önler
-                delayOnTouchOnly: true,
+            new Sortable(document.getElementById(id), {
+                group: 'shared', animation: 150, ghostClass: 'sortable-ghost', dragClass: 'sortable-drag', delay: 200, delayOnTouchOnly: true,
                 onEnd: async function (evt) {
-                    const itemEl = evt.item;
-                    const newStatus = evt.to.getAttribute('data-status'); // todo, progress, done
-                    const taskId = itemEl.getAttribute('data-id');
-                    
                     if (evt.to !== evt.from) {
-                        // Firebase Update
-                        await updateDoc(doc(db, "tasks", taskId), { status: newStatus });
-                        // Eğer Bitenlere atıldıysa Konfeti patlat
-                        if(newStatus === 'done') { fireConfetti(); showToast("Tebrikler! Görev tamamlandı.", "success"); }
-                        else { showToast("Görev taşındı"); }
+                        await updateDoc(doc(db, "tasks", evt.item.getAttribute('data-id')), { status: evt.to.getAttribute('data-status') });
+                        if(evt.to.getAttribute('data-status') === 'done') { fireConfetti(); showToast("Tebrikler! Görev tamamlandı.", "success"); } else { showToast("Görev taşındı"); }
                     }
                 }
             });
@@ -593,20 +545,9 @@
             if(cols[t.status]) {
                 counts[t.status]++;
                 const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
-                
-                // data-id attribütü sürükle bırak için kritik
                 const card = document.createElement('div'); 
-                card.className = `task-card p-${t.priority}`; 
-                card.setAttribute('data-id', t.id); // ID'yi karta gömüyoruz
-                card.onclick = () => openModal(t.id);
-                
-                card.innerHTML = `
-                    <div class="c-top"><span class="badge badge-${t.priority}">${t.priority}</span> <span class="c-id">${t.code}</span></div>
-                    <div class="c-title">${t.title}</div>
-                    ${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}
-                    <div class="c-meta">
-                        <div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div>
-                    </div>`;
+                card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); card.onclick = () => openModal(t.id);
+                card.innerHTML = `<div class="c-top"><span class="badge badge-${t.priority}">${t.priority}</span> <span class="c-id">${t.code}</span></div><div class="c-title">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
                 cols[t.status].appendChild(card);
             }
         });
@@ -620,23 +561,15 @@
         ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].forEach(d => grid.innerHTML += `<div style="text-align:center;font-weight:700;font-size:12px; color:var(--text-sec); padding:10px 0;">${d}</div>`);
         const y = calDate.getFullYear(); const m = calDate.getMonth();
         document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
-        const firstDay = new Date(y, m, 1).getDay();
-        const offset = firstDay === 0 ? 6 : firstDay - 1;
-        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const firstDay = new Date(y, m, 1).getDay(); const offset = firstDay === 0 ? 6 : firstDay - 1; const daysInMonth = new Date(y, m + 1, 0).getDate();
         for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
         const todayStr = new Date().toLocaleDateString('en-CA');
         for(let i=1; i<=daysInMonth; i++) {
-            const mStr = String(m + 1).padStart(2, '0');
-            const dStr = String(i).padStart(2, '0');
-            const fullDate = `${y}-${mStr}-${dStr}`;
+            const mStr = String(m + 1).padStart(2, '0'); const dStr = String(i).padStart(2, '0'); const fullDate = `${y}-${mStr}-${dStr}`;
             const dayTasks = tasks.filter(t => t.date === fullDate);
             let html = '';
-            dayTasks.forEach(t => {
-                const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0ea5e9':'#f59e0b');
-                html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.title.substring(0,10)}..</div>`;
-            });
-            const isToday = fullDate === todayStr ? 'today' : '';
-            grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:700; margin-bottom:4px;">${i}</div>${html}</div>`;
+            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0ea5e9':'#f59e0b'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.title.substring(0,10)}..</div>`; });
+            const isToday = fullDate === todayStr ? 'today' : ''; grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:700; margin-bottom:4px;">${i}</div>${html}</div>`;
         }
     }
 
