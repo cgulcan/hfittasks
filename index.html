@@ -28,21 +28,19 @@
     
     <style>
         :root {
-            /* V5.0 PLATINUM PALET */
+            /* V5.1 COCKPIT PALET */
             --primary-grad: linear-gradient(135deg, #0099d8 0%, #0284c7 100%);
             --primary: #0099d8; 
             --primary-soft: rgba(0, 153, 216, 0.08);
             
-            --bg-card: rgba(255, 255, 255, 0.95); 
+            --bg-card: rgba(255, 255, 255, 0.90); /* Biraz daha şeffaf */
             --bg-glass: rgba(255, 255, 255, 0.75);
-            --bg-col: rgba(248, 250, 252, 0.8);
+            --bg-col: rgba(248, 250, 252, 0.6); /* Sütunlar daha şeffaf */
             
             --border: rgba(226, 232, 240, 0.8); 
             --text-main: #0f172a; 
             --text-sec: #64748b;
             
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-card: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
             --shadow-float: 0 12px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
             --glow-primary: 0 4px 15px rgba(0, 153, 216, 0.3);
             
@@ -56,28 +54,24 @@
             --primary: #38bdf8; 
             --primary-soft: rgba(56, 189, 248, 0.15);
             
-            --bg-card: #1e293b; 
-            --bg-glass: rgba(30, 41, 59, 0.85);
-            --bg-col: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.85); 
+            --bg-glass: rgba(15, 23, 42, 0.85);
+            --bg-col: rgba(15, 23, 42, 0.6);
             
-            --border: #334155; 
+            --border: rgba(51, 65, 85, 0.8); 
             --text-main: #f1f5f9; 
             --text-sec: #94a3b8;
             
-            --shadow-sm: none;
-            --shadow-card: 0 4px 6px rgba(0,0,0,0.3);
-            --glow-primary: 0 0 25px rgba(56, 189, 248, 0.5);
+            --glow-primary: 0 0 25px rgba(56, 189, 248, 0.4);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         
-        /* CANLI ARKA PLAN & BODY */
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
             height: 100vh; overflow: hidden; letter-spacing: 0.01em;
             background: linear-gradient(-45deg, #f1f5f9, #e0f2fe, #f0f9ff, #eff6ff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
         }
         [data-theme="dark"] body {
             background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #172554);
@@ -85,35 +79,25 @@
         }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* CUSTOM SCROLLBARS (YENİ) */
+        /* SCROLLBARS */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--text-sec); border-radius: 10px; opacity: 0.3; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
-        [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
-        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.03em; }
         p, .c-desc { line-height: 1.6; }
 
-        /* RIPPLE EFFECT (YENİ) */
+        /* RIPPLE */
         .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
         @keyframes ripple { to { transform: scale(4); opacity: 0; } }
-        .btn-grad, .nav-btn, .task-card, .btn-icon { position: relative; overflow: hidden; }
-
-        /* SKELETON */
-        .skeleton { background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .sk-card { padding: 15px; background: var(--bg-card); border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); height: 100px; }
-        .sk-line { height: 10px; width: 60%; margin-bottom: 8px; border-radius: 4px; }
-        .sk-line.short { width: 40%; }
+        .btn-grad, .nav-btn, .task-card { position: relative; overflow: hidden; }
 
         /* HEADER */
         header { 
             background-color: var(--bg-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; 
             border-bottom: 1px solid var(--border); width: 100%; z-index: 50; position: sticky; top: 0; left: 0;
-            transition: background 0.3s;
         }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { height: 42px; width: 42px; object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm); background: white; padding: 4px; }
@@ -128,20 +112,24 @@
         .user-area { display: flex; align-items: center; gap: 12px; }
         .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; }
         .user-role { font-size: 11px; color: var(--text-sec); font-weight: 500; display: block; }
-        .btn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
+        .btn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
         .btn-grad { background: var(--primary-grad); color: white; border: none; padding: 10px 22px; border-radius: 14px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: var(--glow-primary); }
         .btn-grad:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0, 153, 216, 0.5); }
 
-        /* GREETING */
+        /* HUD GREETING CARD (YENİ) */
         .greeting-card {
-            background: var(--bg-card); padding: 20px; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 24px;
+            background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border); margin-bottom: 24px;
             display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
-            background-image: linear-gradient(to right, var(--bg-card), var(--primary-soft));
-            backdrop-filter: blur(10px);
+            background-image: linear-gradient(120deg, rgba(255,255,255,0) 30%, var(--primary-soft) 100%);
+            backdrop-filter: blur(10px); box-shadow: var(--shadow-float);
         }
-        .greeting-text h2 { margin: 0; font-size: 20px; color: var(--text-main); }
-        .greeting-text p { margin: 4px 0 0 0; color: var(--text-sec); font-size: 13px; }
-        .greeting-icon { font-size: 32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .greeting-content { display: flex; align-items: center; gap: 20px; }
+        .greeting-text h2 { margin: 0; font-size: 22px; color: var(--text-main); margin-bottom: 5px; }
+        .greeting-text p { margin: 0; color: var(--text-sec); font-size: 14px; }
+        .greeting-chart { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
+        /* Dairesel Grafik CSS */
+        .progress-ring__circle { transition: stroke-dashoffset 0.5s ease-in-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .chart-label { position: absolute; font-size: 12px; font-weight: 800; color: var(--primary); }
 
         /* LAYOUT */
         #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
@@ -152,55 +140,64 @@
         .view-section { display: none; width: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* KANBAN */
+        /* KANBAN & WATERMARKS (YENİ) */
         .kanban-container { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
         .k-col { 
-            flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 20px; 
-            display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--border); 
-            height: 100%; max-height: 70vh; backdrop-filter: blur(5px);
+            flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 24px; 
+            display: flex; flex-direction: column; padding: 20px; border: 1px solid var(--border); 
+            height: 100%; max-height: 75vh; backdrop-filter: blur(5px); position: relative; overflow: hidden;
         }
         
+        /* Watermark Icons */
+        .k-col::before {
+            font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; bottom: -20px; right: -20px;
+            font-size: 120px; opacity: 0.04; color: var(--text-main); pointer-events: none; z-index: 0;
+        }
+        #col-todo::before { content: "\f017"; } /* Clock */
+        #col-progress::before { content: "\f085"; } /* Gears */
+        #col-done::before { content: "\f00c"; } /* Check */
+
         #col-todo { border-top: 4px solid var(--todo-line); }
         #col-progress { border-top: 4px solid var(--prog-line); }
         #col-done { border-top: 4px solid var(--done-line); }
-        .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; }
-        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 12px; min-height: 100px; -webkit-overflow-scrolling: touch; }
+        
+        .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; z-index: 1; }
+        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 14px; min-height: 100px; -webkit-overflow-scrolling: touch; z-index: 1; }
 
-        /* TASK CARDS - EĞİK SÜRÜKLEME (YENİ) */
+        /* TASK CARDS */
         .task-card { 
-            background: var(--bg-card); border-radius: 16px; padding: 16px; 
-            box-shadow: var(--shadow-sm); border: 1px solid var(--border); 
+            background: var(--bg-card); border-radius: 18px; padding: 18px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border); 
             cursor: grab; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            position: relative; flex-shrink: 0;
+            position: relative; flex-shrink: 0; backdrop-filter: blur(5px);
         }
         .task-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-float); }
         [data-theme="dark"] .task-card:hover { box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); border-color: #38bdf8; }
-        .task-card::after { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
-        .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
         
-        /* Sortable Styles */
-        .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
-        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05) rotate(3deg); box-shadow: var(--shadow-float); } /* YENİ TILT ANIMATION */
+        /* HOLOGRAPHIC TAGS (YENİ) */
+        .badge { 
+            padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; 
+            backdrop-filter: blur(8px); letter-spacing: 0.05em;
+        }
+        .badge-Yüksek { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-Orta { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .badge-Düşük { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
 
+        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05) rotate(3deg); box-shadow: var(--shadow-float); }
+        
+        /* ... Diğer stiller (Login, Modal, etc.) aynı kalıyor ... */
         .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .c-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main); }
         .c-desc { font-size: 12px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
         .c-assignee { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-main); }
-        
-        /* EXTRAS */
         .dash-container, .agenda-container { width: 100%; padding-bottom: 50px; }
         .calendar-wrapper { background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); flex: 1; }
         .cal-cell { background: var(--bg-card); padding: 4px; font-size: 12px; min-height: 80px; }
         .cal-cell.today { background: var(--primary-soft); }
         .cal-task { background: var(--primary); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; }
-        
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
-        .badge-Yüksek { background: #fef2f2; color: #ef4444; } .badge-Orta { background: #fffbeb; color: #f59e0b; } .badge-Düşük { background: #ecfdf5; color: #10b981; }
         .avatar { width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 800; }
-        
-        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 100%; max-width: 600px; height: 90%; max-height: 800px; border-radius: 24px; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
@@ -209,29 +206,21 @@
         .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--bg-body); color: var(--text-main); transition: 0.2s; }
         .span-full { grid-column: span 2; }
         .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
-
-        /* LOGIN */
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; }
         #loginOverlay::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
         .login-card { position: relative; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.4); }
         .login-input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 14px; background: rgba(255,255,255,0.8); color: #1e293b; font-size: 15px; transition: 0.3s; }
         .login-input:focus { border-color: #0099d8; box-shadow: 0 0 0 4px rgba(0, 153, 216, 0.2); background: white; }
-
         .hidden { display: none !important; } .admin-only { display: none; }
         .filter-panel { position: absolute; top: 80px; right: 24px; width: 320px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-float); z-index: 40; display: none; flex-direction: column; gap: 16px; }
-        
         #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
         .toast { pointer-events: auto; background: var(--bg-card); color: var(--text-main); padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow-float); border-left: 5px solid; min-width: 320px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s ease; font-weight: 600; font-size: 14px; backdrop-filter: blur(10px); }
         .toast.success { border-color: #10b981; } .toast.success i { color: #10b981; font-size: 18px; }
         .toast.error { border-color: #ef4444; } .toast.error i { color: #ef4444; font-size: 18px; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        /* DASHBOARD GRID */
         .dash-container .stat-card { margin-bottom: 0; }
         .stats-row { gap: 15px; }
         .chart-wrapper { height: 350px; margin-bottom: 20px; }
-
-        /* MOBILE */
         .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
@@ -247,6 +236,11 @@
             .modal-box { height: 100%; border-radius: 0; }
             .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: var(--bg-col); border: 1px solid var(--border); }
         }
+        .skeleton { background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .sk-card { padding: 15px; background: var(--bg-card); border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); height: 100px; }
+        .sk-line { height: 10px; width: 60%; margin-bottom: 8px; border-radius: 4px; }
+        .sk-line.short { width: 40%; }
     </style>
 </head>
 <body onload="initApp()">
@@ -317,8 +311,14 @@
 
         <div id="view-kanban" class="view-section active">
             <div class="greeting-card">
-                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p></div>
-                <div class="greeting-icon" id="greetingIcon">⛅</div>
+                <div class="greeting-content">
+                    <div class="greeting-icon" id="greetingIcon">⛅</div>
+                    <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p></div>
+                </div>
+                <div class="greeting-chart">
+                    <svg class="progress-ring" width="60" height="60"><circle class="progress-ring__circle" stroke="#10b981" stroke-width="4" fill="transparent" r="24" cx="30" cy="30" style="stroke-dasharray: 150; stroke-dashoffset: 150;"></circle></svg>
+                    <span class="chart-label" id="taskRatio">0%</span>
+                </div>
             </div>
 
             <div class="kanban-container">
@@ -337,23 +337,8 @@
             </div>
         </div>
 
-        <div id="view-month" class="view-section">
-            <div class="calendar-wrapper">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-                    <button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <div style="font-size:20px; font-weight:800; letter-spacing:-0.03em;" id="calTitle"></div>
-                    <button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-                <div class="cal-grid" id="calGrid"></div>
-            </div>
-        </div>
-
-        <div id="view-agenda" class="view-section">
-            <div class="calendar-wrapper">
-                <div class="m-title" style="margin-bottom:24px;" id="agendaTitle">Haftalık Liste</div>
-                <div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div>
-            </div>
-        </div>
+        <div id="view-month" class="view-section"><div class="calendar-wrapper"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;"><button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button><div style="font-size:20px; font-weight:800; letter-spacing:-0.03em;" id="calTitle"></div><button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button></div><div class="cal-grid" id="calGrid"></div></div></div>
+        <div id="view-agenda" class="view-section"><div class="calendar-wrapper"><div class="m-title" style="margin-bottom:24px;" id="agendaTitle">Haftalık Liste</div><div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div></div></div>
     </div>
     
     <div class="bottom-nav">
@@ -397,7 +382,6 @@
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    /* CACHE KILLER */
     if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(r => r.forEach(reg => reg.unregister())); }
 
     const firebaseConfig = {
@@ -424,7 +408,7 @@
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '', text: '' };
     let currentUser = null; let chartStatusInst = null; let chartUserInst = null;
 
-    /* RIPPLE EFFECT FUNC */
+    /* RIPPLE EFFECT */
     window.createRipple = function(event) {
         const button = event.currentTarget;
         const circle = document.createElement("span");
@@ -458,16 +442,27 @@
         ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
     }
 
-    function updateGreeting() {
+    function updateGreeting(tasks) {
         if(!currentUser) return;
         const h = new Date().getHours();
-        let msg = "Merhaba", sub = "Bugün neler yapıyoruz?", icon = "☀️";
-        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Kahveler hazır, sistemler açık mı? ☕"; icon = "🌅"; }
+        let msg = "Merhaba", sub = "İşler kontrol altında.", icon = "☀️";
+        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Sabah kahvesi hazır mı? ☕"; icon = "🌅"; }
         else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Projeler hızla ilerliyor! 🚀"; icon = "☀️"; }
         else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]} Bey`; sub = "Günü harika yönettiniz. 🌙"; icon = "✨"; }
         document.getElementById('greetingMsg').innerText = msg;
         document.getElementById('greetingSub').innerText = sub;
         document.getElementById('greetingIcon').innerText = icon;
+
+        // Progress Ring Calculation
+        const done = tasks.filter(t => t.status === 'done').length;
+        const total = tasks.length;
+        const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+        document.getElementById('taskRatio').innerText = percent + "%";
+        const circle = document.querySelector('.progress-ring__circle');
+        const radius = circle.r.baseVal.value;
+        const circumference = radius * 2 * Math.PI;
+        const offset = circumference - (percent / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
     }
 
     function fireConfetti() {
@@ -490,7 +485,6 @@
                 document.getElementById('displayUserName').innerText = uData.name;
                 document.getElementById('displayUserRole').innerText = uData.role === 'admin' ? 'Yönetici' : 'BT Uzmanı';
                 if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
-                updateGreeting();
                 listenTasks();
                 initSortable();
                 if(currentMode === 'dashboard') renderDashboard(allTasks);
@@ -543,7 +537,7 @@
     function listenTasks() {
         if(!db) return;
         const q = query(collection(db, "tasks"), orderBy("code", "desc"));
-        onSnapshot(q, (snapshot) => { allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderAll(); });
+        onSnapshot(q, (snapshot) => { allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderAll(); updateGreeting(allTasks); });
     }
 
     function renderAll() {
@@ -559,7 +553,6 @@
         else renderAgenda(tasks);
     }
 
-    /* GRADIENT CHARTS (YENİ) */
     function renderDashboard(tasks) {
         const counts = { todo: 0, progress: 0, done: 0 };
         const userCounts = {};
