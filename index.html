@@ -25,24 +25,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     
     <style>
         :root {
-            /* V5.1 COCKPIT PALET */
+            /* V6.0 HOLOGRAPHIC PALET */
             --primary-grad: linear-gradient(135deg, #0099d8 0%, #0284c7 100%);
             --primary: #0099d8; 
             --primary-soft: rgba(0, 153, 216, 0.08);
             
-            --bg-card: rgba(255, 255, 255, 0.90); /* Biraz daha şeffaf */
-            --bg-glass: rgba(255, 255, 255, 0.75);
-            --bg-col: rgba(248, 250, 252, 0.6); /* Sütunlar daha şeffaf */
+            --bg-card: rgba(255, 255, 255, 0.90); 
+            --bg-glass: rgba(255, 255, 255, 0.70);
+            --bg-col: rgba(248, 250, 252, 0.7);
             
             --border: rgba(226, 232, 240, 0.8); 
             --text-main: #0f172a; 
             --text-sec: #64748b;
             
-            --shadow-float: 0 12px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            --glow-primary: 0 4px 15px rgba(0, 153, 216, 0.3);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-card: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --glow-primary: 0 4px 20px rgba(0, 153, 216, 0.3);
             
             --todo-line: #f59e0b;
             --prog-line: #0ea5e9;
@@ -53,15 +56,14 @@
             --primary-grad: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
             --primary: #38bdf8; 
             --primary-soft: rgba(56, 189, 248, 0.15);
-            
             --bg-card: rgba(30, 41, 59, 0.85); 
-            --bg-glass: rgba(15, 23, 42, 0.85);
+            --bg-glass: rgba(15, 23, 42, 0.80);
             --bg-col: rgba(15, 23, 42, 0.6);
-            
             --border: rgba(51, 65, 85, 0.8); 
             --text-main: #f1f5f9; 
             --text-sec: #94a3b8;
-            
+            --shadow-sm: none;
+            --shadow-card: 0 4px 6px rgba(0,0,0,0.3);
             --glow-primary: 0 0 25px rgba(56, 189, 248, 0.4);
         }
 
@@ -88,14 +90,9 @@
         h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.03em; }
         p, .c-desc { line-height: 1.6; }
 
-        /* RIPPLE */
-        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
-        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
-        .btn-grad, .nav-btn, .task-card { position: relative; overflow: hidden; }
-
         /* HEADER */
         header { 
-            background-color: var(--bg-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            background-color: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; 
             border-bottom: 1px solid var(--border); width: 100%; z-index: 50; position: sticky; top: 0; left: 0;
         }
@@ -112,23 +109,29 @@
         .user-area { display: flex; align-items: center; gap: 12px; }
         .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; }
         .user-role { font-size: 11px; color: var(--text-sec); font-weight: 500; display: block; }
-        .btn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; position: relative; overflow: hidden; }
+        .btn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
         .btn-grad { background: var(--primary-grad); color: white; border: none; padding: 10px 22px; border-radius: 14px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: var(--glow-primary); }
         .btn-grad:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0, 153, 216, 0.5); }
 
-        /* HUD GREETING CARD (YENİ) */
+        /* TYPEWRITER & GREETING */
         .greeting-card {
             background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border); margin-bottom: 24px;
             display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
             background-image: linear-gradient(120deg, rgba(255,255,255,0) 30%, var(--primary-soft) 100%);
             backdrop-filter: blur(10px); box-shadow: var(--shadow-float);
+            /* TILT HAZIRLIĞI */
+            transform-style: preserve-3d; transform: perspective(1000px);
         }
         .greeting-content { display: flex; align-items: center; gap: 20px; }
-        .greeting-text h2 { margin: 0; font-size: 22px; color: var(--text-main); margin-bottom: 5px; }
+        .greeting-text h2 { margin: 0; font-size: 22px; color: var(--text-main); margin-bottom: 5px; display: flex; align-items: center; }
         .greeting-text p { margin: 0; color: var(--text-sec); font-size: 14px; }
+        
+        /* Cursor Blink */
+        .cursor { display: inline-block; width: 3px; height: 24px; background-color: var(--primary); margin-left: 5px; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
         .greeting-chart { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
-        /* Dairesel Grafik CSS */
-        .progress-ring__circle { transition: stroke-dashoffset 0.5s ease-in-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .progress-ring__circle { transition: stroke-dashoffset 1s ease-in-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
         .chart-label { position: absolute; font-size: 12px; font-weight: 800; color: var(--primary); }
 
         /* LAYOUT */
@@ -140,58 +143,52 @@
         .view-section { display: none; width: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* KANBAN & WATERMARKS (YENİ) */
+        /* KANBAN */
         .kanban-container { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
         .k-col { 
             flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 24px; 
             display: flex; flex-direction: column; padding: 20px; border: 1px solid var(--border); 
             height: 100%; max-height: 75vh; backdrop-filter: blur(5px); position: relative; overflow: hidden;
         }
-        
         /* Watermark Icons */
-        .k-col::before {
-            font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; bottom: -20px; right: -20px;
-            font-size: 120px; opacity: 0.04; color: var(--text-main); pointer-events: none; z-index: 0;
-        }
-        #col-todo::before { content: "\f017"; } /* Clock */
-        #col-progress::before { content: "\f085"; } /* Gears */
-        #col-done::before { content: "\f00c"; } /* Check */
-
-        #col-todo { border-top: 4px solid var(--todo-line); }
-        #col-progress { border-top: 4px solid var(--prog-line); }
-        #col-done { border-top: 4px solid var(--done-line); }
-        
+        .k-col::before { font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; bottom: -20px; right: -20px; font-size: 120px; opacity: 0.04; color: var(--text-main); pointer-events: none; z-index: 0; }
+        #col-todo::before { content: "\f017"; } #col-progress::before { content: "\f085"; } #col-done::before { content: "\f00c"; } 
+        #col-todo { border-top: 4px solid var(--todo-line); } #col-progress { border-top: 4px solid var(--prog-line); } #col-done { border-top: 4px solid var(--done-line); }
         .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; z-index: 1; }
         .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 14px; min-height: 100px; -webkit-overflow-scrolling: touch; z-index: 1; }
 
-        /* TASK CARDS */
+        /* TASK CARDS - 3D TILT READY */
         .task-card { 
             background: var(--bg-card); border-radius: 18px; padding: 18px; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border); 
-            cursor: grab; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+            cursor: grab; transition: transform 0.1s; /* Tilt için hızlı tepki */
             position: relative; flex-shrink: 0; backdrop-filter: blur(5px);
+            transform-style: preserve-3d; transform: perspective(1000px);
         }
-        .task-card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: var(--shadow-float); }
-        [data-theme="dark"] .task-card:hover { box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); border-color: #38bdf8; }
+        .task-card:hover { border-color: var(--primary); }
+        [data-theme="dark"] .task-card:hover { border-color: #38bdf8; }
+        .task-card::after { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
+        .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
         
-        /* HOLOGRAPHIC TAGS (YENİ) */
-        .badge { 
-            padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; 
-            backdrop-filter: blur(8px); letter-spacing: 0.05em;
-        }
+        .badge { padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; backdrop-filter: blur(8px); letter-spacing: 0.05em; }
         .badge-Yüksek { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
         .badge-Orta { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
         .badge-Düşük { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
 
-        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05) rotate(3deg); box-shadow: var(--shadow-float); }
-        
-        /* ... Diğer stiller (Login, Modal, etc.) aynı kalıyor ... */
+        .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
+        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05); box-shadow: var(--shadow-float); }
+
+        /* OTHER COMPONENTS */
         .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
         .c-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main); }
         .c-desc { font-size: 12px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
         .c-assignee { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-main); }
         .dash-container, .agenda-container { width: 100%; padding-bottom: 50px; }
+        .stat-card { background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; box-shadow: var(--shadow-card); transform-style: preserve-3d; transform: perspective(1000px); }
+        .stat-lbl { font-size: 12px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.05em; z-index: 2; transform: translateZ(20px); }
+        .stat-num { font-size: 42px; font-weight: 800; color: var(--text-main); margin-top: 8px; z-index: 2; letter-spacing: -0.05em; transform: translateZ(30px); }
+        .stat-icon-bg { position: absolute; right: -15px; bottom: -15px; font-size: 90px; opacity: 0.06; transform: rotate(-15deg) translateZ(10px); color: var(--text-main); pointer-events: none; }
         .calendar-wrapper { background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); flex: 1; }
         .cal-cell { background: var(--bg-card); padding: 4px; font-size: 12px; min-height: 80px; }
@@ -208,7 +205,7 @@
         .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; }
         #loginOverlay::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
-        .login-card { position: relative; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.4); }
+        .login-card { position: relative; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.4); transform-style: preserve-3d; transform: perspective(1000px); }
         .login-input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 14px; background: rgba(255,255,255,0.8); color: #1e293b; font-size: 15px; transition: 0.3s; }
         .login-input:focus { border-color: #0099d8; box-shadow: 0 0 0 4px rgba(0, 153, 216, 0.2); background: white; }
         .hidden { display: none !important; } .admin-only { display: none; }
@@ -218,9 +215,7 @@
         .toast.success { border-color: #10b981; } .toast.success i { color: #10b981; font-size: 18px; }
         .toast.error { border-color: #ef4444; } .toast.error i { color: #ef4444; font-size: 18px; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .dash-container .stat-card { margin-bottom: 0; }
-        .stats-row { gap: 15px; }
-        .chart-wrapper { height: 350px; margin-bottom: 20px; }
+        .stats-row { gap: 15px; } .chart-wrapper { height: 350px; margin-bottom: 20px; }
         .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
@@ -241,6 +236,9 @@
         .sk-card { padding: 15px; background: var(--bg-card); border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); height: 100px; }
         .sk-line { height: 10px; width: 60%; margin-bottom: 8px; border-radius: 4px; }
         .sk-line.short { width: 40%; }
+        /* RIPPLE EFFECT */
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
 <body onload="initApp()">
@@ -248,7 +246,7 @@
 <div id="toast-container"></div>
 
 <div id="loginOverlay">
-    <div class="login-card">
+    <div class="login-card" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
         <img src="logo.png" alt="Logo" class="login-logo" style="width:100px; margin-bottom:20px; border-radius:20px; box-shadow:0 15px 30px rgba(0,0,0,0.2);">
         <h2 style="margin:0 0 10px 0; color:#1e293b; font-size:26px;">BT Portal</h2>
         <p style="color:#64748b; margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Güvenli BT Yönetim Sistemi</p>
@@ -298,10 +296,10 @@
                 <button class="btn-grad" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel İndir</button>
             </div>
             <div class="stats-row">
-                <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#0099d8" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
+                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
+                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
+                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#0099d8" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
+                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
             </div>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:24px;">
                 <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
@@ -310,10 +308,13 @@
         </div>
 
         <div id="view-kanban" class="view-section active">
-            <div class="greeting-card">
+            <div class="greeting-card" data-tilt data-tilt-max="3" data-tilt-glare data-tilt-max-glare="0.1">
                 <div class="greeting-content">
                     <div class="greeting-icon" id="greetingIcon">⛅</div>
-                    <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p></div>
+                    <div class="greeting-text">
+                        <h2 id="greetingMsg">Merhaba<span class="cursor"></span></h2>
+                        <p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p>
+                    </div>
                 </div>
                 <div class="greeting-chart">
                     <svg class="progress-ring" width="60" height="60"><circle class="progress-ring__circle" stroke="#10b981" stroke-width="4" fill="transparent" r="24" cx="30" cy="30" style="stroke-dasharray: 150; stroke-dashoffset: 150;"></circle></svg>
@@ -442,20 +443,46 @@
         ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
     }
 
+    /* TYPEWRITER FUNC */
+    function typeWriter(text, elementId, speed = 50) {
+        const el = document.getElementById(elementId);
+        el.innerHTML = ""; // Reset
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
     function updateGreeting(tasks) {
         if(!currentUser) return;
         const h = new Date().getHours();
-        let msg = "Merhaba", sub = "İşler kontrol altında.", icon = "☀️";
-        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Sabah kahvesi hazır mı? ☕"; icon = "🌅"; }
-        else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]} Bey`; sub = "Projeler hızla ilerliyor! 🚀"; icon = "☀️"; }
-        else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]} Bey`; sub = "Günü harika yönettiniz. 🌙"; icon = "✨"; }
-        document.getElementById('greetingMsg').innerText = msg;
+        let msg = "", sub = "İşler kontrol altında.", icon = "☀️";
+        const name = currentUser.name.split(' ')[0];
+        
+        if(h < 12) { msg = `Günaydın, ${name} Bey`; sub = "Sabah kahvesi hazır mı? ☕"; icon = "🌅"; }
+        else if(h < 18) { msg = `Tünaydın, ${name} Bey`; sub = "Projeler hızla ilerliyor! 🚀"; icon = "☀️"; }
+        else { msg = `İyi Akşamlar, ${name} Bey`; sub = "Günü harika yönettiniz. 🌙"; icon = "✨"; }
+        
+        // Sadece ana ekrana (kanban) geçince çalışsın veya ilk yüklemede
+        const el = document.getElementById('greetingMsg');
+        if(el && el.innerText !== msg) {
+            el.innerHTML = ""; // Clear for typewriter
+            typeWriter(msg, 'greetingMsg');
+        } else if (el && el.innerText === "") {
+             typeWriter(msg, 'greetingMsg');
+        }
+        
         document.getElementById('greetingSub').innerText = sub;
         document.getElementById('greetingIcon').innerText = icon;
 
         // Progress Ring Calculation
-        const done = tasks.filter(t => t.status === 'done').length;
-        const total = tasks.length;
+        const done = tasks ? tasks.filter(t => t.status === 'done').length : 0;
+        const total = tasks ? tasks.length : 0;
         const percent = total === 0 ? 0 : Math.round((done / total) * 100);
         document.getElementById('taskRatio').innerText = percent + "%";
         const circle = document.querySelector('.progress-ring__circle');
@@ -475,6 +502,9 @@
 
     window.initApp = function() {
         loadTheme(); initSelects(); renderSkeletons();
+        // 3D TILT INIT - Kartlar yüklenince otomatik çalışacak, burada manuel de başlatabiliriz
+        if(typeof VanillaTilt !== 'undefined') { VanillaTilt.init(document.querySelectorAll(".login-card"), { max: 10, speed: 400, glare: true, "max-glare": 0.2 }); }
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uData = USER_MAP[user.email] || { name: user.email, role: "user" };
@@ -537,7 +567,11 @@
     function listenTasks() {
         if(!db) return;
         const q = query(collection(db, "tasks"), orderBy("code", "desc"));
-        onSnapshot(q, (snapshot) => { allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderAll(); updateGreeting(allTasks); });
+        onSnapshot(q, (snapshot) => { 
+            allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
+            renderAll(); 
+            updateGreeting(allTasks); 
+        });
     }
 
     function renderAll() {
@@ -553,6 +587,7 @@
         else renderAgenda(tasks);
     }
 
+    /* GRADIENT CHARTS */
     function renderDashboard(tasks) {
         const counts = { todo: 0, progress: 0, done: 0 };
         const userCounts = {};
@@ -583,6 +618,9 @@
             data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 8 }] }, 
             options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } 
         });
+        
+        // Init Tilt on Stat Cards
+        setTimeout(() => VanillaTilt.init(document.querySelectorAll(".stat-card"), { max: 15, speed: 400, glare: true, "max-glare": 0.2 }), 100);
     }
 
     function renderKanban(tasks) {
@@ -594,12 +632,18 @@
                 const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
                 const card = document.createElement('div'); 
                 card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); card.onclick = () => openModal(t.id);
+                // 3D TILT ATTRIBUTES
+                card.setAttribute("data-tilt", ""); card.setAttribute("data-tilt-max", "10"); card.setAttribute("data-tilt-speed", "400"); card.setAttribute("data-tilt-glare", ""); card.setAttribute("data-tilt-max-glare", "0.3");
+                
                 card.innerHTML = `<div class="c-top"><span class="badge badge-${t.priority}">${t.priority}</span> <span class="c-id">${t.code}</span></div><div class="c-title">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
                 cols[t.status].appendChild(card);
             }
         });
         Object.keys(cols).forEach(key => { if(cols[key].children.length === 0) cols[key].innerHTML = getEmptyState(); });
         document.getElementById('cnt-todo').innerText = counts.todo; document.getElementById('cnt-progress').innerText = counts.progress; document.getElementById('cnt-done').innerText = counts.done;
+        
+        // INIT TILT ON TASKS
+        setTimeout(() => VanillaTilt.init(document.querySelectorAll(".task-card"), { max: 7, speed: 400, glare: true, "max-glare": 0.2 }), 100);
     }
 
     function renderCalendar(tasks) {
