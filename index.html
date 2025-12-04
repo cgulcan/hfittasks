@@ -5,134 +5,132 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
-    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="BT Portal">
-    
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="icon" type="image/png" href="logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
     
     <style>
         :root {
-            /* V6.0 HOLOGRAPHIC PALET */
-            --primary-grad: linear-gradient(135deg, #0099d8 0%, #0284c7 100%);
-            --primary: #0099d8; 
-            --primary-soft: rgba(0, 153, 216, 0.08);
+            /* V6.0 TITANIUM ENTERPRISE PALET */
+            /* Daha derin, kurumsal mavi */
+            --primary-grad: linear-gradient(135deg, #005bea 0%, #00c6fb 100%); 
+            --primary: #005bea; 
+            --primary-soft: rgba(0, 91, 234, 0.06);
             
-            --bg-card: rgba(255, 255, 255, 0.90); 
-            --bg-glass: rgba(255, 255, 255, 0.70);
-            --bg-col: rgba(248, 250, 252, 0.7);
+            /* Zeminler - Artık daha opak ve net (Seramik Etkisi) */
+            --bg-body: #f4f7fa; /* Çok hafif gri-mavi mat zemin */
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.98); /* Neredeyse tam opak */
+            --bg-col: #f8f9fb;
             
-            --border: rgba(226, 232, 240, 0.8); 
-            --text-main: #0f172a; 
+            --border: #e2e8f0; 
+            --text-main: #1e293b; /* Daha koyu, net siyah */
             --text-sec: #64748b;
             
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-card: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --glow-primary: 0 4px 20px rgba(0, 153, 216, 0.3);
+            /* Gölgeler - Daha sofistike, katmanlı */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+            --glow-primary: 0 4px 20px rgba(0, 91, 234, 0.25);
             
             --todo-line: #f59e0b;
-            --prog-line: #0ea5e9;
+            --prog-line: #005bea;
             --done-line: #10b981;
         }
 
         [data-theme="dark"] {
-            --primary-grad: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-            --primary: #38bdf8; 
-            --primary-soft: rgba(56, 189, 248, 0.15);
-            --bg-card: rgba(30, 41, 59, 0.85); 
-            --bg-glass: rgba(15, 23, 42, 0.80);
-            --bg-col: rgba(15, 23, 42, 0.6);
-            --border: rgba(51, 65, 85, 0.8); 
-            --text-main: #f1f5f9; 
+            /* TITANIUM DARK */
+            --primary-grad: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --primary: #3b82f6; 
+            --primary-soft: rgba(59, 130, 246, 0.15);
+            
+            --bg-body: #0b1121; /* Derin, mat gece mavisi */
+            --bg-card: #151c2f;
+            --bg-glass: rgba(21, 28, 47, 0.98);
+            --bg-col: #1e293b;
+            
+            --border: #2a3447; 
+            --text-main: #f8fafc; 
             --text-sec: #94a3b8;
+            
             --shadow-sm: none;
-            --shadow-card: 0 4px 6px rgba(0,0,0,0.3);
-            --glow-primary: 0 0 25px rgba(56, 189, 248, 0.4);
+            --shadow-card: 0 8px 20px rgba(0,0,0,0.25);
+            --glow-primary: 0 0 30px rgba(59, 130, 246, 0.4);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         
+        /* BODY - Dingin, Profesyonel Zemin */
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
-            height: 100vh; overflow: hidden; letter-spacing: 0.01em;
-            background: linear-gradient(-45deg, #f1f5f9, #e0f2fe, #f0f9ff, #eff6ff);
-            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
+            height: 100vh; overflow: hidden; 
+            background-color: var(--bg-body); /* Hareketli gradient yerine sabit renk */
+            letter-spacing: -0.01em; /* Biraz daha sıkı harf aralığı */
         }
-        [data-theme="dark"] body {
-            background: linear-gradient(-45deg, #020617, #0f172a, #1e293b, #172554);
-            background-size: 400% 400%;
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* SCROLLBARS */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* CUSTOM SCROLLBARS - Daha ince */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--text-sec); border-radius: 10px; opacity: 0.3; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-sec); }
 
-        h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.03em; }
-        p, .c-desc { line-height: 1.6; }
+        h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.02em; font-weight: 700; }
+        p, .c-desc { line-height: 1.5; }
 
-        /* HEADER */
+        /* RIPPLE EFFECT */
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.3); pointer-events: none; }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        .btn-grad, .nav-btn, .task-card, .btn-icon { position: relative; overflow: hidden; }
+
+        /* HEADER - Daha net sınırlar */
         header { 
-            background-color: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background-color: var(--bg-glass); 
+            /* Blur efekti azaldı, opaklık arttı */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; 
             border-bottom: 1px solid var(--border); width: 100%; z-index: 50; position: sticky; top: 0; left: 0;
+            box-shadow: var(--shadow-sm);
         }
         .brand { display: flex; align-items: center; gap: 12px; }
-        .logo-img { height: 42px; width: 42px; object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm); background: white; padding: 4px; }
-        .brand-text { font-size: 18px; font-weight: 800; color: var(--text-main); }
+        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 10px; background: white; padding: 3px; border: 1px solid var(--border); }
+        .brand-text { font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.03em; }
 
         .nav-wrapper { flex: 1; display: flex; justify-content: center; }
-        .nav-pills { display: inline-flex; background: var(--bg-col); padding: 5px; border-radius: 18px; gap: 4px; border: 1px solid var(--border); }
-        .nav-btn { color: var(--text-sec); padding: 9px 18px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
-        .nav-btn:hover { color: var(--primary); background: rgba(0,0,0,0.03); }
-        .nav-btn.active { background: var(--primary-grad); color: white; box-shadow: var(--glow-primary); transform: translateY(-1px); }
+        .nav-pills { display: inline-flex; background: var(--bg-col); padding: 4px; border-radius: 16px; gap: 2px; border: 1px solid var(--border); }
+        .nav-btn { color: var(--text-sec); padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+        .nav-btn:hover { color: var(--primary); background: var(--bg-card); }
+        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        [data-theme="dark"] .nav-btn.active { background: var(--primary-grad); color: white; border: none; box-shadow: var(--glow-primary); }
 
         .user-area { display: flex; align-items: center; gap: 12px; }
         .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; }
         .user-role { font-size: 11px; color: var(--text-sec); font-weight: 500; display: block; }
-        .btn-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
-        .btn-grad { background: var(--primary-grad); color: white; border: none; padding: 10px 22px; border-radius: 14px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: var(--glow-primary); }
-        .btn-grad:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(0, 153, 216, 0.5); }
+        .btn-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
+        .btn-grad { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm); }
+        .btn-grad:hover { background: var(--primary-grad); box-shadow: var(--glow-primary); transform: translateY(-1px); }
 
-        /* TYPEWRITER & GREETING */
+        /* GREETING - Daha temiz */
         .greeting-card {
-            background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border); margin-bottom: 24px;
+            background: var(--bg-card); padding: 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px;
             display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
-            background-image: linear-gradient(120deg, rgba(255,255,255,0) 30%, var(--primary-soft) 100%);
-            backdrop-filter: blur(10px); box-shadow: var(--shadow-float);
-            /* TILT HAZIRLIĞI */
-            transform-style: preserve-3d; transform: perspective(1000px);
+            box-shadow: var(--shadow-card);
         }
-        .greeting-content { display: flex; align-items: center; gap: 20px; }
-        .greeting-text h2 { margin: 0; font-size: 22px; color: var(--text-main); margin-bottom: 5px; display: flex; align-items: center; }
-        .greeting-text p { margin: 0; color: var(--text-sec); font-size: 14px; }
-        
-        /* Cursor Blink */
-        .cursor { display: inline-block; width: 3px; height: 24px; background-color: var(--primary); margin-left: 5px; animation: blink 1s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .greeting-chart { position: relative; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
-        .progress-ring__circle { transition: stroke-dashoffset 1s ease-in-out; transform: rotate(-90deg); transform-origin: 50% 50%; }
-        .chart-label { position: absolute; font-size: 12px; font-weight: 800; color: var(--primary); }
+        .greeting-text h2 { margin: 0; font-size: 22px; color: var(--text-main); }
+        .greeting-text p { margin: 4px 0 0 0; color: var(--text-sec); font-size: 14px; }
+        .greeting-icon { font-size: 36px; opacity: 0.8; }
 
         /* LAYOUT */
         #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
@@ -143,102 +141,96 @@
         .view-section { display: none; width: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* KANBAN */
-        .kanban-container { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
+        /* KANBAN - Daha net sütunlar */
+        .kanban-container { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
         .k-col { 
-            flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 24px; 
-            display: flex; flex-direction: column; padding: 20px; border: 1px solid var(--border); 
-            height: 100%; max-height: 75vh; backdrop-filter: blur(5px); position: relative; overflow: hidden;
+            flex: 1; min-width: 320px; max-width: 400px; background: var(--bg-col); border-radius: 16px; 
+            display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--border); 
+            height: 100%; max-height: 75vh;
         }
-        /* Watermark Icons */
-        .k-col::before { font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; bottom: -20px; right: -20px; font-size: 120px; opacity: 0.04; color: var(--text-main); pointer-events: none; z-index: 0; }
-        #col-todo::before { content: "\f017"; } #col-progress::before { content: "\f085"; } #col-done::before { content: "\f00c"; } 
-        #col-todo { border-top: 4px solid var(--todo-line); } #col-progress { border-top: 4px solid var(--prog-line); } #col-done { border-top: 4px solid var(--done-line); }
-        .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; z-index: 1; }
-        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 14px; min-height: 100px; -webkit-overflow-scrolling: touch; z-index: 1; }
+        
+        #col-todo { border-top: 3px solid var(--todo-line); }
+        #col-progress { border-top: 3px solid var(--prog-line); }
+        #col-done { border-top: 3px solid var(--done-line); }
+        .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
+        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 10px; min-height: 100px; }
 
-        /* TASK CARDS - 3D TILT READY */
+        /* TASK CARDS - "Seramik" Efekti */
         .task-card { 
-            background: var(--bg-card); border-radius: 18px; padding: 18px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border); 
-            cursor: grab; transition: transform 0.1s; /* Tilt için hızlı tepki */
-            position: relative; flex-shrink: 0; backdrop-filter: blur(5px);
-            transform-style: preserve-3d; transform: perspective(1000px);
+            background: var(--bg-card); border-radius: 12px; padding: 16px; 
+            box-shadow: var(--shadow-card); border: 1px solid var(--border); 
+            cursor: grab; transition: all 0.2s ease-in-out; 
+            position: relative; flex-shrink: 0;
         }
-        .task-card:hover { border-color: var(--primary); }
-        [data-theme="dark"] .task-card:hover { border-color: #38bdf8; }
-        .task-card::after { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
+        .task-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-float); }
+        [data-theme="dark"] .task-card:hover { box-shadow: var(--glow-primary); }
+        .task-card::after { content: ''; position: absolute; left: -1px; top: 10px; bottom: 10px; width: 3px; border-radius: 4px; }
         .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
         
-        .badge { padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; backdrop-filter: blur(8px); letter-spacing: 0.05em; }
-        .badge-Yüksek { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .badge-Orta { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-        .badge-Düşük { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.03) rotate(2deg); box-shadow: var(--shadow-float); z-index: 100; }
 
-        .sortable-ghost { opacity: 0.4; background: var(--primary-soft); border: 2px dashed var(--primary); }
-        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.05); box-shadow: var(--shadow-float); }
+        .c-top { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .c-id { font-family: monospace; font-size: 11px; color: var(--text-sec); background: var(--bg-col); padding: 2px 6px; border-radius: 4px; }
+        .c-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; color: var(--text-main); line-height: 1.4; }
+        .c-desc { font-size: 13px; color: var(--text-sec); }
+        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+        
+        /* DASHBOARD STATS - Daha net kartlar */
+        .dash-container .stat-card { background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-card); border-radius: 16px; padding: 20px; }
+        .stats-row { gap: 20px; }
+        .stat-lbl { font-size: 13px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.02em; }
+        .stat-num { font-size: 32px; font-weight: 800; margin-top: 5px; display: block; }
+        .stat-icon-bg { opacity: 0.05; font-size: 40px; }
+        .chart-wrapper { height: 350px; margin-bottom: 20px; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); }
 
-        /* OTHER COMPONENTS */
-        .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .c-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main); }
-        .c-desc { font-size: 12px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
-        .c-assignee { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-main); }
-        .dash-container, .agenda-container { width: 100%; padding-bottom: 50px; }
-        .stat-card { background: var(--bg-card); padding: 24px; border-radius: 24px; border: 1px solid var(--border); position: relative; overflow: hidden; box-shadow: var(--shadow-card); transform-style: preserve-3d; transform: perspective(1000px); }
-        .stat-lbl { font-size: 12px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.05em; z-index: 2; transform: translateZ(20px); }
-        .stat-num { font-size: 42px; font-weight: 800; color: var(--text-main); margin-top: 8px; z-index: 2; letter-spacing: -0.05em; transform: translateZ(30px); }
-        .stat-icon-bg { position: absolute; right: -15px; bottom: -15px; font-size: 90px; opacity: 0.06; transform: rotate(-15deg) translateZ(10px); color: var(--text-main); pointer-events: none; }
-        .calendar-wrapper { background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; backdrop-filter: blur(10px); }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); flex: 1; }
-        .cal-cell { background: var(--bg-card); padding: 4px; font-size: 12px; min-height: 80px; }
+        /* EXTRAS */
+        .calendar-wrapper { background: var(--bg-card); border-radius: 16px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; box-shadow: var(--shadow-card); }
+        .cal-grid { border-radius: 12px; border: 1px solid var(--border); }
+        .cal-cell { background: var(--bg-card); }
         .cal-cell.today { background: var(--primary-soft); }
-        .cal-task { background: var(--primary); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; }
-        .avatar { width: 24px; height: 24px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px; font-weight: 800; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; }
+        .cal-task { background: var(--primary); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm); }
+        
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+        .avatar { width: 28px; height: 28px; border-radius: 8px; font-size: 11px; font-weight: 700; border: 2px solid var(--bg-card); box-shadow: var(--shadow-sm); }
+        
+        /* MODAL - Daha net */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
-        .modal-box { background: var(--bg-card); width: 100%; max-width: 600px; height: 90%; max-height: 800px; border-radius: 24px; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-        .m-head, .m-foot { padding: 15px 20px; flex-shrink: 0; } .m-body { padding: 20px; overflow-y: auto; flex: 1; }
-        .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-sec); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
-        .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 14px; background: var(--bg-body); color: var(--text-main); transition: 0.2s; }
-        .span-full { grid-column: span 2; }
+        .modal-box { background: var(--bg-card); width: 100%; max-width: 650px; height: auto; max-height: 92%; border-radius: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-float); border: 1px solid var(--border); }
+        .m-head { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+        .m-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .m-foot { padding: 20px 24px; border-top: 1px solid var(--border); background: var(--bg-col); border-radius: 0 0 20px 20px; }
+        
+        .frm-lbl { font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: block; }
+        .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg-card); color: var(--text-main); transition: 0.2s; }
+        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
         .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
-        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; }
-        #loginOverlay::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); }
-        .login-card { position: relative; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 30px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); width: 100%; max-width: 400px; text-align: center; border: 1px solid rgba(255,255,255,0.4); transform-style: preserve-3d; transform: perspective(1000px); }
-        .login-input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #cbd5e1; border-radius: 14px; background: rgba(255,255,255,0.8); color: #1e293b; font-size: 15px; transition: 0.3s; }
-        .login-input:focus { border-color: #0099d8; box-shadow: 0 0 0 4px rgba(0, 153, 216, 0.2); background: white; }
+
+        /* LOGIN - Daha profesyonel */
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-body); display: flex; align-items: center; justify-content: center; }
+        .login-card { background: var(--bg-card); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-float); width: 100%; max-width: 420px; text-align: center; border: 1px solid var(--border); }
+        .login-input { background: var(--bg-col); border: 1px solid var(--border); color: var(--text-main); }
+
         .hidden { display: none !important; } .admin-only { display: none; }
         .filter-panel { position: absolute; top: 80px; right: 24px; width: 320px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-float); z-index: 40; display: none; flex-direction: column; gap: 16px; }
-        #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
-        .toast { pointer-events: auto; background: var(--bg-card); color: var(--text-main); padding: 16px 20px; border-radius: 16px; box-shadow: var(--shadow-float); border-left: 5px solid; min-width: 320px; display: flex; align-items: center; gap: 15px; animation: slideIn 0.3s ease; font-weight: 600; font-size: 14px; backdrop-filter: blur(10px); }
-        .toast.success { border-color: #10b981; } .toast.success i { color: #10b981; font-size: 18px; }
-        .toast.error { border-color: #ef4444; } .toast.error i { color: #ef4444; font-size: 18px; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .stats-row { gap: 15px; } .chart-wrapper { height: 350px; margin-bottom: 20px; }
+        #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; }
+        .toast { background: var(--bg-card); color: var(--text-main); padding: 16px 24px; border-radius: 12px; box-shadow: var(--shadow-float); border-left: 4px solid; font-weight: 600; }
+
+        /* MOBILE */
         .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
             header { padding: 0 16px; height: 60px; }
-            .main-content { padding: 16px; padding-bottom: 80px; overflow-x: hidden; }
+            .main-content { padding: 16px; padding-bottom: 80px; }
             .greeting-card { padding: 16px; margin-bottom: 16px; }
-            .kanban-container { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; }
-            .k-col { min-width: 85vw; scroll-snap-align: center; margin-right: 10px; }
-            .bottom-nav { display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(0,0,0,0.1); border-radius: 24px; height: 65px; z-index: 1000; justify-content: space-around; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
-            [data-theme="dark"] .bottom-nav { background: rgba(30, 41, 59, 0.95); border-color: rgba(255,255,255,0.1); }
-            .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-sec); font-size: 10px; font-weight: 600; gap: 3px; }
+            .greeting-text h2 { font-size: 18px; }
+            .kanban-container { gap: 12px; }
+            .k-col { min-width: 85vw; }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border); height: 60px; z-index: 1000; justify-content: space-around; align-items: center; }
+            .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-sec); font-size: 10px; font-weight: 600; gap: 4px; }
             .b-nav-item.active { color: var(--primary); }
-            .modal-box { height: 100%; border-radius: 0; }
-            .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: var(--bg-col); border: 1px solid var(--border); }
+            .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: var(--bg-col); border: 1px solid var(--border); color: var(--text-sec); }
         }
-        .skeleton { background: linear-gradient(90deg, var(--bg-col) 25%, var(--border) 50%, var(--bg-col) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .sk-card { padding: 15px; background: var(--bg-card); border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); height: 100px; }
-        .sk-line { height: 10px; width: 60%; margin-bottom: 8px; border-radius: 4px; }
-        .sk-line.short { width: 40%; }
-        /* RIPPLE EFFECT */
-        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
-        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
 <body onload="initApp()">
@@ -246,14 +238,14 @@
 <div id="toast-container"></div>
 
 <div id="loginOverlay">
-    <div class="login-card" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
-        <img src="logo.png" alt="Logo" class="login-logo" style="width:100px; margin-bottom:20px; border-radius:20px; box-shadow:0 15px 30px rgba(0,0,0,0.2);">
-        <h2 style="margin:0 0 10px 0; color:#1e293b; font-size:26px;">BT Portal</h2>
-        <p style="color:#64748b; margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Güvenli BT Yönetim Sistemi</p>
-        <input type="email" id="email" class="login-input" placeholder="Kurumsal E-posta">
+    <div class="login-card">
+        <img src="logo.png" alt="Logo" style="width:80px; margin-bottom:20px; border-radius:16px; box-shadow:var(--shadow-sm);">
+        <h2 style="margin:0 0 10px 0; color:var(--text-main); font-size:24px; font-weight:800;">BT Portal</h2>
+        <p style="color:var(--text-sec); margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Kurumsal Giriş</p>
+        <input type="email" id="email" class="login-input" placeholder="E-posta Adresi">
         <input type="password" id="password" class="login-input" placeholder="Şifre">
-        <button class="btn-grad" style="width:100%; justify-content:center; padding:16px; font-size:15px; margin-top:10px;" onclick="createRipple(event); login()">Giriş Yap</button>
-        <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:13px; font-weight:700;"></div>
+        <button class="btn-grad" style="width:100%; justify-content:center; padding:14px; font-size:15px; margin-top:10px;" onclick="createRipple(event); login()">Giriş Yap</button>
+        <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:13px; font-weight:600;"></div>
     </div>
 </div>
 
@@ -273,7 +265,7 @@
             <div class="user-info"><div id="displayUserName"></div><span class="user-role" id="displayUserRole">Yetkili</span></div>
             <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
             <button class="btn-icon btn-logout" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
-            <button class="btn-grad" onclick="createRipple(event); newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">Yeni</span></button>
+            <button class="btn-grad" onclick="createRipple(event); newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">Yeni Görev</span></button>
         </div>
     </header>
 
@@ -286,20 +278,20 @@
         <div class="frm-grp"><span class="frm-lbl">Atanan</span><select id="fltAssignee" class="frm-inp"></select></div>
         <div style="display:flex; gap:12px; margin-top:10px;">
             <button class="btn-grad" style="flex:1; justify-content:center;" onclick="applyFilter()">Uygula</button>
-            <button class="q-btn" style="flex:1; text-align:center; background:#fee2e2; color:#ef4444;" onclick="clearFilter()">Temizle</button>
+            <button class="q-btn" style="flex:1; text-align:center; background:var(--bg-col); color:var(--text-sec); border:1px solid var(--border);" onclick="clearFilter()">Temizle</button>
         </div>
     </div>
 
     <div class="main-content">
         <div id="view-dashboard" class="view-section dash-container">
             <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
-                <button class="btn-grad" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel İndir</button>
+                <button class="btn-grad" style="background: var(--bg-card); color:var(--text-main); border:1px solid var(--border);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel" style="color:#10b981"></i> Excel İndir</button>
             </div>
             <div class="stats-row">
-                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
-                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
-                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#0099d8" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
-                <div class="stat-card" data-tilt data-tilt-scale="1.05"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Toplam Görev</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#005bea" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
             </div>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:24px;">
                 <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
@@ -308,44 +300,50 @@
         </div>
 
         <div id="view-kanban" class="view-section active">
-            <div class="greeting-card" data-tilt data-tilt-max="3" data-tilt-glare data-tilt-max-glare="0.1">
-                <div class="greeting-content">
-                    <div class="greeting-icon" id="greetingIcon">⛅</div>
-                    <div class="greeting-text">
-                        <h2 id="greetingMsg">Merhaba<span class="cursor"></span></h2>
-                        <p id="greetingSub">Bugünün işlerini harika yönetiyorsunuz.</p>
-                    </div>
-                </div>
-                <div class="greeting-chart">
-                    <svg class="progress-ring" width="60" height="60"><circle class="progress-ring__circle" stroke="#10b981" stroke-width="4" fill="transparent" r="24" cx="30" cy="30" style="stroke-dasharray: 150; stroke-dashoffset: 150;"></circle></svg>
-                    <span class="chart-label" id="taskRatio">0%</span>
-                </div>
+            <div class="greeting-card">
+                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Operasyonel mükemmellik için hazırız.</p></div>
+                <div class="greeting-icon" id="greetingIcon" style="color:var(--primary)">Is</div>
             </div>
 
             <div class="kanban-container">
                 <div class="k-col" id="col-todo">
-                    <div class="k-header">Bekleyenler <span class="badge-count" id="cnt-todo">0</span></div>
+                    <div class="k-header">Bekleyenler <span class="badge-count" id="cnt-todo" style="background:var(--bg-card); padding:2px 8px; border-radius:10px;">0</span></div>
                     <div class="k-list" id="lst-todo" data-status="todo"></div>
                 </div>
                 <div class="k-col" id="col-progress">
-                    <div class="k-header" style="color:var(--primary)">İşlemde <span class="badge-count" id="cnt-progress">0</span></div>
+                    <div class="k-header" style="color:var(--primary)">İşlemde <span class="badge-count" id="cnt-progress" style="background:var(--primary-soft); color:var(--primary); padding:2px 8px; border-radius:10px;">0</span></div>
                     <div class="k-list" id="lst-progress" data-status="progress"></div>
                 </div>
                 <div class="k-col" id="col-done">
-                    <div class="k-header" style="color:#10b981">Bitenler <span class="badge-count" id="cnt-done">0</span></div>
+                    <div class="k-header" style="color:#10b981">Tamamlanan <span class="badge-count" id="cnt-done" style="background:#ecfdf5; color:#10b981; padding:2px 8px; border-radius:10px;">0</span></div>
                     <div class="k-list" id="lst-done" data-status="done"></div>
                 </div>
             </div>
         </div>
 
-        <div id="view-month" class="view-section"><div class="calendar-wrapper"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;"><button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button><div style="font-size:20px; font-weight:800; letter-spacing:-0.03em;" id="calTitle"></div><button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button></div><div class="cal-grid" id="calGrid"></div></div></div>
-        <div id="view-agenda" class="view-section"><div class="calendar-wrapper"><div class="m-title" style="margin-bottom:24px;" id="agendaTitle">Haftalık Liste</div><div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div></div></div>
+        <div id="view-month" class="view-section">
+            <div class="calendar-wrapper">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                    <button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div style="font-size:20px; font-weight:800;" id="calTitle"></div>
+                    <button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+            </div>
+        </div>
+
+        <div id="view-agenda" class="view-section">
+            <div class="calendar-wrapper">
+                <div class="m-title" style="margin-bottom:24px;">Haftalık Görev Listesi</div>
+                <div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div>
+            </div>
+        </div>
     </div>
     
     <div class="bottom-nav">
         <button class="b-nav-item active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
         <button class="b-nav-item" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i><span>Takvim</span></button>
-        <button class="b-nav-item" onclick="newTask()"><div style="background:var(--primary-grad); width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; color:white; margin-top:-24px; box-shadow:0 8px 20px rgba(0,153,216,0.4);"><i class="fa-solid fa-plus" style="font-size:20px;"></i></div></button>
+        <button class="b-nav-item" onclick="newTask()"><i class="fa-solid fa-plus-circle" style="font-size:24px; color:var(--primary)"></i><span>Yeni</span></button>
         <button class="b-nav-item" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i><span>Liste</span></button>
         <button class="b-nav-item" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Rapor</span></button>
     </div>
@@ -353,27 +351,32 @@
 
 <div id="modal" class="modal">
     <div class="modal-box">
-        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title">Görev Detayı</span><span id="tCodeDisplay" style="background:var(--bg-col); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:800; color:var(--text-sec);"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
+        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title" style="font-size:18px;">Görev Detayı</span><span id="tCodeDisplay" style="background:var(--bg-col); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:800; color:var(--text-sec); font-family:monospace;"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
         <div class="m-body">
             <input type="hidden" id="tId"><input type="hidden" id="tCode">
-            <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp"></select></div>
-            <div class="frm-grp"><span class="frm-lbl">Durum</span><select id="tStatus" class="frm-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
-            <div class="frm-grp"><span class="frm-lbl">Öncelik</span><select id="tPriority" class="frm-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
-            <div class="frm-grp"><span class="frm-lbl">Sorumlu Kişi</span><select id="tAssignee" class="frm-inp"></select></div>
-            <div class="frm-grp"><span class="frm-lbl">Hedef Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
-            <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="4"></textarea></div>
-            <div class="frm-grp span-full" style="background:var(--bg-col); padding:16px; border-radius:16px; border:2px dashed var(--border); text-align:center;">
-                <span class="frm-lbl">Ek Dosya</span><input type="file" id="tFile" style="display:none;" onchange="document.getElementById('fileName').innerText = this.files[0].name">
-                <label for="tFile" class="q-btn" style="display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:8px 16px;"><i class="fa-solid fa-cloud-upload"></i> Dosya Seç</label>
-                <div id="fileName" style="margin-top:6px; font-size:12px; color:var(--text-sec); font-weight:500;"></div><span id="uploadStatus" class="loading">Yükleniyor...</span>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp" style="font-weight:600;"></select></div>
+                <div class="frm-grp"><span class="frm-lbl">Durum</span><select id="tStatus" class="frm-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
+                <div class="frm-grp"><span class="frm-lbl">Öncelik</span><select id="tPriority" class="frm-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
+                <div class="frm-grp"><span class="frm-lbl">Sorumlu Kişi</span><select id="tAssignee" class="frm-inp"></select></div>
+                <div class="frm-grp"><span class="frm-lbl">Hedef Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
+                <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="4"></textarea></div>
+            </div>
+            <div class="frm-grp span-full" style="margin-top:20px; background:var(--bg-col); padding:16px; border-radius:16px; border:1px dashed var(--border); text-align:center;">
+                <input type="file" id="tFile" style="display:none;" onchange="document.getElementById('fileName').innerText = this.files[0].name">
+                <label for="tFile" class="btn-grad" style="display:inline-flex; width:auto; padding:8px 16px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border); box-shadow:var(--shadow-sm);"><i class="fa-solid fa-cloud-upload" style="color:var(--primary)"></i> Dosya Seç</label>
+                <div id="fileName" style="margin-top:8px; font-size:12px; color:var(--text-sec);"></div><span id="uploadStatus" class="loading">Yükleniyor...</span>
                 <a id="tFileLink" href="#" target="_blank" class="btn-grad hidden" style="margin:10px auto 0; width:fit-content; padding:8px 16px;">Dosyayı İndir</a>
             </div>
-            <div class="frm-grp span-full comments-section">
-                <span class="frm-lbl">Notlar & Tarihçe</span><div id="commentList" style="max-height:150px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
-                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 20px;" onclick="createRipple(event); addComment()">Gönder</button></div>
+            <div class="frm-grp span-full comments-section" style="margin-top:20px;">
+                <span class="frm-lbl">Tarihçe & Notlar</span><div id="commentList" style="max-height:200px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
+                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 24px;" onclick="createRipple(event); addComment()">Gönder</button></div>
             </div>
         </div>
-        <div class="m-foot"><button class="q-btn admin-only" style="color:#ef4444; background:#fef2f2;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button><button class="btn-grad" onclick="createRipple(event); saveTask()" id="btnSave">Kaydet</button></div>
+        <div class="m-foot" style="display:flex; justify-content:space-between;">
+            <button class="q-btn admin-only" style="color:#ef4444; background:#fef2f2; border:1px solid #fecaca; padding:10px 20px; border-radius:10px; font-weight:600;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button>
+            <button class="btn-grad" onclick="createRipple(event); saveTask()" id="btnSave" style="padding:10px 30px;">Kaydet</button>
+        </div>
     </div>
 </div>
 
@@ -409,7 +412,6 @@
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '', text: '' };
     let currentUser = null; let chartStatusInst = null; let chartUserInst = null;
 
-    /* RIPPLE EFFECT */
     window.createRipple = function(event) {
         const button = event.currentTarget;
         const circle = document.createElement("span");
@@ -433,63 +435,21 @@
     function getAvatar(name) {
         if(!name) return '<div class="avatar" style="background:#cbd5e1; color:#64748b">?</div>';
         const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
-        const colors = ['#3b82f6', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#6366f1'];
+        const colors = ['#005bea', '#00c6fb', '#3b82f6', '#06b6d4'];
         return `<div class="avatar" style="background:${colors[name.length%colors.length]}">${initials}</div>`;
     }
     function getEmptyState() { return `<div style="text-align:center; padding:40px; color:var(--text-sec); opacity:0.6;"><i class="fa-solid fa-clipboard-check" style="font-size:30px; margin-bottom:10px; display:block;"></i>Görev Yok</div>`; }
 
-    function renderSkeletons() {
-        const skHtml = '<div class="skeleton sk-card"><div class="skeleton sk-line"></div><div class="skeleton sk-line short"></div></div>'.repeat(3);
-        ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
-    }
-
-    /* TYPEWRITER FUNC */
-    function typeWriter(text, elementId, speed = 50) {
-        const el = document.getElementById(elementId);
-        el.innerHTML = ""; // Reset
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                el.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
-            }
-        }
-        type();
-    }
-
-    function updateGreeting(tasks) {
+    function updateGreeting() {
         if(!currentUser) return;
         const h = new Date().getHours();
-        let msg = "", sub = "İşler kontrol altında.", icon = "☀️";
-        const name = currentUser.name.split(' ')[0];
-        
-        if(h < 12) { msg = `Günaydın, ${name} Bey`; sub = "Sabah kahvesi hazır mı? ☕"; icon = "🌅"; }
-        else if(h < 18) { msg = `Tünaydın, ${name} Bey`; sub = "Projeler hızla ilerliyor! 🚀"; icon = "☀️"; }
-        else { msg = `İyi Akşamlar, ${name} Bey`; sub = "Günü harika yönettiniz. 🌙"; icon = "✨"; }
-        
-        // Sadece ana ekrana (kanban) geçince çalışsın veya ilk yüklemede
-        const el = document.getElementById('greetingMsg');
-        if(el && el.innerText !== msg) {
-            el.innerHTML = ""; // Clear for typewriter
-            typeWriter(msg, 'greetingMsg');
-        } else if (el && el.innerText === "") {
-             typeWriter(msg, 'greetingMsg');
-        }
-        
+        let msg = "Merhaba", sub = "Operasyonel mükemmellik için hazırız.", icon = "☀️";
+        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; icon = "☕"; }
+        else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]} Bey`; icon = "🚀"; }
+        else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]} Bey`; icon = "🌙"; }
+        document.getElementById('greetingMsg').innerText = msg;
         document.getElementById('greetingSub').innerText = sub;
         document.getElementById('greetingIcon').innerText = icon;
-
-        // Progress Ring Calculation
-        const done = tasks ? tasks.filter(t => t.status === 'done').length : 0;
-        const total = tasks ? tasks.length : 0;
-        const percent = total === 0 ? 0 : Math.round((done / total) * 100);
-        document.getElementById('taskRatio').innerText = percent + "%";
-        const circle = document.querySelector('.progress-ring__circle');
-        const radius = circle.r.baseVal.value;
-        const circumference = radius * 2 * Math.PI;
-        const offset = circumference - (percent / 100) * circumference;
-        circle.style.strokeDashoffset = offset;
     }
 
     function fireConfetti() {
@@ -501,10 +461,7 @@
     }
 
     window.initApp = function() {
-        loadTheme(); initSelects(); renderSkeletons();
-        // 3D TILT INIT - Kartlar yüklenince otomatik çalışacak, burada manuel de başlatabiliriz
-        if(typeof VanillaTilt !== 'undefined') { VanillaTilt.init(document.querySelectorAll(".login-card"), { max: 10, speed: 400, glare: true, "max-glare": 0.2 }); }
-
+        loadTheme(); initSelects();
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uData = USER_MAP[user.email] || { name: user.email, role: "user" };
@@ -515,6 +472,7 @@
                 document.getElementById('displayUserName').innerText = uData.name;
                 document.getElementById('displayUserRole').innerText = uData.role === 'admin' ? 'Yönetici' : 'BT Uzmanı';
                 if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
+                updateGreeting();
                 listenTasks();
                 initSortable();
                 if(currentMode === 'dashboard') renderDashboard(allTasks);
@@ -567,11 +525,7 @@
     function listenTasks() {
         if(!db) return;
         const q = query(collection(db, "tasks"), orderBy("code", "desc"));
-        onSnapshot(q, (snapshot) => { 
-            allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
-            renderAll(); 
-            updateGreeting(allTasks); 
-        });
+        onSnapshot(q, (snapshot) => { allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderAll(); });
     }
 
     function renderAll() {
@@ -587,7 +541,6 @@
         else renderAgenda(tasks);
     }
 
-    /* GRADIENT CHARTS */
     function renderDashboard(tasks) {
         const counts = { todo: 0, progress: 0, done: 0 };
         const userCounts = {};
@@ -598,8 +551,8 @@
         const commonOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } };
         
         const ctx1 = document.getElementById('chartStatus').getContext('2d');
-        const gradTodo = ctx1.createLinearGradient(0,0,0,400); gradTodo.addColorStop(0,'#fcd34d'); gradTodo.addColorStop(1,'#d97706');
-        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#38bdf8'); gradProg.addColorStop(1,'#0284c7');
+        const gradTodo = ctx1.createLinearGradient(0,0,0,400); gradTodo.addColorStop(0,'#fbbf24'); gradTodo.addColorStop(1,'#d97706');
+        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#00c6fb'); gradProg.addColorStop(1,'#005bea');
         const gradDone = ctx1.createLinearGradient(0,0,0,400); gradDone.addColorStop(0,'#34d399'); gradDone.addColorStop(1,'#059669');
 
         if(chartStatusInst) chartStatusInst.destroy();
@@ -610,7 +563,7 @@
         });
         
         const ctx2 = document.getElementById('chartUser').getContext('2d');
-        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#0099d8'); gradBar.addColorStop(1,'#1e3a8a');
+        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#00c6fb'); gradBar.addColorStop(1,'#005bea');
 
         if(chartUserInst) chartUserInst.destroy();
         chartUserInst = new Chart(ctx2, { 
@@ -618,9 +571,6 @@
             data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 8 }] }, 
             options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } 
         });
-        
-        // Init Tilt on Stat Cards
-        setTimeout(() => VanillaTilt.init(document.querySelectorAll(".stat-card"), { max: 15, speed: 400, glare: true, "max-glare": 0.2 }), 100);
     }
 
     function renderKanban(tasks) {
@@ -632,18 +582,12 @@
                 const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
                 const card = document.createElement('div'); 
                 card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); card.onclick = () => openModal(t.id);
-                // 3D TILT ATTRIBUTES
-                card.setAttribute("data-tilt", ""); card.setAttribute("data-tilt-max", "10"); card.setAttribute("data-tilt-speed", "400"); card.setAttribute("data-tilt-glare", ""); card.setAttribute("data-tilt-max-glare", "0.3");
-                
                 card.innerHTML = `<div class="c-top"><span class="badge badge-${t.priority}">${t.priority}</span> <span class="c-id">${t.code}</span></div><div class="c-title">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
                 cols[t.status].appendChild(card);
             }
         });
         Object.keys(cols).forEach(key => { if(cols[key].children.length === 0) cols[key].innerHTML = getEmptyState(); });
         document.getElementById('cnt-todo').innerText = counts.todo; document.getElementById('cnt-progress').innerText = counts.progress; document.getElementById('cnt-done').innerText = counts.done;
-        
-        // INIT TILT ON TASKS
-        setTimeout(() => VanillaTilt.init(document.querySelectorAll(".task-card"), { max: 7, speed: 400, glare: true, "max-glare": 0.2 }), 100);
     }
 
     function renderCalendar(tasks) {
@@ -659,7 +603,7 @@
             const mStr = String(m + 1).padStart(2, '0'); const dStr = String(i).padStart(2, '0'); const fullDate = `${y}-${mStr}-${dStr}`;
             const dayTasks = tasks.filter(t => t.date === fullDate);
             let html = '';
-            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0ea5e9':'#f59e0b'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.title.substring(0,10)}..</div>`; });
+            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#005bea':'#f59e0b'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.title.substring(0,10)}..</div>`; });
             const isToday = fullDate === todayStr ? 'today' : ''; grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:700; margin-bottom:4px;">${i}</div>${html}</div>`;
         }
     }
@@ -669,9 +613,9 @@
         container.innerHTML = '';
         const sorted = tasks.sort((a,b) => new Date(b.date) - new Date(a.date));
         sorted.forEach(t => {
-             const c = t.status==='done'?'#10b981':(t.status==='progress'?'#0ea5e9':'#f59e0b');
+             const c = t.status==='done'?'#10b981':(t.status==='progress'?'#005bea':'#f59e0b');
              const row = document.createElement('div');
-             row.style = `background:var(--bg-card); padding:18px; border-radius:16px; border-left:5px solid ${c}; box-shadow:var(--shadow-sm); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:4px;`;
+             row.style = `background:var(--bg-card); padding:18px; border-radius:16px; border-left:4px solid ${c}; box-shadow:var(--shadow-sm); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:8px; border:1px solid var(--border);`;
              row.onclick = () => openModal(t.id);
              row.innerHTML = `<div><div style="font-weight:700; color:var(--text-main); font-size:15px;">${t.code} - ${t.title}</div><div style="font-size:12px; color:var(--text-sec); margin-top:4px;">${t.date} | ${t.assignee}</div></div><div class="badge badge-${t.priority}">${t.priority}</div>`;
              container.appendChild(row);
@@ -768,7 +712,7 @@
     }
     window.navMonth = function(d) { calDate.setMonth(calDate.getMonth()+d); renderCalendar(allTasks); }
     window.addComment = async function() { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(!txt || !id) return; const t = allTasks.find(x => x.id == id); const h = t.history || []; h.push({ user: currentUser.name, text: txt, date: new Date().toLocaleString('tr-TR') }); await updateDoc(doc(db, "tasks", id), { history: h }); document.getElementById('newComment').value = ''; openModal(id); }
-    function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.reverse().forEach(h => { list.innerHTML += `<div style="background:white; padding:12px; border-radius:12px; border:1px solid var(--border); font-size:13px; box-shadow:var(--shadow-sm);"><div style="font-weight:700; color:var(--primary); font-size:11px; display:flex; justify-content:space-between; margin-bottom:4px;"><span>${h.user}</span> <span>${h.date}</span></div><div>${h.text}</div></div>`; }); }
+    function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.reverse().forEach(h => { list.innerHTML += `<div style="background:var(--bg-card); padding:12px; border-radius:12px; border:1px solid var(--border); font-size:13px; box-shadow:var(--shadow-sm);"><div style="font-weight:700; color:var(--primary); font-size:11px; display:flex; justify-content:space-between; margin-bottom:4px;"><span>${h.user}</span> <span>${h.date}</span></div><div>${h.text}</div></div>`; }); }
     window.exportExcel = function() { const rows = allTasks.map(t => ({ "Kod": t.code, "Konu": t.title, "Durum": t.status, "Öncelik": t.priority, "Sorumlu": t.assignee, "Tarih": t.date, "Açıklama": t.desc })); const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Görevler"); XLSX.writeFile(wb, "BT_Gorevler.xlsx"); }
 </script>
 </body>
