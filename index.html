@@ -5,16 +5,19 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
     <link rel="apple-touch-icon" href="logo.png">
     <link rel="icon" type="image/png" href="logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -24,115 +27,100 @@
     
     <style>
         :root {
-            /* V6.0 TITANIUM ENTERPRISE PALET */
-            /* Daha derin, kurumsal mavi */
-            --primary-grad: linear-gradient(135deg, #005bea 0%, #00c6fb 100%); 
-            --primary: #005bea; 
-            --primary-soft: rgba(0, 91, 234, 0.06);
+            /* V7.0 FUTURISTIC PALET */
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --accent: #06b6d4;
             
-            /* Zeminler - Artık daha opak ve net (Seramik Etkisi) */
-            --bg-body: #f4f7fa; /* Çok hafif gri-mavi mat zemin */
+            /* Light Mode (Clean Tech) */
+            --bg-body: #f8fafc;
             --bg-card: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.98); /* Neredeyse tam opak */
-            --bg-col: #f8f9fb;
-            
-            --border: #e2e8f0; 
-            --text-main: #1e293b; /* Daha koyu, net siyah */
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --bg-col: #f1f5f9;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
             --text-sec: #64748b;
             
-            /* Gölgeler - Daha sofistike, katmanlı */
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04);
-            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-            --shadow-float: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
-            --glow-primary: 0 4px 20px rgba(0, 91, 234, 0.25);
+            --shadow-float: 0 10px 30px -10px rgba(0,0,0,0.1);
+            --spotlight-color: rgba(0, 0, 0, 0.03); /* Işık rengi */
             
             --todo-line: #f59e0b;
-            --prog-line: #005bea;
+            --prog-line: #3b82f6;
             --done-line: #10b981;
         }
 
         [data-theme="dark"] {
-            /* TITANIUM DARK */
-            --primary-grad: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-            --primary: #3b82f6; 
-            --primary-soft: rgba(59, 130, 246, 0.15);
+            /* Dark Mode (Cyberpunk) */
+            --primary: #60a5fa;
+            --primary-glow: rgba(96, 165, 250, 0.6);
             
-            --bg-body: #0b1121; /* Derin, mat gece mavisi */
-            --bg-card: #151c2f;
-            --bg-glass: rgba(21, 28, 47, 0.98);
-            --bg-col: #1e293b;
+            --bg-body: #09090b; /* Simsiyah değil, çok koyu gri */
+            --bg-card: #18181b;
+            --bg-glass: rgba(24, 24, 27, 0.8);
+            --bg-col: #121214;
             
-            --border: #2a3447; 
-            --text-main: #f8fafc; 
-            --text-sec: #94a3b8;
+            --border: #27272a;
+            --text-main: #fafafa;
+            --text-sec: #a1a1aa;
             
-            --shadow-sm: none;
-            --shadow-card: 0 8px 20px rgba(0,0,0,0.25);
-            --glow-primary: 0 0 30px rgba(59, 130, 246, 0.4);
+            --shadow-float: 0 10px 40px -10px rgba(0,0,0,0.5);
+            --spotlight-color: rgba(255, 255, 255, 0.08); /* Karanlıkta beyaz ışık */
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         
-        /* BODY - Dingin, Profesyonel Zemin */
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
-            height: 100vh; overflow: hidden; 
-            background-color: var(--bg-body); /* Hareketli gradient yerine sabit renk */
-            letter-spacing: -0.01em; /* Biraz daha sıkı harf aralığı */
+            height: 100vh; overflow: hidden; background-color: var(--bg-body);
+            /* Teknolojik Grid Arka Plan */
+            background-image: radial-gradient(var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        /* CUSTOM SCROLLBARS - Daha ince */
+        /* SPOTLIGHT EFFECT CONTAINER */
+        .spotlight-group { position: relative; }
+
+        /* CUSTOM SCROLLBARS */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-sec); }
 
-        h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.02em; font-weight: 700; }
-        p, .c-desc { line-height: 1.5; }
+        h1, h2, h3, .brand-text, .stat-num { letter-spacing: -0.03em; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.05em; }
 
-        /* RIPPLE EFFECT */
-        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.3); pointer-events: none; }
-        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
-        .btn-grad, .nav-btn, .task-card, .btn-icon { position: relative; overflow: hidden; }
-
-        /* HEADER - Daha net sınırlar */
+        /* HEADER */
         header { 
-            background-color: var(--bg-glass); 
-            /* Blur efekti azaldı, opaklık arttı */
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; 
-            border-bottom: 1px solid var(--border); width: 100%; z-index: 50; position: sticky; top: 0; left: 0;
-            box-shadow: var(--shadow-sm);
+            background-color: var(--bg-glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 0 24px; height: 70px; display: flex; align-items: center; justify-content: space-between; 
+            border-bottom: 1px solid var(--border); width: 100%; z-index: 50; position: sticky; top: 0;
         }
         .brand { display: flex; align-items: center; gap: 12px; }
-        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 10px; background: white; padding: 3px; border: 1px solid var(--border); }
-        .brand-text { font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.03em; }
+        .logo-img { height: 38px; width: 38px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.3)); }
+        .brand-text { font-size: 16px; font-weight: 800; color: var(--text-main); text-transform: uppercase; letter-spacing: 0.05em; }
 
-        .nav-wrapper { flex: 1; display: flex; justify-content: center; }
-        .nav-pills { display: inline-flex; background: var(--bg-col); padding: 4px; border-radius: 16px; gap: 2px; border: 1px solid var(--border); }
-        .nav-btn { color: var(--text-sec); padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
-        .nav-btn:hover { color: var(--primary); background: var(--bg-card); }
-        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
-        [data-theme="dark"] .nav-btn.active { background: var(--primary-grad); color: white; border: none; box-shadow: var(--glow-primary); }
+        .nav-pills { display: inline-flex; background: var(--bg-col); padding: 4px; border-radius: 12px; border: 1px solid var(--border); }
+        .nav-btn { color: var(--text-sec); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-btn:hover { color: var(--text-main); }
+        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        [data-theme="dark"] .nav-btn.active { background: var(--primary); color: #000; }
 
+        /* USER AREA */
         .user-area { display: flex; align-items: center; gap: 12px; }
-        .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; }
-        .user-role { font-size: 11px; color: var(--text-sec); font-weight: 500; display: block; }
-        .btn-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
-        .btn-grad { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 13px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm); }
-        .btn-grad:hover { background: var(--primary-grad); box-shadow: var(--glow-primary); transform: translateY(-1px); }
-
-        /* GREETING - Daha temiz */
-        .greeting-card {
-            background: var(--bg-card); padding: 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px;
-            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
-            box-shadow: var(--shadow-card);
+        .user-info { font-weight: 700; font-size: 12px; color: var(--text-main); text-align: right; }
+        .user-role { font-size: 10px; color: var(--text-sec); font-family: 'JetBrains Mono', monospace; display: block; }
+        .btn-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
+        .btn-icon:hover { color: var(--primary); border-color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+        
+        .btn-neon { 
+            background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 12px; 
+            transition: 0.3s; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+            box-shadow: 0 0 15px var(--primary-glow); 
         }
-        .greeting-text h2 { margin: 0; font-size: 22px; color: var(--text-main); }
-        .greeting-text p { margin: 4px 0 0 0; color: var(--text-sec); font-size: 14px; }
-        .greeting-icon { font-size: 36px; opacity: 0.8; }
+        .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--primary-glow); }
+        [data-theme="dark"] .btn-neon { color: #000; }
 
-        /* LAYOUT */
+        /* LAYOUT & SCROLL FIX */
         #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         .main-content { 
             flex: 1; overflow-y: auto; overflow-x: hidden; padding: 24px; max-width: 1600px; margin: 0 auto; width: 100%;
@@ -141,95 +129,116 @@
         .view-section { display: none; width: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* KANBAN - Daha net sütunlar */
+        /* GREETING */
+        .greeting-card {
+            background: var(--bg-card); padding: 24px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
+            position: relative; overflow: hidden;
+        }
+        /* Spotlight Effect CSS */
+        .greeting-card::before, .task-card::before, .stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: inherit; pointer-events: none;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);
+            opacity: 0; transition: opacity 0.5s; z-index: 2;
+        }
+        .greeting-card:hover::before, .task-card:hover::before, .stat-card:hover::before { opacity: 1; }
+
+        /* KANBAN */
         .kanban-container { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
         .k-col { 
             flex: 1; min-width: 320px; max-width: 400px; background: var(--bg-col); border-radius: 16px; 
-            display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--border); 
+            display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); 
             height: 100%; max-height: 75vh;
         }
-        
-        #col-todo { border-top: 3px solid var(--todo-line); }
-        #col-progress { border-top: 3px solid var(--prog-line); }
-        #col-done { border-top: 3px solid var(--done-line); }
-        .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
-        .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 10px; min-height: 100px; }
+        .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.1em; padding: 0 4px; }
+        .k-list { overflow-y: auto; flex: 1; padding: 4px; display: flex; flex-direction: column; gap: 12px; min-height: 100px; }
 
-        /* TASK CARDS - "Seramik" Efekti */
+        /* TASK CARD - FUTURISTIC */
         .task-card { 
             background: var(--bg-card); border-radius: 12px; padding: 16px; 
-            box-shadow: var(--shadow-card); border: 1px solid var(--border); 
-            cursor: grab; transition: all 0.2s ease-in-out; 
-            position: relative; flex-shrink: 0;
+            border: 1px solid var(--border); position: relative; flex-shrink: 0;
+            transition: transform 0.2s, box-shadow 0.2s; cursor: grab;
+            animation: slideUp 0.5s ease forwards; opacity: 0; /* Staggered Init */
         }
-        .task-card:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-float); }
-        [data-theme="dark"] .task-card:hover { box-shadow: var(--glow-primary); }
-        .task-card::after { content: ''; position: absolute; left: -1px; top: 10px; bottom: 10px; width: 3px; border-radius: 4px; }
-        .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
-        
-        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.03) rotate(2deg); box-shadow: var(--shadow-float); z-index: 100; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .c-top { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .c-id { font-family: monospace; font-size: 11px; color: var(--text-sec); background: var(--bg-col); padding: 2px 6px; border-radius: 4px; }
-        .c-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; color: var(--text-main); line-height: 1.4; }
-        .c-desc { font-size: 13px; color: var(--text-sec); }
-        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
-        
-        /* DASHBOARD STATS - Daha net kartlar */
-        .dash-container .stat-card { background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-card); border-radius: 16px; padding: 20px; }
-        .stats-row { gap: 20px; }
-        .stat-lbl { font-size: 13px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.02em; }
-        .stat-num { font-size: 32px; font-weight: 800; margin-top: 5px; display: block; }
-        .stat-icon-bg { opacity: 0.05; font-size: 40px; }
-        .chart-wrapper { height: 350px; margin-bottom: 20px; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); }
+        .task-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); border-color: var(--text-sec); }
+        .task-card::after { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 4px 4px 0; }
+        .p-Yüksek::after { background: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); } 
+        .p-Orta::after { background: #f59e0b; } 
+        .p-Düşük::after { background: #10b981; }
 
-        /* EXTRAS */
-        .calendar-wrapper { background: var(--bg-card); border-radius: 16px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; box-shadow: var(--shadow-card); }
-        .cal-grid { border-radius: 12px; border: 1px solid var(--border); }
-        .cal-cell { background: var(--bg-card); }
-        .cal-cell.today { background: var(--primary-soft); }
-        .cal-task { background: var(--primary); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm); }
-        
-        .badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-        .avatar { width: 28px; height: 28px; border-radius: 8px; font-size: 11px; font-weight: 700; border: 2px solid var(--bg-card); box-shadow: var(--shadow-sm); }
-        
-        /* MODAL - Daha net */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; }
+        .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
+        .c-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-sec); background: var(--bg-body); padding: 3px 6px; border-radius: 4px; border: 1px solid var(--border); }
+        .c-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main); line-height: 1.4; }
+        .c-desc { font-size: 12px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+        .c-assignee { font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+        /* DASHBOARD */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 24px; }
+        .stat-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); position: relative; overflow: hidden; }
+        .stat-lbl { font-size: 11px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-num { font-size: 36px; font-weight: 800; margin-top: 5px; color: var(--text-main); letter-spacing: -0.05em; }
+        .chart-wrapper { height: 350px; margin-bottom: 20px; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
+
+        /* MODAL */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
-        .modal-box { background: var(--bg-card); width: 100%; max-width: 650px; height: auto; max-height: 92%; border-radius: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-float); border: 1px solid var(--border); }
-        .m-head { padding: 20px 24px; border-bottom: 1px solid var(--border); }
-        .m-body { padding: 24px; overflow-y: auto; flex: 1; }
-        .m-foot { padding: 20px 24px; border-top: 1px solid var(--border); background: var(--bg-col); border-radius: 0 0 20px 20px; }
+        .modal-box { background: var(--bg-card); width: 100%; max-width: 650px; height: 90%; max-height: 800px; border-radius: 20px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: var(--shadow-float); }
+        .m-head, .m-foot { padding: 16px 24px; flex-shrink: 0; border-color: var(--border); } .m-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .m-head { border-bottom: 1px solid var(--border); } .m-foot { border-top: 1px solid var(--border); background: var(--bg-col); border-radius: 0 0 20px 20px; }
         
-        .frm-lbl { font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: block; }
-        .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg-card); color: var(--text-main); transition: 0.2s; }
-        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
-        .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
-
-        /* LOGIN - Daha profesyonel */
-        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-body); display: flex; align-items: center; justify-content: center; }
-        .login-card { background: var(--bg-card); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-float); width: 100%; max-width: 420px; text-align: center; border: 1px solid var(--border); }
-        .login-input { background: var(--bg-col); border: 1px solid var(--border); color: var(--text-main); }
-
+        .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-sec); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
+        .frm-inp { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; background: var(--bg-body); color: var(--text-main); transition: 0.2s; font-family: 'Inter', sans-serif; }
+        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-glow); }
+        
+        /* LOGIN */
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-body); background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 30px 30px; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: var(--bg-card); padding: 40px; border-radius: 24px; border: 1px solid var(--border); width: 100%; max-width: 400px; text-align: center; box-shadow: var(--shadow-float); }
+        
+        /* UTILS */
         .hidden { display: none !important; } .admin-only { display: none; }
-        .filter-panel { position: absolute; top: 80px; right: 24px; width: 320px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-float); z-index: 40; display: none; flex-direction: column; gap: 16px; }
-        #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; }
-        .toast { background: var(--bg-card); color: var(--text-main); padding: 16px 24px; border-radius: 12px; box-shadow: var(--shadow-float); border-left: 4px solid; font-weight: 600; }
+        .avatar { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+        .badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .badge-Yüksek { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .badge-Orta { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
+        .badge-Düşük { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        
+        .filter-panel { position: absolute; top: 80px; right: 24px; width: 300px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow-float); z-index: 40; display: none; flex-direction: column; gap: 12px; }
+        #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: var(--bg-card); color: var(--text-main); padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid; font-weight: 600; box-shadow: var(--shadow-float); display: flex; align-items: center; gap: 10px; min-width: 300px; animation: slideIn 0.3s ease; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        
+        /* CALENDAR & LIST */
+        .dash-container, .agenda-container { width: 100%; padding-bottom: 50px; }
+        .calendar-wrapper { background: var(--bg-card); border-radius: 16px; padding: 20px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); flex: 1; }
+        .cal-cell { background: var(--bg-card); padding: 4px; font-size: 12px; min-height: 80px; }
+        .cal-cell.today { background: rgba(59, 130, 246, 0.05); }
+        .cal-task { background: var(--primary); color: white; padding: 4px; margin-top: 4px; border-radius: 4px; font-size: 10px; cursor: pointer; }
+        [data-theme="dark"] .cal-task { color: black; }
 
         /* MOBILE */
         .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
             header { padding: 0 16px; height: 60px; }
-            .main-content { padding: 16px; padding-bottom: 80px; }
+            .main-content { padding: 16px; padding-bottom: 90px; }
             .greeting-card { padding: 16px; margin-bottom: 16px; }
-            .greeting-text h2 { font-size: 18px; }
-            .kanban-container { gap: 12px; }
-            .k-col { min-width: 85vw; }
-            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border); height: 60px; z-index: 1000; justify-content: space-around; align-items: center; }
+            .kanban-container { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; }
+            .k-col { min-width: 85vw; scroll-snap-align: center; margin-right: 12px; }
+            
+            .bottom-nav { 
+                display: flex; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; 
+                background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                border: 1px solid var(--border); border-radius: 20px; height: 65px; z-index: 1000; 
+                justify-content: space-around; align-items: center; box-shadow: var(--shadow-float);
+            }
             .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-sec); font-size: 10px; font-weight: 600; gap: 4px; }
             .b-nav-item.active { color: var(--primary); }
-            .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: var(--bg-col); border: 1px solid var(--border); color: var(--text-sec); }
+            .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 8px; background: var(--bg-col); border: 1px solid var(--border); color: var(--text-sec); }
+            .modal-box { height: 100%; border-radius: 0; }
         }
     </style>
 </head>
@@ -239,13 +248,13 @@
 
 <div id="loginOverlay">
     <div class="login-card">
-        <img src="logo.png" alt="Logo" style="width:80px; margin-bottom:20px; border-radius:16px; box-shadow:var(--shadow-sm);">
-        <h2 style="margin:0 0 10px 0; color:var(--text-main); font-size:24px; font-weight:800;">BT Portal</h2>
-        <p style="color:var(--text-sec); margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Kurumsal Giriş</p>
-        <input type="email" id="email" class="login-input" placeholder="E-posta Adresi">
-        <input type="password" id="password" class="login-input" placeholder="Şifre">
-        <button class="btn-grad" style="width:100%; justify-content:center; padding:14px; font-size:15px; margin-top:10px;" onclick="createRipple(event); login()">Giriş Yap</button>
-        <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:13px; font-weight:600;"></div>
+        <img src="logo.png" alt="Logo" style="width:80px; margin-bottom:24px; border-radius:12px; filter: drop-shadow(0 0 10px var(--primary-glow));">
+        <h2 style="margin:0 0 8px 0; color:var(--text-main); font-size:22px; font-weight:800;">BT Portal</h2>
+        <p style="color:var(--text-sec); margin-bottom:30px; font-size:13px; font-family:'JetBrains Mono';">System.Login(User);</p>
+        <input type="email" id="email" class="frm-inp" placeholder="E-posta" style="margin-bottom:12px;">
+        <input type="password" id="password" class="frm-inp" placeholder="Şifre" style="margin-bottom:20px;">
+        <button class="btn-neon" style="width:100%; justify-content:center; height:44px;" onclick="login()">Sisteme Gir</button>
+        <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:12px; font-family:'JetBrains Mono';"></div>
     </div>
 </div>
 
@@ -254,44 +263,44 @@
         <div class="brand"><img src="logo.png" alt="Logo" class="logo-img"><div class="brand-text">BT YÖNETİM</div></div>
         <div class="nav-wrapper">
             <div class="nav-pills">
-                <button class="nav-btn active" onclick="createRipple(event); showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</button>
-                <button class="nav-btn" onclick="createRipple(event); showView('month', this)"><i class="fa-solid fa-calendar-days"></i> Takvim</button>
-                <button class="nav-btn" onclick="createRipple(event); showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
-                <button class="nav-btn" onclick="createRipple(event); showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
+                <button class="nav-btn active" onclick="showView('kanban', this)"><i class="fa-solid fa-layer-group"></i> Pano</button>
+                <button class="nav-btn" onclick="showView('month', this)"><i class="fa-regular fa-calendar"></i> Takvim</button>
+                <button class="nav-btn" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
+                <button class="nav-btn" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
             </div>
         </div>
         <div class="user-area">
             <button class="mobile-filter-btn" onclick="toggleFilter()"><i class="fa-solid fa-filter"></i></button>
-            <div class="user-info"><div id="displayUserName"></div><span class="user-role" id="displayUserRole">Yetkili</span></div>
+            <div class="user-info"><div id="displayUserName"></div><span class="user-role" id="displayUserRole">ADMIN</span></div>
             <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
-            <button class="btn-icon btn-logout" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
-            <button class="btn-grad" onclick="createRipple(event); newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">Yeni Görev</span></button>
+            <button class="btn-icon" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
+            <button class="btn-neon" onclick="newTask()"><i class="fa-solid fa-plus"></i> <span style="display:none; @media(min-width:768px){display:inline}">YENİ</span></button>
         </div>
     </header>
 
     <div id="filterPanel" class="filter-panel">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight:800; font-size:16px;">Filtrele</span><span style="cursor:pointer; padding:5px;" onclick="toggleFilter()">✕</span>
+            <span style="font-weight:800; font-size:14px; text-transform:uppercase;">Filtrele</span><span style="cursor:pointer;" onclick="toggleFilter()">✕</span>
         </div>
-        <div class="frm-grp"><span class="frm-lbl">Ara</span><input type="text" id="fltText" class="frm-inp" placeholder="Kelime..."></div>
-        <div class="frm-grp"><span class="frm-lbl">Konu</span><select id="fltTopic" class="frm-inp"></select></div>
-        <div class="frm-grp"><span class="frm-lbl">Atanan</span><select id="fltAssignee" class="frm-inp"></select></div>
-        <div style="display:flex; gap:12px; margin-top:10px;">
-            <button class="btn-grad" style="flex:1; justify-content:center;" onclick="applyFilter()">Uygula</button>
-            <button class="q-btn" style="flex:1; text-align:center; background:var(--bg-col); color:var(--text-sec); border:1px solid var(--border);" onclick="clearFilter()">Temizle</button>
+        <input type="text" id="fltText" class="frm-inp" placeholder="Ara...">
+        <select id="fltTopic" class="frm-inp"></select>
+        <select id="fltAssignee" class="frm-inp"></select>
+        <div style="display:flex; gap:10px; margin-top:5px;">
+            <button class="btn-neon" style="flex:1; justify-content:center;" onclick="applyFilter()">Uygula</button>
+            <button class="btn-icon" style="flex:1; width:auto; border-color:#ef4444; color:#ef4444;" onclick="clearFilter()">Sil</button>
         </div>
     </div>
 
-    <div class="main-content">
+    <div class="main-content spotlight-group">
         <div id="view-dashboard" class="view-section dash-container">
             <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
-                <button class="btn-grad" style="background: var(--bg-card); color:var(--text-main); border:1px solid var(--border);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel" style="color:#10b981"></i> Excel İndir</button>
+                <button class="btn-neon" style="background:#10b981; box-shadow:0 0 15px rgba(16,185,129,0.4)" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel</button>
             </div>
             <div class="stats-row">
-                <div class="stat-card"><span class="stat-lbl">Toplam Görev</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#005bea" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num font-mono" id="dTotal">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num font-mono" style="color:var(--todo-line)" id="dTodo">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num font-mono" style="color:var(--primary)" id="dProg">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num font-mono" style="color:var(--done-line)" id="dDone">0</span></div>
             </div>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:24px;">
                 <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
@@ -301,21 +310,21 @@
 
         <div id="view-kanban" class="view-section active">
             <div class="greeting-card">
-                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Operasyonel mükemmellik için hazırız.</p></div>
-                <div class="greeting-icon" id="greetingIcon" style="color:var(--primary)">Is</div>
+                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Sistem hazır. Veriler güncel.</p></div>
+                <div class="greeting-icon" id="greetingIcon">⚡</div>
             </div>
 
             <div class="kanban-container">
                 <div class="k-col" id="col-todo">
-                    <div class="k-header">Bekleyenler <span class="badge-count" id="cnt-todo" style="background:var(--bg-card); padding:2px 8px; border-radius:10px;">0</span></div>
+                    <div class="k-header">BEKLEYEN <span class="badge" id="cnt-todo" style="background:var(--bg-card); border:1px solid var(--border)">0</span></div>
                     <div class="k-list" id="lst-todo" data-status="todo"></div>
                 </div>
                 <div class="k-col" id="col-progress">
-                    <div class="k-header" style="color:var(--primary)">İşlemde <span class="badge-count" id="cnt-progress" style="background:var(--primary-soft); color:var(--primary); padding:2px 8px; border-radius:10px;">0</span></div>
+                    <div class="k-header" style="color:var(--primary)">İŞLEMDE <span class="badge" id="cnt-progress" style="background:rgba(59,130,246,0.1); color:var(--primary)">0</span></div>
                     <div class="k-list" id="lst-progress" data-status="progress"></div>
                 </div>
                 <div class="k-col" id="col-done">
-                    <div class="k-header" style="color:#10b981">Tamamlanan <span class="badge-count" id="cnt-done" style="background:#ecfdf5; color:#10b981; padding:2px 8px; border-radius:10px;">0</span></div>
+                    <div class="k-header" style="color:var(--done-line)">BİTEN <span class="badge" id="cnt-done" style="background:rgba(16,185,129,0.1); color:var(--done-line)">0</span></div>
                     <div class="k-list" id="lst-done" data-status="done"></div>
                 </div>
             </div>
@@ -323,9 +332,9 @@
 
         <div id="view-month" class="view-section">
             <div class="calendar-wrapper">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                     <button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <div style="font-size:20px; font-weight:800;" id="calTitle"></div>
+                    <div style="font-size:18px; font-weight:700;" id="calTitle"></div>
                     <button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
                 <div class="cal-grid" id="calGrid"></div>
@@ -334,16 +343,16 @@
 
         <div id="view-agenda" class="view-section">
             <div class="calendar-wrapper">
-                <div class="m-title" style="margin-bottom:24px;">Haftalık Görev Listesi</div>
-                <div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div>
+                <div class="m-title" style="margin-bottom:20px;">Haftalık Liste</div>
+                <div id="agendaList" style="display:flex; flex-direction:column; gap:8px; overflow-y:auto;"></div>
             </div>
         </div>
     </div>
     
     <div class="bottom-nav">
-        <button class="b-nav-item active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
-        <button class="b-nav-item" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i><span>Takvim</span></button>
-        <button class="b-nav-item" onclick="newTask()"><i class="fa-solid fa-plus-circle" style="font-size:24px; color:var(--primary)"></i><span>Yeni</span></button>
+        <button class="b-nav-item active" onclick="showView('kanban', this)"><i class="fa-solid fa-layer-group"></i><span>Pano</span></button>
+        <button class="b-nav-item" onclick="showView('month', this)"><i class="fa-regular fa-calendar"></i><span>Takvim</span></button>
+        <button class="b-nav-item" onclick="newTask()"><div style="background:var(--primary); width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; color:white; margin-top:-24px; box-shadow:0 0 15px var(--primary-glow);"><i class="fa-solid fa-plus"></i></div></button>
         <button class="b-nav-item" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i><span>Liste</span></button>
         <button class="b-nav-item" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Rapor</span></button>
     </div>
@@ -351,31 +360,31 @@
 
 <div id="modal" class="modal">
     <div class="modal-box">
-        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title" style="font-size:18px;">Görev Detayı</span><span id="tCodeDisplay" style="background:var(--bg-col); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:800; color:var(--text-sec); font-family:monospace;"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
+        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title">Görev Detayı</span><span id="tCodeDisplay" class="font-mono" style="background:var(--bg-col); padding:4px 8px; border-radius:6px; font-size:12px; color:var(--primary);"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
         <div class="m-body">
             <input type="hidden" id="tId"><input type="hidden" id="tCode">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-                <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp" style="font-weight:600;"></select></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+                <div class="frm-grp span-full"><span class="frm-lbl">Konu</span><select id="tTitle" class="frm-inp"></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Durum</span><select id="tStatus" class="frm-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Öncelik</span><select id="tPriority" class="frm-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
-                <div class="frm-grp"><span class="frm-lbl">Sorumlu Kişi</span><select id="tAssignee" class="frm-inp"></select></div>
-                <div class="frm-grp"><span class="frm-lbl">Hedef Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
+                <div class="frm-grp"><span class="frm-lbl">Sorumlu</span><select id="tAssignee" class="frm-inp"></select></div>
+                <div class="frm-grp"><span class="frm-lbl">Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
                 <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="4"></textarea></div>
             </div>
-            <div class="frm-grp span-full" style="margin-top:20px; background:var(--bg-col); padding:16px; border-radius:16px; border:1px dashed var(--border); text-align:center;">
+            <div class="frm-grp span-full" style="margin-top:20px; background:var(--bg-col); padding:16px; border-radius:12px; border:1px dashed var(--border); text-align:center;">
                 <input type="file" id="tFile" style="display:none;" onchange="document.getElementById('fileName').innerText = this.files[0].name">
-                <label for="tFile" class="btn-grad" style="display:inline-flex; width:auto; padding:8px 16px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border); box-shadow:var(--shadow-sm);"><i class="fa-solid fa-cloud-upload" style="color:var(--primary)"></i> Dosya Seç</label>
-                <div id="fileName" style="margin-top:8px; font-size:12px; color:var(--text-sec);"></div><span id="uploadStatus" class="loading">Yükleniyor...</span>
-                <a id="tFileLink" href="#" target="_blank" class="btn-grad hidden" style="margin:10px auto 0; width:fit-content; padding:8px 16px;">Dosyayı İndir</a>
+                <label for="tFile" class="btn-icon" style="display:inline-flex; width:auto; padding:0 20px; gap:8px;"><i class="fa-solid fa-cloud-upload"></i> Dosya Seç</label>
+                <div id="fileName" class="font-mono" style="margin-top:8px; font-size:11px; color:var(--text-sec);"></div><span id="uploadStatus" class="loading">Yükleniyor...</span>
+                <a id="tFileLink" href="#" target="_blank" class="btn-neon hidden" style="margin:10px auto 0; width:fit-content;">İndir</a>
             </div>
             <div class="frm-grp span-full comments-section" style="margin-top:20px;">
-                <span class="frm-lbl">Tarihçe & Notlar</span><div id="commentList" style="max-height:200px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
-                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 24px;" onclick="createRipple(event); addComment()">Gönder</button></div>
+                <span class="frm-lbl">Log & Notlar</span><div id="commentList" style="max-height:150px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
+                <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-icon" onclick="addComment()"><i class="fa-solid fa-paper-plane"></i></button></div>
             </div>
         </div>
         <div class="m-foot" style="display:flex; justify-content:space-between;">
-            <button class="q-btn admin-only" style="color:#ef4444; background:#fef2f2; border:1px solid #fecaca; padding:10px 20px; border-radius:10px; font-weight:600;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button>
-            <button class="btn-grad" onclick="createRipple(event); saveTask()" id="btnSave" style="padding:10px 30px;">Kaydet</button>
+            <button class="btn-icon admin-only" style="border-color:#ef4444; color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-neon" onclick="saveTask()" id="btnSave">KAYDET</button>
         </div>
     </div>
 </div>
@@ -387,6 +396,18 @@
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(r => r.forEach(reg => reg.unregister())); }
+
+    /* SPOTLIGHT LOGIC */
+    document.addEventListener('mousemove', e => {
+        const containers = document.querySelectorAll('.spotlight-group');
+        containers.forEach(container => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            container.style.setProperty('--mouse-x', `${x}px`);
+            container.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 
     const firebaseConfig = {
         apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s",
@@ -412,41 +433,33 @@
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '', text: '' };
     let currentUser = null; let chartStatusInst = null; let chartUserInst = null;
 
-    window.createRipple = function(event) {
-        const button = event.currentTarget;
-        const circle = document.createElement("span");
-        const diameter = Math.max(button.clientWidth, button.clientHeight);
-        const radius = diameter / 2;
-        circle.style.width = circle.style.height = `${diameter}px`;
-        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
-        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
-        circle.classList.add("ripple");
-        const ripple = button.getElementsByClassName("ripple")[0];
-        if (ripple) { ripple.remove(); }
-        button.appendChild(circle);
-    }
-
     window.showToast = function(msg, type='success') {
         const c = document.getElementById('toast-container'); const t = document.createElement('div');
-        t.className = `toast ${type}`; t.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':'fa-circle-exclamation'}"></i> <span>${msg}</span>`;
+        t.className = `toast ${type}`; 
+        const icon = type==='success'?'fa-check-circle':'fa-circle-exclamation';
+        t.innerHTML = `<i class="fa-solid ${icon}"></i> <span>${msg}</span>`;
         c.appendChild(t); setTimeout(() => { t.style.animation='slideOut 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards'; setTimeout(()=>t.remove(), 300); }, 3000);
     }
     
     function getAvatar(name) {
-        if(!name) return '<div class="avatar" style="background:#cbd5e1; color:#64748b">?</div>';
+        if(!name) return '<div class="avatar" style="background:var(--bg-col); color:var(--text-sec)">?</div>';
         const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
-        const colors = ['#005bea', '#00c6fb', '#3b82f6', '#06b6d4'];
-        return `<div class="avatar" style="background:${colors[name.length%colors.length]}">${initials}</div>`;
+        return `<div class="avatar" style="background:var(--bg-col); border:1px solid var(--border); color:var(--text-main)">${initials}</div>`;
     }
-    function getEmptyState() { return `<div style="text-align:center; padding:40px; color:var(--text-sec); opacity:0.6;"><i class="fa-solid fa-clipboard-check" style="font-size:30px; margin-bottom:10px; display:block;"></i>Görev Yok</div>`; }
+    function getEmptyState() { return `<div style="text-align:center; padding:30px; color:var(--text-sec); opacity:0.5; font-size:12px;"><i class="fa-solid fa-ghost" style="font-size:24px; margin-bottom:8px; display:block;"></i>Veri Yok</div>`; }
+
+    function renderSkeletons() {
+        const skHtml = '<div class="skeleton sk-card"><div class="skeleton sk-line"></div><div class="skeleton sk-line short"></div></div>'.repeat(3);
+        ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
+    }
 
     function updateGreeting() {
         if(!currentUser) return;
         const h = new Date().getHours();
-        let msg = "Merhaba", sub = "Operasyonel mükemmellik için hazırız.", icon = "☀️";
-        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; icon = "☕"; }
-        else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]} Bey`; icon = "🚀"; }
-        else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]} Bey`; icon = "🌙"; }
+        let msg = "Merhaba", sub = "Sistem aktif.", icon = "⚡";
+        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]}`; sub = "Kahveler hazır mı? ☕"; icon = "🌅"; }
+        else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]}`; sub = "Operasyon devam ediyor. 🚀"; icon = "☀️"; }
+        else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]}`; sub = "Günü bitiriyoruz. 🌙"; icon = "✨"; }
         document.getElementById('greetingMsg').innerText = msg;
         document.getElementById('greetingSub').innerText = sub;
         document.getElementById('greetingIcon').innerText = icon;
@@ -461,7 +474,7 @@
     }
 
     window.initApp = function() {
-        loadTheme(); initSelects();
+        loadTheme(); initSelects(); renderSkeletons();
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const uData = USER_MAP[user.email] || { name: user.email, role: "user" };
@@ -470,8 +483,8 @@
                 document.getElementById('appContainer').style.visibility = 'visible';
                 document.getElementById('appContainer').style.opacity = '1';
                 document.getElementById('displayUserName').innerText = uData.name;
-                document.getElementById('displayUserRole').innerText = uData.role === 'admin' ? 'Yönetici' : 'BT Uzmanı';
-                if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'inline-flex' : 'none';
+                document.getElementById('displayUserRole').innerText = uData.role === 'admin' ? 'ADMIN' : 'USER';
+                if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'flex' : 'none';
                 updateGreeting();
                 listenTasks();
                 initSortable();
@@ -492,7 +505,7 @@
                 onEnd: async function (evt) {
                     if (evt.to !== evt.from) {
                         await updateDoc(doc(db, "tasks", evt.item.getAttribute('data-id')), { status: evt.to.getAttribute('data-status') });
-                        if(evt.to.getAttribute('data-status') === 'done') { fireConfetti(); showToast("Tebrikler! Görev tamamlandı.", "success"); } else { showToast("Görev taşındı"); }
+                        if(evt.to.getAttribute('data-status') === 'done') { fireConfetti(); showToast("Tebrikler!", "success"); } else { showToast("Taşındı"); }
                     }
                 }
             });
@@ -502,7 +515,7 @@
     window.login = function() {
         const e = document.getElementById('email').value;
         const p = document.getElementById('password').value;
-        signInWithEmailAndPassword(auth, e, p).catch(() => document.getElementById('loginError').innerText = "Hatalı e-posta veya şifre!");
+        signInWithEmailAndPassword(auth, e, p).catch(() => document.getElementById('loginError').innerText = "Hatalı giriş!");
     }
     window.logout = function() { signOut(auth).then(() => window.location.reload()); }
     window.loadTheme = function() { if(localStorage.getItem('btTheme') === 'dark') document.body.setAttribute('data-theme', 'dark'); }
@@ -525,7 +538,10 @@
     function listenTasks() {
         if(!db) return;
         const q = query(collection(db, "tasks"), orderBy("code", "desc"));
-        onSnapshot(q, (snapshot) => { allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderAll(); });
+        onSnapshot(q, (snapshot) => { 
+            allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); 
+            renderAll(); 
+        });
     }
 
     function renderAll() {
@@ -552,23 +568,23 @@
         
         const ctx1 = document.getElementById('chartStatus').getContext('2d');
         const gradTodo = ctx1.createLinearGradient(0,0,0,400); gradTodo.addColorStop(0,'#fbbf24'); gradTodo.addColorStop(1,'#d97706');
-        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#00c6fb'); gradProg.addColorStop(1,'#005bea');
+        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#38bdf8'); gradProg.addColorStop(1,'#0284c7');
         const gradDone = ctx1.createLinearGradient(0,0,0,400); gradDone.addColorStop(0,'#34d399'); gradDone.addColorStop(1,'#059669');
 
         if(chartStatusInst) chartStatusInst.destroy();
         chartStatusInst = new Chart(ctx1, { 
             type: 'doughnut', 
-            data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: [gradTodo, gradProg, gradDone], borderWidth:0, hoverOffset: 10 }] }, 
+            data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: [gradTodo, gradProg, gradDone], borderWidth:0, hoverOffset: 15 }] }, 
             options: { ...commonOpts, cutout: '75%' } 
         });
         
         const ctx2 = document.getElementById('chartUser').getContext('2d');
-        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#00c6fb'); gradBar.addColorStop(1,'#005bea');
+        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#38bdf8'); gradBar.addColorStop(1,'#005bea');
 
         if(chartUserInst) chartUserInst.destroy();
         chartUserInst = new Chart(ctx2, { 
             type: 'bar', 
-            data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 8 }] }, 
+            data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 6 }] }, 
             options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } 
         });
     }
@@ -576,13 +592,17 @@
     function renderKanban(tasks) {
         const cols = { todo: document.getElementById('lst-todo'), progress: document.getElementById('lst-progress'), done: document.getElementById('lst-done') };
         const counts = { todo: 0, progress: 0, done: 0 }; Object.values(cols).forEach(c => c.innerHTML = '');
-        tasks.forEach(t => {
+        
+        tasks.forEach((t, index) => {
             if(cols[t.status]) {
                 counts[t.status]++;
                 const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
                 const card = document.createElement('div'); 
-                card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); card.onclick = () => openModal(t.id);
-                card.innerHTML = `<div class="c-top"><span class="badge badge-${t.priority}">${t.priority}</span> <span class="c-id">${t.code}</span></div><div class="c-title">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
+                card.className = `task-card p-${t.priority}`; 
+                card.setAttribute('data-id', t.id); 
+                card.style.animationDelay = `${index * 0.05}s`; // Staggered Animation
+                card.onclick = () => openModal(t.id);
+                card.innerHTML = `<div class="c-top"><span class="c-id">${t.code}</span><span class="badge badge-${t.priority}">${t.priority}</span></div><div class="c-title">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
                 cols[t.status].appendChild(card);
             }
         });
@@ -593,7 +613,7 @@
     function renderCalendar(tasks) {
         const grid = document.getElementById('calGrid');
         grid.innerHTML = '';
-        ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].forEach(d => grid.innerHTML += `<div style="text-align:center;font-weight:700;font-size:12px; color:var(--text-sec); padding:10px 0;">${d}</div>`);
+        ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'].forEach(d => grid.innerHTML += `<div style="text-align:center;font-weight:700;font-size:11px; color:var(--text-sec); padding:10px 0;">${d}</div>`);
         const y = calDate.getFullYear(); const m = calDate.getMonth();
         document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' });
         const firstDay = new Date(y, m, 1).getDay(); const offset = firstDay === 0 ? 6 : firstDay - 1; const daysInMonth = new Date(y, m + 1, 0).getDate();
@@ -603,8 +623,8 @@
             const mStr = String(m + 1).padStart(2, '0'); const dStr = String(i).padStart(2, '0'); const fullDate = `${y}-${mStr}-${dStr}`;
             const dayTasks = tasks.filter(t => t.date === fullDate);
             let html = '';
-            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#005bea':'#f59e0b'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.title.substring(0,10)}..</div>`; });
-            const isToday = fullDate === todayStr ? 'today' : ''; grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:700; margin-bottom:4px;">${i}</div>${html}</div>`;
+            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#3b82f6':'#f59e0b'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')"></div>`; });
+            const isToday = fullDate === todayStr ? 'today' : ''; grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:700; margin-bottom:4px; font-size:10px;">${i}</div>${html}</div>`;
         }
     }
 
@@ -612,12 +632,12 @@
         const container = document.getElementById('agendaList');
         container.innerHTML = '';
         const sorted = tasks.sort((a,b) => new Date(b.date) - new Date(a.date));
-        sorted.forEach(t => {
-             const c = t.status==='done'?'#10b981':(t.status==='progress'?'#005bea':'#f59e0b');
+        sorted.forEach((t, index) => {
+             const c = t.status==='done'?'#10b981':(t.status==='progress'?'#3b82f6':'#f59e0b');
              const row = document.createElement('div');
-             row.style = `background:var(--bg-card); padding:18px; border-radius:16px; border-left:4px solid ${c}; box-shadow:var(--shadow-sm); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:8px; border:1px solid var(--border);`;
+             row.style = `background:var(--bg-card); padding:16px; border-radius:12px; border-left:4px solid ${c}; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:8px; animation:slideUp 0.3s ease forwards; opacity:0; animation-delay:${index*0.05}s`;
              row.onclick = () => openModal(t.id);
-             row.innerHTML = `<div><div style="font-weight:700; color:var(--text-main); font-size:15px;">${t.code} - ${t.title}</div><div style="font-size:12px; color:var(--text-sec); margin-top:4px;">${t.date} | ${t.assignee}</div></div><div class="badge badge-${t.priority}">${t.priority}</div>`;
+             row.innerHTML = `<div><div style="font-weight:700; color:var(--text-main); font-size:14px;"><span style="color:var(--text-sec); font-family:'JetBrains Mono'">${t.code}</span> - ${t.title}</div><div style="font-size:11px; color:var(--text-sec); margin-top:4px;">${t.date} | ${t.assignee}</div></div><div class="badge badge-${t.priority}">${t.priority}</div>`;
              container.appendChild(row);
         });
     }
@@ -629,7 +649,7 @@
         const title = document.getElementById('tTitle').value;
         if(!title) { showToast('Konu seçiniz!','error'); return; }
 
-        btnSave.disabled = true; btnSave.innerText = "Kaydediliyor...";
+        btnSave.disabled = true; btnSave.innerText = "KAYDEDİLİYOR...";
         const fileIn = document.getElementById('tFile');
         let downloadUrl = null;
 
@@ -640,7 +660,7 @@
                 const storageRef = ref(storage, 'uploads/' + Date.now() + '_' + file.name);
                 await uploadBytes(storageRef, file);
                 downloadUrl = await getDownloadURL(storageRef);
-            } catch (err) { showToast("Dosya yüklenemedi!", 'error'); btnSave.disabled=false; btnSave.innerText="Kaydet"; uploadStatus.style.display='none'; return; }
+            } catch (err) { showToast("Dosya hatası!", 'error'); btnSave.disabled=false; btnSave.innerText="KAYDET"; uploadStatus.style.display='none'; return; }
         }
 
         const data = {
@@ -653,7 +673,7 @@
         if (downloadUrl) data.fileUrl = downloadUrl;
 
         try {
-            if(id) { await updateDoc(doc(db, "tasks", id), data); showToast("Kayıt güncellendi"); }
+            if(id) { await updateDoc(doc(db, "tasks", id), data); showToast("Güncellendi"); }
             else {
                 await runTransaction(db, async (transaction) => {
                     const metaRef = doc(db, "meta", "counters");
@@ -665,23 +685,23 @@
                     const newTaskData = { ...data, code: 'GRV-' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' };
                     transaction.set(newTaskRef, newTaskData);
                 });
-                showToast("Yeni görev oluşturuldu");
+                showToast("Görev oluşturuldu");
             }
             closeModal();
         } catch(e) { console.error(e); showToast("Hata oluştu!", 'error'); }
-        btnSave.disabled = false; btnSave.innerText = "Kaydet"; uploadStatus.style.display = 'none';
+        btnSave.disabled = false; btnSave.innerText = "KAYDET"; uploadStatus.style.display = 'none';
     }
 
     window.delTask = async function() {
-        if (!currentUser || currentUser.role !== 'admin') { showToast("Yetkiniz yok!", 'error'); return; }
-        if(confirm('Silmek istiyor musunuz?')) { 
+        if (!currentUser || currentUser.role !== 'admin') { showToast("Yetkisiz işlem", 'error'); return; }
+        if(confirm('Bu görevi silmek istiyor musunuz?')) { 
             await deleteDoc(doc(db, "tasks", document.getElementById('tId').value)); 
-            closeModal(); showToast("Görev silindi", 'success');
+            closeModal(); showToast("Silindi", 'success');
         }
     }
 
     window.newTask = function() { 
-        if(!currentUser) { showToast("Lütfen giriş yapın!", 'error'); return; } 
+        if(!currentUser) { showToast("Giriş yapın!", 'error'); return; } 
         document.getElementById('tId').value = ''; document.getElementById('tCode').value = 'YENİ'; document.getElementById('tCodeDisplay').innerText = 'YENİ';
         document.getElementById('tTitle').value = ''; document.getElementById('tStatus').value = 'todo'; 
         document.getElementById('tAssignee').value = ''; document.getElementById('tDate').value = new Date().toLocaleDateString('en-CA'); 
@@ -712,7 +732,7 @@
     }
     window.navMonth = function(d) { calDate.setMonth(calDate.getMonth()+d); renderCalendar(allTasks); }
     window.addComment = async function() { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(!txt || !id) return; const t = allTasks.find(x => x.id == id); const h = t.history || []; h.push({ user: currentUser.name, text: txt, date: new Date().toLocaleString('tr-TR') }); await updateDoc(doc(db, "tasks", id), { history: h }); document.getElementById('newComment').value = ''; openModal(id); }
-    function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.reverse().forEach(h => { list.innerHTML += `<div style="background:var(--bg-card); padding:12px; border-radius:12px; border:1px solid var(--border); font-size:13px; box-shadow:var(--shadow-sm);"><div style="font-weight:700; color:var(--primary); font-size:11px; display:flex; justify-content:space-between; margin-bottom:4px;"><span>${h.user}</span> <span>${h.date}</span></div><div>${h.text}</div></div>`; }); }
+    function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.reverse().forEach(h => { list.innerHTML += `<div style="background:var(--bg-col); padding:10px; border-radius:8px; border:1px solid var(--border); font-size:12px;"><div style="font-weight:700; color:var(--primary); font-size:10px; display:flex; justify-content:space-between; margin-bottom:4px;"><span>${h.user}</span> <span>${h.date}</span></div><div>${h.text}</div></div>`; }); }
     window.exportExcel = function() { const rows = allTasks.map(t => ({ "Kod": t.code, "Konu": t.title, "Durum": t.status, "Öncelik": t.priority, "Sorumlu": t.assignee, "Tarih": t.date, "Açıklama": t.desc })); const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Görevler"); XLSX.writeFile(wb, "BT_Gorevler.xlsx"); }
 </script>
 </body>
