@@ -5,7 +5,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
     
@@ -26,7 +25,7 @@
     
     <style>
         :root {
-            /* V7.5 COCKPIT PALET */
+            /* V7.6 CLEAN & CONFIRMED PALET */
             --primary-grad: linear-gradient(135deg, #005bea 0%, #00c6fb 100%);
             --primary: #005bea; 
             --primary-soft: rgba(0, 91, 234, 0.06);
@@ -40,7 +39,6 @@
             --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
             --shadow-float: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
             --glow-primary: 0 4px 20px rgba(0, 91, 234, 0.2);
-            
             --todo-line: #f59e0b;
             --prog-line: #005bea;
             --done-line: #10b981;
@@ -96,22 +94,30 @@
         .view-section { display: none; width: 100%; height: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* GRID LAYOUT FOR MAIN SCREEN */
+        /* COCKPIT LAYOUT */
         .cockpit-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; height: 100%; overflow: hidden; }
         .cockpit-main { display: flex; flex-direction: column; overflow: hidden; height: 100%; }
         .cockpit-side { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; padding-right: 4px; border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-body); }
 
-        .greeting-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card); }
-        .greeting-text h2 { margin: 0; font-size: 18px; color: var(--text-main); }
-        .greeting-text p { margin: 2px 0 0 0; color: var(--text-sec); font-size: 12px; }
-        .greeting-icon { font-size: 28px; opacity: 0.8; }
+        /* CLEAN TOP BAR (No Text Greeting) */
+        .top-control-bar { 
+            background: var(--bg-card); padding: 12px 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; 
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card);
+        }
+        .control-icon { font-size: 24px; color: var(--primary); opacity: 0.8; }
+        .time-pills { display: inline-flex; background: var(--bg-col); border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
+        .time-btn { background: transparent; border: none; color: var(--text-sec); padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .time-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); }
+        [data-theme="dark"] .time-btn.active { background: var(--primary-grad); color:white; }
 
+        /* KANBAN */
         .kanban-container { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; height: 100%; }
         .k-col { flex: 1; min-width: 280px; background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); height: 100%; max-height: 100%; }
         #col-todo { border-top: 3px solid var(--todo-line); } #col-progress { border-top: 3px solid var(--prog-line); } #col-done { border-top: 3px solid var(--done-line); }
         .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
         .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 8px; min-height: 100px; }
 
+        /* TASK CARD */
         .task-card { background: var(--bg-card); border-radius: 10px; padding: 12px; box-shadow: var(--shadow-card); border: 1px solid var(--border); cursor: grab; transition: all 0.2s; position: relative; flex-shrink: 0; }
         .task-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: var(--shadow-float); }
         .task-card::after { content: ''; position: absolute; left: -1px; top: 8px; bottom: 8px; width: 3px; border-radius: 4px; }
@@ -127,11 +133,15 @@
         .c-desc { font-size: 11px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 10px; }
 
-        /* RIGHT PANEL STYLES */
+        /* DONE STATUS VISUAL */
+        .done-icon { color: var(--done-line); font-size: 14px; margin-left: auto; display: none; animation: popIn 0.3s; }
+        .task-done .done-icon { display: block; }
+        .task-done { opacity: 0.85; }
+        @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+        /* RIGHT PANEL */
         .side-widget { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: var(--shadow-card); }
         .side-title { font-size: 12px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* MINI CALENDAR */
         .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
         .mc-head { font-size: 10px; font-weight: 700; color: var(--text-sec); padding: 4px; }
         .mc-cell { font-size: 11px; padding: 6px; border-radius: 6px; cursor: pointer; color: var(--text-main); transition: 0.2s; position: relative; }
@@ -139,14 +149,13 @@
         .mc-cell.today { background: var(--primary); color: white; font-weight: 700; }
         .mc-cell.has-task::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #ef4444; border-radius: 50%; }
         
-        /* MINI TODO LIST */
         .todo-list-mini { display: flex; flex-direction: column; gap: 8px; }
         .tl-item { background: var(--bg-col); padding: 10px; border-radius: 8px; border-left: 3px solid var(--todo-line); font-size: 12px; cursor: pointer; transition: 0.2s; }
         .tl-item:hover { background: var(--bg-card); box-shadow: var(--shadow-sm); transform: translateX(2px); }
         .tl-title { font-weight: 600; color: var(--text-main); margin-bottom: 2px; }
         .tl-date { font-size: 10px; color: var(--text-sec); }
 
-        /* OTHER VIEWS */
+        /* DASHBOARD & EXTRAS */
         .dash-container .stat-card { background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-card); border-radius: 16px; padding: 20px; }
         .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
         .stat-lbl { font-size: 11px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; }
@@ -198,7 +207,7 @@
             header { padding: 0 16px; height: 56px; }
             .main-content { padding: 16px; padding-bottom: 80px; }
             .cockpit-layout { grid-template-columns: 1fr; gap: 0; }
-            .cockpit-side { display: none; } /* Mobilde yan paneli gizle */
+            .cockpit-side { display: none; }
             .kanban-container { gap: 10px; }
             .k-col { min-width: 88vw; margin-right: 8px; }
             .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border); height: 60px; z-index: 1000; justify-content: space-around; align-items: center; }
@@ -279,16 +288,14 @@
         <div id="view-kanban" class="view-section active">
             <div class="cockpit-layout">
                 <div class="cockpit-main">
-                    <div class="greeting-card">
-                        <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Sistem hazır.</p></div>
-                        <div class="greeting-icon" id="greetingIcon" style="color:var(--primary)">⚡</div>
-                    </div>
-                    
-                    <div class="time-filter-container">
-                        <div class="time-pills">
-                            <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
-                            <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
-                            <button class="time-btn" onclick="setTimeFilter('month', this)">Bu Ay</button>
+                    <div class="top-control-bar">
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div class="greeting-icon" style="color:var(--primary)">⚡</div>
+                            <div class="time-pills">
+                                <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
+                                <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
+                                <button class="time-btn" onclick="setTimeFilter('month', this)">Bu Ay</button>
+                            </div>
                         </div>
                     </div>
 
@@ -475,18 +482,6 @@
         ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
     }
 
-    function updateGreeting() {
-        if(!currentUser) return;
-        const h = new Date().getHours();
-        let msg = "Merhaba", sub = "Operasyonel mükemmellik için hazırız.", icon = "☀️";
-        if(h < 12) { msg = `Günaydın, ${currentUser.name.split(' ')[0]} Bey`; icon = "☕"; }
-        else if(h < 18) { msg = `Tünaydın, ${currentUser.name.split(' ')[0]} Bey`; icon = "🚀"; }
-        else { msg = `İyi Akşamlar, ${currentUser.name.split(' ')[0]} Bey`; icon = "🌙"; }
-        document.getElementById('greetingMsg').innerText = msg;
-        document.getElementById('greetingSub').innerText = sub;
-        document.getElementById('greetingIcon').innerText = icon;
-    }
-
     function fireConfetti() {
         const count = 200; const defaults = { origin: { y: 0.7 } };
         function fire(particleRatio, opts) { confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) })); }
@@ -507,7 +502,6 @@
                 document.getElementById('displayUserName').innerText = uData.name;
                 document.getElementById('displayUserRole').innerText = uData.role === 'admin' ? 'Yönetici' : 'BT Uzmanı';
                 if(document.getElementById('deleteTaskBtn')) document.getElementById('deleteTaskBtn').style.display = (currentUser.role === 'admin') ? 'flex' : 'none';
-                updateGreeting();
                 listenTasks();
                 initSortable();
                 if(currentMode === 'dashboard') renderDashboard(allTasks);
@@ -590,7 +584,7 @@
         
         if(currentMode==='kanban') {
             renderKanban(tasks);
-            renderSideWidgets(tasks); // Sağ Paneli Güncelle
+            renderSideWidgets(tasks);
         }
         else if(currentMode==='month') renderCalendar(tasks);
         else if(currentMode==='dashboard') renderDashboard(tasks);
@@ -599,29 +593,21 @@
 
     /* RIGHT SIDEBAR LOGIC */
     function renderSideWidgets(tasks) {
-        // Mini Calendar
         const grid = document.getElementById('miniCalGrid');
-        // Clear previous days (keep headers)
         while(grid.children.length > 7) { grid.removeChild(grid.lastChild); }
-        
         const now = new Date();
         const y = now.getFullYear(), m = now.getMonth();
         document.getElementById('sideCalTitle').innerText = now.toLocaleDateString('tr-TR', { month: 'long' });
-        
         const firstDay = new Date(y, m, 1).getDay();
         const offset = firstDay === 0 ? 6 : firstDay - 1;
         const daysInMonth = new Date(y, m + 1, 0).getDate();
-        
         for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
-        
         for(let i=1; i<=daysInMonth; i++) {
             const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
             const hasTask = tasks.some(t => t.date === dStr);
             const isToday = i === now.getDate();
             grid.innerHTML += `<div class="mc-cell ${isToday?'today':''} ${hasTask?'has-task':''}">${i}</div>`;
         }
-
-        // Mini Todo List
         const list = document.getElementById('sideTodoList');
         const todos = tasks.filter(t => t.status !== 'done').sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 6);
         list.innerHTML = '';
@@ -664,10 +650,18 @@
                 counts[t.status]++;
                 const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
                 const card = document.createElement('div'); 
-                card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); 
+                card.className = `task-card p-${t.priority} ${t.status === 'done' ? 'task-done' : ''}`; 
+                card.setAttribute('data-id', t.id); 
                 card.style.animationDelay = `${index * 0.05}s`; 
                 card.onclick = () => openModal(t.id);
-                card.innerHTML = `<div class="c-top"><span class="c-id">${t.code}</span><span class="badge badge-${t.priority}">${t.priority}</span></div><div class="c-title" data-id="${t.code}">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
+                
+                // Add Check Icon for DONE tasks
+                let doneIcon = '';
+                if(t.status === 'done') {
+                    doneIcon = '<i class="fa-solid fa-circle-check done-icon"></i>';
+                }
+
+                card.innerHTML = `<div class="c-top"><span class="c-id">${t.code}</span><span class="badge badge-${t.priority}">${t.priority}</span>${doneIcon}</div><div class="c-title" data-id="${t.code}">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
                 cols[t.status].appendChild(card);
             }
         });
