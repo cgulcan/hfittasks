@@ -5,6 +5,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
     
@@ -25,7 +26,7 @@
     
     <style>
         :root {
-            /* V7.6 CLEAN & CONFIRMED PALET */
+            /* V7.7 GOLD MASTER PALET */
             --primary-grad: linear-gradient(135deg, #005bea 0%, #00c6fb 100%);
             --primary: #005bea; 
             --primary-soft: rgba(0, 91, 234, 0.06);
@@ -99,12 +100,11 @@
         .cockpit-main { display: flex; flex-direction: column; overflow: hidden; height: 100%; }
         .cockpit-side { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; padding-right: 4px; border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-body); }
 
-        /* CLEAN TOP BAR (No Text Greeting) */
+        /* CLEAN TOP BAR */
         .top-control-bar { 
             background: var(--bg-card); padding: 12px 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; 
             display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card);
         }
-        .control-icon { font-size: 24px; color: var(--primary); opacity: 0.8; }
         .time-pills { display: inline-flex; background: var(--bg-col); border: 1px solid var(--border); border-radius: 10px; padding: 3px; }
         .time-btn { background: transparent; border: none; color: var(--text-sec); padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .time-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); }
@@ -134,9 +134,9 @@
         .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 10px; }
 
         /* DONE STATUS VISUAL */
-        .done-icon { color: var(--done-line); font-size: 14px; margin-left: auto; display: none; animation: popIn 0.3s; }
+        .done-icon { color: var(--done-line); font-size: 16px; margin-left: auto; display: none; animation: popIn 0.3s; filter: drop-shadow(0 0 5px rgba(16,185,129,0.3)); }
         .task-done .done-icon { display: block; }
-        .task-done { opacity: 0.85; }
+        .task-done { opacity: 0.9; }
         @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
 
         /* RIGHT PANEL */
@@ -290,7 +290,7 @@
                 <div class="cockpit-main">
                     <div class="top-control-bar">
                         <div style="display:flex; align-items:center; gap:10px;">
-                            <div class="greeting-icon" style="color:var(--primary)">⚡</div>
+                            <div class="greeting-icon" style="color:var(--primary)"><i class="fa-solid fa-layer-group"></i></div>
                             <div class="time-pills">
                                 <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
                                 <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
