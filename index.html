@@ -5,8 +5,10 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
+    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="logo.png">
@@ -24,7 +26,7 @@
     
     <style>
         :root {
-            /* V7.4 TIMELINE EDITION */
+            /* V7.5 COCKPIT PALET */
             --primary-grad: linear-gradient(135deg, #005bea 0%, #00c6fb 100%);
             --primary: #005bea; 
             --primary-soft: rgba(0, 91, 234, 0.06);
@@ -38,6 +40,7 @@
             --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
             --shadow-float: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
             --glow-primary: 0 4px 20px rgba(0, 91, 234, 0.2);
+            
             --todo-line: #f59e0b;
             --prog-line: #005bea;
             --done-line: #10b981;
@@ -60,50 +63,51 @@
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); height: 100vh; overflow: hidden; background-color: var(--bg-body); letter-spacing: -0.01em; }
+        
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-        h1, h2, h3, .brand-text, .stat-num { letter-spacing: -0.02em; font-weight: 700; }
         
+        h1, h2, h3, .brand-text, .stat-num { letter-spacing: -0.02em; font-weight: 700; }
         .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.3); pointer-events: none; }
         @keyframes ripple { to { transform: scale(4); opacity: 0; } }
-        .btn-grad, .nav-btn, .task-card, .btn-icon, .time-btn { position: relative; overflow: hidden; }
+        .btn-grad, .nav-btn, .task-card, .btn-icon { position: relative; overflow: hidden; }
 
-        header { background-color: var(--bg-glass); backdrop-filter: blur(10px); padding: 0 20px; height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); z-index: 50; position: sticky; top: 0; }
-        .brand { display: flex; align-items: center; gap: 10px; }
+        header { background-color: var(--bg-glass); backdrop-filter: blur(10px); padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); z-index: 50; position: sticky; top: 0; box-shadow: var(--shadow-card); }
+        .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { height: 36px; width: 36px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid var(--border); }
         .brand-text { font-size: 16px; font-weight: 800; color: var(--text-main); }
 
         .nav-wrapper { flex: 1; display: flex; justify-content: center; }
         .nav-pills { display: inline-flex; background: var(--bg-col); padding: 3px; border-radius: 12px; gap: 2px; border: 1px solid var(--border); }
         .nav-btn { color: var(--text-sec); padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        .nav-btn:hover { color: var(--primary); background: var(--bg-card); }
         .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); }
-        [data-theme="dark"] .nav-btn.active { background: var(--primary-grad); color: white; border: none; box-shadow: var(--glow-primary); }
+        [data-theme="dark"] .nav-btn.active { background: var(--primary-grad); color: white; border: none; }
 
         .user-area { display: flex; align-items: center; gap: 10px; }
         .user-info { font-weight: 700; font-size: 12px; color: var(--text-main); text-align: right; }
-        .btn-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; }
+        .btn-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
         .btn-grad { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 12px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; box-shadow: var(--shadow-card); }
         .btn-grad:hover { background: var(--primary-grad); box-shadow: var(--glow-primary); transform: translateY(-1px); }
 
-        .time-filter-container { display: flex; justify-content: center; margin-bottom: 16px; }
-        .time-pills { display: inline-flex; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 3px; box-shadow: var(--shadow-card); }
-        .time-btn { background: transparent; border: none; color: var(--text-sec); padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .time-btn.active { background: var(--primary); color: white; }
-        [data-theme="dark"] .time-btn.active { background: var(--primary-grad); }
+        #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
+        .main-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px; max-width: 1800px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; position: relative; }
+        .view-section { display: none; width: 100%; height: 100%; flex-direction: column; }
+        .view-section.active { display: flex; }
 
-        .greeting-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card); }
+        /* GRID LAYOUT FOR MAIN SCREEN */
+        .cockpit-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; height: 100%; overflow: hidden; }
+        .cockpit-main { display: flex; flex-direction: column; overflow: hidden; height: 100%; }
+        .cockpit-side { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; padding-right: 4px; border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-body); }
+
+        .greeting-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card); }
         .greeting-text h2 { margin: 0; font-size: 18px; color: var(--text-main); }
         .greeting-text p { margin: 2px 0 0 0; color: var(--text-sec); font-size: 12px; }
         .greeting-icon { font-size: 28px; opacity: 0.8; }
 
-        #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
-        .main-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px; max-width: 1600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; position: relative; }
-        .view-section { display: none; width: 100%; flex-direction: column; }
-        .view-section.active { display: flex; }
-
-        .kanban-container { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
-        .k-col { flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); height: 100%; max-height: 75vh; }
+        .kanban-container { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; height: 100%; }
+        .k-col { flex: 1; min-width: 280px; background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); height: 100%; max-height: 100%; }
         #col-todo { border-top: 3px solid var(--todo-line); } #col-progress { border-top: 3px solid var(--prog-line); } #col-done { border-top: 3px solid var(--done-line); }
         .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
         .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 8px; min-height: 100px; }
@@ -122,7 +126,27 @@
         .c-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; color: var(--text-main); line-height: 1.3; }
         .c-desc { font-size: 11px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 10px; }
+
+        /* RIGHT PANEL STYLES */
+        .side-widget { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: var(--shadow-card); }
+        .side-title { font-size: 12px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
         
+        /* MINI CALENDAR */
+        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+        .mc-head { font-size: 10px; font-weight: 700; color: var(--text-sec); padding: 4px; }
+        .mc-cell { font-size: 11px; padding: 6px; border-radius: 6px; cursor: pointer; color: var(--text-main); transition: 0.2s; position: relative; }
+        .mc-cell:hover { background: var(--bg-col); }
+        .mc-cell.today { background: var(--primary); color: white; font-weight: 700; }
+        .mc-cell.has-task::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #ef4444; border-radius: 50%; }
+        
+        /* MINI TODO LIST */
+        .todo-list-mini { display: flex; flex-direction: column; gap: 8px; }
+        .tl-item { background: var(--bg-col); padding: 10px; border-radius: 8px; border-left: 3px solid var(--todo-line); font-size: 12px; cursor: pointer; transition: 0.2s; }
+        .tl-item:hover { background: var(--bg-card); box-shadow: var(--shadow-sm); transform: translateX(2px); }
+        .tl-title { font-weight: 600; color: var(--text-main); margin-bottom: 2px; }
+        .tl-date { font-size: 10px; color: var(--text-sec); }
+
+        /* OTHER VIEWS */
         .dash-container .stat-card { background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-card); border-radius: 16px; padding: 20px; }
         .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
         .stat-lbl { font-size: 11px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; }
@@ -148,22 +172,15 @@
         
         .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: block; }
         .frm-inp { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--bg-card); color: var(--text-main); transition: 0.2s; font-family: 'Inter', sans-serif; }
-        
-        /* TIMELINE STYLES (YENİ) */
         .comments-section { background: var(--bg-col); padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
         .timeline { position: relative; border-left: 2px solid var(--border); margin-left: 8px; padding-left: 20px; }
         .timeline-item { position: relative; margin-bottom: 16px; }
-        .timeline-item:last-child { margin-bottom: 0; }
-        .timeline-item::before { 
-            content: ''; position: absolute; left: -25px; top: 2px; width: 8px; height: 8px; 
-            border-radius: 50%; background: var(--bg-card); border: 2px solid var(--primary);
-        }
+        .timeline-item::before { content: ''; position: absolute; left: -25px; top: 2px; width: 8px; height: 8px; border-radius: 50%; background: var(--bg-card); border: 2px solid var(--primary); }
         .t-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
         .t-user { font-weight: 700; font-size: 12px; color: var(--text-main); }
         .t-date { font-size: 10px; color: var(--text-sec); font-family: monospace; }
-        .t-text { font-size: 12px; color: var(--text-sec); background: var(--bg-card); padding: 8px; border-radius: 6px; border: 1px solid var(--border); line-height: 1.4; }
+        .t-text { font-size: 12px; color: var(--text-sec); background: var(--bg-card); padding: 8px; border-radius: 6px; border: 1px solid var(--border); }
         .t-system .t-text { background: transparent; border: none; padding: 0; color: var(--primary); font-style: italic; font-size: 11px; }
-        .t-system::before { border-color: var(--text-sec); background: var(--text-sec); }
 
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-body); display: flex; align-items: center; justify-content: center; }
         .login-card { background: var(--bg-card); padding: 30px; border-radius: 20px; box-shadow: var(--shadow-float); width: 100%; max-width: 380px; text-align: center; border: 1px solid var(--border); }
@@ -180,7 +197,8 @@
             .nav-wrapper, .user-info, .brand-text { display: none; }
             header { padding: 0 16px; height: 56px; }
             .main-content { padding: 16px; padding-bottom: 80px; }
-            .greeting-card { padding: 16px; margin-bottom: 12px; }
+            .cockpit-layout { grid-template-columns: 1fr; gap: 0; }
+            .cockpit-side { display: none; } /* Mobilde yan paneli gizle */
             .kanban-container { gap: 10px; }
             .k-col { min-width: 88vw; margin-right: 8px; }
             .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border); height: 60px; z-index: 1000; justify-content: space-around; align-items: center; }
@@ -247,10 +265,10 @@
                 <button class="btn-grad" style="background: var(--bg-card); color:var(--text-main); border:1px solid var(--border);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel" style="color:#10b981"></i> Excel İndir</button>
             </div>
             <div class="stats-row">
-                <div class="stat-card"><span class="stat-lbl">Toplam Görev</span><span class="stat-num" id="dTotal">0</span><i class="fa-solid fa-layer-group stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span><i class="fa-solid fa-clock stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#005bea" id="dProg">0</span><i class="fa-solid fa-spinner stat-icon-bg"></i></div>
-                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span><i class="fa-solid fa-check-circle stat-icon-bg"></i></div>
+                <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">İşlemde</span><span class="stat-num" style="color:#005bea" id="dProg">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span></div>
             </div>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:24px;">
                 <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
@@ -259,31 +277,50 @@
         </div>
 
         <div id="view-kanban" class="view-section active">
-            <div class="greeting-card">
-                <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Operasyonel mükemmellik için hazırız.</p></div>
-                <div class="greeting-icon" id="greetingIcon" style="color:var(--primary)">⚡</div>
-            </div>
-            
-            <div class="time-filter-container">
-                <div class="time-pills">
-                    <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
-                    <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
-                    <button class="time-btn" onclick="setTimeFilter('month', this)">Bu Ay</button>
-                </div>
-            </div>
+            <div class="cockpit-layout">
+                <div class="cockpit-main">
+                    <div class="greeting-card">
+                        <div class="greeting-text"><h2 id="greetingMsg">Merhaba</h2><p id="greetingSub">Sistem hazır.</p></div>
+                        <div class="greeting-icon" id="greetingIcon" style="color:var(--primary)">⚡</div>
+                    </div>
+                    
+                    <div class="time-filter-container">
+                        <div class="time-pills">
+                            <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
+                            <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
+                            <button class="time-btn" onclick="setTimeFilter('month', this)">Bu Ay</button>
+                        </div>
+                    </div>
 
-            <div class="kanban-container">
-                <div class="k-col" id="col-todo">
-                    <div class="k-header">BEKLEYENLER <span class="badge" id="cnt-todo" style="background:var(--bg-card); border:1px solid var(--border)">0</span></div>
-                    <div class="k-list" id="lst-todo" data-status="todo"></div>
+                    <div class="kanban-container">
+                        <div class="k-col" id="col-todo">
+                            <div class="k-header">BEKLEYENLER <span class="badge" id="cnt-todo" style="background:var(--bg-card); border:1px solid var(--border)">0</span></div>
+                            <div class="k-list" id="lst-todo" data-status="todo"></div>
+                        </div>
+                        <div class="k-col" id="col-progress">
+                            <div class="k-header" style="color:var(--primary)">İŞLEMDE <span class="badge" id="cnt-progress" style="background:var(--primary-soft); color:var(--primary);">0</span></div>
+                            <div class="k-list" id="lst-progress" data-status="progress"></div>
+                        </div>
+                        <div class="k-col" id="col-done">
+                            <div class="k-header" style="color:var(--done-line)">BİTENLER <span class="badge" id="cnt-done" style="background:#ecfdf5; color:var(--done-line);">0</span></div>
+                            <div class="k-list" id="lst-done" data-status="done"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="k-col" id="col-progress">
-                    <div class="k-header" style="color:var(--primary)">İŞLEMDE <span class="badge" id="cnt-progress" style="background:var(--primary-soft); color:var(--primary);">0</span></div>
-                    <div class="k-list" id="lst-progress" data-status="progress"></div>
-                </div>
-                <div class="k-col" id="col-done">
-                    <div class="k-header" style="color:var(--done-line)">BİTENLER <span class="badge" id="cnt-done" style="background:#ecfdf5; color:var(--done-line);">0</span></div>
-                    <div class="k-list" id="lst-done" data-status="done"></div>
+
+                <div class="cockpit-side">
+                    <div class="side-widget">
+                        <div class="side-title"><span><i class="fa-regular fa-calendar"></i> Takvim</span><span id="sideCalTitle" style="font-size:10px; color:var(--text-sec)"></span></div>
+                        <div class="mini-cal-grid" id="miniCalGrid">
+                            <div class="mc-head">Pt</div><div class="mc-head">Sa</div><div class="mc-head">Ça</div><div class="mc-head">Pe</div><div class="mc-head">Cu</div><div class="mc-head">Ct</div><div class="mc-head">Pz</div>
+                        </div>
+                    </div>
+                    <div class="side-widget" style="flex:1; display:flex; flex-direction:column;">
+                        <div class="side-title"><span><i class="fa-solid fa-list-check"></i> Acil İşler</span></div>
+                        <div class="todo-list-mini" id="sideTodoList">
+                            <div style="text-align:center; color:var(--text-sec); font-size:11px;">Görev yok</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -536,22 +573,62 @@
 
     function renderAll() {
         let tasks = [...allTasks];
+        // Time Filter
+        const now = new Date();
         if(timeFilter === 'week') {
-            const now = new Date(); const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 1)); startOfWeek.setHours(0,0,0,0);
+            const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 1)); startOfWeek.setHours(0,0,0,0);
             tasks = tasks.filter(t => t.date && new Date(t.date) >= startOfWeek);
         } else if(timeFilter === 'month') {
-            const now = new Date();
-            tasks = tasks.filter(t => t.date && new Date(t.date).getMonth() === now.getMonth() && new Date(t.date).getFullYear() === now.getFullYear());
+            tasks = tasks.filter(t => t.date && new Date(t.date).getMonth() === new Date().getMonth());
         }
+
         if(filterConfig.active) {
             if(filterConfig.text) { const txt = filterConfig.text.toLowerCase(); tasks = tasks.filter(t => (t.title && t.title.toLowerCase().includes(txt)) || (t.desc && t.desc.toLowerCase().includes(txt)) || (t.code && t.code.toLowerCase().includes(txt))); }
             if(filterConfig.topic) tasks = tasks.filter(t => t.title === filterConfig.topic);
             if(filterConfig.assignee) tasks = tasks.filter(t => t.assignee === filterConfig.assignee);
         }
-        if(currentMode==='kanban') renderKanban(tasks);
+        
+        if(currentMode==='kanban') {
+            renderKanban(tasks);
+            renderSideWidgets(tasks); // Sağ Paneli Güncelle
+        }
         else if(currentMode==='month') renderCalendar(tasks);
         else if(currentMode==='dashboard') renderDashboard(tasks);
         else renderAgenda(tasks);
+    }
+
+    /* RIGHT SIDEBAR LOGIC */
+    function renderSideWidgets(tasks) {
+        // Mini Calendar
+        const grid = document.getElementById('miniCalGrid');
+        // Clear previous days (keep headers)
+        while(grid.children.length > 7) { grid.removeChild(grid.lastChild); }
+        
+        const now = new Date();
+        const y = now.getFullYear(), m = now.getMonth();
+        document.getElementById('sideCalTitle').innerText = now.toLocaleDateString('tr-TR', { month: 'long' });
+        
+        const firstDay = new Date(y, m, 1).getDay();
+        const offset = firstDay === 0 ? 6 : firstDay - 1;
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        
+        for(let i=0; i<offset; i++) grid.innerHTML += `<div></div>`;
+        
+        for(let i=1; i<=daysInMonth; i++) {
+            const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+            const hasTask = tasks.some(t => t.date === dStr);
+            const isToday = i === now.getDate();
+            grid.innerHTML += `<div class="mc-cell ${isToday?'today':''} ${hasTask?'has-task':''}">${i}</div>`;
+        }
+
+        // Mini Todo List
+        const list = document.getElementById('sideTodoList');
+        const todos = tasks.filter(t => t.status !== 'done').sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 6);
+        list.innerHTML = '';
+        if(todos.length === 0) list.innerHTML = '<div style="text-align:center; color:var(--text-sec); font-size:11px;">İşler yolunda 👍</div>';
+        todos.forEach(t => {
+            list.innerHTML += `<div class="tl-item" onclick="openModal('${t.id}')"><div class="tl-title">${t.title}</div><div class="tl-date">${t.date || 'Tarihsiz'}</div></div>`;
+        });
     }
 
     function renderDashboard(tasks) {
