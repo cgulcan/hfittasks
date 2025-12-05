@@ -5,10 +5,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
-    
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="logo.png">
@@ -26,11 +24,10 @@
     
     <style>
         :root {
-            /* V7.3 COMPACT & PRO PALET */
+            /* V7.4 TIMELINE EDITION */
             --primary-grad: linear-gradient(135deg, #005bea 0%, #00c6fb 100%);
             --primary: #005bea; 
             --primary-soft: rgba(0, 91, 234, 0.06);
-            
             --bg-body: #f4f7fa;
             --bg-card: #ffffff;
             --bg-glass: rgba(255, 255, 255, 0.95);
@@ -38,12 +35,9 @@
             --border: #e2e8f0; 
             --text-main: #1e293b;
             --text-sec: #64748b;
-            
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
             --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
             --shadow-float: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
             --glow-primary: 0 4px 20px rgba(0, 91, 234, 0.2);
-            
             --todo-line: #f59e0b;
             --prog-line: #005bea;
             --done-line: #10b981;
@@ -60,38 +54,22 @@
             --border: #2a3447; 
             --text-main: #f8fafc; 
             --text-sec: #94a3b8;
-            --shadow-sm: none;
             --shadow-card: 0 4px 10px rgba(0,0,0,0.3);
             --glow-primary: 0 0 30px rgba(59, 130, 246, 0.4);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
-        
-        body { 
-            font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
-            height: 100vh; overflow: hidden; background-color: var(--bg-body); letter-spacing: -0.01em; 
-        }
-
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); height: 100vh; overflow: hidden; background-color: var(--bg-body); letter-spacing: -0.01em; }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-sec); }
-
-        h1, h2, h3, .brand-text, .stat-num, .m-title { letter-spacing: -0.02em; font-weight: 700; }
-        p, .c-desc { line-height: 1.4; }
-
-        /* RIPPLE EFFECT */
+        h1, h2, h3, .brand-text, .stat-num { letter-spacing: -0.02em; font-weight: 700; }
+        
         .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.3); pointer-events: none; }
         @keyframes ripple { to { transform: scale(4); opacity: 0; } }
         .btn-grad, .nav-btn, .task-card, .btn-icon, .time-btn { position: relative; overflow: hidden; }
 
-        /* HEADER */
-        header { 
-            background-color: var(--bg-glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            padding: 0 20px; height: 64px; display: flex; align-items: center; justify-content: space-between; 
-            border-bottom: 1px solid var(--border); width: 100%; z-index: 50; position: sticky; top: 0; left: 0;
-            box-shadow: var(--shadow-sm);
-        }
+        header { background-color: var(--bg-glass); backdrop-filter: blur(10px); padding: 0 20px; height: 64px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); z-index: 50; position: sticky; top: 0; }
         .brand { display: flex; align-items: center; gap: 10px; }
         .logo-img { height: 36px; width: 36px; object-fit: contain; border-radius: 8px; background: white; padding: 3px; border: 1px solid var(--border); }
         .brand-text { font-size: 16px; font-weight: 800; color: var(--text-main); }
@@ -99,92 +77,68 @@
         .nav-wrapper { flex: 1; display: flex; justify-content: center; }
         .nav-pills { display: inline-flex; background: var(--bg-col); padding: 3px; border-radius: 12px; gap: 2px; border: 1px solid var(--border); }
         .nav-btn { color: var(--text-sec); padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
-        .nav-btn:hover { color: var(--primary); background: var(--bg-card); }
-        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); border: 1px solid var(--border); }
+        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); }
         [data-theme="dark"] .nav-btn.active { background: var(--primary-grad); color: white; border: none; box-shadow: var(--glow-primary); }
 
         .user-area { display: flex; align-items: center; gap: 10px; }
         .user-info { font-weight: 700; font-size: 12px; color: var(--text-main); text-align: right; }
-        .btn-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.2s; }
-        .btn-grad { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 12px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; box-shadow: var(--shadow-sm); }
+        .btn-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; }
+        .btn-grad { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 12px; transition: all 0.3s ease; display: flex; align-items: center; gap: 6px; box-shadow: var(--shadow-card); }
         .btn-grad:hover { background: var(--primary-grad); box-shadow: var(--glow-primary); transform: translateY(-1px); }
 
-        /* TIME FILTER BAR */
         .time-filter-container { display: flex; justify-content: center; margin-bottom: 16px; }
-        .time-pills { display: inline-flex; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 3px; box-shadow: var(--shadow-sm); }
+        .time-pills { display: inline-flex; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 3px; box-shadow: var(--shadow-card); }
         .time-btn { background: transparent; border: none; color: var(--text-sec); padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .time-btn:hover { color: var(--primary); background: var(--bg-col); }
-        .time-btn.active { background: var(--primary); color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        [data-theme="dark"] .time-btn.active { background: var(--primary-grad); box-shadow: var(--glow-primary); }
+        .time-btn.active { background: var(--primary); color: white; }
+        [data-theme="dark"] .time-btn.active { background: var(--primary-grad); }
 
-        /* GREETING */
-        .greeting-card {
-            background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 16px;
-            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card);
-        }
+        .greeting-card { background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card); }
         .greeting-text h2 { margin: 0; font-size: 18px; color: var(--text-main); }
         .greeting-text p { margin: 2px 0 0 0; color: var(--text-sec); font-size: 12px; }
         .greeting-icon { font-size: 28px; opacity: 0.8; }
 
-        /* LAYOUT */
         #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         .main-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px; max-width: 1600px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; position: relative; }
         .view-section { display: none; width: 100%; flex-direction: column; }
         .view-section.active { display: flex; }
 
-        /* KANBAN */
         .kanban-container { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; min-height: 600px; }
         .k-col { flex: 1; min-width: 300px; max-width: 400px; background: var(--bg-col); border-radius: 16px; display: flex; flex-direction: column; padding: 12px; border: 1px solid var(--border); height: 100%; max-height: 75vh; }
-        #col-todo { border-top: 3px solid var(--todo-line); }
-        #col-progress { border-top: 3px solid var(--prog-line); }
-        #col-done { border-top: 3px solid var(--done-line); }
+        #col-todo { border-top: 3px solid var(--todo-line); } #col-progress { border-top: 3px solid var(--prog-line); } #col-done { border-top: 3px solid var(--done-line); }
         .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
         .k-list { overflow-y: auto; flex: 1; padding-right: 4px; display: flex; flex-direction: column; gap: 8px; min-height: 100px; }
 
-        /* TASK CARD - COMPACT DESIGN */
-        .task-card { 
-            background: var(--bg-card); border-radius: 10px; padding: 12px; /* Daha az padding */
-            box-shadow: var(--shadow-card); border: 1px solid var(--border); 
-            cursor: grab; transition: all 0.2s ease-in-out; position: relative; flex-shrink: 0; 
-        }
+        .task-card { background: var(--bg-card); border-radius: 10px; padding: 12px; box-shadow: var(--shadow-card); border: 1px solid var(--border); cursor: grab; transition: all 0.2s; position: relative; flex-shrink: 0; }
         .task-card:hover { transform: translateY(-2px); border-color: var(--primary); box-shadow: var(--shadow-float); }
         .task-card::after { content: ''; position: absolute; left: -1px; top: 8px; bottom: 8px; width: 3px; border-radius: 4px; }
         .p-Yüksek::after { background: #ef4444; } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
         
-        .c-top { display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center; }
-        .c-id { font-family: monospace; font-size: 10px; color: var(--text-sec); background: var(--bg-col); padding: 1px 5px; border-radius: 4px; }
-        .c-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; color: var(--text-main); line-height: 1.3; }
-        .c-desc { font-size: 11px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; margin-bottom: 6px; }
-        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 10px; }
-        
-        /* Compact Mode Override */
         body.compact-mode .task-card { padding: 8px 10px; }
         body.compact-mode .c-desc, body.compact-mode .c-meta, body.compact-mode .c-top { display: none; }
         body.compact-mode .c-title { margin: 0; font-size: 12px; display: flex; align-items: center; gap: 6px; }
-        body.compact-mode .task-card::after { top: 4px; bottom: 4px; }
-
-        .sortable-drag { cursor: grabbing; opacity: 1; transform: scale(1.03) rotate(2deg); box-shadow: var(--shadow-float); z-index: 100; }
-
-        /* DASHBOARD */
+        
+        .c-top { display: flex; justify-content: space-between; margin-bottom: 6px; align-items: center; }
+        .c-id { font-family: monospace; font-size: 10px; color: var(--text-sec); background: var(--bg-col); padding: 1px 5px; border-radius: 4px; }
+        .c-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; color: var(--text-main); line-height: 1.3; }
+        .c-desc { font-size: 11px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); font-size: 10px; }
+        
         .dash-container .stat-card { background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-card); border-radius: 16px; padding: 20px; }
         .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
-        .stat-lbl { font-size: 11px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.02em; }
+        .stat-lbl { font-size: 11px; font-weight: 600; color: var(--text-sec); text-transform: uppercase; }
         .stat-num { font-size: 28px; font-weight: 800; margin-top: 4px; display: block; }
-        .stat-icon-bg { opacity: 0.05; font-size: 32px; }
         .chart-wrapper { height: 320px; margin-bottom: 20px; background: var(--bg-card); padding: 16px; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); }
 
-        /* EXTRAS */
         .calendar-wrapper { background: var(--bg-card); border-radius: 16px; padding: 16px; border: 1px solid var(--border); min-height: 600px; display: flex; flex-direction: column; box-shadow: var(--shadow-card); }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); flex: 1; }
         .cal-cell { background: var(--bg-card); padding: 4px; font-size: 12px; min-height: 80px; }
         .cal-cell.today { background: var(--primary-soft); }
-        .cal-task { background: var(--primary); color: white; padding: 3px 6px; margin-top: 3px; border-radius: 4px; font-size: 10px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm); }
+        .cal-task { background: var(--primary); color: white; padding: 3px 6px; margin-top: 3px; border-radius: 4px; font-size: 10px; font-weight: 600; cursor: pointer; }
         
         .badge { padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; }
-        .badge-Yüksek { background: #fef2f2; color: #ef4444; } .badge-Orta { background: #fffbeb; color: #f59e0b; } .badge-Düşük { background: #ecfdf5; color: #10b981; }
+        .badge-Yüksek { background: rgba(239, 68, 68, 0.1); color: #ef4444; } .badge-Orta { background: rgba(245, 158, 11, 0.1); color: #f59e0b; } .badge-Düşük { background: rgba(16, 185, 129, 0.1); color: #10b981; }
         .avatar { width: 24px; height: 24px; border-radius: 6px; font-size: 10px; font-weight: 700; border: 1px solid var(--bg-card); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; }
         
-        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 2000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 100%; max-width: 600px; height: auto; max-height: 92%; border-radius: 16px; display: flex; flex-direction: column; box-shadow: var(--shadow-float); border: 1px solid var(--border); }
@@ -194,10 +148,23 @@
         
         .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-main); margin-bottom: 6px; display: block; }
         .frm-inp { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--bg-card); color: var(--text-main); transition: 0.2s; font-family: 'Inter', sans-serif; }
-        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+        
+        /* TIMELINE STYLES (YENİ) */
         .comments-section { background: var(--bg-col); padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
+        .timeline { position: relative; border-left: 2px solid var(--border); margin-left: 8px; padding-left: 20px; }
+        .timeline-item { position: relative; margin-bottom: 16px; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { 
+            content: ''; position: absolute; left: -25px; top: 2px; width: 8px; height: 8px; 
+            border-radius: 50%; background: var(--bg-card); border: 2px solid var(--primary);
+        }
+        .t-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 4px; }
+        .t-user { font-weight: 700; font-size: 12px; color: var(--text-main); }
+        .t-date { font-size: 10px; color: var(--text-sec); font-family: monospace; }
+        .t-text { font-size: 12px; color: var(--text-sec); background: var(--bg-card); padding: 8px; border-radius: 6px; border: 1px solid var(--border); line-height: 1.4; }
+        .t-system .t-text { background: transparent; border: none; padding: 0; color: var(--primary); font-style: italic; font-size: 11px; }
+        .t-system::before { border-color: var(--text-sec); background: var(--text-sec); }
 
-        /* LOGIN */
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-body); display: flex; align-items: center; justify-content: center; }
         .login-card { background: var(--bg-card); padding: 30px; border-radius: 20px; box-shadow: var(--shadow-float); width: 100%; max-width: 380px; text-align: center; border: 1px solid var(--border); }
         .login-input { background: var(--bg-col); border: 1px solid var(--border); color: var(--text-main); padding: 12px; font-size: 14px; margin-bottom: 12px; }
@@ -208,21 +175,15 @@
         .toast { background: var(--bg-card); color: var(--text-main); padding: 12px 20px; border-radius: 10px; box-shadow: var(--shadow-float); border-left: 4px solid; font-weight: 600; min-width: 280px; display: flex; align-items: center; gap: 10px; animation: slideIn 0.3s ease; font-size: 13px; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* MOBILE */
         .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info, .brand-text { display: none; }
             header { padding: 0 16px; height: 56px; }
             .main-content { padding: 16px; padding-bottom: 80px; }
             .greeting-card { padding: 16px; margin-bottom: 12px; }
-            .greeting-text h2 { font-size: 16px; }
             .kanban-container { gap: 10px; }
             .k-col { min-width: 88vw; margin-right: 8px; }
-            .bottom-nav { 
-                display: flex; position: fixed; bottom: 0; left: 0; width: 100%; 
-                background: var(--bg-card); border-top: 1px solid var(--border); height: 60px; z-index: 1000; 
-                justify-content: space-around; align-items: center; 
-            }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border); height: 60px; z-index: 1000; justify-content: space-around; align-items: center; }
             .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-sec); font-size: 9px; font-weight: 600; gap: 3px; }
             .b-nav-item.active { color: var(--primary); }
             .mobile-filter-btn { display: flex; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 8px; background: var(--bg-col); border: 1px solid var(--border); color: var(--text-sec); }
@@ -259,7 +220,6 @@
         </div>
         <div class="user-area">
             <button class="btn-icon" onclick="toggleCompact(this)" title="Görünümü Sıkıştır"><i class="fa-solid fa-compress-alt"></i></button>
-            
             <button class="mobile-filter-btn" onclick="toggleFilter()"><i class="fa-solid fa-filter"></i></button>
             <div class="user-info"><div id="displayUserName"></div><span class="user-role" id="displayUserRole">Yetkili</span></div>
             <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
@@ -366,7 +326,7 @@
     <div class="modal-box">
         <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title" style="font-size:18px;">Görev Detayı</span><span id="tCodeDisplay" style="background:var(--bg-col); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:800; color:var(--text-sec); font-family:monospace;"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
         <div class="m-body">
-            <input type="hidden" id="tId"><input type="hidden" id="tCode">
+            <input type="hidden" id="tId"><input type="hidden" id="tCode"><input type="hidden" id="initialStatus">
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
                 <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp" style="font-weight:600;"></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Durum</span><select id="tStatus" class="frm-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
@@ -375,14 +335,15 @@
                 <div class="frm-grp"><span class="frm-lbl">Hedef Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
                 <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="4"></textarea></div>
             </div>
-            <div class="frm-grp span-full" style="margin-top:20px; background:var(--bg-col); padding:16px; border-radius:12px; border:1px dashed var(--border); text-align:center;">
+            <div class="frm-grp span-full" style="margin-top:20px; background:var(--bg-col); padding:16px; border-radius:16px; border:1px dashed var(--border); text-align:center;">
                 <input type="file" id="tFile" style="display:none;" onchange="document.getElementById('fileName').innerText = this.files[0].name">
                 <label for="tFile" class="btn-grad" style="display:inline-flex; width:auto; padding:8px 16px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border); box-shadow:var(--shadow-sm);"><i class="fa-solid fa-cloud-upload" style="color:var(--primary)"></i> Dosya Seç</label>
                 <div id="fileName" style="margin-top:8px; font-size:12px; color:var(--text-sec);"></div><span id="uploadStatus" class="loading">Yükleniyor...</span>
                 <a id="tFileLink" href="#" target="_blank" class="btn-grad hidden" style="margin:10px auto 0; width:fit-content; padding:8px 16px;">Dosyayı İndir</a>
             </div>
             <div class="frm-grp span-full comments-section" style="margin-top:20px;">
-                <span class="frm-lbl">Tarihçe & Notlar</span><div id="commentList" style="max-height:200px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:10px;"></div>
+                <span class="frm-lbl">İşlem Tarihçesi</span>
+                <div id="commentList" style="max-height:200px; overflow-y:auto; margin-bottom:15px; display:flex; flex-direction:column; gap:0;"></div>
                 <div style="display:flex; gap:10px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..."><button class="btn-grad" style="padding:0 24px;" onclick="createRipple(event); addComment()">Gönder</button></div>
             </div>
         </div>
@@ -395,25 +356,22 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(r => r.forEach(reg => reg.unregister())); }
 
-    /* RIPPLE */
     window.createRipple = function(event) {
         const button = event.currentTarget;
         const circle = document.createElement("span");
-        const diameter = Math.max(button.clientWidth, button.clientHeight);
-        const radius = diameter / 2;
-        circle.style.width = circle.style.height = `${diameter}px`;
-        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
-        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+        const d = Math.max(button.clientWidth, button.clientHeight);
+        circle.style.width = circle.style.height = `${d}px`;
+        circle.style.left = `${event.clientX - button.getBoundingClientRect().left - d/2}px`;
+        circle.style.top = `${event.clientY - button.getBoundingClientRect().top - d/2}px`;
         circle.classList.add("ripple");
-        const ripple = button.getElementsByClassName("ripple")[0];
-        if (ripple) { ripple.remove(); }
         button.appendChild(circle);
+        setTimeout(() => circle.remove(), 600);
     }
 
     const firebaseConfig = {
@@ -440,7 +398,7 @@
     let allTasks = []; let calDate = new Date(); let currentMode = 'kanban';
     let filterConfig = { active: false, start: '', end: '', topic: '', assignee: '', text: '' };
     let currentUser = null; let chartStatusInst = null; let chartUserInst = null;
-    let timeFilter = 'all'; // all, week, month
+    let timeFilter = 'all';
 
     window.toggleCompact = function(btn) {
         document.body.classList.toggle('compact-mode');
@@ -531,13 +489,18 @@
                 group: 'shared', animation: 200, ghostClass: 'sortable-ghost', dragClass: 'sortable-drag', delay: 150, delayOnTouchOnly: true,
                 onEnd: async function (evt) {
                     if (evt.to !== evt.from) {
-                        await updateDoc(doc(db, "tasks", evt.item.getAttribute('data-id')), { status: evt.to.getAttribute('data-status') });
-                        if(evt.to.getAttribute('data-status') === 'done') { fireConfetti(); showToast("Tebrikler!", "success"); } else { showToast("Taşındı"); }
+                        const newStatus = evt.to.getAttribute('data-status');
+                        const tId = evt.item.getAttribute('data-id');
+                        await updateDoc(doc(db, "tasks", tId), { status: newStatus });
+                        logHistory(tId, `Durum değişti: ${getStatusName(evt.from.getAttribute('data-status'))} -> ${getStatusName(newStatus)}`, true);
+                        if(newStatus === 'done') { fireConfetti(); showToast("Tebrikler!", "success"); } else { showToast("Taşındı"); }
                     }
                 }
             });
         });
     }
+    
+    function getStatusName(s) { return s==='todo'?'Bekleyen':(s==='progress'?'İşlemde':'Tamamlanan'); }
 
     window.login = function() {
         const e = document.getElementById('email').value;
@@ -573,18 +536,13 @@
 
     function renderAll() {
         let tasks = [...allTasks];
-        
-        // TIME FILTER LOGIC
         if(timeFilter === 'week') {
-            const now = new Date();
-            const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 1));
-            startOfWeek.setHours(0,0,0,0);
+            const now = new Date(); const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 1)); startOfWeek.setHours(0,0,0,0);
             tasks = tasks.filter(t => t.date && new Date(t.date) >= startOfWeek);
         } else if(timeFilter === 'month') {
             const now = new Date();
             tasks = tasks.filter(t => t.date && new Date(t.date).getMonth() === now.getMonth() && new Date(t.date).getFullYear() === now.getFullYear());
         }
-
         if(filterConfig.active) {
             if(filterConfig.text) { const txt = filterConfig.text.toLowerCase(); tasks = tasks.filter(t => (t.title && t.title.toLowerCase().includes(txt)) || (t.desc && t.desc.toLowerCase().includes(txt)) || (t.code && t.code.toLowerCase().includes(txt))); }
             if(filterConfig.topic) tasks = tasks.filter(t => t.title === filterConfig.topic);
@@ -611,21 +569,13 @@
         const gradDone = ctx1.createLinearGradient(0,0,0,400); gradDone.addColorStop(0,'#34d399'); gradDone.addColorStop(1,'#059669');
 
         if(chartStatusInst) chartStatusInst.destroy();
-        chartStatusInst = new Chart(ctx1, { 
-            type: 'doughnut', 
-            data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: [gradTodo, gradProg, gradDone], borderWidth:0, hoverOffset: 15 }] }, 
-            options: { ...commonOpts, cutout: '75%' } 
-        });
+        chartStatusInst = new Chart(ctx1, { type: 'doughnut', data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: [gradTodo, gradProg, gradDone], borderWidth:0, hoverOffset: 15 }] }, options: { ...commonOpts, cutout: '75%' } });
         
         const ctx2 = document.getElementById('chartUser').getContext('2d');
-        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#00c6fb'); gradBar.addColorStop(1,'#005bea');
+        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#38bdf8'); gradBar.addColorStop(1,'#005bea');
 
         if(chartUserInst) chartUserInst.destroy();
-        chartUserInst = new Chart(ctx2, { 
-            type: 'bar', 
-            data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 6 }] }, 
-            options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } 
-        });
+        chartUserInst = new Chart(ctx2, { type: 'bar', data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 6 }] }, options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { display: false } }, x: { grid: { display: false } } } } });
     }
 
     function renderKanban(tasks) {
@@ -637,8 +587,7 @@
                 counts[t.status]++;
                 const descPrev = t.desc ? t.desc.substring(0,60) + (t.desc.length>60?'...':'') : '';
                 const card = document.createElement('div'); 
-                card.className = `task-card p-${t.priority}`; 
-                card.setAttribute('data-id', t.id); 
+                card.className = `task-card p-${t.priority}`; card.setAttribute('data-id', t.id); 
                 card.style.animationDelay = `${index * 0.05}s`; 
                 card.onclick = () => openModal(t.id);
                 card.innerHTML = `<div class="c-top"><span class="c-id">${t.code}</span><span class="badge badge-${t.priority}">${t.priority}</span></div><div class="c-title" data-id="${t.code}">${t.title}</div>${descPrev ? `<div class="c-desc">${descPrev}</div>` : ''}<div class="c-meta"><div class="c-assignee">${getAvatar(t.assignee)} <span>${t.assignee ? t.assignee.split(' ')[0] : '-'}</span></div></div>`;
@@ -681,6 +630,19 @@
         });
     }
 
+    async function logHistory(id, text, isSystem = false) {
+        if(!id) return;
+        const taskRef = doc(db, "tasks", id);
+        const taskSnap = await getDoc(taskRef);
+        if(taskSnap.exists()) {
+            const h = taskSnap.data().history || [];
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('tr-TR') + ' ' + now.toLocaleTimeString('tr-TR', {hour: '2-digit', minute: '2-digit'});
+            h.push({ user: isSystem ? 'Sistem' : currentUser.name, text: text, date: dateStr, isSystem: isSystem });
+            await updateDoc(taskRef, { history: h });
+        }
+    }
+
     window.saveTask = async function() {
         const btnSave = document.getElementById('btnSave');
         const uploadStatus = document.getElementById('uploadStatus');
@@ -712,8 +674,12 @@
         if (downloadUrl) data.fileUrl = downloadUrl;
 
         try {
-            if(id) { await updateDoc(doc(db, "tasks", id), data); showToast("Güncellendi"); }
-            else {
+            if(id) { 
+                const oldStatus = document.getElementById('initialStatus').value;
+                if(oldStatus !== data.status) logHistory(id, `Durum değişti: ${getStatusName(oldStatus)} -> ${getStatusName(data.status)}`, true);
+                await updateDoc(doc(db, "tasks", id), data); 
+                showToast("Güncellendi"); 
+            } else {
                 await runTransaction(db, async (transaction) => {
                     const metaRef = doc(db, "meta", "counters");
                     const metaDoc = await transaction.get(metaRef);
@@ -721,7 +687,7 @@
                     if(metaDoc.exists()) newSeq = metaDoc.data().taskSeq + 1;
                     transaction.set(metaRef, { taskSeq: newSeq }, { merge: true });
                     const newTaskRef = doc(collection(db, "tasks"));
-                    const newTaskData = { ...data, code: 'GRV-' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '' };
+                    const newTaskData = { ...data, code: 'GRV-' + newSeq, creator: currentUser.name, createdAt: new Date().toLocaleDateString('en-CA'), timestamp: new Date(), fileUrl: downloadUrl || '', history: [{user: 'Sistem', text: 'Görev oluşturuldu', date: new Date().toLocaleString('tr-TR'), isSystem: true}] };
                     transaction.set(newTaskRef, newTaskData);
                 });
                 showToast("Görev oluşturuldu");
@@ -742,7 +708,7 @@
     window.newTask = function() { 
         if(!currentUser) { showToast("Giriş yapın!", 'error'); return; } 
         document.getElementById('tId').value = ''; document.getElementById('tCode').value = 'YENİ'; document.getElementById('tCodeDisplay').innerText = 'YENİ';
-        document.getElementById('tTitle').value = ''; document.getElementById('tStatus').value = 'todo'; 
+        document.getElementById('tTitle').value = ''; document.getElementById('tStatus').value = 'todo'; document.getElementById('initialStatus').value = 'todo';
         document.getElementById('tAssignee').value = ''; document.getElementById('tDate').value = new Date().toLocaleDateString('en-CA'); 
         document.getElementById('tDesc').value = ''; document.getElementById('commentList').innerHTML = ''; 
         document.getElementById('modal').classList.add('show'); document.getElementById('modal').style.display = 'flex'; 
@@ -750,7 +716,7 @@
     window.openModal = function(id) { 
         const t = allTasks.find(x => x.id === id); if(!t) return; 
         document.getElementById('tId').value = t.id; document.getElementById('tCode').value = t.code; document.getElementById('tCodeDisplay').innerText = t.code;
-        document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; 
+        document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; document.getElementById('initialStatus').value = t.status;
         document.getElementById('tPriority').value = t.priority; document.getElementById('tAssignee').value = t.assignee; 
         document.getElementById('tDate').value = t.date; document.getElementById('tDesc').value = t.desc; 
         const l = document.getElementById('tFileLink'); if(t.fileUrl) { l.href = t.fileUrl; l.classList.remove('hidden'); } else l.classList.add('hidden'); 
@@ -770,8 +736,19 @@
         renderAll();
     }
     window.navMonth = function(d) { calDate.setMonth(calDate.getMonth()+d); renderCalendar(allTasks); }
-    window.addComment = async function() { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(!txt || !id) return; const t = allTasks.find(x => x.id == id); const h = t.history || []; h.push({ user: currentUser.name, text: txt, date: new Date().toLocaleString('tr-TR') }); await updateDoc(doc(db, "tasks", id), { history: h }); document.getElementById('newComment').value = ''; openModal(id); }
-    function renderComments(history) { const list = document.getElementById('commentList'); list.innerHTML = ''; if(!history) return; history.reverse().forEach(h => { list.innerHTML += `<div style="background:var(--bg-col); padding:10px; border-radius:8px; border:1px solid var(--border); font-size:12px;"><div style="font-weight:700; color:var(--primary); font-size:10px; display:flex; justify-content:space-between; margin-bottom:4px;"><span>${h.user}</span> <span>${h.date}</span></div><div>${h.text}</div></div>`; }); }
+    window.addComment = async function() { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(!txt || !id) return; await logHistory(id, txt, false); document.getElementById('newComment').value = ''; openModal(id); }
+    
+    function renderComments(history) { 
+        const list = document.getElementById('commentList'); list.innerHTML = ''; 
+        if(!history || history.length === 0) { list.innerHTML = '<div style="text-align:center; color:var(--text-sec); font-size:11px; padding:10px;">Henüz kayıt yok</div>'; return; }
+        let html = '<div class="timeline">';
+        history.reverse().forEach(h => { 
+            const isSys = h.isSystem ? 't-system' : '';
+            html += `<div class="timeline-item ${isSys}"><div class="t-meta"><span class="t-user">${h.user}</span><span class="t-date">${h.date}</span></div><div class="t-text">${h.text}</div></div>`; 
+        });
+        html += '</div>';
+        list.innerHTML = html;
+    }
     window.exportExcel = function() { const rows = allTasks.map(t => ({ "Kod": t.code, "Konu": t.title, "Durum": t.status, "Öncelik": t.priority, "Sorumlu": t.assignee, "Tarih": t.date, "Açıklama": t.desc })); const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Görevler"); XLSX.writeFile(wb, "BT_Gorevler.xlsx"); }
 </script>
 </body>
