@@ -25,24 +25,21 @@
     
     <style>
         :root {
-            /* V11.4 FINAL TECH-MASTER (ULTRA BG) PALET */
+            /* V11.5 FINAL "WONDERFUL TECH BG" PALET */
             --primary: #0065B3; 
             --primary-hover: #004d8a; 
             --primary-light: #e0f2fe;
             
-            /* YENİ ULTRA-TEKNOLOJİK ARKA PLAN (LIGHT) */
-            --bg-body: #f4f7fa;
-            /* PCB (Devre Kartı) Yolları Deseni */
+            /* --- YENİ "HARİKA" TEKNOLOJİK ARKA PLAN (LIGHT) --- */
+            --bg-body: #f0f5f9; /* Daha temiz, soğuk bir beyaz/gri */
+            /* Hassas Mühendislik / Veri Izgarası Deseni */
             --bg-pattern: 
-                radial-gradient(circle at 15% 25%, rgba(0, 101, 179, 0.04) 0%, transparent 50%),
-                radial-gradient(circle at 85% 75%, rgba(0, 101, 179, 0.04) 0%, transparent 50%),
-                linear-gradient(0deg, transparent 49%, rgba(0, 101, 179, 0.03) 50%, transparent 51%),
-                linear-gradient(90deg, transparent 49%, rgba(0, 101, 179, 0.03) 50%, transparent 51%),
-                linear-gradient(45deg, transparent 49%, rgba(0, 101, 179, 0.02) 50%, transparent 51%),
-                linear-gradient(135deg, transparent 49%, rgba(0, 101, 179, 0.02) 50%, transparent 51%);
-            --bg-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px, 60px 60px, 60px 60px;
+                radial-gradient(circle at center, rgba(0, 101, 179, 0.08) 1px, transparent 1px),
+                linear-gradient(to right, rgba(0, 101, 179, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 101, 179, 0.03) 1px, transparent 1px);
+            --bg-size: 24px 24px, 48px 48px, 48px 48px;
 
-            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-card: rgba(255, 255, 255, 0.92); /* Biraz daha opak, net kartlar */
             --bg-sub: #f8fafc;
             
             --border: #e2e8f0; 
@@ -61,18 +58,21 @@
             --primary-hover: #60a5fa; 
             --primary-light: rgba(59,130,246,0.15);
             
-            --bg-body: #0a0e17; 
-            /* YENİ ULTRA-TEKNOLOJİK ARKA PLAN (DARK) - Siber Uzay/Anakart */
+            /* --- YENİ "HARİKA" TEKNOLOJİK ARKA PLAN (DARK) --- */
+            --bg-body: #050a14; /* Çok derin, lacivert-siyah */
+            /* Siber Uzay / Neon Matrix Deseni */
             --bg-pattern: 
-                radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
-                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
-                linear-gradient(0deg, transparent 49%, rgba(59, 130, 246, 0.06) 50%, transparent 51%),
-                linear-gradient(90deg, transparent 49%, rgba(59, 130, 246, 0.06) 50%, transparent 51%),
-                linear-gradient(60deg, transparent 49%, rgba(59, 130, 246, 0.05) 50%, transparent 51%),
-                linear-gradient(120deg, transparent 49%, rgba(59, 130, 246, 0.05) 50%, transparent 51%);
-            --bg-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px, 100px 100px, 100px 100px;
+                /* Katman 1: Derinlik veren ambiyans ışıkları */
+                radial-gradient(circle at 15% 25%, rgba(0, 200, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                /* Katman 2: Parlayan Veri Noktaları (Matrix Dots) */
+                radial-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+                /* Katman 3: İnce Devre Yolları */
+                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            --bg-size: 100% 100%, 100% 100%, 24px 24px, 48px 48px, 48px 48px;
             
-            --bg-card: rgba(30, 41, 59, 0.85); 
+            --bg-card: rgba(15, 23, 42, 0.85); /* Yarı saydam, koyu lacivert kartlar */
             --bg-sub: #1e293b;
             
             --border: #334155; 
@@ -80,7 +80,7 @@
             --text-sec: #94a3b8;
             
             --shadow-sm: none; 
-            --shadow-md: 0 10px 25px -5px rgba(0,0,0,0.5);
+            --shadow-md: 0 10px 30px -5px rgba(0,0,0,0.6); /* Daha derin gölge */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -93,7 +93,7 @@
             background-color: var(--bg-body);
             background-image: var(--bg-pattern);
             background-size: var(--bg-size);
-            background-attachment: fixed;
+            background-attachment: fixed; /* Deseni sabitle */
             
             display: flex; flex-direction: column;
             transition: all 0.3s ease;
