@@ -7,7 +7,7 @@
     <meta http-equiv="Expires" content="0">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Halk Faktoring | BT Portal V8</title>
+    <title>Halk Faktoring | BT Portal</title>
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -16,7 +16,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,288 +26,247 @@
     
     <style>
         :root {
-            /* V8.0 DIAMOND PALET - Zenginleştirilmiş Renkler ve Derinlik */
-            --primary-grad: linear-gradient(135deg, #0061ff 0%, #60efff 100%);
-            --primary: #0061ff; 
-            --primary-soft: rgba(0, 97, 255, 0.08);
+            /* V8.5 GLASS CORPORATE PALET */
+            --primary: #007aff;
+            --primary-glow: rgba(0, 122, 255, 0.4);
             
-            /* Daha zengin, hafif dokulu arka plan */
-            --bg-body: #f0f4f8; 
-            --bg-card: rgba(255, 255, 255, 0.9); /* Hafif şeffaflık (Glass effect için) */
-            --bg-glass: rgba(255, 255, 255, 0.85);
-            --bg-col: #f7f9fc;
+            /* Zeminler (Canlı Gradient kullanılacak) */
+            --bg-glass-heavy: rgba(255, 255, 255, 0.65); /* Header vb. */
+            --bg-glass-light: rgba(255, 255, 255, 0.4); /* Kartlar */
+            --bg-glass-border: rgba(255, 255, 255, 0.4);
             
-            --border: rgba(226, 232, 240, 0.8); 
-            --text-main: #1a202c;
-            --text-sec: #718096;
-            
-            /* MODERN GÖLGELER - Çok katmanlı ve renkli */
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02), 0 1px 0 inset rgba(255,255,255,0.5);
-            --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0,0,0,0.02);
-            --shadow-float: 0 20px 40px -12px rgba(0, 97, 255, 0.15), 0 0 0 1px rgba(0, 97, 255, 0.05) inset;
-            --glow-primary: 0 8px 30px rgba(0, 97, 255, 0.25);
-            --glow-success: 0 0 20px rgba(16, 185, 129, 0.4);
-            
-            --todo-line: #f59e0b;
-            --prog-line: #0061ff;
-            --done-line: #10b981;
+            --text-main: #1d1d1f;
+            --text-sec: #48484a;
+            --text-light: #6e6e73;
 
-            --radius-md: 12px;
-            --radius-lg: 20px;
+            /* Gölgeler (Glassy Shadows) */
+            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            
+            /* Durum Renkleri */
+            --todo-line: #ff9f0a;
+            --prog-line: #007aff;
+            --done-line: #34c759;
+
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
         }
 
         [data-theme="dark"] {
-            --primary-grad: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-            --primary: #3b82f6; 
-            --primary-soft: rgba(59, 130, 246, 0.15);
+            --primary: #0a84ff;
+            --primary-glow: rgba(10, 132, 255, 0.4);
             
-            /* Simsiyah yerine zengin lacivert/arduvaz tonları */
-            --bg-body: #0f172a; 
-            --bg-card: rgba(30, 41, 59, 0.9);
-            --bg-glass: rgba(15, 23, 42, 0.85);
-            --bg-col: #1e293b;
+            --bg-glass-heavy: rgba(28, 28, 30, 0.65);
+            --bg-glass-light: rgba(44, 44, 46, 0.4);
+            --bg-glass-border: rgba(255, 255, 255, 0.1);
             
-            --border: rgba(51, 65, 85, 0.7); 
-            --text-main: #f1f5f9; 
-            --text-sec: #94a3b8;
+            --text-main: #f5f5f7;
+            --text-sec: #aeaeb2;
+            --text-light: #86868b;
             
-            --shadow-sm: none;
-            --shadow-card: 0 10px 30px -10px rgba(0,0,0,0.5);
-            --shadow-float: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1) inset;
-            --glow-primary: 0 0 40px rgba(59, 130, 246, 0.3);
-            --glow-success: 0 0 30px rgba(16, 185, 129, 0.3);
+            --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
         }
 
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; outline: none; }
         
+        /* BODY - LIVE MESH BACKGROUND */
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
-            height: 100vh; overflow: hidden; background-color: var(--bg-body); letter-spacing: -0.015em; 
-            /* Çok hafif bir gürültü (noise) dokusu ekleyerek düzlüğü kıralım */
-            background-image: radial-gradient(circle at top left, rgba(0, 97, 255, 0.03) 0%, transparent 40%);
-            background-attachment: fixed;
+            height: 100vh; overflow: hidden; letter-spacing: -0.01em;
+            
+            /* Profesyonel, Kurumsal Mavi Gradient Arka Plan */
+            background: linear-gradient(120deg, #e0f2fe, #f0f9ff, #dbeafe);
+            background-size: 200% 200%;
+            animation: bgFlow 15s ease infinite;
         }
+        [data-theme="dark"] body {
+            background: linear-gradient(120deg, #0f172a, #1e293b, #172554);
+        }
+        @keyframes bgFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Yumuşak Kaydırma Çubukları */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
-        ::-webkit-scrollbar-thumb:hover { background-color: var(--text-sec); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
 
-        h1, h2, h3, .brand-text, .stat-num { letter-spacing: -0.03em; font-weight: 800; }
-        
-        /* RIPPLE EFFECT - Daha yumuşak */
-        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.5s ease-out; background-color: rgba(255, 255, 255, 0.4); pointer-events: none; }
-        @keyframes ripple { to { transform: scale(3); opacity: 0; } }
-        .btn-grad, .nav-btn, .task-card, .btn-icon, .time-btn, .mc-cell, .tl-item { position: relative; overflow: hidden; isolation: isolate; }
+        /* RIPPLE */
+        .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.3); pointer-events: none; }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+        .btn-grad, .nav-btn, .task-card, .tl-item, .btn-icon { position: relative; overflow: hidden; }
 
-        /* HEADER - Glassmorphism */
+        /* GLASS HEADER */
         header { 
-            background-color: var(--bg-glass); 
-            backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
-            padding: 0 24px; height: 70px; display: flex; align-items: center; justify-content: space-between; 
-            border-bottom: 1px solid var(--border); z-index: 50; position: sticky; top: 0; 
-            box-shadow: var(--shadow-sm);
+            background: var(--bg-glass-heavy); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; 
+            border-bottom: 1px solid var(--bg-glass-border); z-index: 50; position: sticky; top: 0;
+            box-shadow: var(--shadow-glass);
         }
         .brand { display: flex; align-items: center; gap: 12px; }
-        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 10px; background: white; padding: 4px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
-        .brand-text { font-size: 18px; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-img { height: 40px; width: 40px; object-fit: contain; border-radius: 10px; background: rgba(255,255,255,0.5); padding: 4px; border: 1px solid var(--bg-glass-border); }
+        .brand-text { font-size: 18px; font-weight: 800; color: var(--text-main); letter-spacing: -0.02em; }
 
-        .nav-wrapper { flex: 1; display: flex; justify-content: center; }
-        .nav-pills { display: inline-flex; background: var(--bg-col); padding: 4px; border-radius: 14px; gap: 4px; border: 1px solid var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); }
-        .nav-btn { color: var(--text-sec); padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; align-items: center; gap: 8px; }
-        .nav-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.5); }
-        .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-card); font-weight: 700; }
-        [data-theme="dark"] .nav-btn.active { background: var(--primary-grad); color: white; box-shadow: var(--glow-primary); }
+        .nav-pills { display: inline-flex; background: rgba(128,128,128,0.1); padding: 4px; border-radius: 14px; border: 1px solid var(--bg-glass-border); }
+        .nav-btn { color: var(--text-sec); padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: 0.3s; display: flex; align-items: center; gap: 6px; }
+        .nav-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.2); }
+        .nav-btn.active { background: var(--bg-glass-light); color: var(--primary); box-shadow: 0 2px 10px rgba(0,0,0,0.05); font-weight: 700; border: 1px solid var(--bg-glass-border); }
+        [data-theme="dark"] .nav-btn.active { background: rgba(255,255,255,0.1); color: white; }
 
         .user-area { display: flex; align-items: center; gap: 12px; }
-        .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; line-height: 1.2; }
-        .user-role { font-size: 11px; color: var(--text-sec); font-weight: 500; }
-        .btn-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); cursor: pointer; transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: var(--shadow-sm); }
-        .btn-icon:hover { transform: translateY(-2px) scale(1.05); color: var(--primary); border-color: var(--primary-soft); background: var(--bg-col); }
-        
-        .btn-grad { 
-            background: var(--primary-grad); color: white; border: none; padding: 10px 24px; border-radius: 12px; 
-            font-weight: 700; cursor: pointer; font-size: 13px; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
-            display: flex; align-items: center; gap: 8px; box-shadow: var(--glow-primary); letter-spacing: 0.02em;
-        }
-        .btn-grad:hover { box-shadow: 0 15px 30px -5px rgba(0, 97, 255, 0.4); transform: translateY(-3px); }
-        .btn-grad:active { transform: translateY(-1px); }
+        .user-info { font-weight: 700; font-size: 13px; color: var(--text-main); text-align: right; }
+        .btn-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--bg-glass-border); background: var(--bg-glass-light); color: var(--text-sec); cursor: pointer; transition: 0.2s; backdrop-filter: blur(5px); }
+        .btn-icon:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .btn-grad { background: var(--primary); color: white; border: none; padding: 10px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px var(--primary-glow); }
+        .btn-grad:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--primary-glow); }
 
         /* LAYOUT */
         #appContainer { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
         .main-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 24px; max-width: 1800px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; position: relative; }
         .view-section { display: none; width: 100%; height: 100%; flex-direction: column; }
-        .view-section.active { display: flex; animation: fadeIn 0.4s ease-out; }
+        .view-section.active { display: flex; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* COCKPIT LAYOUT - Geliştirilmiş */
-        .cockpit-layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; height: 100%; overflow: hidden; }
+        /* KOKPİT DÜZENİ */
+        .cockpit-layout { display: grid; grid-template-columns: 1fr 350px; gap: 24px; height: 100%; overflow: hidden; }
         .cockpit-main { display: flex; flex-direction: column; overflow: hidden; height: 100%; }
+        
+        /* SAĞ PANEL - GLASS */
         .cockpit-side { 
             display: flex; flex-direction: column; gap: 24px; overflow-y: auto; 
-            padding: 4px; /* Gölgeler için pay */
+            padding: 4px; border-left: 1px solid transparent; /* Artık border yok, boşluk var */
         }
+        .side-widget { 
+            background: var(--bg-glass-heavy); border: 1px solid var(--bg-glass-border); border-radius: var(--radius-lg); 
+            padding: 20px; box-shadow: var(--shadow-glass); backdrop-filter: blur(20px);
+        }
+        .side-title { font-size: 12px; font-weight: 800; color: var(--text-sec); margin-bottom: 16px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; letter-spacing: 0.05em; }
 
-        /* CLEAN TOP BAR - Premium His */
+        /* MINI CALENDAR */
+        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+        .mc-head { font-size: 10px; font-weight: 700; color: var(--text-light); padding: 4px; }
+        .mc-cell { font-size: 12px; padding: 8px; border-radius: 10px; cursor: pointer; color: var(--text-main); transition: 0.2s; font-weight: 600; }
+        .mc-cell:hover { background: rgba(128,128,128,0.1); }
+        .mc-cell.today { background: var(--primary); color: white; box-shadow: var(--primary-glow); }
+        .mc-cell.has-task::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--todo-line); border-radius: 50%; }
+
+        /* MINI FEED (ACİL İŞLER YERİNE) */
+        .todo-list-mini { display: flex; flex-direction: column; gap: 12px; }
+        .tl-item { 
+            background: var(--bg-glass-light); padding: 14px; border-radius: var(--radius-md); 
+            border: 1px solid var(--bg-glass-border); cursor: pointer; transition: all 0.2s;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .tl-item:hover { background: var(--bg-glass-heavy); transform: translateX(4px) scale(1.02); border-color: var(--primary); }
+        
+        .tl-head { display: flex; justify-content: space-between; align-items: flex-start; }
+        .tl-title { font-weight: 700; color: var(--text-main); font-size: 13px; line-height: 1.3; }
+        .tl-date { font-size: 10px; color: var(--text-light); white-space: nowrap; background: rgba(128,128,128,0.1); padding: 2px 6px; border-radius: 6px; height: fit-content; }
+        .tl-desc { font-size: 11px; color: var(--text-sec); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; opacity: 0.8; }
+        /* Status Indicator Line */
+        .tl-item { border-left: 3px solid transparent; }
+        .tl-item:hover { border-left-color: var(--primary); }
+
+
+        /* TOP BAR */
         .top-control-bar { 
-            background: var(--bg-card); padding: 10px 16px; border-radius: var(--radius-lg); border: 1px solid var(--border); margin-bottom: 24px; 
-            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-card);
-            backdrop-filter: blur(10px);
+            background: var(--bg-glass-heavy); padding: 10px 20px; border-radius: var(--radius-md); border: 1px solid var(--bg-glass-border); margin-bottom: 20px; 
+            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: var(--shadow-glass); backdrop-filter: blur(20px);
         }
-        .time-pills { display: inline-flex; background: var(--bg-col); border: 1px solid var(--border); border-radius: 12px; padding: 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.03); }
-        .time-btn { background: transparent; border: none; color: var(--text-sec); padding: 6px 16px; border-radius: 9px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-        .time-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); }
-        [data-theme="dark"] .time-btn.active { background: var(--primary-grad); color:white; box-shadow: var(--glow-primary); }
+        .time-pills { display: inline-flex; background: rgba(128,128,128,0.1); border-radius: 10px; padding: 3px; }
+        .time-btn { background: transparent; border: none; color: var(--text-sec); padding: 6px 16px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .time-btn.active { background: var(--bg-glass-heavy); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        [data-theme="dark"] .time-btn.active { background: rgba(255,255,255,0.1); color: white; }
 
-        /* KANBAN - Modern Sütunlar */
+        /* KANBAN */
         .kanban-container { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; align-items: flex-start; height: 100%; }
         .k-col { 
-            flex: 1; min-width: 300px; background: var(--bg-col); border-radius: var(--radius-lg); 
-            display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--border); 
-            height: 100%; max-height: 100%; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-            transition: background 0.3s;
+            flex: 1; min-width: 300px; background: var(--bg-glass-light); border-radius: var(--radius-lg); 
+            display: flex; flex-direction: column; padding: 16px; border: 1px solid var(--bg-glass-border); 
+            height: 100%; max-height: 100%; backdrop-filter: blur(10px); box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
         }
-        [data-theme="dark"] .k-col { background: rgba(30, 41, 59, 0.5); }
         #col-todo { border-top: 4px solid var(--todo-line); } #col-progress { border-top: 4px solid var(--prog-line); } #col-done { border-top: 4px solid var(--done-line); }
-        .k-header { font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
+        .k-header { font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; color: var(--text-sec); flex-shrink: 0; letter-spacing: 0.05em; }
         .k-list { overflow-y: auto; flex: 1; padding-right: 6px; display: flex; flex-direction: column; gap: 12px; min-height: 100px; }
 
-        /* TASK CARD - Premium & Glassy */
+        /* TASK CARD GLASS */
         .task-card { 
-            background: var(--bg-card); border-radius: var(--radius-md); padding: 16px; 
-            box-shadow: var(--shadow-card); border: 1px solid var(--border); 
+            background: rgba(255, 255, 255, 0.7); /* Daha opak kart */
+            border-radius: var(--radius-md); padding: 16px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--bg-glass-border); 
             cursor: grab; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; flex-shrink: 0;
             backdrop-filter: blur(5px);
         }
-        .task-card:hover { 
-            transform: translateY(-5px) scale(1.02); 
-            border-color: var(--primary-soft); 
-            box-shadow: var(--shadow-float); 
-        }
-        .task-card::after { content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 4px; border-radius: 0 4px 4px 0; }
-        .p-Yüksek::after { background: #ef4444; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); } 
-        .p-Orta::after { background: #f59e0b; } 
-        .p-Düşük::after { background: #10b981; }
+        [data-theme="dark"] .task-card { background: rgba(40, 40, 45, 0.6); }
+        
+        .task-card:hover { transform: translateY(-4px) scale(1.01); border-color: var(--primary); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .task-card::after { content: ''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 0 4px 4px 0; }
+        .p-Yüksek::after { background: #ef4444; box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); } .p-Orta::after { background: #f59e0b; } .p-Düşük::after { background: #10b981; }
         
         body.compact-mode .task-card { padding: 10px 12px; }
         body.compact-mode .c-desc, body.compact-mode .c-meta, body.compact-mode .c-top { display: none; }
         body.compact-mode .c-title { margin: 0; font-size: 13px; display: flex; align-items: center; gap: 8px; }
         
         .c-top { display: flex; justify-content: space-between; margin-bottom: 8px; align-items: center; }
-        .c-id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-sec); background: var(--bg-col); padding: 2px 6px; border-radius: 6px; font-weight: 600; border: 1px solid var(--border); }
+        .c-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-light); background: rgba(128,128,128,0.1); padding: 2px 6px; border-radius: 6px; font-weight: 600; border: 1px solid var(--bg-glass-border); }
         .c-title { font-weight: 700; font-size: 14px; margin-bottom: 6px; color: var(--text-main); line-height: 1.4; }
-        .c-desc { font-size: 12px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 10px; }
-        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-sec); font-weight: 600; }
+        .c-desc { font-size: 12px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .c-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--bg-glass-border); font-size: 11px; color: var(--text-light); font-weight: 500; }
 
-        /* DONE STATUS VISUAL - Parlayan Onay */
-        .done-icon { color: var(--done-line); font-size: 18px; margin-left: auto; display: none; animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); filter: drop-shadow(0 0 8px rgba(16,185,129,0.5)); }
+        /* CHECK ICON */
+        .done-icon { color: var(--done-line); font-size: 18px; margin-left: auto; display: none; animation: popIn 0.4s; filter: drop-shadow(0 0 5px rgba(52, 199, 89, 0.4)); }
         .task-done .done-icon { display: block; }
-        .task-done { opacity: 0.8; background: linear-gradient(to bottom right, var(--bg-card), rgba(16, 185, 129, 0.05)) !important; border-color: rgba(16, 185, 129, 0.2) !important; }
-        @keyframes popIn { 0% { transform: scale(0) rotate(-45deg); } 100% { transform: scale(1) rotate(0); } }
+        .task-done { opacity: 0.8; background: linear-gradient(to bottom right, transparent, rgba(52, 199, 89, 0.05)); border-color: rgba(52, 199, 89, 0.3); }
+        @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* RIGHT PANEL WIDGETS - Modern Kartlar */
-        .side-widget { 
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); 
-            padding: 20px; box-shadow: var(--shadow-card); backdrop-filter: blur(10px);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .side-widget:hover { transform: translateY(-3px); box-shadow: var(--shadow-float); }
-        .side-title { font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 16px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; letter-spacing: 0.05em; }
-        
-        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
-        .mc-head { font-size: 10px; font-weight: 700; color: var(--text-sec); padding: 4px; }
-        .mc-cell { font-size: 12px; padding: 8px; border-radius: 10px; cursor: pointer; color: var(--text-main); transition: all 0.2s; position: relative; font-weight: 600; border: 1px solid transparent; }
-        .mc-cell:hover { background: var(--bg-col); border-color: var(--border); transform: scale(1.1); z-index: 2; box-shadow: var(--shadow-sm); }
-        .mc-cell.today { background: var(--primary-grad); color: white; font-weight: 800; box-shadow: var(--glow-primary); border: none; }
-        .mc-cell.has-task::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; background: #ef4444; border-radius: 50%; box-shadow: 0 0 5px rgba(239,68,68,0.5); }
-        
-        .todo-list-mini { display: flex; flex-direction: column; gap: 10px; }
-        .tl-item { 
-            background: var(--bg-col); padding: 12px 14px; border-radius: var(--radius-md); 
-            border-left: 4px solid var(--todo-line); font-size: 13px; cursor: pointer; 
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .tl-item:hover { background: var(--bg-card); box-shadow: var(--shadow-float); transform: translateX(5px) scale(1.02); border-color: var(--todo-line); }
-        .tl-title { font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
-        .tl-date { font-size: 11px; color: var(--text-sec); font-weight: 500; }
-
-        /* DASHBOARD & EXTRAS */
+        /* OTHER VIEWS */
         .dash-container .stat-card { 
-            background: var(--bg-card); border: 1px solid var(--border); box-shadow: var(--shadow-card); 
-            border-radius: var(--radius-lg); padding: 24px; backdrop-filter: blur(10px); position: relative; overflow: hidden;
-            transition: transform 0.3s;
+            background: var(--bg-glass-heavy); border: 1px solid var(--bg-glass-border); box-shadow: var(--shadow-glass); 
+            border-radius: var(--radius-lg); padding: 24px; backdrop-filter: blur(20px); 
         }
-        .dash-container .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-float); }
-        .stat-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-        [data-theme="dark"] .stat-card::before { background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%); }
-        .stat-card:hover::before { opacity: 1; }
-
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 24px; }
-        .stat-lbl { font-size: 12px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.05em; }
-        .stat-num { font-size: 36px; font-weight: 800; margin-top: 8px; display: block; letter-spacing: -0.02em; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .chart-wrapper { height: 350px; margin-bottom: 24px; background: var(--bg-card); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-card); backdrop-filter: blur(10px); }
-
-        .calendar-wrapper { background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; border: 1px solid var(--border); min-height: 650px; display: flex; flex-direction: column; box-shadow: var(--shadow-card); backdrop-filter: blur(10px); }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); flex: 1; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); }
-        .cal-cell { background: var(--bg-card); padding: 8px; font-size: 13px; min-height: 90px; transition: background 0.2s; }
-        .cal-cell:hover { background: var(--bg-col); }
-        .cal-cell.today { background: var(--primary-soft); }
-        .cal-task { background: var(--primary-grad); color: white; padding: 4px 8px; margin-top: 4px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-sm); transition: transform 0.2s; }
-        .cal-task:hover { transform: scale(1.05); box-shadow: var(--glow-primary); }
+        .stats-row { gap: 24px; }
+        .stat-lbl { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-num { font-size: 32px; font-weight: 800; margin-top: 8px; display: block; color: var(--text-main); }
+        .chart-wrapper { height: 350px; margin-bottom: 24px; background: var(--bg-glass-heavy); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--bg-glass-border); box-shadow: var(--shadow-glass); backdrop-filter: blur(20px); }
+        .calendar-wrapper { background: var(--bg-glass-heavy); border-radius: var(--radius-lg); padding: 24px; border: 1px solid var(--bg-glass-border); min-height: 650px; display: flex; flex-direction: column; box-shadow: var(--shadow-glass); backdrop-filter: blur(20px); }
+        .cal-grid { border-radius: 16px; overflow: hidden; border: 1px solid var(--bg-glass-border); background: rgba(128,128,128,0.05); }
+        .cal-cell { background: var(--bg-card); padding: 8px; font-size: 12px; }
         
-        .badge { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; }
-        .badge-Yüksek { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); } 
-        .badge-Orta { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); } 
-        .badge-Düşük { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .avatar { width: 28px; height: 28px; border-radius: 8px; font-size: 11px; font-weight: 800; border: 2px solid var(--bg-card); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; }
-        
-        /* MODAL - Gelişmiş */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; transition: all 0.3s; opacity: 0; }
+        /* MODAL */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 2000; align-items: center; justify-content: center; transition: all 0.3s; opacity: 0; }
         .modal.show { display: flex; opacity: 1; }
         .modal-box { 
-            background: var(--bg-card); width: 100%; max-width: 650px; height: auto; max-height: 94%; 
-            border-radius: 24px; display: flex; flex-direction: column; box-shadow: var(--shadow-float); 
-            border: 1px solid var(--border); transform: scale(0.95); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: rgba(255, 255, 255, 0.85); width: 100%; max-width: 650px; height: auto; max-height: 94%; 
+            border-radius: 24px; display: flex; flex-direction: column; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); 
+            border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(20px); transform: scale(0.95); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        [data-theme="dark"] .modal-box { background: rgba(30, 30, 35, 0.85); border-color: rgba(255,255,255,0.1); }
         .modal.show .modal-box { transform: scale(1); }
-        .m-head { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .m-body { padding: 24px; overflow-y: auto; flex: 1; }
-        .m-foot { padding: 20px 24px; border-top: 1px solid var(--border); background: var(--bg-col); border-radius: 0 0 24px 24px; }
+        .m-head { padding: 20px 28px; border-bottom: 1px solid var(--bg-glass-border); }
+        .m-body { padding: 28px; overflow-y: auto; flex: 1; }
+        .m-foot { padding: 20px 28px; border-top: 1px solid var(--bg-glass-border); background: rgba(128,128,128,0.05); border-radius: 0 0 24px 24px; }
         
-        .frm-lbl { font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: block; }
-        .frm-inp { 
-            width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 14px; 
-            background: var(--bg-card); color: var(--text-main); transition: all 0.3s; font-family: 'Inter', sans-serif; font-weight: 500;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); background: var(--bg-body); }
-        textarea.frm-inp { resize: vertical; }
-
-        .comments-section { background: var(--bg-col); padding: 20px; border-radius: 16px; border: 1px solid var(--border); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-        .timeline { position: relative; border-left: 2px solid var(--border); margin-left: 8px; padding-left: 24px; }
-        .timeline-item { position: relative; margin-bottom: 20px; }
-        .timeline-item::before { content: ''; position: absolute; left: -29px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg-card); border: 3px solid var(--primary); box-shadow: var(--shadow-sm); }
-        .t-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 6px; }
-        .t-user { font-weight: 800; font-size: 13px; color: var(--text-main); }
-        .t-date { font-size: 11px; color: var(--text-sec); font-family: 'JetBrains Mono', monospace; }
-        .t-text { font-size: 13px; color: var(--text-sec); background: var(--bg-card); padding: 12px; border-radius: 12px; border: 1px solid var(--border); line-height: 1.5; box-shadow: var(--shadow-sm); }
-        .t-system .t-text { background: transparent; border: none; padding: 0; color: var(--primary); font-style: italic; font-size: 12px; box-shadow: none; }
-        .t-system::before { border-color: var(--text-sec); background: var(--text-sec); }
-
-        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-body); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .login-card { background: var(--bg-card); padding: 40px; border-radius: 24px; box-shadow: var(--shadow-float); width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--border); backdrop-filter: blur(20px); }
-        .login-input { background: var(--bg-col); border: 1px solid var(--border); color: var(--text-main); padding: 14px; font-size: 15px; margin-bottom: 16px; border-radius: 12px; }
-        .login-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+        .frm-lbl { font-size: 11px; font-weight: 700; color: var(--text-sec); margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 0.05em; }
+        .frm-inp { width: 100%; padding: 12px 16px; border: 1px solid var(--bg-glass-border); border-radius: 12px; font-size: 14px; background: rgba(255,255,255,0.5); color: var(--text-main); transition: 0.2s; font-family: 'Inter', sans-serif; }
+        [data-theme="dark"] .frm-inp { background: rgba(0,0,0,0.2); }
+        .frm-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); background: var(--bg-card); }
+        
+        /* UTILS */
+        .badge { padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; }
+        .badge-Yüksek { background: rgba(255, 59, 48, 0.15); color: #ff3b30; border: 1px solid rgba(255, 59, 48, 0.2); }
+        .badge-Orta { background: rgba(255, 149, 0, 0.15); color: #ff9500; border: 1px solid rgba(255, 149, 0, 0.2); }
+        .badge-Düşük { background: rgba(52, 199, 89, 0.15); color: #34c759; border: 1px solid rgba(52, 199, 89, 0.2); }
+        .avatar { width: 28px; height: 28px; border-radius: 8px; font-size: 11px; font-weight: 700; border: 1px solid var(--bg-glass-border); display: flex; align-items: center; justify-content: center; background: rgba(128,128,128,0.1); color: var(--text-main); }
 
         .hidden { display: none !important; } .admin-only { display: none; }
-        .filter-panel { position: absolute; top: 75px; right: 24px; width: 300px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; box-shadow: var(--shadow-float); z-index: 40; display: none; flex-direction: column; gap: 16px; backdrop-filter: blur(10px); animation: slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-        #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: var(--bg-card); color: var(--text-main); padding: 16px 24px; border-radius: 16px; box-shadow: var(--shadow-float); border-left: 5px solid; font-weight: 700; min-width: 300px; display: flex; align-items: center; gap: 12px; animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); font-size: 14px; backdrop-filter: blur(10px); border: 1px solid var(--border); }
-        @keyframes slideInRight { from { transform: translateX(120%) scale(0.9); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; background: var(--bg-glass-heavy); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; }
+        .login-card { background: var(--bg-card); padding: 40px; border-radius: 30px; box-shadow: var(--shadow-glass); width: 100%; max-width: 400px; text-align: center; border: 1px solid var(--bg-glass-border); }
+        
+        .filter-panel { position: absolute; top: 80px; right: 24px; width: 320px; background: var(--bg-glass-heavy); border: 1px solid var(--bg-glass-border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow-glass); z-index: 40; display: none; flex-direction: column; gap: 16px; backdrop-filter: blur(20px); }
+        #toast-container { position: fixed; top: 24px; right: 24px; z-index: 9999; }
+        .toast { background: var(--bg-glass-heavy); backdrop-filter: blur(12px); color: var(--text-main); padding: 16px 24px; border-radius: 16px; box-shadow: var(--shadow-glass); border-left: 4px solid; font-weight: 600; min-width: 300px; display: flex; align-items: center; gap: 12px; animation: slideIn 0.3s ease; border: 1px solid var(--bg-glass-border); }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         .bottom-nav { display: none; } .mobile-filter-btn { display: none; }
         @media (max-width: 768px) {
@@ -318,12 +277,10 @@
             .cockpit-side { display: none; }
             .kanban-container { gap: 12px; }
             .k-col { min-width: 85vw; margin-right: 12px; }
-            .top-control-bar { margin-bottom: 16px; padding: 10px; overflow-x: auto; }
-            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-card); border-top: 1px solid var(--border); height: 70px; z-index: 1000; justify-content: space-around; align-items: center; backdrop-filter: blur(16px); box-shadow: 0 -5px 20px rgba(0,0,0,0.05); padding-bottom: 10px; }
-            .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-sec); font-size: 10px; font-weight: 700; gap: 4px; transition: all 0.2s; }
-            .b-nav-item.active { color: var(--primary); transform: translateY(-2px); }
-            .b-nav-item i { font-size: 18px; }
-            .mobile-filter-btn { display: flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 12px; background: var(--bg-col); border: 1px solid var(--border); color: var(--text-sec); }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--bg-glass-heavy); backdrop-filter: blur(20px); border-top: 1px solid var(--bg-glass-border); height: 65px; z-index: 1000; justify-content: space-around; align-items: center; padding-bottom: 10px; }
+            .b-nav-item { border: none; background: transparent; display: flex; flex-direction: column; align-items: center; color: var(--text-light); font-size: 10px; font-weight: 600; gap: 4px; }
+            .b-nav-item.active { color: var(--primary); }
+            .mobile-filter-btn { display: flex; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: var(--bg-glass-light); border: 1px solid var(--bg-glass-border); color: var(--text-sec); }
             .modal-box { height: 100%; border-radius: 0; max-height: 100%; }
             .modal.show .modal-box { transform: none; }
         }
@@ -335,13 +292,13 @@
 
 <div id="loginOverlay">
     <div class="login-card">
-        <img src="logo.png" alt="Logo" style="width:80px; margin-bottom:20px; border-radius:16px; box-shadow:var(--shadow-card);">
-        <h2 style="margin:0 0 10px 0; color:var(--text-main); font-size:24px;">BT Portal</h2>
-        <p style="color:var(--text-sec); margin-bottom:30px; font-size:14px; font-weight:500;">Halk Faktoring A.Ş.<br>Kurumsal Giriş</p>
-        <input type="email" id="email" class="login-input" placeholder="E-posta Adresi">
-        <input type="password" id="password" class="login-input" placeholder="Şifre">
-        <button class="btn-grad" style="width:100%; justify-content:center; padding:14px; font-size:15px; margin-top:16px;" onclick="createRipple(event); login()">Giriş Yap</button>
-        <div id="loginError" style="color:#ef4444; margin-top:20px; font-size:13px; font-weight:700;"></div>
+        <img src="logo.png" alt="Logo" style="width:80px; margin-bottom:20px; border-radius:18px; box-shadow:var(--shadow-sm);">
+        <h2 style="margin:0 0 8px 0; color:var(--text-main); font-size:24px; font-weight:800;">BT Portal</h2>
+        <p style="color:var(--text-sec); margin-bottom:30px; font-size:14px;">Halk Faktoring A.Ş.<br>Güvenli Giriş</p>
+        <input type="email" id="email" class="login-input frm-inp" placeholder="E-posta Adresi" style="background:var(--bg-col);">
+        <input type="password" id="password" class="login-input frm-inp" placeholder="Şifre" style="background:var(--bg-col); margin-top:12px;">
+        <button class="btn-grad" style="width:100%; justify-content:center; padding:14px; font-size:15px; margin-top:20px;" onclick="createRipple(event); login()">Giriş Yap</button>
+        <div id="loginError" style="color:#ff3b30; margin-top:20px; font-size:13px; font-weight:600;"></div>
     </div>
 </div>
 
@@ -368,28 +325,27 @@
 
     <div id="filterPanel" class="filter-panel">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight:800; font-size:15px; color:var(--primary);">FİLTRELE</span><button class="btn-icon" style="width:32px; height:32px;" onclick="toggleFilter()">✕</button>
+            <span style="font-weight:800; font-size:15px;">FİLTRELE</span><span style="cursor:pointer; padding:5px;" onclick="toggleFilter()">✕</span>
         </div>
-        <div class="frm-grp"><span class="frm-lbl">Ara</span><input type="text" id="fltText" class="frm-inp" placeholder="Anahtar kelime..."></div>
+        <div class="frm-grp"><span class="frm-lbl">Ara</span><input type="text" id="fltText" class="frm-inp" placeholder="Kelime..."></div>
         <div class="frm-grp"><span class="frm-lbl">Konu</span><select id="fltTopic" class="frm-inp"></select></div>
         <div class="frm-grp"><span class="frm-lbl">Atanan</span><select id="fltAssignee" class="frm-inp"></select></div>
         <div style="display:flex; gap:12px; margin-top:10px;">
             <button class="btn-grad" style="flex:1; justify-content:center;" onclick="applyFilter()">Uygula</button>
-            <button class="btn-icon" style="flex:1; width:auto; font-size:13px; font-weight:700;" onclick="clearFilter()">Temizle</button>
+            <button class="btn-icon" style="flex:1; width:auto; border-color:#ff3b30; color:#ff3b30;" onclick="clearFilter()">Temizle</button>
         </div>
     </div>
 
     <div class="main-content">
         <div id="view-dashboard" class="view-section dash-container">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-                <h2 style="margin:0; font-size:24px;">Genel Bakış</h2>
-                <button class="btn-grad" style="background: var(--bg-card); color:var(--text-main); border:1px solid var(--border); box-shadow:var(--shadow-sm);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel" style="color:#10b981"></i> Excel İndir</button>
+            <div style="display:flex; justify-content:flex-end; margin-bottom:20px;">
+                <button class="btn-grad" style="background: var(--bg-glass-light); color:var(--text-main); border:1px solid var(--bg-glass-border); box-shadow:var(--shadow-sm);" onclick="createRipple(event); exportExcel()"><i class="fa-solid fa-file-excel" style="color:#34c759"></i> Excel İndir</button>
             </div>
             <div class="stats-row">
-                <div class="stat-card"><span class="stat-lbl">Toplam İş</span><span class="stat-num" id="dTotal">0</span></div>
-                <div class="stat-card"><span class="stat-lbl" style="color:#f59e0b">Bekleyen</span><span class="stat-num" style="color:#f59e0b" id="dTodo">0</span></div>
-                <div class="stat-card"><span class="stat-lbl" style="color:#0061ff">İşlemde</span><span class="stat-num" style="color:#0061ff" id="dProg">0</span></div>
-                <div class="stat-card"><span class="stat-lbl" style="color:#10b981">Tamamlanan</span><span class="stat-num" style="color:#10b981" id="dDone">0</span></div>
+                <div class="stat-card"><span class="stat-lbl">Toplam</span><span class="stat-num" id="dTotal">0</span></div>
+                <div class="stat-card"><span class="stat-lbl" style="color:var(--todo-line)">Bekleyen</span><span class="stat-num" style="color:var(--todo-line)" id="dTodo">0</span></div>
+                <div class="stat-card"><span class="stat-lbl" style="color:var(--prog-line)">İşlemde</span><span class="stat-num" style="color:var(--prog-line)" id="dProg">0</span></div>
+                <div class="stat-card"><span class="stat-lbl" style="color:var(--done-line)">Tamamlanan</span><span class="stat-num" style="color:var(--done-line)" id="dDone">0</span></div>
             </div>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:24px;">
                 <div class="chart-wrapper"><canvas id="chartStatus"></canvas></div>
@@ -401,27 +357,27 @@
             <div class="cockpit-layout">
                 <div class="cockpit-main">
                     <div class="top-control-bar">
-                        <div style="display:flex; align-items:center; gap:16px;">
-                            <div style="font-size:20px; font-weight:800; color:var(--text-main); display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-layer-group" style="color:var(--primary)"></i> İş Takip Panosu</div>
+                        <div style="display:flex; align-items:center; gap:12px;">
+                            <div class="time-pills">
+                                <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
+                                <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
+                                <button class="time-btn" onclick="setTimeFilter('month', this)">Bu Ay</button>
+                            </div>
                         </div>
-                         <div class="time-pills">
-                            <button class="time-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
-                            <button class="time-btn" onclick="setTimeFilter('week', this)">Bu Hafta</button>
-                            <button class="time-btn" onclick="setTimeFilter('month', this)">Bu Ay</button>
-                        </div>
+                        <div style="font-size:12px; color:var(--text-light); font-weight:600; display:flex; align-items:center; gap:6px;"><span style="width:8px; height:8px; background:#34c759; border-radius:50%; box-shadow:0 0 8px #34c759;"></span> Sistem Aktif</div>
                     </div>
 
                     <div class="kanban-container">
                         <div class="k-col" id="col-todo">
-                            <div class="k-header">BEKLEYENLER <span class="badge" id="cnt-todo" style="background:var(--bg-card); border:1px solid var(--border); box-shadow:var(--shadow-sm);">0</span></div>
+                            <div class="k-header">BEKLEYEN <span class="badge" id="cnt-todo" style="background:rgba(0,0,0,0.05); border:1px solid var(--bg-glass-border)">0</span></div>
                             <div class="k-list" id="lst-todo" data-status="todo"></div>
                         </div>
                         <div class="k-col" id="col-progress">
-                            <div class="k-header" style="color:var(--primary)">İŞLEMDE <span class="badge" id="cnt-progress" style="background:var(--primary-soft); color:var(--primary); border:1px solid rgba(0,97,255,0.2);">0</span></div>
+                            <div class="k-header" style="color:var(--primary)">İŞLEMDE <span class="badge" id="cnt-progress" style="background:rgba(0,122,255,0.1); color:var(--primary)">0</span></div>
                             <div class="k-list" id="lst-progress" data-status="progress"></div>
                         </div>
                         <div class="k-col" id="col-done">
-                            <div class="k-header" style="color:var(--done-line)">BİTENLER <span class="badge" id="cnt-done" style="background:rgba(16,185,129,0.1); color:var(--done-line); border:1px solid rgba(16,185,129,0.2);">0</span></div>
+                            <div class="k-header" style="color:var(--done-line)">BİTEN <span class="badge" id="cnt-done" style="background:rgba(52,199,89,0.1); color:var(--done-line)">0</span></div>
                             <div class="k-list" id="lst-done" data-status="done"></div>
                         </div>
                     </div>
@@ -429,16 +385,13 @@
 
                 <div class="cockpit-side">
                     <div class="side-widget">
-                        <div class="side-title"><span style="display:flex; align-items:center; gap:8px;"><i class="fa-regular fa-calendar" style="color:var(--primary)"></i> Takvim</span><span id="sideCalTitle" style="font-size:11px; color:var(--text-sec); font-weight:700;"></span></div>
+                        <div class="side-title"><span><i class="fa-regular fa-calendar"></i> Takvim</span><span id="sideCalTitle" style="color:var(--primary)"></span></div>
                         <div class="mini-cal-grid" id="miniCalGrid">
                             <div class="mc-head">Pt</div><div class="mc-head">Sa</div><div class="mc-head">Ça</div><div class="mc-head">Pe</div><div class="mc-head">Cu</div><div class="mc-head">Ct</div><div class="mc-head">Pz</div>
                         </div>
                     </div>
-                    <div class="side-widget" style="flex:1; display:flex; flex-direction:column;">
-                        <div class="side-title"><span style="display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-list-check" style="color:#f59e0b"></i> Acil İşler</span></div>
-                        <div class="todo-list-mini" id="sideTodoList">
-                            <div style="text-align:center; color:var(--text-sec); font-size:12px; padding:20px; opacity:0.7;">Aktif görev yok 👍</div>
-                        </div>
+                    <div class="todo-list-mini" id="sideTodoList">
+                        <div style="text-align:center; color:var(--text-light); font-size:12px; padding:20px;">Görev akışı boş</div>
                     </div>
                 </div>
             </div>
@@ -454,16 +407,9 @@
                 <div class="cal-grid" id="calGrid"></div>
             </div>
         </div>
-
         <div id="view-agenda" class="view-section">
             <div class="calendar-wrapper">
-                <div class="m-title" style="margin-bottom:24px; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:22px; font-weight:800;">Haftalık Liste</span>
-                    <div class="time-pills">
-                        <button class="time-btn active" onclick="setTimeFilter('all', this, 'list')">Tümü</button>
-                        <button class="time-btn" onclick="setTimeFilter('week', this, 'list')">Hafta</button>
-                    </div>
-                </div>
+                <div class="m-title" style="margin-bottom:24px; font-size:20px;">Haftalık Liste</div>
                 <div id="agendaList" style="display:flex; flex-direction:column; gap:12px; overflow-y:auto;"></div>
             </div>
         </div>
@@ -472,7 +418,7 @@
     <div class="bottom-nav">
         <button class="b-nav-item active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
         <button class="b-nav-item" onclick="showView('month', this)"><i class="fa-solid fa-calendar-days"></i><span>Takvim</span></button>
-        <button class="b-nav-item" onclick="newTask()"><div style="background:var(--primary-grad); width:48px; height:48px; border-radius:16px; display:flex; align-items:center; justify-content:center; color:white; margin-top:-24px; box-shadow:var(--glow-primary);"><i class="fa-solid fa-plus" style="font-size:22px;"></i></div></button>
+        <button class="b-nav-item" onclick="newTask()"><div style="background:var(--primary-grad); width:48px; height:48px; border-radius:16px; display:flex; align-items:center; justify-content:center; color:white; margin-top:-24px; box-shadow:0 4px 15px var(--primary-glow);"><i class="fa-solid fa-plus" style="font-size:20px;"></i></div></button>
         <button class="b-nav-item" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i><span>Liste</span></button>
         <button class="b-nav-item" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Rapor</span></button>
     </div>
@@ -480,32 +426,32 @@
 
 <div id="modal" class="modal">
     <div class="modal-box">
-        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title" style="font-size:20px; font-weight:800;">Görev Detayı</span><span id="tCodeDisplay" style="background:var(--bg-col); padding:4px 10px; border-radius:8px; font-size:13px; font-weight:700; color:var(--text-sec); font-family:'JetBrains Mono', monospace; border:1px solid var(--border);"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
+        <div class="m-head"><div style="display:flex; align-items:center; gap:12px;"><span class="m-title" style="font-size:18px;">Görev Detayı</span><span id="tCodeDisplay" style="background:rgba(0,0,0,0.05); padding:4px 10px; border-radius:8px; font-size:12px; font-weight:700; color:var(--text-sec); font-family:'JetBrains Mono', monospace; border:1px solid var(--bg-glass-border);"></span></div><button class="btn-icon" onclick="closeModal()">✕</button></div>
         <div class="m-body">
             <input type="hidden" id="tId"><input type="hidden" id="tCode"><input type="hidden" id="initialStatus">
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp" style="font-weight:700; font-size:15px;"></select></div>
+                <div class="frm-grp span-full"><span class="frm-lbl">Konu Başlığı</span><select id="tTitle" class="frm-inp" style="font-weight:600;"></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Durum</span><select id="tStatus" class="frm-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Öncelik</span><select id="tPriority" class="frm-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Sorumlu Kişi</span><select id="tAssignee" class="frm-inp"></select></div>
                 <div class="frm-grp"><span class="frm-lbl">Hedef Bitiş</span><input type="date" id="tDate" class="frm-inp"></div>
-                <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="5" placeholder="Görev hakkında detaylı bilgi..."></textarea></div>
+                <div class="frm-grp span-full"><span class="frm-lbl">Açıklama</span><textarea id="tDesc" class="frm-inp" rows="4"></textarea></div>
             </div>
-            <div class="frm-grp span-full" style="margin-top:24px; background:var(--bg-col); padding:20px; border-radius:16px; border:2px dashed var(--border); text-align:center; transition:all 0.3s;">
+            <div class="frm-grp span-full" style="margin-top:24px; background:rgba(0,0,0,0.02); padding:20px; border-radius:16px; border:1px dashed var(--border); text-align:center;">
                 <input type="file" id="tFile" style="display:none;" onchange="document.getElementById('fileName').innerText = this.files[0].name">
-                <label for="tFile" class="btn-grad" style="display:inline-flex; width:auto; padding:10px 20px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--border); box-shadow:var(--shadow-sm);"><i class="fa-solid fa-cloud-upload" style="color:var(--primary)"></i> Dosya Seç</label>
-                <div id="fileName" style="margin-top:10px; font-size:13px; color:var(--text-sec); font-weight:500;"></div><span id="uploadStatus" class="loading" style="display:none; font-size:12px; color:var(--primary); margin-top:10px; font-weight:600;">Yükleniyor...</span>
-                <a id="tFileLink" href="#" target="_blank" class="btn-grad hidden" style="margin:16px auto 0; width:fit-content; padding:10px 20px;"><i class="fa-solid fa-download"></i> Dosyayı İndir</a>
+                <label for="tFile" class="btn-grad" style="display:inline-flex; width:auto; padding:10px 24px; background:var(--bg-card); color:var(--text-main); border:1px solid var(--bg-glass-border); box-shadow:var(--shadow-sm);"><i class="fa-solid fa-cloud-upload" style="color:white"></i> Dosya Seç</label>
+                <div id="fileName" style="margin-top:10px; font-size:12px; color:var(--text-sec);"></div><span id="uploadStatus" class="loading" style="display:none; font-size:12px; color:var(--primary); margin-top:10px;">Yükleniyor...</span>
+                <a id="tFileLink" href="#" target="_blank" class="btn-grad hidden" style="margin:16px auto 0; width:fit-content; padding:10px 20px;">İndir</a>
             </div>
             <div class="frm-grp span-full comments-section" style="margin-top:24px;">
-                <span class="frm-lbl" style="display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-clock-rotate-left"></i> İşlem Tarihçesi & Notlar</span>
-                <div id="commentList" style="max-height:250px; overflow-y:auto; margin-bottom:16px; display:flex; flex-direction:column; gap:0; padding-right:10px;"></div>
+                <span class="frm-lbl">İşlem Tarihçesi</span>
+                <div id="commentList" style="max-height:250px; overflow-y:auto; margin-bottom:16px; display:flex; flex-direction:column; gap:0;"></div>
                 <div style="display:flex; gap:12px;"><input type="text" id="newComment" class="frm-inp" placeholder="Not ekle..." style="box-shadow:var(--shadow-sm);"><button class="btn-grad" style="padding:0 28px;" onclick="createRipple(event); addComment()"><i class="fa-solid fa-paper-plane"></i></button></div>
             </div>
         </div>
-        <div class="m-foot" style="display:flex; justify-content:space-between; align-items:center;">
-            <button class="btn-icon admin-only" style="color:#ef4444; border-color:rgba(239,68,68,0.3); background:rgba(239,68,68,0.1); width:auto; padding:0 20px; font-weight:700; font-size:13px; gap:8px;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button>
-            <button class="btn-grad" onclick="createRipple(event); saveTask()" id="btnSave" style="padding:12px 40px; font-size:14px;">Kaydet</button>
+        <div class="m-foot" style="display:flex; justify-content:space-between;">
+            <button class="btn-icon admin-only" style="color:#ff3b30; border-color:rgba(255,59,48,0.3); background:rgba(255,59,48,0.1); width:auto; padding:0 20px;" onclick="delTask()" id="deleteTaskBtn"><i class="fa-solid fa-trash"></i> Sil</button>
+            <button class="btn-grad" onclick="createRipple(event); saveTask()" id="btnSave" style="padding:12px 40px;">Kaydet</button>
         </div>
     </div>
 </div>
@@ -527,7 +473,7 @@
         circle.style.top = `${event.clientY - button.getBoundingClientRect().top - d/2}px`;
         circle.classList.add("ripple");
         button.appendChild(circle);
-        setTimeout(() => circle.remove(), 500);
+        setTimeout(() => circle.remove(), 600);
     }
 
     const firebaseConfig = {
@@ -573,34 +519,34 @@
     window.showToast = function(msg, type='success') {
         const c = document.getElementById('toast-container'); const t = document.createElement('div');
         t.className = `toast`;
-        let icon = 'fa-circle-check'; let color = '#10b981';
-        if(type==='error') { icon='fa-circle-exclamation'; color='#ef4444'; t.style.borderLeftColor=color; }
-        else if(type==='info') { icon='fa-circle-info'; color='#0061ff'; t.style.borderLeftColor=color; }
+        let icon = 'fa-circle-check'; let color = '#34c759';
+        if(type==='error') { icon='fa-circle-exclamation'; color='#ff3b30'; t.style.borderLeftColor=color; }
+        else if(type==='info') { icon='fa-circle-info'; color='#007aff'; t.style.borderLeftColor=color; }
         else { t.style.borderLeftColor=color; }
         t.innerHTML = `<i class="fa-solid ${icon}" style="font-size:20px; color:${color}"></i> <span>${msg}</span>`;
         c.appendChild(t); setTimeout(() => { t.style.animation='slideInRight 0.4s reverse forwards'; setTimeout(()=>t.remove(), 400); }, 3500);
     }
     
     function getAvatar(name) {
-        if(!name) return '<div class="avatar" style="background:#e2e8f0; color:#64748b"><i class="fa-solid fa-user"></i></div>';
+        if(!name) return '<div class="avatar" style="background:rgba(0,0,0,0.05); color:var(--text-light)">?</div>';
         const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
         return `<div class="avatar" style="background:${getInitialsColor(name)}; color:white; border:none; text-shadow:0 1px 2px rgba(0,0,0,0.2);">${initials}</div>`;
     }
     function getInitialsColor(name) {
-        const colors = ['linear-gradient(135deg, #0061ff, #60efff)', 'linear-gradient(135deg, #ff0080, #ff8c00)', 'linear-gradient(135deg, #10b981, #a7f3d0)', 'linear-gradient(135deg, #f59e0b, #fcd34d)', 'linear-gradient(135deg, #8b5cf6, #c4b5fd)'];
+        const colors = ['linear-gradient(135deg, #007aff, #5ac8fa)', 'linear-gradient(135deg, #ff2d55, #ff9f0a)', 'linear-gradient(135deg, #34c759, #30b0c7)', 'linear-gradient(135deg, #5856d6, #af52de)'];
         return colors[name.length % colors.length];
     }
-    function getEmptyState() { return `<div style="text-align:center; padding:40px 20px; color:var(--text-sec); opacity:0.7; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:12px;"><i class="fa-solid fa-clipboard-list" style="font-size:32px; color:var(--border);"></i><div>Henüz görev yok</div></div>`; }
+    function getEmptyState() { return `<div style="text-align:center; padding:40px 20px; color:var(--text-light); opacity:0.7; font-size:13px; display:flex; flex-direction:column; align-items:center; gap:12px;"><i class="fa-solid fa-clipboard-check" style="font-size:32px; color:var(--bg-glass-border);"></i><div>Görev bulunamadı</div></div>`; }
 
     function renderSkeletons() {
-        const skHtml = '<div class="skeleton sk-card" style="height:120px; border-radius:12px; margin-bottom:16px; animation:pulse 1.5s infinite;"></div>'.repeat(2);
+        const skHtml = '<div class="skeleton sk-card" style="height:120px; border-radius:16px; margin-bottom:16px; animation:pulse 1.5s infinite;"></div>'.repeat(2);
         ['lst-todo','lst-progress','lst-done'].forEach(id => document.getElementById(id).innerHTML = skHtml);
     }
 
     function fireConfetti() {
         const count = 250; const defaults = { origin: { y: 0.65 } };
         function fire(particleRatio, opts) { confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) })); }
-        fire(0.25, { spread: 26, startVelocity: 55, colors:['#10b981','#60efff'] }); fire(0.2, { spread: 60, colors:['#0061ff','#f59e0b'] });
+        fire(0.25, { spread: 26, startVelocity: 55, colors:['#34c759','#5ac8fa'] }); fire(0.2, { spread: 60, colors:['#007aff','#ff9f0a'] });
         fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 }); fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
         fire(0.1, { spread: 120, startVelocity: 45 });
     }
@@ -724,9 +670,17 @@
         const list = document.getElementById('sideTodoList');
         const todos = tasks.filter(t => t.status !== 'done').sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 6);
         list.innerHTML = '';
-        if(todos.length === 0) list.innerHTML = '<div style="text-align:center; color:var(--text-sec); font-size:12px; padding:20px; opacity:0.7;">Aktif görev yok 👍</div>';
+        if(todos.length === 0) list.innerHTML = '<div style="text-align:center; color:var(--text-light); font-size:12px; padding:20px; opacity:0.7;">Aktif görev yok 👍</div>';
         todos.forEach(t => {
-            list.innerHTML += `<div class="tl-item" onclick="openModal('${t.id}')"><div style="flex:1;"><div class="tl-title">${t.title}</div><div class="tl-date"><i class="fa-regular fa-calendar-xmark"></i> ${t.date ? new Date(t.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}) : 'Tarihsiz'}</div></div><div class="badge badge-${t.priority}">${t.priority}</div></div>`;
+            const descPrev = t.desc ? t.desc.substring(0, 50) + (t.desc.length>50?'...':'') : 'Açıklama yok';
+            list.innerHTML += `
+            <div class="tl-item" onclick="openModal('${t.id}')">
+                <div class="tl-head">
+                    <span class="tl-title">${t.title}</span>
+                    <span class="tl-date">${t.date ? new Date(t.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}) : ''}</span>
+                </div>
+                <div class="tl-desc">${descPrev}</div>
+            </div>`;
         });
     }
 
@@ -738,20 +692,20 @@
         document.getElementById('dTotal').innerText = tasks.length; document.getElementById('dTodo').innerText = counts.todo; document.getElementById('dProg').innerText = counts.progress; document.getElementById('dDone').innerText = counts.done;
         
         const isDark = document.body.getAttribute('data-theme') === 'dark';
-        const textColor = isDark ? '#f1f5f9' : '#1e293b';
+        const textColor = isDark ? '#f5f5f7' : '#1d1d1f';
         const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
         const commonOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: textColor, font: { family: 'Inter', weight: 600 } } } } };
         
         const ctx1 = document.getElementById('chartStatus').getContext('2d');
-        const gradTodo = ctx1.createLinearGradient(0,0,0,400); gradTodo.addColorStop(0,'#f59e0b'); gradTodo.addColorStop(1,'#d97706');
-        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#0061ff'); gradProg.addColorStop(1,'#60efff');
-        const gradDone = ctx1.createLinearGradient(0,0,0,400); gradDone.addColorStop(0,'#10b981'); gradDone.addColorStop(1,'#059669');
+        const gradTodo = ctx1.createLinearGradient(0,0,0,400); gradTodo.addColorStop(0,'#ff9f0a'); gradTodo.addColorStop(1,'#ffb340');
+        const gradProg = ctx1.createLinearGradient(0,0,0,400); gradProg.addColorStop(0,'#007aff'); gradProg.addColorStop(1,'#5ac8fa');
+        const gradDone = ctx1.createLinearGradient(0,0,0,400); gradDone.addColorStop(0,'#34c759'); gradDone.addColorStop(1,'#30b0c7');
 
         if(chartStatusInst) chartStatusInst.destroy();
         chartStatusInst = new Chart(ctx1, { type: 'doughnut', data: { labels: ['Bekleyen', 'İşlemde', 'Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: [gradTodo, gradProg, gradDone], borderWidth:0, hoverOffset: 15, spacing: 5 }] }, options: { ...commonOpts, cutout: '70%', plugins: { ...commonOpts.plugins, title: { display: true, text: 'Görev Durum Dağılımı', color: textColor, font: { size: 14, weight: 800 } } } } });
         
         const ctx2 = document.getElementById('chartUser').getContext('2d');
-        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#0061ff'); gradBar.addColorStop(1,'#60efff');
+        const gradBar = ctx2.createLinearGradient(0,0,0,400); gradBar.addColorStop(0,'#007aff'); gradBar.addColorStop(1,'#5ac8fa');
 
         if(chartUserInst) chartUserInst.destroy();
         chartUserInst = new Chart(ctx2, { type: 'bar', data: { labels: USERS.map(u => u.split(' ')[0]), datasets: [{ label: 'Görev Sayısı', data: USERS.map(u => userCounts[u]), backgroundColor: gradBar, borderRadius: 8, barThickness: 24 }] }, options: { ...commonOpts, scales: { y: { beginAtZero: true, grid: { color: gridColor, drawBorder: false }, ticks: { color: textColor } }, x: { grid: { display: false }, ticks: { color: textColor } } }, plugins: { ...commonOpts.plugins, title: { display: true, text: 'Kişi Bazlı İş Yükü', color: textColor, font: { size: 14, weight: 800 } } } } });
@@ -796,7 +750,7 @@
             const mStr = String(m + 1).padStart(2, '0'); const dStr = String(i).padStart(2, '0'); const fullDate = `${y}-${mStr}-${dStr}`;
             const dayTasks = tasks.filter(t => t.date === fullDate);
             let html = '';
-            dayTasks.forEach(t => { const bg = t.status==='done'?'linear-gradient(135deg, #10b981, #059669)':(t.status==='progress'?'linear-gradient(135deg, #0061ff, #60efff)':'linear-gradient(135deg, #f59e0b, #d97706)'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.code}</div>`; });
+            dayTasks.forEach(t => { const bg = t.status==='done'?'linear-gradient(135deg, #34c759, #30b0c7)':(t.status==='progress'?'linear-gradient(135deg, #007aff, #5ac8fa)':'linear-gradient(135deg, #ff9f0a, #ff2d55)'); html += `<div class="cal-task" style="background:${bg}" onclick="event.stopPropagation(); openModal('${t.id}')">${t.code}</div>`; });
             const isToday = fullDate === todayStr ? 'today' : ''; grid.innerHTML += `<div class="cal-cell ${isToday}"><div style="font-weight:800; margin-bottom:6px; font-size:13px;">${i}</div><div style="display:flex; flex-direction:column; gap:4px;">${html}</div></div>`;
         }
     }
@@ -807,13 +761,13 @@
         if(tasks.length === 0) { container.innerHTML = getEmptyState(); return; }
         const sorted = tasks.sort((a,b) => new Date(b.date) - new Date(a.date));
         sorted.forEach((t, index) => {
-             const c = t.status==='done'?'#10b981':(t.status==='progress'?'#0061ff':'#f59e0b');
+             const c = t.status==='done'?'#34c759':(t.status==='progress'?'#007aff':'#ff9f0a');
              const row = document.createElement('div');
-             row.style = `background:var(--bg-card); padding:16px; border-radius:16px; border-left:4px solid ${c}; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:10px; animation:fadeIn 0.4s ease-out ${index*0.05}s backwards; box-shadow:var(--shadow-sm); transition:all 0.2s;`;
-             row.onmouseover = () => { row.style.transform='translateY(-3px)'; row.style.boxShadow='var(--shadow-card)'; };
+             row.style = `background:var(--bg-card); padding:16px; border-radius:16px; border-left:4px solid ${c}; border:1px solid var(--bg-glass-border); display:flex; justify-content:space-between; align-items:center; cursor:pointer; margin-bottom:10px; animation:fadeIn 0.4s ease-out ${index*0.05}s backwards; box-shadow:var(--shadow-sm); transition:all 0.2s;`;
+             row.onmouseover = () => { row.style.transform='translateY(-3px)'; row.style.boxShadow='var(--shadow-glass)'; };
              row.onmouseout = () => { row.style.transform='translateY(0)'; row.style.boxShadow='var(--shadow-sm)'; };
              row.onclick = () => openModal(t.id);
-             row.innerHTML = `<div style="display:flex; align-items:center; gap:12px;"><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:12px; color:var(--text-sec); background:var(--bg-col); padding:4px 8px; border-radius:8px; border:1px solid var(--border);">${t.code}</div><div><div style="font-weight:800; color:var(--text-main); font-size:14px; margin-bottom:4px;">${t.title}</div><div style="font-size:12px; color:var(--text-sec); display:flex; align-items:center; gap:10px;"><span style="display:flex; align-items:center; gap:4px;"><i class="fa-regular fa-calendar"></i> ${t.date}</span> <span style="display:flex; align-items:center; gap:4px;"><i class="fa-regular fa-user"></i> ${t.assignee.split(' ')[0]}</span></div></div></div><div class="badge badge-${t.priority}">${t.priority}</div>`;
+             row.innerHTML = `<div style="display:flex; align-items:center; gap:12px;"><div style="font-family:'JetBrains Mono'; font-weight:700; font-size:12px; color:var(--text-light); background:rgba(128,128,128,0.1); padding:4px 8px; border-radius:8px; border:1px solid var(--bg-glass-border);">${t.code}</div><div><div style="font-weight:800; color:var(--text-main); font-size:14px; margin-bottom:4px;">${t.title}</div><div style="font-size:12px; color:var(--text-sec); display:flex; align-items:center; gap:10px;"><span style="display:flex; align-items:center; gap:4px;"><i class="fa-regular fa-calendar"></i> ${t.date}</span> <span style="display:flex; align-items:center; gap:4px;"><i class="fa-regular fa-user"></i> ${t.assignee.split(' ')[0]}</span></div></div></div><div class="badge badge-${t.priority}">${t.priority}</div>`;
              container.appendChild(row);
         });
     }
@@ -941,7 +895,6 @@
     }
     window.exportExcel = function() { const rows = allTasks.map(t => ({ "Kod": t.code, "Konu": t.title, "Durum": t.status, "Öncelik": t.priority, "Sorumlu": t.assignee, "Tarih": t.date, "Açıklama": t.desc })); const ws = XLSX.utils.json_to_sheet(rows); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Görevler"); XLSX.writeFile(wb, "BT_Gorevler.xlsx"); }
     
-    /* Dış tıklama ile modalları kapatma */
     window.onclick = function(event) {
         const modal = document.getElementById('modal');
         const filterPanel = document.getElementById('filterPanel');
