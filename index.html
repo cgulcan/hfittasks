@@ -25,22 +25,17 @@
     
     <style>
         :root {
-            /* V11.5 FINAL "WONDERFUL TECH BG" PALET */
+            /* V11.6 FINAL "REAL TECH IMAGE BG" PALET */
             --primary: #0065B3; 
             --primary-hover: #004d8a; 
             --primary-light: #e0f2fe;
             
-            /* --- YENİ "HARİKA" TEKNOLOJİK ARKA PLAN (LIGHT) --- */
-            --bg-body: #f0f5f9; /* Daha temiz, soğuk bir beyaz/gri */
-            /* Hassas Mühendislik / Veri Izgarası Deseni */
-            --bg-pattern: 
-                radial-gradient(circle at center, rgba(0, 101, 179, 0.08) 1px, transparent 1px),
-                linear-gradient(to right, rgba(0, 101, 179, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 101, 179, 0.03) 1px, transparent 1px);
-            --bg-size: 24px 24px, 48px 48px, 48px 48px;
-
-            --bg-card: rgba(255, 255, 255, 0.92); /* Biraz daha opak, net kartlar */
-            --bg-sub: #f8fafc;
+            /* --- YENİ "GERÇEK RESİM" TEKNOLOJİK ARKA PLAN (LIGHT) --- */
+            /* Göz yormayan, aydınlık, soyut teknoloji/çip görseli */
+            --bg-image-url: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            
+            --bg-card: rgba(255, 255, 255, 0.85); /* Arka planı göstermek için yarı saydam */
+            --bg-sub: rgba(248, 250, 252, 0.9);
             
             --border: #e2e8f0; 
             --text-main: #0f172a; 
@@ -58,29 +53,19 @@
             --primary-hover: #60a5fa; 
             --primary-light: rgba(59,130,246,0.15);
             
-            /* --- YENİ "HARİKA" TEKNOLOJİK ARKA PLAN (DARK) --- */
-            --bg-body: #050a14; /* Çok derin, lacivert-siyah */
-            /* Siber Uzay / Neon Matrix Deseni */
-            --bg-pattern: 
-                /* Katman 1: Derinlik veren ambiyans ışıkları */
-                radial-gradient(circle at 15% 25%, rgba(0, 200, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                /* Katman 2: Parlayan Veri Noktaları (Matrix Dots) */
-                radial-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
-                /* Katman 3: İnce Devre Yolları */
-                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
-                linear-gradient(0deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
-            --bg-size: 100% 100%, 100% 100%, 24px 24px, 48px 48px, 48px 48px;
+            /* --- YENİ "GERÇEK RESİM" TEKNOLOJİK ARKA PLAN (DARK) --- */
+            /* Göz yormayan, koyu mavi, soyut siber güvenlik/veri görseli */
+            --bg-image-url: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             
-            --bg-card: rgba(15, 23, 42, 0.85); /* Yarı saydam, koyu lacivert kartlar */
-            --bg-sub: #1e293b;
+            --bg-card: rgba(15, 23, 42, 0.80); /* Koyu modda daha şeffaf kartlar */
+            --bg-sub: rgba(30, 41, 59, 0.85);
             
-            --border: #334155; 
+            --border: rgba(51, 65, 85, 0.8); 
             --text-main: #f8fafc; 
             --text-sec: #94a3b8;
             
             --shadow-sm: none; 
-            --shadow-md: 0 10px 30px -5px rgba(0,0,0,0.6); /* Daha derin gölge */
+            --shadow-md: 0 10px 30px -5px rgba(0,0,0,0.6);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -89,11 +74,11 @@
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
             height: 100dvh; width: 100vw; overflow: hidden; 
             
-            /* Arka Plan Uygulaması */
-            background-color: var(--bg-body);
-            background-image: var(--bg-pattern);
-            background-size: var(--bg-size);
-            background-attachment: fixed; /* Deseni sabitle */
+            /* Arka Plan Resmi Uygulaması */
+            background-image: var(--bg-image-url);
+            background-size: cover;      /* Resmi ekrana yay */
+            background-position: center; /* Resmi ortala */
+            background-attachment: fixed; /* Kaydırmada sabit kalsın */
             
             display: flex; flex-direction: column;
             transition: all 0.3s ease;
