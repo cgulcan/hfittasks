@@ -25,16 +25,21 @@
     
     <style>
         :root {
-            /* V11.2 TECH PALET */
+            /* V11.3 FINAL TECH-MASTER PALET */
             --primary: #0065B3; 
             --primary-hover: #004d8a; 
             --primary-light: #e0f2fe;
             
-            /* TECH BACKGROUND COLORS */
-            --bg-body: #f0f4f8;
-            --grid-color: rgba(0, 101, 179, 0.08); /* Mavi Izgara */
-            
-            --bg-card: rgba(255, 255, 255, 0.95); /* Hafif cam */
+            /* YENİ TEKNOLOJİK ARKA PLAN RENKLERİ */
+            --bg-body: #f4f7fa;
+            /* Light Mode: Dijital Ağ Deseni */
+            --bg-pattern: 
+                radial-gradient(circle at center, rgba(0, 101, 179, 0.05) 0%, transparent 70%),
+                linear-gradient(0deg, transparent 49%, rgba(0, 101, 179, 0.03) 50%, transparent 51%),
+                linear-gradient(90deg, transparent 49%, rgba(0, 101, 179, 0.03) 50%, transparent 51%);
+            --bg-size: 100% 100%, 60px 60px, 60px 60px;
+
+            --bg-card: rgba(255, 255, 255, 0.9); /* Yarı saydam kartlar */
             --bg-sub: #f8fafc;
             
             --border: #e2e8f0; 
@@ -53,11 +58,16 @@
             --primary-hover: #60a5fa; 
             --primary-light: rgba(59,130,246,0.15);
             
-            --bg-body: #0b1120; 
-            --grid-color: rgba(59, 130, 246, 0.15); /* Neon Izgara */
+            --bg-body: #0a0e17; 
+            /* Dark Mode: Siber Devre Deseni */
+            --bg-pattern: 
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            --bg-size: 100% 100%, 40px 40px, 40px 40px;
             
-            --bg-card: rgba(30, 41, 59, 0.9); 
-            --bg-sub: #334155;
+            --bg-card: rgba(30, 41, 59, 0.85); 
+            --bg-sub: #1e293b;
             
             --border: #334155; 
             --text-main: #f8fafc; 
@@ -69,26 +79,18 @@
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        /* TEKNOLOJİK ARKA PLAN (CSS GRID PATTERN) */
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
             height: 100dvh; width: 100vw; overflow: hidden; 
-            background-color: var(--bg-body);
             
-            /* Tech Grid Effect */
-            background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 40px 40px;
+            /* Yeni Arka Plan Uygulaması */
+            background-color: var(--bg-body);
+            background-image: var(--bg-pattern);
+            background-size: var(--bg-size);
+            background-attachment: fixed;
             
             display: flex; flex-direction: column;
-            transition: background-color 0.3s ease;
-        }
-        
-        /* Dark Mode için Nokta Efekti */
-        [data-theme="dark"] body {
-            background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
-            background-size: 20px 20px;
+            transition: all 0.3s ease;
         }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -101,7 +103,7 @@
             height: var(--header-height); flex-shrink: 0; 
             background: var(--bg-card); border-bottom: 1px solid var(--border); 
             display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 20px; z-index: 50; backdrop-filter: blur(10px);
+            padding: 0 20px; z-index: 50; backdrop-filter: blur(12px);
         }
         .brand { display: flex; align-items: center; gap: 10px; }
         .logo-img { height: 30px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
@@ -138,10 +140,9 @@
         .kanban-main { display: flex; flex-direction: column; height: 100%; overflow: hidden; padding-right: 20px; }
         .cockpit-side { 
             display: flex; flex-direction: column; gap: 20px; overflow-y: auto; 
-            border-left: 1px solid var(--border); padding-left: 20px; background: rgba(255,255,255,0.5);
-            backdrop-filter: blur(5px);
+            border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-card);
+            backdrop-filter: blur(10px);
         }
-        [data-theme="dark"] .cockpit-side { background: rgba(0,0,0,0.2); }
 
         /* KANBAN */
         .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
@@ -166,7 +167,6 @@
         .task-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary); }
         .p-Yüksek { border-left-color: #ef4444; } .p-Orta { border-left-color: #f59e0b; } .p-Düşük { border-left-color: #10b981; }
         
-        /* YEŞİL ÇERÇEVE FIX */
         .task-card.task-done { border: 2px solid var(--done) !important; background: #f0fdf4; opacity: 0.9; }
         [data-theme="dark"] .task-card.task-done { background: rgba(16, 185, 129, 0.15); }
         .done-icon { color: var(--done); font-size: 16px; position: absolute; top: 12px; right: 12px; display: none; }
@@ -191,7 +191,6 @@
         .mc-cell:hover { background: var(--bg-sub); transform: scale(1.1); z-index: 2; }
         .mc-cell.today { background: var(--primary); color: white; font-weight: 700; }
         
-        /* Takvim Renkleri */
         .day-has-prog { background-color: rgba(0, 101, 179, 0.1); color: var(--prog); font-weight: 800; }
         .day-has-todo { background-color: rgba(245, 158, 11, 0.1); color: var(--todo); font-weight: 800; }
         .day-all-done { background-color: rgba(16, 185, 129, 0.1); color: var(--done); font-weight: 800; }
@@ -226,7 +225,7 @@
         .list-row { display: grid; grid-template-columns: 80px 2fr 1fr 100px 100px; padding: 12px 20px; border-bottom: 1px solid var(--border); align-items: center; cursor: pointer; font-size: 13px; transition: 0.1s; } .list-row:hover { background: var(--bg-sub); }
 
         /* MODAL */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(3px); } .modal.show { display: flex; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); } .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 600px; max-height: 90vh; border-radius: 16px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
         .m-head { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; }
         .m-body { padding: 24px; overflow-y: auto; flex: 1; } .m-foot { padding: 16px 24px; border-top: 1px solid var(--border); background: var(--bg-sub); border-radius: 0 0 16px 16px; display: flex; justify-content: space-between; }
@@ -244,9 +243,10 @@
 
         /* LOGIN */
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .login-box { background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--border); width: 90%; max-width: 400px; text-align: center; box-shadow: var(--shadow-md); }
+        .login-box { background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--border); width: 90%; max-width: 400px; text-align: center; box-shadow: var(--shadow-md); backdrop-filter: blur(10px); }
         
-        .hidden { display: none !important; } .admin-only { display: none; }
+        .hidden { display: none !important; } 
+        /* .admin-only { display: none; }  <-- BU SATIR KALDIRILDI (Görev Silme Kilidi Açıldı) */
         .filter-panel { position: absolute; top: 65px; right: 20px; width: 300px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: var(--shadow-md); z-index: 90; display: none; }
         #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 3000; } .toast { background: var(--bg-card); color: var(--text-main); padding: 14px 24px; border-radius: 10px; border: 1px solid var(--border); border-left: 5px solid; margin-bottom: 10px; box-shadow: var(--shadow-md); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
         
@@ -404,7 +404,7 @@
             </div>
         </div>
         <div class="m-foot">
-            <button class="btn-icon admin-only" id="deleteTaskBtn" style="color:#ef4444; border-color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-icon" id="deleteTaskBtn" style="color:#ef4444; border-color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
             <button class="btn-primary" onclick="saveTask()">Kaydet</button>
         </div>
     </div>
@@ -455,7 +455,7 @@
                 currentUser = { email: user.email, role: user.email.includes('cengiz') ? 'admin' : 'user', name: displayName };
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('displayUserName').innerText = currentUser.name;
-                if(currentUser.role!=='admin') document.querySelectorAll('.admin-only').forEach(e=>e.style.display='none');
+                // admin-only kontrolü kaldırıldı, herkes silebilir.
                 listenTasks(); initSortable();
             } else { document.getElementById('loginOverlay').style.display = 'flex'; }
         });
