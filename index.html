@@ -14,7 +14,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -25,10 +25,15 @@
     <style>
         :root {
             --primary: #0065B3; --primary-hover: #004d8a; --primary-light: #e0f2fe;
-            --bg-body: #f8fafc; --bg-card: #ffffff; --bg-sub: #f1f5f9;
+            
+            /* GÜNCELLENEN ZEMİN RENKLERİ (Daha soft) */
+            --bg-body: #f3f5f7; /* Hafif kırık gri/beyaz */
+            --bg-card: #ffffff; /* Kartlar tam beyaz */
+            --bg-sub: #f8fafc;
+            
             --border: #e2e8f0; --text-main: #0f172a; --text-sec: #64748b;
             --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08);
             --todo: #f59e0b; --prog: #0065B3; --done: #10b981;
             --header-height: 60px; --bottom-nav-height: 60px;
         }
@@ -104,16 +109,30 @@
         .feed-item.s-todo { border-left-color: var(--todo); } .feed-item.s-prog { border-left-color: var(--prog); } .feed-item.s-done { border-left-color: var(--done); }
         .feed-title { font-size: 12px; font-weight: 600; color: var(--text-main); margin-bottom: 2px; } .feed-desc { font-size: 10px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .feed-date { font-size: 10px; color: var(--primary); font-weight: 600; }
 
-        /* CALENDAR & LIST & REPORT */
+        /* CALENDAR (Takvim Renklendirme Stilleri) */
         .calendar-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; height: 100%; display: flex; flex-direction: column; }
         .cal-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; } .cal-title { font-size: 16px; font-weight: 700; color: var(--text-main); }
         .cal-grid-lg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; flex: 1; overflow: hidden; }
-        .cal-cell-lg { background: var(--bg-card); min-height: 60px; padding: 5px; display: flex; flex-direction: column; gap: 3px; overflow-y: auto; } 
-        .cal-cell-lg.today { background: var(--bg-sub); }
+        
+        /* Gelişmiş Hücre Stili */
+        .cal-cell-lg { background: var(--bg-card); min-height: 60px; padding: 5px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; border: 2px solid transparent; transition:0.2s; }
+        .cal-cell-lg.today { background: var(--bg-sub); } 
+        
+        /* Gün Durum Renkleri */
+        .day-has-prog { background-color: rgba(0, 101, 179, 0.05); border-bottom: 2px solid var(--prog); }
+        .day-has-todo { background-color: rgba(245, 158, 11, 0.05); border-bottom: 2px solid var(--todo); }
+        .day-all-done { background-color: rgba(16, 185, 129, 0.05); border-bottom: 2px solid var(--done); }
+
         .cal-day-num { font-size: 11px; font-weight: 700; color: var(--text-sec); margin-bottom: 2px; padding-left: 4px; }
         .cal-task-strip { font-size: 10px; padding: 3px 6px; border-radius: 4px; color: white; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; margin-bottom: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .cal-task-strip:hover { transform: scale(1.02); opacity: 0.9; }
         
+        /* Statü Renkleri (Şeritler) */
+        .ts-todo { background: var(--todo); color: #fff; }
+        .ts-progress { background: var(--primary); color: #fff; }
+        .ts-done { background: var(--done); color: #fff; text-decoration: line-through; opacity: 0.6; }
+
+        /* LIST & REPORT */
         .list-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; height: 100%; overflow: hidden; display: flex; flex-direction: column; }
         .list-header { display: grid; grid-template-columns: 80px 2fr 1fr 100px 100px; padding: 10px 15px; background: var(--bg-sub); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--text-sec); }
         .list-body { flex: 1; overflow-y: auto; }
@@ -126,9 +145,11 @@
         .modal-box { background: var(--bg-card); width: 600px; max-height: 90vh; border-radius: 12px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: var(--shadow-md); }
         .m-head { padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
         .m-body { padding: 20px; overflow-y: auto; flex: 1; } .m-foot { padding: 15px 20px; border-top: 1px solid var(--border); background: var(--bg-sub); border-radius: 0 0 12px 12px; display: flex; justify-content: space-between; }
-        .f-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-size: 14px; margin-bottom: 12px; }
         .f-label { display: block; font-size: 11px; font-weight: 600; color: var(--text-sec); margin-bottom: 4px; }
-        .timeline { border-left: 2px solid var(--border); padding-left: 15px; margin-top: 10px; } .t-item { position: relative; margin-bottom: 15px; } .t-item::before { content:''; position:absolute; left:-20px; top:5px; width:8px; height:8px; background:var(--primary); border-radius:50%; } .t-meta { font-size: 11px; color: var(--text-sec); margin-bottom: 2px; } .t-text { font-size: 13px; color: var(--text-main); }
+        .f-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-size: 14px; margin-bottom: 12px; font-family: inherit; }
+        .timeline { border-left: 2px solid var(--border); padding-left: 15px; margin-top: 10px; }
+        .t-item { position: relative; margin-bottom: 15px; } .t-item::before { content:''; position:absolute; left:-20px; top:5px; width:8px; height:8px; background:var(--primary); border-radius:50%; }
+        .t-meta { font-size: 11px; color: var(--text-sec); margin-bottom: 2px; } .t-text { font-size: 13px; color: var(--text-main); }
 
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .login-box { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); width: 90%; max-width: 340px; text-align: center; box-shadow: var(--shadow-md); }
@@ -268,8 +289,8 @@
             <label class="f-label">Konu</label><select id="tTitle" class="f-input"></select>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div><label class="f-label">Durum</label><select id="tStatus" class="f-input"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
-                <div><label class="f-label">Sorumlu</label><select id="tAssignee" class="f-input"></select></div>
                 <div><label class="f-label">Öncelik</label><select id="tPriority" class="f-input"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
+                <div><label class="f-label">Sorumlu</label><select id="tAssignee" class="f-input"></select></div>
                 <div><label class="f-label">Bitiş</label><input type="date" id="tDate" class="f-input"></div>
             </div>
             <label class="f-label">Açıklama</label><textarea id="tDesc" class="f-input" rows="4"></textarea>
@@ -373,7 +394,7 @@
                 div.setAttribute('data-id', t.id);
                 div.onclick = () => openModal(t.id);
                 
-                const doneIcon = isDone ? '<i class="fa-solid fa-check-circle done-icon"></i>' : '';
+                const doneIcon = isDone ? '<i class="fa-solid fa-circle-check done-icon"></i>' : '';
                 let uName = t.assignee ? t.assignee.split(' ')[0] : '?';
                 if(t.assignee && t.assignee.split(' ').length > 1) uName += ' ' + t.assignee.split(' ')[1][0] + '.';
 
@@ -399,8 +420,17 @@
         const now = new Date(); document.getElementById('sideCalTitle').innerText = now.toLocaleDateString('tr-TR',{month:'long'});
         const y = now.getFullYear(), m = now.getMonth(); const days = new Date(y, m+1, 0).getDate(); const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
         for(let i=0; i<offset; i++) grid.innerHTML += '<div></div>';
-        for(let i=1; i<=days; i++) { const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; const has = tasks.some(t => t.date === dStr && t.status!=='done'); grid.innerHTML += `<div class="mc-cell ${i===now.getDate()?'today':''} ${has?'has-task':''}">${i}</div>`; }
-        
+        for(let i=1; i<=days; i++) { 
+            const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; 
+            const dayTasks = tasks.filter(t => t.date === dStr);
+            let dayClass = '';
+            if(dayTasks.length > 0) {
+                if(dayTasks.some(t => t.status === 'progress')) dayClass = 'day-has-prog';
+                else if(dayTasks.some(t => t.status === 'todo')) dayClass = 'day-has-todo';
+                else dayClass = 'day-all-done';
+            }
+            grid.innerHTML += `<div class="mc-cell ${i===now.getDate()?'today':''} ${dayClass}">${i}</div>`; 
+        }
         const list = document.getElementById('sideFeedList'); list.innerHTML = '';
         const feed = tasks.filter(t => t.status !== 'done').sort((a,b) => (new Date(a.date||'2099') - new Date(b.date||'2099'))).slice(0,6);
         feed.forEach(t => {
