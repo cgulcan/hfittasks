@@ -5,7 +5,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Halk Faktoring | BT Portal</title>
     
@@ -15,7 +14,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -25,24 +24,24 @@
     
     <style>
         :root {
-            /* PALET */
             --primary: #0065B3; --primary-hover: #004d8a; --primary-light: #e0f2fe;
             --bg-body: #f8fafc; --bg-card: #ffffff; --bg-sub: #f1f5f9;
             --border: #e2e8f0; --text-main: #0f172a; --text-sec: #64748b;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05); --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
             --todo: #f59e0b; --prog: #0065B3; --done: #10b981;
             --header-height: 60px; --bottom-nav-height: 60px;
         }
         [data-theme="dark"] {
-            --primary: #3b82f6; --primary-hover: #60a5fa; --primary-light: rgba(59, 130, 246, 0.1);
+            --primary: #3b82f6; --primary-hover: #60a5fa; --primary-light: rgba(59,130,246,0.1);
             --bg-body: #0f172a; --bg-card: #1e293b; --bg-sub: #334155;
             --border: #334155; --text-main: #f8fafc; --text-sec: #94a3b8;
-            --shadow-sm: none; --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-sm: none; --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); height: 100dvh; width: 100vw; overflow: hidden; background-color: var(--bg-body); display: flex; flex-direction: column; }
-        ::-webkit-scrollbar { width: 6px; height: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; } [data-theme="dark"] ::-webkit-scrollbar-thumb { background: #475569; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; } [data-theme="dark"] ::-webkit-scrollbar-thumb { background: #475569; }
 
         /* HEADER */
         header { height: var(--header-height); flex-shrink: 0; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 50; }
@@ -59,108 +58,89 @@
         .main-content { flex: 1; overflow: hidden; padding: 20px; width: 100%; max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column; position: relative; }
         .view-section { display: none; width: 100%; height: 100%; flex-direction: column; overflow: hidden; } .view-section.active { display: flex; }
 
-        /* COCKPIT (Grid) */
-        .cockpit-wrapper { display: grid; grid-template-columns: 1fr 300px; gap: 20px; height: 100%; overflow: hidden; }
+        /* KANBAN & SIDEBAR GRID */
+        .cockpit-wrapper { display: grid; grid-template-columns: 1fr 320px; gap: 20px; height: 100%; overflow: hidden; }
         .kanban-main { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
         
-        /* KANBAN */
-        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
-        .time-filters { display: flex; gap: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-        .tf-btn { padding: 6px 12px; font-size: 12px; font-weight: 500; background: transparent; border: none; color: var(--text-sec); cursor: pointer; border-right: 1px solid var(--border); } .tf-btn:last-child { border-right: none; }
-        .tf-btn.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
-
-        .kanban-board { display: flex; gap: 15px; overflow-x: auto; height: 100%; padding-bottom: 10px; }
+        /* KANBAN BOARD */
+        .kanban-board { display: flex; gap: 16px; overflow-x: auto; height: 100%; padding-bottom: 10px; }
         .k-col { flex: 1; min-width: 280px; max-width: 400px; background: var(--bg-sub); border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 100%; }
-        .k-header { padding: 10px 15px; border-bottom: 1px solid var(--border); background: var(--bg-card); border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; }
-        .k-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .k-header { padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg-card); border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--text-sec); text-transform: uppercase; }
+        .k-list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
 
-        .task-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px; box-shadow: var(--shadow-sm); cursor: grab; transition: transform 0.2s; border-left: 3px solid transparent; }
+        /* GÖREV KARTI (Düzeltildi) */
+        .task-card { 
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; 
+            box-shadow: var(--shadow-sm); cursor: grab; transition: transform 0.2s; border-left: 4px solid transparent;
+            display: flex; flex-direction: column; gap: 8px;
+        }
         .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
         .p-Yüksek { border-left-color: #ef4444; } .p-Orta { border-left-color: #f59e0b; } .p-Düşük { border-left-color: #10b981; }
-        .c-top { display: flex; justify-content: space-between; margin-bottom: 6px; } .c-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-sec); background: var(--bg-sub); padding: 2px 6px; border-radius: 4px; border:1px solid var(--border); }
-        .c-title { font-weight: 600; font-size: 13px; color: var(--text-main); line-height: 1.4; margin-bottom: 4px; } .c-desc { font-size: 11px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* SAĞ PANEL */
+        .c-top { display: flex; justify-content: space-between; align-items: center; }
+        .c-id { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-sec); background: var(--bg-sub); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); }
+        .c-title { font-weight: 700; font-size: 14px; color: var(--text-main); line-height: 1.4; }
+        .c-desc { font-size: 12px; color: var(--text-sec); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Meta Alanı (Alt Kısım) */
+        .c-meta { 
+            border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .c-assignee { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-main); }
+        .c-avatar { width: 24px; height: 24px; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; border: 1px solid var(--border); }
+        .c-date { font-size: 11px; color: var(--text-sec); display: flex; align-items: center; gap: 4px; }
+
+        /* SAĞ PANEL (TAKVİM & FEED) */
         .cockpit-side { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-body); }
-        .side-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; box-shadow: var(--shadow-sm); }
-        .side-head { font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; text-transform: uppercase; display: flex; justify-content: space-between; }
-        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; } .mc-head { font-size: 10px; font-weight: 600; color: var(--text-sec); padding: 4px; }
-        .mc-cell { font-size: 11px; padding: 6px; border-radius: 4px; cursor: pointer; color: var(--text-main); } .mc-cell:hover { background: var(--bg-sub); } .mc-cell.today { background: var(--primary); color: white; font-weight: 600; } .mc-cell.has-task { font-weight: 700; border-bottom: 2px solid var(--todo); }
-        .feed-item { padding: 8px 0; border-bottom: 1px solid var(--border); cursor: pointer; } .feed-item:last-child { border-bottom: none; } .feed-title { font-size: 12px; font-weight: 600; color: var(--text-main); } .feed-desc { font-size: 11px; color: var(--text-sec); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .side-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-sm); }
+        .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+        .mc-cell { font-size: 12px; padding: 6px; border-radius: 4px; cursor: pointer; color: var(--text-main); } .mc-cell.today { background: var(--primary); color: white; font-weight: 600; }
+        .feed-item { padding: 12px 0; border-bottom: 1px solid var(--border); cursor: pointer; } 
+        .feed-title { font-size: 13px; font-weight: 600; color: var(--text-main); } .feed-desc { font-size: 11px; color: var(--text-sec); }
 
-        /* DASHBOARD, LIST, CALENDAR - Fixed Layouts */
-        .report-container { overflow-y: auto; padding-right: 5px; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 15px; }
-        .stat-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; } .stat-val { font-size: 24px; font-weight: 700; margin-top: 5px; display: block; }
-        .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px; padding-bottom: 20px; } .chart-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; height: 300px; position: relative; }
-        
-        .calendar-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; height: 100%; display: flex; flex-direction: column; }
-        .cal-grid-lg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; flex: 1; overflow: hidden; }
-        .cal-cell-lg { background: var(--bg-card); min-height: 60px; padding: 5px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
-        .cal-task-dot { font-size: 10px; padding: 2px 4px; border-radius: 4px; color: white; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        .list-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; height: 100%; overflow: hidden; display: flex; flex-direction: column; }
-        .list-header { display: grid; grid-template-columns: 80px 2fr 1fr 100px 100px; padding: 10px 15px; background: var(--bg-sub); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--text-sec); }
-        .list-body { flex: 1; overflow-y: auto; }
-        .list-row { display: grid; grid-template-columns: 80px 2fr 1fr 100px 100px; padding: 10px 15px; border-bottom: 1px solid var(--border); align-items: center; cursor: pointer; font-size: 13px; } .list-row:hover { background: var(--bg-sub); }
-        
-        /* MODAL & HISTORY */
+        /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; } .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 600px; max-height: 90vh; border-radius: 12px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: var(--shadow-md); }
         .m-head { padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
-        .m-body { padding: 20px; overflow-y: auto; flex: 1; } .m-foot { padding: 15px 20px; border-top: 1px solid var(--border); background: var(--bg-sub); border-radius: 0 0 12px 12px; display: flex; justify-content: space-between; }
-        .f-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-size: 14px; margin-bottom: 12px; }
-        
-        /* Timeline */
-        .timeline { position: relative; border-left: 2px solid var(--border); margin-left: 5px; padding-left: 15px; }
-        .t-item { position: relative; margin-bottom: 15px; } .t-item::before { content:''; position:absolute; left:-20px; top:4px; width:8px; height:8px; border-radius:50%; background:var(--bg-card); border:2px solid var(--primary); }
-        .t-meta { font-size: 11px; color: var(--text-sec); margin-bottom: 4px; font-weight: 600; }
-        .t-text { font-size: 13px; color: var(--text-main); background: var(--bg-sub); padding: 8px; border-radius: 6px; border: 1px solid var(--border); }
+        .m-body { padding: 20px; overflow-y: auto; flex: 1; } .m-foot { padding: 15px 20px; border-top: 1px solid var(--border); background: var(--bg-sub); border-radius: 0 0 12px 12px; display: flex; justify-content: space-between; align-items: center; }
+        .f-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-size: 14px; margin-bottom: 12px; font-family: inherit; }
+        .timeline { border-left: 2px solid var(--border); padding-left: 15px; margin-top: 10px; }
+        .t-item { position: relative; margin-bottom: 15px; } .t-item::before { content:''; position:absolute; left:-20px; top:5px; width:8px; height:8px; background:var(--primary); border-radius:50%; }
+        .t-meta { font-size: 11px; color: var(--text-sec); margin-bottom: 2px; } .t-text { font-size: 13px; color: var(--text-main); }
 
+        /* UTILS */
+        .hidden { display: none !important; } .admin-only { display: none; }
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        .login-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid var(--border); width: 90%; max-width: 360px; text-align: center; box-shadow: var(--shadow-md); }
+        
         /* MOBILE */
         .mobile-only, .bottom-nav { display: none; }
         @media (max-width: 768px) {
             .nav-wrapper, .user-info { display: none !important; }
             .mobile-only { display: flex; } header { padding: 0 15px; }
             .main-content { padding: 15px; padding-bottom: var(--bottom-nav-height); }
-            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: var(--bottom-nav-height); background: var(--bg-card); border-top: 1px solid var(--border); justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
-            .bn-item { display: flex; flex-direction: column; align-items: center; color: var(--text-sec); background: none; border: none; font-size: 10px; gap: 4px; padding: 8px; flex: 1; }
-            .bn-item.active { color: var(--primary); }
-            
-            /* Mobil Kokpit: Dikey Düzen */
-            .cockpit-wrapper { grid-template-columns: 1fr; gap: 20px; overflow-y: auto; }
-            .kanban-main { height: auto; min-height: 500px; overflow: visible; }
+            .cockpit-wrapper { grid-template-columns: 1fr; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
+            .kanban-main { flex: 0 0 auto; height: auto; min-height: 500px; }
             .kanban-board { scroll-snap-type: x mandatory; gap: 10px; padding-bottom: 5px; min-height: 500px; }
-            .k-col { min-width: 85vw; scroll-snap-align: center; height: auto; min-height: 400px; }
-            .k-list { overflow-y: visible; } /* Kartlar uzasın */
-            
-            /* Mobilde Sağ Panel: Altta Göster */
-            .cockpit-side { display: flex !important; border-left: none; padding-left: 0; padding-top: 10px; border-top: 1px solid var(--border); height: auto; overflow: visible; }
-            
-            .list-header { display: none; }
-            .list-row { grid-template-columns: 1fr; gap: 4px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: flex-start; }
-            .stats-grid, .charts-grid { grid-template-columns: 1fr; } .chart-box { height: 250px; }
-            .modal-box { width: 95%; max-height: 95vh; }
-            .filter-panel { top: var(--header-height); right: 0; left: 0; width: 100%; }
+            .k-col { min-width: 85vw; scroll-snap-align: center; margin-right: 10px; }
+            .cockpit-side { display: flex !important; border-left: none; padding-left: 0; padding-top: 20px; border-top: 1px solid var(--border); height: auto; background: transparent; overflow: visible; }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: var(--bg-card); border-top: 1px solid var(--border); justify-content: space-around; align-items: center; z-index: 100; }
+            .bn-item { display: flex; flex-direction: column; align-items: center; color: var(--text-sec); background: none; border: none; font-size: 10px; gap: 4px; padding: 8px; }
+            .bn-item.active { color: var(--primary); }
         }
         
-        /* Login & Utils */
-        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
-        .login-box { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); width: 90%; max-width: 340px; text-align: center; box-shadow: var(--shadow-md); }
-        .hidden { display: none !important; } .admin-only { display: none; }
-        .filter-panel { position: absolute; top: 65px; right: 20px; width: 280px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; box-shadow: var(--shadow-md); z-index: 90; display: none; }
-        #toastContainer { position: fixed; top: 20px; right: 20px; z-index: 3000; } .toast { background: var(--bg-card); color: var(--text-main); padding: 12px 20px; border-radius: 8px; border: 1px solid var(--border); border-left: 4px solid; margin-bottom: 10px; box-shadow: var(--shadow-md); font-size: 13px; font-weight: 600; }
-        .done-icon { color: #10b981; font-size: 16px; margin-left: auto; display: none; } .task-done .done-icon { display: block; } .task-done { opacity: 0.85; background: var(--bg-sub); }
+        /* EXTRAS */
+        .done-icon { color: #10b981; font-size: 16px; display: none; } .task-done .done-icon { display: block; } .task-done { opacity: 0.8; background: #f0fdf4 !important; border-color: #bbf7d0 !important; }
+        .filter-panel { position: absolute; top: 65px; right: 20px; width: 280px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-md); z-index: 90; display: none; }
     </style>
 </head>
 <body onload="initApp()">
 
-<div id="toastContainer"></div>
-
 <div id="loginOverlay">
     <div class="login-box">
-        <img src="logo.png" style="width:60px; margin-bottom:15px;">
-        <h2 style="margin:0 0 10px 0; font-size:18px;">BT Portal</h2>
+        <img src="logo.png" style="width:60px; margin-bottom:20px;">
+        <h2 style="margin:0 0 10px 0; font-size:20px;">BT Portal</h2>
         <p style="color:var(--text-sec); font-size:13px; margin-bottom:20px;">Halk Faktoring A.Ş.</p>
         <input type="email" id="email" class="f-input" placeholder="E-posta">
         <input type="password" id="password" class="f-input" placeholder="Şifre">
@@ -176,7 +156,6 @@
             <div class="nav-pills">
                 <button class="nav-btn active" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</button>
                 <button class="nav-btn" onclick="showView('month', this)"><i class="fa-regular fa-calendar"></i> Takvim</button>
-                <button class="nav-btn" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
                 <button class="nav-btn" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
             </div>
         </div>
@@ -206,14 +185,6 @@
         <div id="view-kanban" class="view-section active">
             <div class="cockpit-wrapper">
                 <div class="kanban-main">
-                    <div class="toolbar">
-                        <div style="font-weight:700; font-size:16px;">İş Panosu</div>
-                        <div class="time-filters">
-                            <button class="tf-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
-                            <button class="tf-btn" onclick="setTimeFilter('week', this)">Hafta</button>
-                            <button class="tf-btn" onclick="setTimeFilter('month', this)">Ay</button>
-                        </div>
-                    </div>
                     <div class="kanban-board">
                         <div class="k-col" id="col-todo"><div class="k-header">BEKLEYEN <span class="badge-count" id="cnt-todo">0</span></div><div class="k-list" id="lst-todo" data-status="todo"></div></div>
                         <div class="k-col" id="col-progress"><div class="k-header" style="color:var(--prog)">İŞLEMDE <span class="badge-count" id="cnt-progress">0</span></div><div class="k-list" id="lst-progress" data-status="progress"></div></div>
@@ -222,35 +193,13 @@
                 </div>
                 <div class="cockpit-side">
                     <div class="side-box"><div class="side-head"><span id="sideCalTitle"></span> <i class="fa-regular fa-calendar"></i></div><div class="mini-cal-grid" id="miniCalGrid"></div></div>
-                    <div style="flex:1;"><div class="side-head">Görev Akışı</div><div class="feed-list" id="sideFeedList"></div></div>
+                    <div style="flex:1;"><div class="side-head">Görev Akışı</div><div class="todo-list-mini" id="sideFeedList"></div></div>
                 </div>
             </div>
         </div>
-
-        <div id="view-month" class="view-section">
-            <div class="calendar-container">
-                <div class="cal-controls"><button class="btn-icon" onclick="navMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button><span class="cal-title" id="calTitle"></span><button class="btn-icon" onclick="navMonth(1)"><i class="fa-solid fa-chevron-right"></i></button></div>
-                <div class="cal-grid-lg" id="calGrid"></div>
-            </div>
-        </div>
-
-        <div id="view-week" class="view-section">
-            <div class="list-container">
-                <div class="list-header"><span>KOD</span><span>KONU</span><span>SORUMLU</span><span>DURUM</span><span>TARİH</span></div>
-                <div class="list-body" id="agendaList"></div>
-            </div>
-        </div>
-
-        <div id="view-dashboard" class="view-section report-container">
-            <div style="display:flex; justify-content:flex-end; margin-bottom:15px;"><button class="btn-primary" onclick="exportExcel()"><i class="fa-solid fa-file-excel"></i> Excel</button></div>
-            <div class="stats-grid">
-                <div class="stat-box"><span class="stat-lbl">Toplam</span><span class="stat-val" id="dTotal">0</span></div>
-                <div class="stat-box"><span class="stat-lbl" style="color:var(--todo)">Bekleyen</span><span class="stat-val" id="dTodo">0</span></div>
-                <div class="stat-box"><span class="stat-lbl" style="color:var(--prog)">İşlemde</span><span class="stat-val" id="dProg">0</span></div>
-                <div class="stat-box"><span class="stat-lbl" style="color:var(--done)">Biten</span><span class="stat-val" id="dDone">0</span></div>
-            </div>
-            <div class="charts-grid"><div class="chart-box"><canvas id="chartStatus"></canvas></div><div class="chart-box"><canvas id="chartUser"></canvas></div></div>
-        </div>
+        
+        <div id="view-month" class="view-section"><div style="padding:20px; text-align:center; color:var(--text-sec);">Takvim Modülü Yükleniyor...</div></div>
+        <div id="view-dashboard" class="view-section"><div style="padding:20px; text-align:center; color:var(--text-sec);">Rapor Modülü Yükleniyor...</div></div>
     </div>
 
     <div class="bottom-nav">
@@ -258,7 +207,6 @@
         <button class="bn-item" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Rapor</button>
         <button class="bn-item" onclick="newTask()" style="color:var(--primary)"><i class="fa-solid fa-plus-circle" style="font-size:24px;"></i></button>
         <button class="bn-item" onclick="showView('month', this)"><i class="fa-regular fa-calendar"></i> Takvim</button>
-        <button class="bn-item" onclick="showView('week', this)"><i class="fa-solid fa-list-ul"></i> Liste</button>
     </div>
 </div>
 
@@ -268,20 +216,23 @@
         <div class="m-body">
             <input type="hidden" id="tId">
             <label class="f-label">Konu</label><select id="tTitle" class="f-input"></select>
-            <div class="form-grid">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div><label class="f-label">Durum</label><select id="tStatus" class="f-input"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
-                <div><label class="f-label">Öncelik</label><select id="tPriority" class="f-input"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
                 <div><label class="f-label">Sorumlu</label><select id="tAssignee" class="f-input"></select></div>
+                <div><label class="f-label">Öncelik</label><select id="tPriority" class="f-input"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
                 <div><label class="f-label">Bitiş</label><input type="date" id="tDate" class="f-input"></div>
             </div>
             <label class="f-label">Açıklama</label><textarea id="tDesc" class="f-input" rows="4"></textarea>
-            <div style="margin-top:15px;">
-                <label class="f-label">Notlar & Tarihçe</label>
-                <div id="commentList" style="background:var(--bg-sub); padding:10px; border-radius:8px; max-height:150px; overflow-y:auto; margin-bottom:10px; font-size:12px;"></div>
+            <div style="margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
+                <label class="f-label">İşlem Tarihçesi</label>
+                <div id="commentList" style="max-height:150px; overflow-y:auto; margin-bottom:10px;"></div>
                 <div style="display:flex; gap:5px;"><input type="text" id="newComment" class="f-input" style="margin:0;" placeholder="Not ekle..."><button class="btn-icon" onclick="addComment()"><i class="fa-solid fa-paper-plane"></i></button></div>
             </div>
         </div>
-        <div class="m-foot"><button class="btn-icon admin-only" style="color:#ef4444; border-color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button><button class="btn-primary" onclick="saveTask()">Kaydet</button></div>
+        <div class="m-foot">
+            <button class="btn-icon admin-only" id="deleteTaskBtn" style="color:#ef4444; border-color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-primary" onclick="saveTask()">Kaydet</button>
+        </div>
     </div>
 </div>
 
@@ -293,7 +244,7 @@
     window.toggleTheme = function() {
         const body = document.body; const current = body.getAttribute('data-theme'); const next = current === 'dark' ? 'light' : 'dark';
         if (next === 'light') body.removeAttribute('data-theme'); else body.setAttribute('data-theme', 'dark');
-        localStorage.setItem('btTheme', next); if(window.chartStatusInst) renderDashboard(window.allTasks);
+        localStorage.setItem('btTheme', next);
     }
     if (localStorage.getItem('btTheme') === 'dark') document.body.setAttribute('data-theme', 'dark');
 
@@ -302,17 +253,15 @@
 
     const USERS = ["Cengiz GÜLCAN", "Enis BİRCAN", "Çağrı Can DÜNDAR", "HalkfaktoringBT"];
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
-    window.allTasks = []; let currentUser = null; let timeFilter = 'all'; let calDate = new Date();
-
-    window.showToast = (msg, type='success') => { const c = document.getElementById('toastContainer'); const t = document.createElement('div'); t.className = 'toast'; t.style.borderLeftColor = type==='error'?'#ef4444':'#10b981'; t.innerHTML = `<span>${msg}</span>`; c.appendChild(t); setTimeout(() => t.remove(), 3000); }
+    window.allTasks = []; let currentUser = null;
 
     window.initApp = () => {
         initSelects();
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                currentUser = { email: user.email, role: user.email.includes('cengiz') ? 'admin' : 'user' };
+                currentUser = { email: user.email, role: user.email.includes('cengiz') ? 'admin' : 'user', name: user.email.split('@')[0] };
                 document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('displayUserName').innerText = user.email.split('@')[0];
+                document.getElementById('displayUserName').innerText = currentUser.name;
                 document.getElementById('displayUserRole').innerText = currentUser.role === 'admin' ? 'Yönetici' : 'Uzman';
                 if(currentUser.role!=='admin') document.querySelectorAll('.admin-only').forEach(e=>e.style.display='none');
                 listenTasks(); initSortable();
@@ -323,7 +272,8 @@
     window.login = () => {
         const e = document.getElementById('email').value; const p = document.getElementById('password').value;
         signInWithEmailAndPassword(auth, e, p).catch(err => {
-            if(err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') { createUserWithEmailAndPassword(auth, e, p).then(()=>showToast("İlk giriş: Kayıt yapıldı.")); } else document.getElementById('loginError').innerText = "Hata: " + err.message;
+            if(err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') { createUserWithEmailAndPassword(auth, e, p).then(()=>alert("İlk giriş yapıldı.")); } 
+            else document.getElementById('loginError').innerText = "Hata: " + err.message;
         });
     }
     window.logout = () => signOut(auth).then(()=>window.location.reload());
@@ -345,83 +295,103 @@
 
     function renderAll() {
         let tasks = [...window.allTasks];
-        const now = new Date();
-        if(timeFilter === 'week') { const start = new Date(now); start.setDate(now.getDate() - now.getDay() + 1); start.setHours(0,0,0,0); tasks = tasks.filter(t => t.date && new Date(t.date) >= start); } 
-        else if(timeFilter === 'month') { tasks = tasks.filter(t => t.date && new Date(t.date).getMonth() === now.getMonth()); }
+        const txt = document.getElementById('fltText').value.toLowerCase();
+        const top = document.getElementById('fltTopic').value;
+        const asn = document.getElementById('fltAssignee').value;
+        
+        if(txt || top || asn) {
+            tasks = tasks.filter(t => (!txt || (t.title+t.code).toLowerCase().includes(txt)) && (!top || t.title === top) && (!asn || t.assignee === asn));
+        }
 
-        const txt = document.getElementById('fltText').value.toLowerCase(); const top = document.getElementById('fltTopic').value; const asn = document.getElementById('fltAssignee').value;
-        if(txt || top || asn) { tasks = tasks.filter(t => (!txt || (t.title+t.code).toLowerCase().includes(txt)) && (!top || t.title === top) && (!asn || t.assignee === asn)); }
-
-        const view = document.querySelector('.view-section.active').id;
-        if(view === 'view-kanban') { renderKanban(tasks); renderSide(tasks); } else if(view === 'view-month') renderCalendar(tasks); else if(view === 'view-week') renderList(tasks); else renderDashboard(tasks);
+        renderKanban(tasks); renderSide(tasks);
     }
 
     function renderKanban(tasks) {
         const cols = { todo: document.getElementById('lst-todo'), progress: document.getElementById('lst-progress'), done: document.getElementById('lst-done') };
-        Object.values(cols).forEach(c => c.innerHTML = ''); const counts = { todo:0, progress:0, done:0 };
+        Object.values(cols).forEach(c => c.innerHTML = '');
+        const counts = { todo:0, progress:0, done:0 };
+
         tasks.forEach(t => {
             if(cols[t.status]) {
                 counts[t.status]++;
                 const isDone = t.status === 'done';
-                const div = document.createElement('div'); div.className = `task-card p-${t.priority} ${isDone?'task-done':''}`; div.setAttribute('data-id', t.id); div.onclick = () => openModal(t.id);
+                const div = document.createElement('div');
+                div.className = `task-card p-${t.priority} ${isDone?'task-done':''}`;
+                div.setAttribute('data-id', t.id);
+                div.onclick = () => openModal(t.id);
+                
                 const doneIcon = isDone ? '<i class="fa-solid fa-circle-check done-icon"></i>' : '';
-                div.innerHTML = `<div class="c-top"><span class="c-id">${t.code}</span>${doneIcon}</div><div class="c-title">${t.title}</div><div class="c-desc">${t.desc||''}</div><div class="c-meta"><span><i class="fa-regular fa-user"></i> ${t.assignee?t.assignee.split(' ')[0]:'-'}</span><span>${t.date ? new Date(t.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}) : ''}</span></div>`;
+                const userInitial = t.assignee ? t.assignee.substring(0,2).toUpperCase() : '?';
+                
+                div.innerHTML = `
+                    <div class="c-top"><span class="c-id">${t.code}</span>${doneIcon}</div>
+                    <div class="c-title">${t.title}</div>
+                    <div class="c-desc">${t.desc||''}</div>
+                    <div class="c-meta">
+                        <div class="c-assignee"><div class="c-avatar">${userInitial}</div> ${t.assignee?t.assignee.split(' ')[0]:'-'}</div>
+                        <div class="c-date">${t.date ? new Date(t.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}) : ''}</div>
+                    </div>
+                `;
                 cols[t.status].appendChild(div);
             }
         });
-        document.getElementById('cnt-todo').innerText = counts.todo; document.getElementById('cnt-progress').innerText = counts.progress; document.getElementById('cnt-done').innerText = counts.done;
+        document.getElementById('cnt-todo').innerText = counts.todo;
+        document.getElementById('cnt-progress').innerText = counts.progress;
+        document.getElementById('cnt-done').innerText = counts.done;
     }
 
     function renderSide(tasks) {
-        const grid = document.getElementById('miniCalGrid'); while(grid.children.length > 7) grid.removeChild(grid.lastChild);
-        const now = new Date(); document.getElementById('sideCalTitle').innerText = now.toLocaleDateString('tr-TR',{month:'long'});
-        const y = now.getFullYear(), m = now.getMonth(); const days = new Date(y, m+1, 0).getDate(); const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
+        const grid = document.getElementById('miniCalGrid');
+        while(grid.children.length > 7) grid.removeChild(grid.lastChild);
+        const now = new Date();
+        document.getElementById('sideCalTitle').innerText = now.toLocaleDateString('tr-TR',{month:'long'});
+        const y = now.getFullYear(), m = now.getMonth();
+        const days = new Date(y, m+1, 0).getDate();
+        const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
+        
         for(let i=0; i<offset; i++) grid.innerHTML += '<div></div>';
-        for(let i=1; i<=days; i++) { const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; const has = tasks.some(t => t.date === dStr && t.status!=='done'); grid.innerHTML += `<div class="mc-cell ${i===now.getDate()?'today':''} ${has?'has-task':''}">${i}</div>`; }
-        const list = document.getElementById('sideFeedList'); list.innerHTML = '';
-        const feed = tasks.filter(t => t.status !== 'done').sort((a,b) => (new Date(a.date||'2099') - new Date(b.date||'2099'))).slice(0,8);
-        feed.forEach(t => { list.innerHTML += `<div class="feed-item" onclick="openModal('${t.id}')"><div class="feed-title">${t.title}</div><div class="feed-desc">${t.desc||''}</div></div>`; });
-    }
-
-    function renderCalendar(tasks) {
-        const g = document.getElementById('calGrid'); g.innerHTML = ''; ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'].forEach(d=>g.innerHTML+=`<div style="text-align:center;font-weight:bold;color:var(--text-sec);padding:5px;font-size:11px;">${d}</div>`);
-        const y = calDate.getFullYear(), m = calDate.getMonth(); document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', {month:'long', year:'numeric'});
-        const days = new Date(y, m+1, 0).getDate(); const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
-        for(let i=0; i<offset; i++) g.innerHTML += '<div></div>';
         for(let i=1; i<=days; i++) {
-            const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; const dayTasks = tasks.filter(t => t.date === dStr); let html = '';
-            dayTasks.forEach(t => { const bg = t.status==='done'?'#10b981':(t.status==='progress'?'#0065B3':'#f59e0b'); html += `<div class="cal-task-dot" style="background:${bg};" onclick="openModal('${t.id}')">${t.title}</div>`; });
-            g.innerHTML += `<div class="cal-cell-lg ${i===new Date().getDate() && m===new Date().getMonth()?'today':''}"><div class="cal-day-num">${i}</div>${html}</div>`;
+            const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+            const has = tasks.some(t => t.date === dStr && t.status!=='done');
+            grid.innerHTML += `<div class="mc-cell ${i===now.getDate()?'today':''} ${has?'has-task':''}">${i}</div>`;
         }
-    }
 
-    function renderList(tasks) {
-        const con = document.getElementById('agendaList'); con.innerHTML = '';
-        tasks.sort((a,b) => new Date(b.date||'2099') - new Date(a.date||'2099')).forEach(t => {
-            const stText = t.status==='done'?'Bitti':(t.status==='progress'?'İşlemde':'Bekliyor');
-            con.innerHTML += `<div class="list-row" onclick="openModal('${t.id}')"><span class="l-code">${t.code}</span><span class="l-title">${t.title}</span><span class="l-user">${t.assignee?t.assignee.split(' ')[0]:'-'}</span><span class="l-badge">${stText}</span><span class="l-date">${t.date||''}</span></div>`;
+        const list = document.getElementById('sideFeedList'); list.innerHTML = '';
+        const feed = tasks.filter(t => t.status !== 'done').sort((a,b) => (new Date(a.date||'2099') - new Date(b.date||'2099'))).slice(0,6);
+        feed.forEach(t => {
+            list.innerHTML += `<div class="feed-item" onclick="openModal('${t.id}')"><div class="feed-title">${t.title}</div><div class="feed-desc">${t.desc||''}</div></div>`;
         });
     }
 
-    function renderDashboard(tasks) {
-        const isDark = document.body.getAttribute('data-theme') === 'dark'; const color = isDark ? '#f9fafb' : '#111827';
-        const counts = { todo:0, progress:0, done:0 }; tasks.forEach(t => { if(counts[t.status]!==undefined) counts[t.status]++; });
-        document.getElementById('dTotal').innerText = tasks.length; document.getElementById('dTodo').innerText = counts.todo; document.getElementById('dProg').innerText = counts.progress; document.getElementById('dDone').innerText = counts.done;
-        if(window.chartStatusInst) window.chartStatusInst.destroy();
-        window.chartStatusInst = new Chart(document.getElementById('chartStatus').getContext('2d'), { type: 'doughnut', data: { labels: ['Bekleyen','İşlemde','Biten'], datasets: [{ data: [counts.todo, counts.progress, counts.done], backgroundColor: ['#f59e0b','#0065B3','#10b981'], borderWidth:0 }] }, options: { responsive:true, maintainAspectRatio:false, plugins: { legend: { labels: { color: color } } } } });
-        if(window.chartUserInst) window.chartUserInst.destroy();
-        const uC = {}; USERS.forEach(u=>uC[u]=0); tasks.forEach(t=>{if(uC[t.assignee]!==undefined) uC[t.assignee]++});
-        window.chartUserInst = new Chart(document.getElementById('chartUser').getContext('2d'), { type: 'bar', data: { labels: USERS.map(u=>u.split(' ')[0]), datasets: [{ label:'Görev', data:USERS.map(u=>uC[u]), backgroundColor:'#0065B3', borderRadius:4 }] }, options: { responsive:true, maintainAspectRatio:false, plugins: { legend: { display:false } }, scales:{ x:{ticks:{color:color}}, y:{ticks:{color:color}, grid:{color:isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.1)'}} } } });
+    window.showView = (v, btn) => {
+        document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
+        document.getElementById('view-'+v).classList.add('active');
+        document.querySelectorAll('.nav-btn, .bn-item').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        renderAll();
     }
-
-    window.showView = (v, btn) => { document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active')); document.getElementById('view-'+v).classList.add('active'); document.querySelectorAll('.nav-btn, .bn-item').forEach(b => b.classList.remove('active')); if(btn) btn.classList.add('active'); renderAll(); }
-    window.setTimeFilter = (mode, btn) => { timeFilter = mode; document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderAll(); }
-    window.navMonth = (d) => { calDate.setMonth(calDate.getMonth()+d); renderAll(); }
 
     function initSortable() {
         ['lst-todo', 'lst-progress', 'lst-done'].forEach(id => {
             new Sortable(document.getElementById(id), { group: 'shared', animation: 150, delay: 100, delayOnTouchOnly: true, onEnd: async (evt) => { if (evt.to !== evt.from) { const newStatus = evt.to.getAttribute('data-status'); const tId = evt.item.getAttribute('data-id'); await updateDoc(doc(db, "tasks", tId), { status: newStatus }); addHistory(tId, `Durum: ${newStatus}`); if(newStatus === 'done') confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); } } });
         });
+    }
+
+    window.openModal = (id) => {
+        const t = window.allTasks.find(x => x.id === id); if(!t) return;
+        document.getElementById('tId').value = id; document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; document.getElementById('tPriority').value = t.priority; document.getElementById('tAssignee').value = t.assignee; document.getElementById('tDate').value = t.date; document.getElementById('tDesc').value = t.desc;
+        renderHistory(t.history);
+        document.getElementById('modal').classList.add('show');
+    }
+    window.closeModal = () => { document.getElementById('modal').classList.remove('show'); }
+    window.newTask = () => { document.getElementById('tId').value = ''; document.getElementById('tTitle').value = ''; document.getElementById('commentList').innerHTML = ''; document.getElementById('modal').classList.add('show'); }
+    
+    window.saveTask = async () => {
+        const id = document.getElementById('tId').value; const data = { title: document.getElementById('tTitle').value, status: document.getElementById('tStatus').value, priority: document.getElementById('tPriority').value, assignee: document.getElementById('tAssignee').value, date: document.getElementById('tDate').value, desc: document.getElementById('tDesc').value };
+        if(!data.title) return alert("Konu seçiniz");
+        if(id) { await updateDoc(doc(db, "tasks", id), data); addHistory(id, "Güncellendi"); }
+        else { await runTransaction(db, async (t) => { const ref = doc(db, "meta", "counters"); const d = await t.get(ref); const seq = (d.exists() ? d.data().taskSeq : 0) + 1; t.set(ref, { taskSeq: seq }, { merge: true }); data.code = 'GRV-' + seq; data.history = [{user:currentUser.name, text:'Oluşturuldu', date:new Date().toLocaleString()}]; await addDoc(collection(db, "tasks"), data); }); }
+        closeModal();
     }
     
     async function addHistory(id, txt) {
@@ -430,31 +400,27 @@
         h.push({ user: currentUser.name, text: txt, date: new Date().toLocaleString('tr-TR') });
         await updateDoc(ref, { history: h });
     }
-
-    window.openModal = (id) => {
-        const t = window.allTasks.find(x => x.id === id); if(!t) return;
-        document.getElementById('tId').value = id; document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; document.getElementById('tPriority').value = t.priority; document.getElementById('tAssignee').value = t.assignee; document.getElementById('tDate').value = t.date; document.getElementById('tDesc').value = t.desc;
-        const list = document.getElementById('commentList'); list.innerHTML = '';
-        if(t.history) t.history.reverse().forEach(h => list.innerHTML += `<div class="timeline"><div class="t-item"><div class="t-meta">${h.user} • ${h.date}</div><div class="t-text">${h.text}</div></div></div>`);
-        document.getElementById('modal').classList.add('show');
-    }
-    window.closeModal = () => { document.getElementById('modal').classList.remove('show'); }
-    window.newTask = () => { document.getElementById('tId').value = ''; document.getElementById('tTitle').value = ''; document.getElementById('modal').classList.add('show'); }
     
-    window.saveTask = async () => {
-        const id = document.getElementById('tId').value; const data = { title: document.getElementById('tTitle').value, status: document.getElementById('tStatus').value, priority: document.getElementById('tPriority').value, assignee: document.getElementById('tAssignee').value, date: document.getElementById('tDate').value, desc: document.getElementById('tDesc').value };
-        if(!data.title) return showToast("Konu seçiniz", "error");
-        if(id) { await updateDoc(doc(db, "tasks", id), data); addHistory(id, "Güncellendi"); }
-        else { await runTransaction(db, async (t) => { const ref = doc(db, "meta", "counters"); const d = await t.get(ref); const seq = (d.exists() ? d.data().taskSeq : 0) + 1; t.set(ref, { taskSeq: seq }, { merge: true }); data.code = 'GRV-' + seq; data.history = [{user:currentUser.name, text:'Oluşturuldu', date:new Date().toLocaleString()}]; await addDoc(collection(db, "tasks"), data); }); }
-        closeModal(); showToast("Kaydedildi");
+    function renderHistory(hList) {
+        const div = document.getElementById('commentList'); div.innerHTML = '';
+        if(!hList) return;
+        hList.reverse().forEach(h => {
+            div.innerHTML += `<div class="timeline"><div class="t-item"><div class="t-meta">${h.user} • ${h.date}</div><div class="t-text">${h.text}</div></div></div>`;
+        });
     }
     window.addComment = () => { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(id && txt) { addHistory(id, txt); document.getElementById('newComment').value=''; openModal(id); } }
-    window.delTask = async () => { if(confirm("Silinsin mi?")) { await deleteDoc(doc(db, "tasks", document.getElementById('tId').value)); closeModal(); } }
+
+    window.delTask = async () => { 
+        if(confirm("Bu görevi kalıcı olarak silmek istediğinize emin misiniz?")) { 
+            await deleteDoc(doc(db, "tasks", document.getElementById('tId').value)); 
+            closeModal(); 
+        } 
+    }
+    
     window.exportExcel = () => { const ws = XLSX.utils.json_to_sheet(window.allTasks); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Tasks"); XLSX.writeFile(wb, "BT_Portal.xlsx"); }
     window.toggleFilter = () => { const p = document.getElementById('filterPanel'); p.style.display = p.style.display==='flex'?'none':'flex'; }
     window.applyFilter = () => { renderAll(); window.toggleFilter(); }
     window.clearFilter = () => { document.getElementById('fltText').value=''; document.getElementById('fltTopic').value=''; document.getElementById('fltAssignee').value=''; renderAll(); }
-    window.toggleCompact = (btn) => { document.body.classList.toggle('compact-mode'); btn.classList.toggle('active'); }
 </script>
 </body>
 </html>
