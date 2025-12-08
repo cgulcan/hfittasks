@@ -3,290 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halk Faktoring IT - Compact Günlük Plan</title>
+    <title>IT Günlük Plan - Compact</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        
-        /* Compact Scrollbar */
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        /* Compact görünüm için ince scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        /* Takvim gün hücreleri için hover efekti */
-        .calendar-day:hover { background-color: #f1f5f9; cursor: pointer; border-radius: 4px; }
     </style>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontSize: {
-                        'xxs': '0.65rem',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-slate-50 text-slate-800 h-screen overflow-hidden flex selection:bg-blue-100 selection:text-blue-700">
+<body class="bg-slate-50 text-slate-800 h-screen overflow-hidden flex">
 
-    <aside class="w-16 bg-slate-900 flex flex-col items-center py-6 gap-6 z-20 shadow-xl">
-        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-900/50">H</div>
+    <div class="w-16 bg-slate-900 flex flex-col items-center py-6 space-y-6 z-10 shadow-lg">
+        <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-blue-900/50 shadow-md">H</div>
         
-        <nav class="flex flex-col gap-4 w-full px-2">
-            <button class="p-2 rounded-lg bg-slate-800 text-blue-400 relative group">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
-                <span class="absolute left-14 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">Günlük</span>
-            </button>
-            <button class="p-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors group relative">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-            </button>
-            <button class="p-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white transition-colors group relative">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-            </button>
-        </nav>
-
-        <div class="mt-auto">
-             <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs text-white">CB</div>
+        <div class="w-8 h-8 bg-slate-700 text-blue-400 rounded flex items-center justify-center cursor-pointer hover:bg-slate-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
         </div>
-    </aside>
+        <div class="w-8 h-8 text-slate-400 rounded flex items-center justify-center cursor-pointer hover:bg-slate-700 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        </div>
+    </div>
 
-    <main class="flex-1 flex flex-col min-w-0">
+    <div class="flex-1 flex flex-col min-w-0">
         
-        <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm z-10">
-            <div>
-                <h1 class="text-lg font-bold text-slate-800">IT Görev Paneli</h1>
-                <p class="text-xs text-slate-500">Cengiz Bey, bugün <span class="font-bold text-slate-700" id="headerTaskCount">0</span> bekleyen göreviniz var.</p>
+        <div class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm z-10">
+            <h1 class="font-bold text-lg text-slate-700">Günlük Plan</h1>
+            <div class="flex gap-3">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-4 py-2 rounded shadow-sm flex items-center gap-2 transition-colors">
+                    <span>+ Yeni Görev</span>
+                </button>
             </div>
-            <div class="flex items-center gap-3">
-                <div class="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
-                    📅 <span id="currentDate"></span>
-                </div>
-            </div>
-        </header>
-
-        <div class="flex-1 overflow-hidden flex">
-            
-            <div class="w-64 bg-white border-r border-slate-200 flex flex-col p-4 overflow-y-auto hidden md:flex">
-                <h3 class="text-xs font-bold text-slate-400 uppercase mb-3 tracking-wider">Takvim</h3>
-                
-                <div class="bg-slate-50 rounded-lg p-3 border border-slate-100 mb-6">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-slate-700">Aralık 2025</span>
-                        <div class="flex gap-1">
-                            <span class="text-xs cursor-pointer hover:text-blue-600">❮</span>
-                            <span class="text-xs cursor-pointer hover:text-blue-600">❯</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-7 text-center text-[10px] gap-y-2 text-slate-500 mb-1">
-                        <div>Pt</div><div>Sa</div><div>Ça</div><div>Pe</div><div>Cu</div><div>Ct</div><div>Pa</div>
-                    </div>
-                    <div class="grid grid-cols-7 text-center text-xs gap-1 font-medium">
-                        <div class="text-slate-300">29</div><div class="text-slate-300">30</div>
-                        
-                        <div class="calendar-day p-1">1</div>
-                        <div class="calendar-day p-1 relative">2 <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-500 rounded-full"></span></div>
-                        <div class="calendar-day p-1">3</div>
-                        <div class="calendar-day p-1 relative">4 <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full"></span></div>
-                        <div class="calendar-day p-1 bg-blue-600 text-white rounded shadow-md shadow-blue-200">5</div>
-                        <div class="calendar-day p-1 text-slate-400">6</div>
-                        <div class="calendar-day p-1 text-slate-400 relative">7 <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-400 rounded-full"></span></div>
-                        </div>
-                </div>
-
-                <h3 class="text-xs font-bold text-slate-400 uppercase mb-3 tracking-wider">Durum Özeti</h3>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-xs p-2 bg-red-50 text-red-700 rounded border border-red-100">
-                        <span class="font-semibold">Kritik</span>
-                        <span class="font-bold bg-white px-2 py-0.5 rounded shadow-sm">2</span>
-                    </div>
-                    <div class="flex items-center justify-between text-xs p-2 bg-orange-50 text-orange-700 rounded border border-orange-100">
-                        <span class="font-semibold">Yüksek</span>
-                        <span class="font-bold bg-white px-2 py-0.5 rounded shadow-sm">3</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex-1 bg-slate-50/50 p-4 md:p-6 overflow-hidden flex flex-col">
-                
-                <div class="flex justify-between items-center mb-4">
-                    <div class="flex gap-2">
-                        <button class="text-xs font-medium bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded shadow-sm hover:border-blue-400 transition-colors">Tümü</button>
-                        <button class="text-xs font-medium bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded shadow-sm hover:border-red-400 transition-colors">Kritik Öncelik</button>
-                    </div>
-                    <div class="text-xs text-slate-400">Sıralama: Önem Derecesi</div>
-                </div>
-
-                <div class="flex-1 overflow-y-auto pr-1 space-y-2" id="taskList">
-                    </div>
-            </div>
-
-            <div class="w-80 bg-white border-l border-slate-200 flex flex-col shadow-xl z-10">
-                <div class="p-4 border-b border-slate-100 bg-slate-50">
-                    <h2 class="font-semibold text-sm text-slate-800 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-                        Yeni Görev Oluştur
-                    </h2>
-                </div>
-                
-                <div class="p-4 flex flex-col gap-4 flex-1 overflow-y-auto">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Görev Başlığı</label>
-                        <input type="text" id="inputTitle" class="w-full text-sm border border-slate-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-300" placeholder="Örn: SQL Bakımı Yapılacak">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1.5">Öncelik</label>
-                            <select id="inputPriority" class="w-full text-sm border border-slate-300 rounded-md p-2 focus:outline-none bg-white">
-                                <option value="Kritik">🔴 Kritik</option>
-                                <option value="Yüksek">🟠 Yüksek</option>
-                                <option value="Normal" selected>🔵 Normal</option>
-                                <option value="Düşük">⚪ Düşük</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-500 mb-1.5">Bitiş Zamanı</label>
-                            <input type="time" id="inputTime" class="w-full text-sm border border-slate-300 rounded-md p-2 text-slate-600">
-                        </div>
-                    </div>
-
-                    <div class="flex-1">
-                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Görev Notu / Detaylar</label>
-                        <textarea id="inputNote" class="w-full h-32 text-sm border border-slate-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none placeholder:text-slate-300" placeholder="Ayrıntıları buraya ekleyin..."></textarea>
-                    </div>
-                </div>
-
-                <div class="p-4 border-t border-slate-100 bg-slate-50">
-                    <button onclick="addTask()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium text-sm py-2.5 rounded-lg shadow-md transition-all active:scale-95 flex justify-center items-center gap-2">
-                        <span>Listeye Ekle</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </button>
-                </div>
-            </div>
-
         </div>
-    </main>
 
-    <script>
-        // Tarih Ayarı
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('tr-TR', options);
-
-        // Örnek Veriler (Cengiz Bey'in olası görevleri)
-        let tasks = [
-            { id: 1, title: 'Mobil Uygulama API Testleri', priority: 'Kritik', time: '10:00', note: 'BIS Çözüm ile entegrasyon hataları kontrol edilecek.', completed: false },
-            { id: 2, title: 'Yönetim Kurulu Sunumu', priority: 'Yüksek', time: '14:00', note: 'Dijital mizan ve rating projeleri hakkında statü raporu hazırlanacak.', completed: false },
-            { id: 3, title: 'Experian Entegrasyon Kontrolü', priority: 'Normal', time: '16:30', note: 'Karar destek sistemi logları incelenecek.', completed: false },
-            { id: 4, title: 'Haftalık IT Ekip Toplantısı', priority: 'Düşük', time: '09:00', note: 'Haftalık görev dağılımı.', completed: true }
-        ];
-
-        // Renk Yapılandırması
-        const priorityColors = {
-            'Kritik': { border: 'border-l-red-500', bg: 'bg-white', badge: 'bg-red-100 text-red-700' },
-            'Yüksek': { border: 'border-l-orange-400', bg: 'bg-white', badge: 'bg-orange-100 text-orange-700' },
-            'Normal': { border: 'border-l-blue-400', bg: 'bg-white', badge: 'bg-blue-100 text-blue-700' },
-            'Düşük': { border: 'border-l-slate-300', bg: 'bg-slate-50', badge: 'bg-slate-200 text-slate-600' }
-        };
-
-        // Görevleri Ekrana Basma Fonksiyonu
-        function renderTasks() {
-            const list = document.getElementById('taskList');
-            list.innerHTML = ''; // Temizle
+        <div class="flex-1 p-4 flex gap-4 overflow-hidden bg-slate-50">
             
-            // Tamamlanmamışları üstte tutmak için sıralama yapabiliriz ama şimdilik olduğu gibi bırakıyorum.
-
-            tasks.forEach(task => {
-                const colors = priorityColors[task.priority];
-                const opacityClass = task.completed ? 'opacity-60' : 'opacity-100';
-                const strikeClass = task.completed ? 'line-through text-slate-400' : 'text-slate-800';
+            <div class="flex-1 bg-white rounded-lg border border-slate-200 shadow-sm flex flex-col overflow-hidden">
+                <div class="p-3 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                    <h2 class="font-semibold text-sm text-slate-600">Bugünün Görevleri (Yapılacaklar)</h2>
+                    <div class="flex gap-2 text-[10px]">
+                        <span class="px-2 py-0.5 bg-red-50 text-red-600 rounded border border-red-100">Kritik</span>
+                        <span class="px-2 py-0.5 bg-orange-50 text-orange-600 rounded border border-orange-100">Yüksek</span>
+                    </div>
+                </div>
                 
-                const html = `
-                    <div class="group flex items-start gap-3 p-3 rounded shadow-sm border border-slate-200 hover:shadow-md transition-all ${colors.border} border-l-[4px] ${colors.bg} ${opacityClass}">
-                        <div class="pt-1">
-                            <input type="checkbox" onclick="toggleTask(${task.id})" ${task.completed ? 'checked' : ''} class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer">
-                        </div>
+                <div class="overflow-y-auto p-2 space-y-2 flex-1">
+                    
+                    <div class="group flex items-start gap-3 p-2.5 bg-white border-l-4 border-red-500 rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer border-t border-r border-b border-slate-100">
+                        <input type="checkbox" class="mt-1 accent-red-600 w-3.5 h-3.5 cursor-pointer">
                         <div class="flex-1 min-w-0">
-                            <div class="flex justify-between items-start mb-1">
-                                <span class="font-semibold text-sm ${strikeClass} truncate pr-2">${task.title}</span>
-                                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide ${colors.badge}">${task.priority}</span>
+                            <div class="flex justify-between items-start">
+                                <span class="text-sm font-semibold text-slate-800 truncate">Dijital Mizan Entegrasyon Hatası</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">KRİTİK</span>
                             </div>
-                            
-                            <p class="text-xs text-slate-500 mb-2 line-clamp-2">${task.note}</p>
-                            
-                            <div class="flex items-center gap-3 text-[10px] text-slate-400 font-medium">
-                                <span class="flex items-center gap-1 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-100">
-                                    🕒 ${task.time || '--:--'}
-                                </span>
-                                ${task.completed ? '<span class="text-green-600">✓ Tamamlandı</span>' : ''}
+                            <p class="text-xs text-slate-500 mt-0.5">Prometeia servisi yanıt vermiyor, loglar incelenecek.</p>
+                            <div class="mt-1.5 flex gap-3 text-[10px] text-slate-400 font-medium">
+                                <span class="flex items-center gap-1">🕒 10:00</span>
+                                <span class="flex items-center gap-1">👤 Cengiz B.</span>
                             </div>
                         </div>
-                        <button onclick="deleteTask(${task.id})" class="text-slate-300 hover:text-red-500 transition-colors self-start pt-1 opacity-0 group-hover:opacity-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                    </div>
+
+                    <div class="group flex items-start gap-3 p-2.5 bg-white border-l-4 border-orange-400 rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer border-t border-r border-b border-slate-100">
+                        <input type="checkbox" class="mt-1 accent-orange-500 w-3.5 h-3.5 cursor-pointer">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start">
+                                <span class="text-sm font-semibold text-slate-800">Yönetim Kurulu Sunumu</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-100 text-orange-700">YÜKSEK</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">Rating projesi verileri slaytlara eklenecek.</p>
+                            <div class="mt-1.5 flex gap-3 text-[10px] text-slate-400 font-medium">
+                                <span class="flex items-center gap-1">🕒 14:30</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group flex items-start gap-3 p-2.5 bg-white border-l-4 border-blue-400 rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer border-t border-r border-b border-slate-100">
+                        <input type="checkbox" class="mt-1 accent-blue-500 w-3.5 h-3.5 cursor-pointer">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start">
+                                <span class="text-sm font-medium text-slate-700">Google Play Hesabı Kontrolü</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700">NORMAL</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">D&B numarası eşleşme sorunu için destek talebi aç.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group flex items-start gap-3 p-2.5 bg-white border-l-4 border-blue-400 rounded shadow-sm hover:shadow-md transition-shadow cursor-pointer border-t border-r border-b border-slate-100">
+                        <input type="checkbox" class="mt-1 accent-blue-500 w-3.5 h-3.5 cursor-pointer">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start">
+                                <span class="text-sm font-medium text-slate-700">Vakıf Faktoring Dashboard Taslağı</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700">NORMAL</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-0.5">Tarih seçimi ve Excel export özellikleri eklenecek.</p>
+                        </div>
+                    </div>
+
+                    <div class="group flex items-start gap-3 p-2.5 bg-slate-50 border-l-4 border-slate-300 rounded opacity-60 border-t border-r border-b border-slate-100">
+                        <input type="checkbox" checked class="mt-1 w-3.5 h-3.5 cursor-pointer">
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-start">
+                                <span class="text-sm font-medium text-slate-500 line-through">Günlük Sistem Kontrolleri</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-200 text-slate-600">DÜŞÜK</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="w-80 bg-white rounded-lg border border-slate-200 shadow-sm flex flex-col">
+                <div class="p-3 border-b border-slate-100 bg-slate-50">
+                    <h3 class="font-semibold text-sm text-slate-700">Hızlı İşlem</h3>
+                </div>
+                
+                <div class="p-4 flex flex-col gap-4 overflow-y-auto">
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Görev Başlığı</label>
+                            <input type="text" class="w-full text-sm border border-slate-300 rounded p-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" placeholder="Yeni görev yazın...">
+                        </div>
+
+                        <div class="flex gap-2">
+                            <div class="flex-1">
+                                <label class="block text-xs font-medium text-slate-500 mb-1">Tarih</label>
+                                <input type="date" class="w-full text-xs border border-slate-300 rounded p-2 text-slate-600">
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-xs font-medium text-slate-500 mb-1">Öncelik</label>
+                                <select class="w-full text-xs border border-slate-300 rounded p-2 focus:outline-none bg-white">
+                                    <option value="critical" class="text-red-600 font-bold">🔴 Kritik</option>
+                                    <option value="high" class="text-orange-500 font-bold">🟠 Yüksek</option>
+                                    <option value="normal" selected>🔵 Normal</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-500 mb-1">Not / Detay</label>
+                            <textarea rows="3" class="w-full text-sm border border-slate-300 rounded p-2 focus:outline-none focus:border-blue-500" placeholder="Açıklama..."></textarea>
+                        </div>
+
+                        <button class="w-full bg-slate-800 text-white text-xs font-medium py-2.5 rounded hover:bg-slate-700 transition-colors shadow-sm">
+                            Kaydet
                         </button>
                     </div>
-                `;
-                list.insertAdjacentHTML('beforeend', html);
-            });
 
-            // Başlık sayacı güncelle
-            const pendingCount = tasks.filter(t => !t.completed).length;
-            document.getElementById('headerTaskCount').innerText = pendingCount;
-        }
+                    <div class="mt-2 pt-4 border-t border-slate-100">
+                        <div class="flex justify-between items-end mb-2">
+                            <div class="text-xs font-bold text-slate-600">Takvim Özeti</div>
+                            <div class="text-[10px] text-slate-400">Aralık 2025</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 gap-1 text-center text-[10px]">
+                            <div class="text-slate-400 pb-1">Pt</div><div class="text-slate-400 pb-1">Sa</div><div class="text-slate-400 pb-1">Ça</div><div class="text-slate-400 pb-1">Pe</div><div class="text-slate-400 pb-1">Cu</div><div class="text-slate-400 pb-1">Ct</div><div class="text-slate-400 pb-1">Pa</div>
+                            
+                            <div class="p-1.5 rounded hover:bg-slate-100 cursor-pointer">1</div>
+                            <div class="p-1.5 bg-red-100 text-red-700 rounded font-bold cursor-pointer border border-red-200">2</div>
+                            <div class="p-1.5 rounded hover:bg-slate-100 cursor-pointer">3</div>
+                            <div class="p-1.5 bg-blue-100 text-blue-700 rounded font-bold cursor-pointer border border-blue-200">4</div>
+                            <div class="p-1.5 bg-orange-100 text-orange-700 rounded font-bold cursor-pointer border border-orange-200 relative">5</div>
+                            <div class="p-1.5 text-slate-300">6</div>
+                            <div class="p-1.5 text-slate-300">7</div>
+                            <div class="p-1.5 rounded hover:bg-slate-100">8</div>
+                            <div class="p-1.5 rounded hover:bg-slate-100">9</div>
+                            <div class="p-1.5 rounded hover:bg-slate-100">10</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        // Yeni Görev Ekleme
-        function addTask() {
-            const title = document.getElementById('inputTitle').value;
-            const priority = document.getElementById('inputPriority').value;
-            const time = document.getElementById('inputTime').value;
-            const note = document.getElementById('inputNote').value;
-
-            if (!title) {
-                alert("Lütfen en azından bir görev başlığı girin.");
-                return;
-            }
-
-            const newTask = {
-                id: Date.now(),
-                title: title,
-                priority: priority,
-                time: time || 'Gün Boyu',
-                note: note || 'Açıklama yok.',
-                completed: false
-            };
-
-            tasks.unshift(newTask); // Listenin başına ekle
-            renderTasks();
-            
-            // Formu Temizle
-            document.getElementById('inputTitle').value = '';
-            document.getElementById('inputNote').value = '';
-        }
-
-        // Görev Tamamlama Durumu
-        function toggleTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                renderTasks();
-            }
-        }
-
-        // Görev Silme
-        function deleteTask(id) {
-            if(confirm('Bu görevi silmek istediğinize emin misiniz?')) {
-                tasks = tasks.filter(t => t.id !== id);
-                renderTasks();
-            }
-        }
-
-        // İlk Yükleme
-        renderTasks();
-
-    </script>
+        </div>
+    </div>
 </body>
 </html>
