@@ -25,17 +25,21 @@
     
     <style>
         :root {
-            /* V11.6 FINAL "REAL TECH IMAGE BG" PALET */
+            /* V12.0 PERSONAL ASSISTANT PALET */
             --primary: #0065B3; 
             --primary-hover: #004d8a; 
             --primary-light: #e0f2fe;
             
-            /* --- YENİ "GERÇEK RESİM" TEKNOLOJİK ARKA PLAN (LIGHT) --- */
-            /* Göz yormayan, aydınlık, soyut teknoloji/çip görseli */
-            --bg-image-url: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            
-            --bg-card: rgba(255, 255, 255, 0.85); /* Arka planı göstermek için yarı saydam */
-            --bg-sub: rgba(248, 250, 252, 0.9);
+            /* ARKA PLAN (LIGHT) */
+            --bg-body: #f4f7fa;
+            --bg-pattern: 
+                radial-gradient(circle at center, rgba(0, 101, 179, 0.08) 1px, transparent 1px),
+                linear-gradient(to right, rgba(0, 101, 179, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 101, 179, 0.03) 1px, transparent 1px);
+            --bg-size: 24px 24px, 48px 48px, 48px 48px;
+
+            --bg-card: rgba(255, 255, 255, 0.92);
+            --bg-sub: #f8fafc;
             
             --border: #e2e8f0; 
             --text-main: #0f172a; 
@@ -53,14 +57,20 @@
             --primary-hover: #60a5fa; 
             --primary-light: rgba(59,130,246,0.15);
             
-            /* --- YENİ "GERÇEK RESİM" TEKNOLOJİK ARKA PLAN (DARK) --- */
-            /* Göz yormayan, koyu mavi, soyut siber güvenlik/veri görseli */
-            --bg-image-url: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            /* ARKA PLAN (DARK) */
+            --bg-body: #050a14;
+            --bg-pattern: 
+                radial-gradient(circle at 15% 25%, rgba(0, 200, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+            --bg-size: 100% 100%, 100% 100%, 24px 24px, 48px 48px, 48px 48px;
             
-            --bg-card: rgba(15, 23, 42, 0.80); /* Koyu modda daha şeffaf kartlar */
-            --bg-sub: rgba(30, 41, 59, 0.85);
+            --bg-card: rgba(15, 23, 42, 0.85); 
+            --bg-sub: #1e293b;
             
-            --border: rgba(51, 65, 85, 0.8); 
+            --border: #334155; 
             --text-main: #f8fafc; 
             --text-sec: #94a3b8;
             
@@ -73,13 +83,10 @@
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
             height: 100dvh; width: 100vw; overflow: hidden; 
-            
-            /* Arka Plan Resmi Uygulaması */
-            background-image: var(--bg-image-url);
-            background-size: cover;      /* Resmi ekrana yay */
-            background-position: center; /* Resmi ortala */
-            background-attachment: fixed; /* Kaydırmada sabit kalsın */
-            
+            background-color: var(--bg-body);
+            background-image: var(--bg-pattern);
+            background-size: var(--bg-size);
+            background-attachment: fixed;
             display: flex; flex-direction: column;
             transition: all 0.3s ease;
         }
@@ -215,6 +222,14 @@
         .list-body { flex: 1; overflow-y: auto; }
         .list-row { display: grid; grid-template-columns: 80px 2fr 1fr 100px 100px; padding: 12px 20px; border-bottom: 1px solid var(--border); align-items: center; cursor: pointer; font-size: 13px; transition: 0.1s; } .list-row:hover { background: var(--bg-sub); }
 
+        /* DAILY NOTES STYLE */
+        .daily-item { display: flex; align-items: center; gap: 10px; padding: 8px; border-bottom: 1px solid var(--border); }
+        .daily-check { width: 18px; height: 18px; cursor: pointer; accent-color: var(--primary); }
+        .daily-text { flex: 1; font-size: 14px; color: var(--text-main); }
+        .daily-done .daily-text { text-decoration: line-through; color: var(--text-sec); opacity: 0.7; }
+        .daily-del { color: #ef4444; cursor: pointer; font-size: 14px; opacity: 0.6; }
+        .daily-del:hover { opacity: 1; }
+
         /* MODAL */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); } .modal.show { display: flex; }
         .modal-box { background: var(--bg-card); width: 600px; max-height: 90vh; border-radius: 16px; display: flex; flex-direction: column; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
@@ -284,6 +299,9 @@
         </div>
         <div class="user-area">
             <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
+            
+            <button class="btn-icon" onclick="openDailyModal()" title="Günlük Notlar"><i class="fa-solid fa-clipboard-check"></i></button>
+            
             <button class="btn-icon mobile-only" onclick="toggleFilter()"><i class="fa-solid fa-filter"></i></button>
             <div class="user-info" id="displayUserName"></div>
             <button class="btn-icon" onclick="logout()"><i class="fa-solid fa-power-off"></i></button>
@@ -327,7 +345,7 @@
 
                 <div class="cockpit-side" id="rightPanel">
                     <div class="side-box"><div class="side-head"><span id="sideCalTitle"></span> <i class="fa-regular fa-calendar"></i></div><div class="mini-cal-grid" id="miniCalGrid"></div></div>
-                    <div style="flex:1; overflow-y:auto;"><div class="side-head">Görev Akışı</div><div class="todo-list-mini" id="sideFeedList"></div></div>
+                    <div style="flex:1; overflow-y:auto;"><div class="side-head">Görev Akışı</div><div class="feed-list" id="sideFeedList"></div></div>
                 </div>
             </div>
         </div>
@@ -400,9 +418,25 @@
     </div>
 </div>
 
+<div id="dailyModal" class="modal">
+    <div class="modal-box" style="max-width:400px; height:auto;">
+        <div class="m-head">
+            <span style="font-size:16px; font-weight:700;"><i class="fa-solid fa-clipboard-check" style="color:var(--primary)"></i> Günlük Planım</span>
+            <button class="btn-icon" style="width:30px; height:30px;" onclick="closeDailyModal()">✕</button>
+        </div>
+        <div class="m-body" style="padding:15px;">
+            <div style="display:flex; gap:10px; margin-bottom:15px;">
+                <input type="text" id="dailyInput" class="f-input" style="margin:0;" placeholder="Hızlıca bir not ekle..." onkeypress="if(event.key==='Enter') addDailyItem()">
+                <button class="btn-primary" onclick="addDailyItem()"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <div id="dailyList" style="max-height:300px; overflow-y:auto; display:flex; flex-direction:column; gap:5px;"></div>
+        </div>
+    </div>
+</div>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy, getDoc, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     /* RESIZER */
@@ -431,7 +465,7 @@
 
     const USERS = ["Cengiz GÜLCAN", "Enis BİRCAN", "Çağrı Can DÜNDAR", "HalkfaktoringBT"];
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
-    window.allTasks = []; let currentUser = null; let timeFilter = 'all'; let calDate = new Date(); let listSortBy = 'date';
+    window.allTasks = []; window.dailyNotes = []; let currentUser = null; let timeFilter = 'all'; let calDate = new Date(); let listSortBy = 'date';
 
     window.showToast = (msg, type='success') => { const c = document.getElementById('toastContainer'); const t = document.createElement('div'); t.className = 'toast'; t.style.borderLeftColor = type==='error'?'#ef4444':'#10b981'; t.innerHTML = `<span>${msg}</span>`; c.appendChild(t); setTimeout(() => t.remove(), 3000); }
 
@@ -445,7 +479,7 @@
                 currentUser = { email: user.email, role: user.email.includes('cengiz') ? 'admin' : 'user', name: displayName };
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('displayUserName').innerText = currentUser.name;
-                listenTasks(); initSortable();
+                listenTasks(); initSortable(); listenDailyNotes();
             } else { document.getElementById('loginOverlay').style.display = 'flex'; }
         });
     }
@@ -471,6 +505,41 @@
             window.allTasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             renderAll();
         });
+    }
+    
+    /* DAILY NOTES LOGIC */
+    function listenDailyNotes() {
+        if(!db || !currentUser) return;
+        onSnapshot(query(collection(db, "daily_notes"), where("user", "==", currentUser.email)), (snap) => {
+            window.dailyNotes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderDailyNotes();
+        });
+    }
+
+    window.openDailyModal = () => document.getElementById('dailyModal').classList.add('show');
+    window.closeDailyModal = () => document.getElementById('dailyModal').classList.remove('show');
+    
+    window.addDailyItem = async () => {
+        const txt = document.getElementById('dailyInput').value;
+        if(!txt) return;
+        await addDoc(collection(db, "daily_notes"), { user: currentUser.email, text: txt, done: false, date: Date.now() });
+        document.getElementById('dailyInput').value = '';
+    }
+    
+    window.toggleDailyItem = async (id, status) => { await updateDoc(doc(db, "daily_notes", id), { done: !status }); }
+    window.deleteDailyItem = async (id) => { await deleteDoc(doc(db, "daily_notes", id)); }
+
+    function renderDailyNotes() {
+        const list = document.getElementById('dailyList'); list.innerHTML = '';
+        window.dailyNotes.sort((a,b) => a.date - b.date).forEach(n => {
+            list.innerHTML += `
+            <div class="daily-item ${n.done?'daily-done':''}">
+                <input type="checkbox" class="daily-check" ${n.done?'checked':''} onclick="toggleDailyItem('${n.id}', ${n.done})">
+                <span class="daily-text">${n.text}</span>
+                <i class="fa-solid fa-trash daily-del" onclick="deleteDailyItem('${n.id}')"></i>
+            </div>`;
+        });
+        if(window.dailyNotes.length === 0) list.innerHTML = '<div style="text-align:center; color:var(--text-sec); padding:10px;">Notunuz yok</div>';
     }
 
     window.sortList = (val) => { listSortBy = val; renderAll(); }
@@ -502,7 +571,7 @@
                 div.setAttribute('data-id', t.id);
                 div.onclick = () => openModal(t.id);
                 
-                const doneIcon = isDone ? '<i class="fa-solid fa-check-circle done-icon"></i>' : '';
+                const doneIcon = isDone ? '<i class="fa-solid fa-circle-check done-icon"></i>' : '';
                 let uName = t.assignee ? t.assignee.split(' ')[0] : '?';
                 if(t.assignee && t.assignee.split(' ').length > 1) uName += ' ' + t.assignee.split(' ')[1][0] + '.';
 
@@ -624,7 +693,7 @@
     }
 
     window.openModal = (id) => {
-        // 1. GHOST DATA TEMİZLİĞİ
+        // GHOST DATA TEMİZLİĞİ
         document.getElementById('commentList').innerHTML = '';
         document.getElementById('newComment').value = '';
 
