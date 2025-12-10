@@ -129,13 +129,25 @@
         .dt-top { display: flex; justify-content: space-between; align-items: center; } .dt-title { font-weight: 700; font-size: 13px; color: var(--text-main); } .dt-badge { font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; border: 1px solid var(--border); } .dt-desc { font-size: 11px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         
         .daily-calendar-area { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); }
+        
+        /* TAKVİM BAŞLIK DÜZENLEMESİ */
+        .cal-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .cal-title { font-size: 18px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; flex: 1; text-align: center; }
+        
         .dc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; flex: 1; }
-        .dc-cell { border: 1px solid var(--border); border-radius: 8px; background: var(--bg-sub); display: flex; flex-direction: column; padding: 8px; cursor: pointer; transition: 0.2s; position: relative; }
+        
+        /* HAFTA BAŞLIKLARI */
+        .dc-day-head { text-align: center; font-size: 12px; font-weight: 800; color: var(--text-main); text-transform: uppercase; }
+
+        .dc-cell { border: 1px solid var(--border); border-radius: 8px; background: var(--bg-sub); display: flex; flex-direction: column; padding: 8px; cursor: pointer; transition: 0.2s; position: relative; height: 100px; /* Sabit yükseklik */ }
         .dc-cell:hover { border-color: var(--primary); background: var(--primary-light); }
         .dc-cell.selected { background: var(--primary); color: white; border-color: var(--primary); box-shadow: var(--shadow-md); transform: scale(1.02); z-index: 2; }
-        .dc-cell.selected .dc-day-num { color: white; }
+        
+        /* HATA DÜZELTMESİ: Koyu modda gün numaraları görünür */
         .dc-day-num { font-size: 14px; font-weight: 700; color: var(--text-sec); margin-bottom: 4px; }
-        .dc-dots { display: flex; gap: 3px; flex-wrap: wrap; } .dc-dot { width: 6px; height: 6px; border-radius: 50%; }
+        .dc-cell.selected .dc-day-num { color: white; }
+        
+        .dc-dots { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 4px; } .dc-dot { width: 6px; height: 6px; border-radius: 50%; }
 
         /* KANBAN & OTHER VIEWS */
         .cockpit-wrapper { display: grid; grid-template-columns: 1fr 4px 320px; gap: 0; height: 100%; overflow: hidden; }
@@ -275,20 +287,22 @@
                     </div>
                 </div>
                 <div class="daily-calendar-area">
-                    <div class="cal-controls" style="margin-bottom:20px;">
+                    <div class="cal-controls">
                         <button class="btn-icon" onclick="navDailyMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                         <span class="cal-title" id="dailyCalTitle"></span>
                         <button class="btn-icon" onclick="navDailyMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
+                    
                     <div class="dc-grid" style="margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:5px;">
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Pt</div>
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Sa</div>
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Ça</div>
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Pe</div>
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Cu</div>
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Ct</div>
-                        <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Pa</div>
+                        <div class="dc-day-head">Pt</div>
+                        <div class="dc-day-head">Sa</div>
+                        <div class="dc-day-head">Çr</div>
+                        <div class="dc-day-head">Pr</div>
+                        <div class="dc-day-head">Cm</div>
+                        <div class="dc-day-head">Ct</div>
+                        <div class="dc-day-head" style="color: #ef4444;">Pz</div>
                     </div>
+                    
                     <div class="dc-grid" id="dailyCalGrid"></div>
                 </div>
             </div>
@@ -453,15 +467,30 @@
         const y = activeDay.getFullYear(), m = activeDay.getMonth();
         document.getElementById('dailyCalTitle').innerText = activeDay.toLocaleDateString('tr-TR', {month:'long', year:'numeric'});
         const g = document.getElementById('dailyCalGrid'); g.innerHTML = '';
-        const days = new Date(y, m+1, 0).getDate(); const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
+        
+        const firstDayOfMonth = new Date(y, m, 1);
+        let offset = firstDayOfMonth.getDay() === 0 ? 6 : firstDayOfMonth.getDay() - 1; // Pazartesi'den başlar (0 Pazar, 1 Pzt, ... 6 Cmt). Pazar=6, Pzt=0 olmalı.
+
+        const daysInMonth = new Date(y, m+1, 0).getDate(); 
+        
+        // Boş günleri ekle (Pazartesi'den başlamak için)
         for(let i=0; i<offset; i++) g.innerHTML += '<div></div>';
         
-        for(let i=1; i<=days; i++) {
+        for(let i=1; i<=daysInMonth; i++) {
             const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
+            // Tamamlanmamış ve bitiş tarihi bu gün olan görevleri al
             const dayTasks = tasks.filter(t => t.date === dStr && t.status !== 'done');
-            let dots = ''; dayTasks.forEach(t => { let color = t.priority === 'Yüksek' ? 'var(--critical)' : (t.priority === 'Orta' ? 'var(--todo)' : 'var(--done)'); dots += `<div class="dc-dot" style="background:${color}"></div>`; });
+            
+            let dots = ''; 
+            dayTasks.forEach(t => { 
+                let color = t.priority === 'Yüksek' ? 'var(--critical)' : (t.priority === 'Orta' ? 'var(--todo)' : 'var(--done)'); 
+                dots += `<div class="dc-dot" style="background:${color}"></div>`; 
+            });
+            
             const isSelected = activeDay.getDate() === i && activeDay.getMonth() === m;
-            const div = document.createElement('div'); div.className = `dc-cell ${isSelected ? 'selected' : ''}`; div.onclick = () => { activeDay = new Date(y, m, i); renderDaily(tasks); };
+            const div = document.createElement('div'); 
+            div.className = `dc-cell ${isSelected ? 'selected' : ''}`; 
+            div.onclick = () => { activeDay = new Date(y, m, i); renderDaily(tasks); };
             div.innerHTML = `<div class="dc-day-num">${i}</div><div class="dc-dots">${dots}</div>`;
             g.appendChild(div);
         }
@@ -543,7 +572,7 @@
         document.getElementById('commentList').innerHTML = ''; document.getElementById('newComment').value = '';
         const t = window.allTasks.find(x => x.id === id); if(!t) return;
         document.getElementById('tId').value = id; document.getElementById('tTitle').value = t.title; document.getElementById('tStatus').value = t.status; document.getElementById('tPriority').value = t.priority; document.getElementById('tAssignee').value = t.assignee; document.getElementById('tDate').value = t.date; document.getElementById('tDesc').value = t.desc;
-        if(t.history) t.history.reverse().forEach(h => { const delBtn = `<span class="t-del" onclick="deleteHistoryItem('${id}', ${h.id})"><i class="fa-solid fa-trash"></i></span>`; document.getElementById('commentList').innerHTML += `<div class="timeline"><div class="t-item"><div class="t-meta"><span>${h.user} • ${h.date}</span>${delBtn}</div><div class="t-text">${h.text}</div></div></div>`; });
+        if(t.history) t.history.reverse().forEach(h => { const delBtn = `<span class="t-del" onclick="deleteHistoryItem('${id}', ${h.id})" style="cursor:pointer; color:var(--text-sec); font-size:10px;"><i class="fa-solid fa-trash"></i></span>`; document.getElementById('commentList').innerHTML += `<div class="timeline"><div class="t-item"><div class="t-meta"><span>${h.user} • ${h.date}</span>${delBtn}</div><div class="t-text">${h.text}</div></div></div>`; });
         document.getElementById('modal').classList.add('show');
     }
     window.closeModal = () => { document.getElementById('modal').classList.remove('show'); }
@@ -553,7 +582,7 @@
         const id = document.getElementById('tId').value; const data = { title: document.getElementById('tTitle').value, status: document.getElementById('tStatus').value, priority: document.getElementById('tPriority').value, assignee: document.getElementById('tAssignee').value, date: document.getElementById('tDate').value, desc: document.getElementById('tDesc').value };
         if(!data.title) return showToast("Konu seçiniz", "error");
         if(id) { await updateDoc(doc(db, "tasks", id), data); addHistory(id, "Güncellendi"); }
-        else { await runTransaction(db, async (t) => { const ref = doc(db, "meta", "counters"); const d = await t.get(ref); const seq = (d.exists() ? d.data().taskSeq : 0) + 1; t.set(ref, { taskSeq: seq }, { merge: true }); data.code = 'GRV-' + seq; data.history = [{id: Date.now(), user:currentUser.name.split(' ')[0], text:'Oluşturuldu', date:new Date().toLocaleString()}]; await addDoc(collection(db, "tasks"), data); }); }
+        else { await runTransaction(db, async (t) => { const ref = doc(db, "meta", "counters"); const d = await t.get(ref); const seq = (d.exists() ? d.data().taskSeq : 0) + 1; t.set(ref, { taskSeq: seq }, { merge: true }); data.code = 'GRV-' + seq; data.history = [{id: Date.now(), user:currentUser.name.split(' ')[0], text:'Oluşturuldu', date:new Date().toLocaleString('tr-TR')}]; await addDoc(collection(db, "tasks"), data); }); }
         closeModal(); showToast("Kaydedildi");
     }
     window.addComment = () => { const id = document.getElementById('tId').value; const txt = document.getElementById('newComment').value; if(id && txt) { addHistory(id, txt); document.getElementById('newComment').value=''; openModal(id); } }
