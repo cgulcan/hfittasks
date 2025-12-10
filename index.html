@@ -25,23 +25,22 @@
     
     <style>
         :root {
-            /* TEMEL RENKLER */
+            /* SADE RENK PALETİ */
             --primary: #0065B3; 
             --primary-hover: #004d8a; 
-            --primary-light: #e0f2fe;
+            --primary-light: #eff6ff;
             
-            /* ARKA PLAN RESMİ */
-            --bg-image-url: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop');
-            
-            --bg-card: rgba(255, 255, 255, 0.90);
-            --bg-sub: rgba(248, 250, 252, 0.95);
+            /* SADE ARKA PLAN (Resim Yok) */
+            --bg-body: #f8fafc; /* Açık Gri/Beyaz */
+            --bg-card: #ffffff;
+            --bg-sub: #f1f5f9;
             
             --border: #e2e8f0; 
             --text-main: #0f172a; 
             --text-sec: #64748b;
             
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-md: 0 8px 16px -4px rgba(0,0,0,0.1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
             
             --todo: #f59e0b; --prog: #0065B3; --done: #10b981; --critical: #ef4444;
             --header-height: 60px;
@@ -50,15 +49,19 @@
         [data-theme="dark"] {
             --primary: #3b82f6; 
             --primary-hover: #60a5fa; 
-            --primary-light: rgba(59,130,246,0.15);
-            --bg-image-url: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');
-            --bg-card: rgba(15, 23, 42, 0.85);
-            --bg-sub: rgba(30, 41, 59, 0.90);
-            --border: rgba(51, 65, 85, 0.8); 
+            --primary-light: rgba(59,130,246,0.1);
+            
+            /* KOYU MOD SADE ARKA PLAN */
+            --bg-body: #0f172a; /* Koyu Lacivert/Siyah */
+            --bg-card: #1e293b;
+            --bg-sub: #334155;
+            
+            --border: #334155; 
             --text-main: #f8fafc; 
             --text-sec: #94a3b8;
+            
             --shadow-sm: none; 
-            --shadow-md: 0 10px 30px -5px rgba(0,0,0,0.6);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
@@ -66,7 +69,10 @@
         body { 
             font-family: 'Inter', sans-serif; margin: 0; padding: 0; color: var(--text-main); 
             height: 100dvh; width: 100vw; overflow: hidden; 
-            background-image: var(--bg-image-url); background-size: cover; background-position: center; background-attachment: fixed;
+            
+            /* SADE ARKA PLAN UYGULAMASI */
+            background-color: var(--bg-body);
+            
             display: flex; flex-direction: column; transition: all 0.3s ease;
         }
 
@@ -80,10 +86,10 @@
             height: var(--header-height); flex-shrink: 0; 
             background: var(--bg-card); border-bottom: 1px solid var(--border); 
             display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 20px; z-index: 50; backdrop-filter: blur(12px);
+            padding: 0 20px; z-index: 50;
         }
         .brand { display: flex; align-items: center; gap: 10px; }
-        .logo-img { height: 30px; width: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        .logo-img { height: 30px; width: auto; }
         .brand-text { font-weight: 800; font-size: 16px; letter-spacing: -0.02em; }
 
         .nav-pills { display: flex; gap: 4px; background: var(--bg-sub); padding: 4px; border-radius: 8px; border: 1px solid var(--border); }
@@ -94,7 +100,7 @@
         .nav-btn.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); }
         
         .user-area { display: flex; align-items: center; gap: 10px; }
-        .user-info { font-weight: 700; font-size: 13px; color: var(--primary); text-align: right; background: var(--primary-light); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); }
+        .user-info { font-weight: 700; font-size: 13px; color: var(--primary); text-align: right; background: var(--primary-light); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--primary-light); }
         .btn-icon { width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-sec); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
         .btn-primary { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; box-shadow: var(--shadow-sm); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
@@ -109,66 +115,33 @@
         .view-section { display: none; width: 100%; height: 100%; flex-direction: column; overflow: hidden; }
         .view-section.active { display: flex; }
 
-        /* --- YENİ "GÜNLÜK" SAYFASI STİLLERİ --- */
-        .daily-split-layout {
-            display: grid; grid-template-columns: 350px 1fr; gap: 20px; height: 100%; overflow: hidden;
-        }
-        
-        /* Sol: Görev Listesi */
-        .daily-sidebar {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
-            display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-sm);
-        }
-        .ds-header {
-            padding: 15px; border-bottom: 1px solid var(--border); background: var(--bg-sub);
-            display: flex; flex-direction: column; gap: 4px;
-        }
+        /* GÜNLÜK SAYFA (DAILY) */
+        .daily-split-layout { display: grid; grid-template-columns: 350px 1fr; gap: 20px; height: 100%; overflow: hidden; }
+        .daily-sidebar { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; box-shadow: var(--shadow-sm); }
+        .ds-header { padding: 15px; border-bottom: 1px solid var(--border); background: var(--bg-sub); display: flex; flex-direction: column; gap: 4px; }
         .ds-date-big { font-size: 24px; font-weight: 800; color: var(--text-main); letter-spacing: -0.03em; }
         .ds-date-sub { font-size: 13px; color: var(--text-sec); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
         .ds-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
         
-        /* Compact Görev Kartı */
-        .d-task {
-            background: var(--bg-card); border: 1px solid var(--border); padding: 12px; border-radius: 8px;
-            cursor: pointer; transition: 0.2s; border-left: 4px solid transparent;
-            display: flex; flex-direction: column; gap: 4px;
-        }
-        .d-task:hover { transform: translateX(3px); box-shadow: var(--shadow-sm); }
-        .d-task.p-Yüksek { border-left-color: var(--critical); }
-        .d-task.p-Orta { border-left-color: var(--todo); }
-        .d-task.p-Düşük { border-left-color: var(--done); }
+        .d-task { background: var(--bg-card); border: 1px solid var(--border); padding: 12px; border-radius: 8px; cursor: pointer; transition: 0.2s; border-left: 4px solid transparent; display: flex; flex-direction: column; gap: 4px; }
+        .d-task:hover { transform: translateX(3px); box-shadow: var(--shadow-sm); border-color: var(--primary); }
+        .d-task.p-Yüksek { border-left-color: var(--critical); } .d-task.p-Orta { border-left-color: var(--todo); } .d-task.p-Düşük { border-left-color: var(--done); }
+        .dt-top { display: flex; justify-content: space-between; align-items: center; } .dt-title { font-weight: 700; font-size: 13px; color: var(--text-main); } .dt-badge { font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; border: 1px solid var(--border); } .dt-desc { font-size: 11px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         
-        .dt-top { display: flex; justify-content: space-between; align-items: center; }
-        .dt-title { font-weight: 700; font-size: 13px; color: var(--text-main); }
-        .dt-badge { font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; border: 1px solid var(--border); }
-        .dt-desc { font-size: 11px; color: var(--text-sec); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-        
-        /* Sağ: Takvim Alanı */
-        .daily-calendar-area {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
-            padding: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm);
-        }
-        .dc-grid {
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; flex: 1;
-        }
-        .dc-cell {
-            border: 1px solid var(--border); border-radius: 8px; background: var(--bg-sub);
-            display: flex; flex-direction: column; padding: 8px; cursor: pointer; transition: 0.2s; position: relative;
-        }
+        .daily-calendar-area { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; box-shadow: var(--shadow-sm); }
+        .dc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; flex: 1; }
+        .dc-cell { border: 1px solid var(--border); border-radius: 8px; background: var(--bg-sub); display: flex; flex-direction: column; padding: 8px; cursor: pointer; transition: 0.2s; position: relative; }
         .dc-cell:hover { border-color: var(--primary); background: var(--primary-light); }
         .dc-cell.selected { background: var(--primary); color: white; border-color: var(--primary); box-shadow: var(--shadow-md); transform: scale(1.02); z-index: 2; }
         .dc-cell.selected .dc-day-num { color: white; }
         .dc-day-num { font-size: 14px; font-weight: 700; color: var(--text-sec); margin-bottom: 4px; }
-        .dc-dots { display: flex; gap: 3px; flex-wrap: wrap; }
-        .dc-dot { width: 6px; height: 6px; border-radius: 50%; }
-        
-        /* ---------------------------------- */
+        .dc-dots { display: flex; gap: 3px; flex-wrap: wrap; } .dc-dot { width: 6px; height: 6px; border-radius: 50%; }
 
-        /* KANBAN */
+        /* KANBAN & OTHER VIEWS */
         .cockpit-wrapper { display: grid; grid-template-columns: 1fr 4px 320px; gap: 0; height: 100%; overflow: hidden; }
         .resizer { cursor: col-resize; background: transparent; z-index: 10; transition: background 0.2s; } .resizer:hover { background: var(--primary); }
         .kanban-main { display: flex; flex-direction: column; height: 100%; overflow: hidden; padding-right: 20px; }
-        .cockpit-side { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-card); backdrop-filter: blur(10px); }
+        .cockpit-side { display: flex; flex-direction: column; gap: 20px; overflow-y: auto; border-left: 1px solid var(--border); padding-left: 20px; background: var(--bg-card); }
         .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
         .time-filters { display: flex; gap: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
         .tf-btn { padding: 6px 12px; font-size: 12px; font-weight: 600; background: transparent; border: none; color: var(--text-sec); cursor: pointer; border-right: 1px solid var(--border); } .tf-btn.active { background: var(--primary-light); color: var(--primary); }
@@ -177,6 +150,7 @@
         .k-header { padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg-card); border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 800; color: var(--text-sec); text-transform: uppercase; }
         .k-list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
         .task-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; box-shadow: var(--shadow-sm); cursor: grab; transition: transform 0.2s; border-left: 4px solid transparent; position: relative; }
+        .task-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
         .p-Yüksek { border-left-color: #ef4444; } .p-Orta { border-left-color: #f59e0b; } .p-Düşük { border-left-color: #10b981; }
         .task-card.task-done { border: 2px solid var(--done) !important; background: #f0fdf4; opacity: 0.9; }
         .done-icon { color: var(--done); font-size: 16px; position: absolute; top: 12px; right: 12px; display: none; } .task-done .done-icon { display: block; }
@@ -289,27 +263,23 @@
         
         <div id="view-daily" class="view-section active">
             <div class="daily-split-layout">
-                
                 <div class="daily-sidebar">
                     <div class="ds-header">
                         <div class="ds-date-big" id="dsDateBig">--</div>
                         <div class="ds-date-sub" id="dsDateSub">--</div>
                         <div style="font-size:12px; color:var(--text-sec); margin-top:5px;">Toplam <b id="dsCount" style="color:var(--primary)">0</b> Görev</div>
                     </div>
-                    <div class="ds-list" id="dailyTaskList">
-                        </div>
+                    <div class="ds-list" id="dailyTaskList"></div>
                     <div style="padding:15px; border-top:1px solid var(--border);">
                         <button class="btn-primary" style="width:100%; justify-content:center;" onclick="newTaskForSelectedDate()">+ Bu Güne Ekle</button>
                     </div>
                 </div>
-
                 <div class="daily-calendar-area">
                     <div class="cal-controls" style="margin-bottom:20px;">
                         <button class="btn-icon" onclick="navDailyMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                         <span class="cal-title" id="dailyCalTitle"></span>
                         <button class="btn-icon" onclick="navDailyMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
-                    
                     <div class="dc-grid" style="margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:5px;">
                         <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Pt</div>
                         <div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-sec);">Sa</div>
@@ -321,7 +291,6 @@
                     </div>
                     <div class="dc-grid" id="dailyCalGrid"></div>
                 </div>
-
             </div>
         </div>
 
@@ -330,11 +299,7 @@
                 <div class="kanban-main">
                     <div class="toolbar">
                         <div style="font-weight:700; font-size:16px;">İş Panosu</div>
-                        <div class="time-filters">
-                            <button class="tf-btn active" onclick="setTimeFilter('all', this)">Tümü</button>
-                            <button class="tf-btn" onclick="setTimeFilter('week', this)">Hafta</button>
-                            <button class="tf-btn" onclick="setTimeFilter('month', this)">Ay</button>
-                        </div>
+                        <div class="time-filters"><button class="tf-btn active" onclick="setTimeFilter('all', this)">Tümü</button><button class="tf-btn" onclick="setTimeFilter('week', this)">Hafta</button><button class="tf-btn" onclick="setTimeFilter('month', this)">Ay</button></div>
                     </div>
                     <div class="kanban-board">
                         <div class="k-col" id="col-todo"><div class="k-header">BEKLEYEN <span class="badge-count" id="cnt-todo">0</span></div><div class="k-list" id="lst-todo" data-status="todo"></div></div>
@@ -344,7 +309,6 @@
                 </div>
                 <div class="resizer" id="dragMe" style="width:4px;"></div>
                 <div class="cockpit-side" id="rightPanel">
-                    <div class="side-box"><div class="side-head"><span id="sideCalTitle"></span> <i class="fa-regular fa-calendar"></i></div><div class="mini-cal-grid" id="miniCalGrid"></div></div>
                     <div style="flex:1; overflow-y:auto;"><div class="side-head">Son Aktiviteler</div><div class="todo-list-mini" id="sideFeedList"></div></div>
                 </div>
             </div>
@@ -354,10 +318,7 @@
             <div class="list-container">
                 <div class="list-toolbar" style="padding:15px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
                     <span style="font-weight:700; font-size:16px;">Görev Listesi</span>
-                    <select class="f-input" style="width:auto; padding:6px 12px; font-size:12px; margin:0;" onchange="sortList(this.value)">
-                        <option value="date">Tarihe Göre</option>
-                        <option value="topic">Konuya Göre</option>
-                    </select>
+                    <select class="f-input" style="width:auto; padding:6px 12px; font-size:12px; margin:0;" onchange="sortList(this.value)"><option value="date">Tarihe Göre</option><option value="topic">Konuya Göre</option></select>
                 </div>
                 <div class="list-header"><span>KOD</span><span>KONU</span><span>SORUMLU</span><span>DURUM</span><span>TARİH</span></div>
                 <div class="list-body" id="agendaList"></div>
@@ -433,9 +394,7 @@
     const USERS = ["Cengiz GÜLCAN", "Enis BİRCAN", "Çağrı Can DÜNDAR", "HalkfaktoringBT"];
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
     window.allTasks = []; let currentUser = null; let timeFilter = 'all'; let listSortBy = 'date';
-    
-    // TAKVİM VE SEÇİLİ GÜN DEĞİŞKENLERİ
-    let activeDay = new Date(); // Günlük sayfadaki seçili gün
+    let activeDay = new Date();
 
     window.showToast = (msg, type='success') => { const c = document.getElementById('toastContainer'); const t = document.createElement('div'); t.className = 'toast'; t.style.borderLeftColor = type==='error'?'#ef4444':'#10b981'; t.innerHTML = `<span>${msg}</span>`; c.appendChild(t); setTimeout(() => t.remove(), 3000); }
 
@@ -445,8 +404,7 @@
             if (user) {
                 let cleanName = user.email.split('@')[0]; 
                 const foundUser = USERS.find(u => u.toLowerCase().includes(cleanName.toLowerCase()));
-                const displayName = foundUser ? foundUser : cleanName;
-                currentUser = { email: user.email, role: user.email.includes('cengiz') ? 'admin' : 'user', name: displayName };
+                currentUser = { email: user.email, name: foundUser ? foundUser : cleanName };
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('displayUserName').innerText = currentUser.name;
                 listenTasks(); initSortable();
@@ -454,7 +412,7 @@
         });
     }
 
-    window.login = () => { const e = document.getElementById('email').value; const p = document.getElementById('password').value; signInWithEmailAndPassword(auth, e, p).catch(err => { if(err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') createUserWithEmailAndPassword(auth, e, p).then(()=>showToast("İlk giriş: Kayıt yapıldı.")); else document.getElementById('loginError').innerText = "Hata: " + err.message; }); }
+    window.login = () => { const e = document.getElementById('email').value; const p = document.getElementById('password').value; signInWithEmailAndPassword(auth, e, p).catch(err => { if(err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') createUserWithEmailAndPassword(auth, e, p); else document.getElementById('loginError').innerText = err.message; }); }
     window.logout = () => signOut(auth).then(()=>window.location.reload());
 
     function initSelects() {
@@ -477,7 +435,6 @@
     function renderAll() {
         let tasks = [...window.allTasks];
         const now = new Date();
-        // Filtreleme (Kanban için)
         if(timeFilter === 'week') { const start = new Date(now); start.setDate(now.getDate() - now.getDay() + 1); start.setHours(0,0,0,0); tasks = tasks.filter(t => t.date && new Date(t.date) >= start); } 
         else if(timeFilter === 'month') { tasks = tasks.filter(t => t.date && new Date(t.date).getMonth() === now.getMonth()); }
 
@@ -491,103 +448,56 @@
         else renderDashboard(tasks);
     }
 
-    /* --- YENİ GÜNLÜK SAYFA MANTIĞI --- */
+    /* GÜNLÜK SAYFA MANTIĞI */
     function renderDaily(tasks) {
-        // 1. Takvimi Çiz
         const y = activeDay.getFullYear(), m = activeDay.getMonth();
         document.getElementById('dailyCalTitle').innerText = activeDay.toLocaleDateString('tr-TR', {month:'long', year:'numeric'});
-        
         const g = document.getElementById('dailyCalGrid'); g.innerHTML = '';
-        const days = new Date(y, m+1, 0).getDate();
-        const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
-        
+        const days = new Date(y, m+1, 0).getDate(); const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
         for(let i=0; i<offset; i++) g.innerHTML += '<div></div>';
         
         for(let i=1; i<=days; i++) {
             const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
             const dayTasks = tasks.filter(t => t.date === dStr && t.status !== 'done');
-            
-            // Renkli noktalar
-            let dots = '';
-            dayTasks.forEach(t => {
-                let color = t.priority === 'Yüksek' ? 'var(--critical)' : (t.priority === 'Orta' ? 'var(--todo)' : 'var(--done)');
-                dots += `<div class="dc-dot" style="background:${color}"></div>`;
-            });
-            
+            let dots = ''; dayTasks.forEach(t => { let color = t.priority === 'Yüksek' ? 'var(--critical)' : (t.priority === 'Orta' ? 'var(--todo)' : 'var(--done)'); dots += `<div class="dc-dot" style="background:${color}"></div>`; });
             const isSelected = activeDay.getDate() === i && activeDay.getMonth() === m;
-            
-            const div = document.createElement('div');
-            div.className = `dc-cell ${isSelected ? 'selected' : ''}`;
-            div.onclick = () => { activeDay = new Date(y, m, i); renderDaily(tasks); };
+            const div = document.createElement('div'); div.className = `dc-cell ${isSelected ? 'selected' : ''}`; div.onclick = () => { activeDay = new Date(y, m, i); renderDaily(tasks); };
             div.innerHTML = `<div class="dc-day-num">${i}</div><div class="dc-dots">${dots}</div>`;
             g.appendChild(div);
         }
 
-        // 2. Sol Listeyi Güncelle
         const activeStr = `${activeDay.getFullYear()}-${String(activeDay.getMonth()+1).padStart(2,'0')}-${String(activeDay.getDate()).padStart(2,'0')}`;
         document.getElementById('dsDateBig').innerText = activeDay.getDate();
         document.getElementById('dsDateSub').innerText = activeDay.toLocaleDateString('tr-TR', {weekday:'long', month:'long'});
-        
         const selectedTasks = tasks.filter(t => t.date === activeStr);
         document.getElementById('dsCount').innerText = selectedTasks.length;
-        
         const listEl = document.getElementById('dailyTaskList'); listEl.innerHTML = '';
         if(selectedTasks.length === 0) listEl.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-sec);">Bugün için görev yok.</div>';
-        
         selectedTasks.forEach(t => {
             const isDone = t.status === 'done';
-            listEl.innerHTML += `
-            <div class="d-task p-${t.priority}" onclick="openModal('${t.id}')" style="opacity:${isDone?0.6:1}">
-                <div class="dt-top">
-                    <span class="dt-title" style="text-decoration:${isDone?'line-through':''}">${t.title}</span>
-                    <span class="dt-badge">${t.priority}</span>
-                </div>
-                <div class="dt-desc">${t.desc||''}</div>
-                <div style="font-size:10px; color:var(--text-sec); margin-top:5px; display:flex; gap:10px;">
-                    <span><i class="fa-solid fa-user"></i> ${t.assignee?t.assignee.split(' ')[0]:'-'}</span>
-                    <span>${t.status}</span>
-                </div>
-            </div>`;
+            listEl.innerHTML += `<div class="d-task p-${t.priority}" onclick="openModal('${t.id}')" style="opacity:${isDone?0.6:1}"><div class="dt-top"><span class="dt-title" style="text-decoration:${isDone?'line-through':''}">${t.title}</span><span class="dt-badge">${t.priority}</span></div><div class="dt-desc">${t.desc||''}</div><div style="font-size:10px; color:var(--text-sec); margin-top:5px; display:flex; gap:10px;"><span><i class="fa-solid fa-user"></i> ${t.assignee?t.assignee.split(' ')[0]:'-'}</span><span>${t.status}</span></div></div>`;
         });
     }
 
     window.navDailyMonth = (d) => { activeDay.setMonth(activeDay.getMonth()+d); renderAll(); }
     window.newTaskForSelectedDate = () => { 
         document.getElementById('tId').value = ''; document.getElementById('tTitle').value = ''; 
-        // Takvimdeki seçili tarihi ata
         const dateStr = `${activeDay.getFullYear()}-${String(activeDay.getMonth()+1).padStart(2,'0')}-${String(activeDay.getDate()).padStart(2,'0')}`;
-        document.getElementById('tDate').value = dateStr;
-        document.getElementById('modal').classList.add('show'); 
+        document.getElementById('tDate').value = dateStr; document.getElementById('modal').classList.add('show'); 
     }
-    /* ------------------------------ */
 
     function renderKanban(tasks) {
         const cols = { todo: document.getElementById('lst-todo'), progress: document.getElementById('lst-progress'), done: document.getElementById('lst-done') };
         Object.values(cols).forEach(c => c.innerHTML = '');
         const counts = { todo:0, progress:0, done:0 };
-
         tasks.forEach(t => {
             if(cols[t.status]) {
                 counts[t.status]++;
                 const isDone = t.status === 'done';
-                const div = document.createElement('div');
-                div.className = `task-card p-${t.priority} ${isDone?'task-done':''}`;
-                div.setAttribute('data-id', t.id);
-                div.onclick = () => openModal(t.id);
-                
+                const div = document.createElement('div'); div.className = `task-card p-${t.priority} ${isDone?'task-done':''}`; div.setAttribute('data-id', t.id); div.onclick = () => openModal(t.id);
                 const doneIcon = isDone ? '<i class="fa-solid fa-check-circle done-icon"></i>' : '';
-                let uName = t.assignee ? t.assignee.split(' ')[0] : '?';
-                if(t.assignee && t.assignee.split(' ').length > 1) uName += ' ' + t.assignee.split(' ')[1][0] + '.';
-
-                div.innerHTML = `
-                    <div class="c-top"><span class="c-id">${t.code}</span>${doneIcon}</div>
-                    <div class="c-title">${t.title}</div>
-                    <div class="c-desc">${t.desc||''}</div>
-                    <div class="c-meta">
-                        <div class="c-assignee"><div class="c-avatar">${uName[0]}</div> ${uName}</div>
-                        <div class="c-date">${t.date ? new Date(t.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}) : ''}</div>
-                    </div>
-                `;
+                let uName = t.assignee ? t.assignee.split(' ')[0] : '?'; if(t.assignee && t.assignee.split(' ').length > 1) uName += ' ' + t.assignee.split(' ')[1][0] + '.';
+                div.innerHTML = `<div class="c-top"><span class="c-id">${t.code}</span>${doneIcon}</div><div class="c-title">${t.title}</div><div class="c-desc">${t.desc||''}</div><div class="c-meta"><div class="c-assignee"><div class="c-avatar">${uName[0]}</div> ${uName}</div><div class="c-date">${t.date ? new Date(t.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'}) : ''}</div></div>`;
                 cols[t.status].appendChild(div);
             }
         });
@@ -595,31 +505,15 @@
     }
 
     function renderSide(tasks) {
-        const grid = document.getElementById('miniCalGrid'); grid.innerHTML=''; const now = new Date(); document.getElementById('sideCalTitle').innerText = now.toLocaleDateString('tr-TR',{month:'long'});
-        const y = now.getFullYear(), m = now.getMonth(); const days = new Date(y, m+1, 0).getDate(); const offset = new Date(y, m, 1).getDay() === 0 ? 6 : new Date(y, m, 1).getDay() - 1;
-        for(let i=0; i<offset; i++) grid.innerHTML += '<div></div>';
-        for(let i=1; i<=days; i++) { 
-            const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`; const dayTasks = tasks.filter(t => t.date === dStr);
-            grid.innerHTML += `<div class="mc-cell ${i===now.getDate()?'today':''} ${dayTasks.some(t=>t.status==='todo')?'day-has-todo':''}">${i}</div>`; 
-        }
         const list = document.getElementById('sideFeedList'); list.innerHTML = '';
         const feed = tasks.filter(t => t.status !== 'done').sort((a,b) => (new Date(a.date||'2099') - new Date(b.date||'2099'))).slice(0,8);
-        feed.forEach(t => {
-            const statusClass = t.status === 'todo' ? 's-todo' : 's-prog';
-            list.innerHTML += `<div class="feed-item ${statusClass}" onclick="openModal('${t.id}')"><div class="feed-title">${t.title}</div><div class="feed-date">${t.date || 'Tarihsiz'}</div><div class="feed-desc">${t.desc||''}</div></div>`;
-        });
+        feed.forEach(t => { const statusClass = t.status === 'todo' ? 's-todo' : 's-prog'; list.innerHTML += `<div class="feed-item ${statusClass}" onclick="openModal('${t.id}')"><div class="feed-title">${t.title}</div><div class="feed-date">${t.date || 'Tarihsiz'}</div><div class="feed-desc">${t.desc||''}</div></div>`; });
     }
 
     function renderList(tasks) {
         const con = document.getElementById('agendaList'); con.innerHTML = '';
-        tasks.sort((a,b) => {
-            if(listSortBy === 'date') return new Date(a.date||'2099') - new Date(b.date||'2099');
-            return a.title.localeCompare(b.title);
-        });
-        tasks.forEach(t => {
-            const stText = t.status==='done'?'Bitti':(t.status==='progress'?'İşlemde':'Bekliyor');
-            con.innerHTML += `<div class="list-row" onclick="openModal('${t.id}')"><span class="l-code">${t.code}</span><span class="l-title">${t.title}</span><span class="l-user">${t.assignee?t.assignee.split(' ')[0]:'-'}</span><span class="l-badge ${t.status==='done'?'s-done':(t.status==='progress'?'s-prog':'s-todo')}">${stText}</span><span class="l-date">${t.date||''}</span></div>`;
-        });
+        tasks.sort((a,b) => { if(listSortBy === 'date') return new Date(a.date||'2099') - new Date(b.date||'2099'); return a.title.localeCompare(b.title); });
+        tasks.forEach(t => { const stText = t.status==='done'?'Bitti':(t.status==='progress'?'İşlemde':'Bekliyor'); con.innerHTML += `<div class="list-row" onclick="openModal('${t.id}')"><span class="l-code">${t.code}</span><span class="l-title">${t.title}</span><span class="l-user">${t.assignee?t.assignee.split(' ')[0]:'-'}</span><span class="l-badge ${t.status==='done'?'s-done':(t.status==='progress'?'s-prog':'s-todo')}">${stText}</span><span class="l-date">${t.date||''}</span></div>`; });
     }
 
     function renderDashboard(tasks) {
