@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
     <title>Halk Faktoring | BT Yönetim</title>
     
-    <meta name="theme-color" content="#0f172a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" type="image/png" href="logo.png">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,431 +18,354 @@
     
     <style>
         :root {
-            /* KURUMSAL RENK PALETİ (CLEAN & SHARP) */
-            --bg-body: #F3F4F6;       /* Açık Gri Zemin */
-            --sidebar-bg: #0F172A;    /* Koyu Lacivert Sidebar */
-            --sidebar-text: #94A3B8;
-            --sidebar-active: #3B82F6;
+            /* KURUMSAL RENK PALETİ */
+            --bg-body: #F8FAFC;       /* Çok açık gri arka plan */
+            --bg-sidebar: #FFFFFF;    /* Beyaz Sidebar */
+            --bg-card: #FFFFFF;       /* Beyaz Kartlar */
             
-            --card-bg: #FFFFFF;
-            --border-color: #E5E7EB;
+            --primary: #0065B3;       /* Halk Faktoring Mavisi */
+            --primary-light: #E0F2FE;
+            --secondary: #64748B;     /* Gri Metinler */
             
-            --text-primary: #111827;
-            --text-secondary: #6B7280;
+            --text-main: #0F172A;
+            --text-muted: #94A3B8;
             
-            --primary: #2563EB;       /* Ana Aksiyon Rengi */
-            --primary-hover: #1D4ED8;
+            --border: #E2E8F0;
+            --radius: 12px;
             
             /* Durum Renkleri */
-            --tag-critical-bg: #FEF2F2; --tag-critical-text: #DC2626;
-            --tag-high-bg: #FFF7ED;     --tag-high-text: #EA580C;
-            --tag-norm-bg: #EFF6FF;     --tag-norm-text: #2563EB;
-            --tag-done-bg: #F0FDF4;     --tag-done-text: #16A34A;
-
-            --radius: 12px;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --danger: #EF4444; 
+            --warning: #F59E0B;
+            --success: #10B981;
             
-            --header-h: 64px;
+            --header-h: 70px;
             --sidebar-w: 260px;
             --bottom-nav-h: 70px;
         }
 
         [data-theme="dark"] {
-            --bg-body: #0B1120;
-            --sidebar-bg: #020617;
-            --card-bg: #1E293B;
-            --border-color: #334155;
-            --text-primary: #F9FAFB;
-            --text-secondary: #94A3B8;
+            --bg-body: #0F172A;
+            --bg-sidebar: #1E293B;
+            --bg-card: #1E293B;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #334155;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-primary); height: 100vh; overflow: hidden; display: flex; transition: background 0.3s; }
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); height: 100vh; overflow: hidden; display: flex; }
 
-        /* --- SIDEBAR (DESKTOP) --- */
+        /* --- SIDEBAR (SOL MENÜ) --- */
         .sidebar {
-            width: var(--sidebar-w); background: var(--sidebar-bg);
-            display: flex; flex-direction: column; flex-shrink: 0;
-            transition: 0.3s; z-index: 50;
+            width: var(--sidebar-w); background: var(--bg-sidebar); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; z-index: 50; transition: transform 0.3s ease;
         }
         .logo-area {
             height: var(--header-h); display: flex; align-items: center; padding: 0 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            color: #fff; font-weight: 700; font-size: 18px; letter-spacing: -0.5px; gap: 10px;
+            font-weight: 800; font-size: 20px; color: var(--primary); border-bottom: 1px solid var(--border);
+            gap: 12px;
         }
-        .nav-menu { flex: 1; padding: 20px 12px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+        .logo-area i { font-size: 24px; }
+        
+        .nav-links { flex: 1; padding: 20px 12px; display: flex; flex-direction: column; gap: 5px; overflow-y: auto; }
         .nav-item {
             display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-            color: var(--sidebar-text); font-size: 14px; font-weight: 500;
+            color: var(--secondary); font-weight: 500; font-size: 14px;
             border-radius: 8px; cursor: pointer; transition: 0.2s;
         }
-        .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
-        .nav-item.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .nav-item:hover { background: var(--bg-body); color: var(--primary); }
+        .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
         .nav-item i { width: 20px; text-align: center; font-size: 16px; }
 
         .user-profile {
-            padding: 20px; border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; gap: 12px; color: #fff;
+            padding: 20px; border-top: 1px solid var(--border);
+            display: flex; align-items: center; gap: 12px;
         }
-        .avatar { width: 36px; height: 36px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; }
-        .u-det h4 { margin: 0; font-size: 14px; } .u-det p { margin: 0; font-size: 11px; color: var(--sidebar-text); }
-
+        .avatar { width: 40px; height: 40px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+        
         /* --- MAIN CONTENT --- */
-        .main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         
         .topbar {
-            height: var(--header-h); background: var(--card-bg); border-bottom: 1px solid var(--border-color);
+            height: var(--header-h); background: var(--bg-card); border-bottom: 1px solid var(--border);
             display: flex; align-items: center; justify-content: space-between; padding: 0 30px;
-            flex-shrink: 0;
         }
-        .page-header h1 { margin: 0; font-size: 20px; font-weight: 700; color: var(--text-primary); }
-        .page-header p { margin: 0; font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+        .page-title h1 { margin: 0; font-size: 20px; font-weight: 700; }
+        .page-title p { margin: 0; font-size: 12px; color: var(--text-muted); }
         
-        .top-actions { display: flex; gap: 12px; }
-        .icon-btn {
-            width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border-color);
-            background: var(--card-bg); color: var(--text-secondary);
-            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+        .action-btn {
+            width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text-muted); display: flex; align-items: center;
+            justify-content: center; cursor: pointer; transition: 0.2s;
         }
-        .icon-btn:hover { background: var(--bg-body); color: var(--text-primary); }
+        .action-btn:hover { border-color: var(--primary); color: var(--primary); }
         
         .btn-primary {
-            background: var(--primary); color: #fff; border: none; padding: 0 20px; height: 40px;
-            border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; transition: 0.2s;
-            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2);
+            background: var(--primary); color: #fff; border: none; padding: 0 24px; height: 40px;
+            border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex;
+            align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 10px rgba(0, 101, 179, 0.2);
         }
-        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+        .btn-primary:hover { background: #005091; transform: translateY(-1px); }
 
-        /* --- VIEW AREA --- */
-        .content-scroll { flex: 1; overflow-y: auto; padding: 30px; }
-        .view-section { display: none; animation: fadein 0.3s; }
-        .view-section.active { display: block; }
-        @keyframes fadein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* --- VIEWS --- */
+        .view-container { flex: 1; overflow-y: auto; padding: 24px; display: none; }
+        .view-container.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- DASHBOARD GRID --- */
-        .grid-dashboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 24px; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); }
+        /* --- DASHBOARD & CALENDAR LAYOUT --- */
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; height: 100%; }
         
-        .stat-card { display: flex; flex-direction: column; gap: 8px; }
-        .stat-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 8px; }
-        .stat-val { font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1; }
-        .stat-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
-
-        /* --- GÜNLÜK (DAILY) LAYOUT --- */
-        .daily-wrapper { display: grid; grid-template-columns: 350px 1fr; gap: 24px; height: calc(100vh - 160px); }
-        .daily-col { display: flex; flex-direction: column; gap: 20px; height: 100%; overflow: hidden; }
+        /* Büyük Takvim Kartı */
+        .calendar-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 24px; display: flex; flex-direction: column; height: 100%;
+        }
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .cal-nav { display: flex; gap: 8px; }
         
-        /* Modern Takvim */
-        .calendar-widget { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; }
-        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .cal-title { font-weight: 700; font-size: 16px; }
-        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-        .cal-head { text-align: center; font-size: 11px; font-weight: 600; color: var(--text-secondary); padding: 8px 0; }
-        .cal-cell { 
-            height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s; position: relative;
-            color: var(--text-primary);
-        }
-        .cal-cell:hover { background: var(--bg-body); }
-        .cal-cell.today { background: var(--primary); color: #fff; font-weight: 700; box-shadow: 0 4px 10px rgba(37,99,235,0.3); }
-        .cal-cell.has-task::after { content:''; width: 4px; height: 4px; background: #EA580C; border-radius: 50%; position: absolute; bottom: 4px; }
-        .cal-cell.today.has-task::after { background: #fff; }
-
-        /* Günlük Liste */
-        .task-list-wrapper { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 5px; }
-        .daily-task-item {
-            display: flex; gap: 16px; padding: 16px; 
-            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius);
-            cursor: pointer; transition: 0.2s; align-items: center;
-        }
-        .daily-task-item:hover { transform: translateX(4px); border-color: var(--primary); }
-        .dti-time { font-size: 14px; font-weight: 700; color: var(--text-secondary); min-width: 50px; }
-        .dti-content { flex: 1; }
-        .dti-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
-        .dti-sub { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-        .dti-status { font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; text-transform: uppercase; }
-
-        /* --- KANBAN --- */
-        .kanban-container { display: flex; gap: 24px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
-        .kanban-col { 
-            min-width: 320px; width: 320px; display: flex; flex-direction: column; 
-            background: #F8FAFC; border-radius: 16px; border: 1px solid var(--border-color); height: 100%;
-        }
-        [data-theme="dark"] .kanban-col { background: #1E293B; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; flex: 1; }
+        .cal-head { text-align: center; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; padding-bottom: 10px; }
         
-        .kc-header { padding: 16px; font-weight: 700; font-size: 13px; color: var(--text-secondary); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; }
-        .kc-body { padding: 12px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-        
-        .kanban-card { 
-            background: var(--card-bg); padding: 16px; border-radius: 8px; 
-            border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); 
-            cursor: grab; transition: 0.2s; position: relative;
+        .cal-day {
+            border: 1px solid var(--border); border-radius: 8px; cursor: pointer;
+            display: flex; flex-direction: column; padding: 8px; transition: 0.2s;
+            position: relative; min-height: 80px; background: var(--bg-body);
         }
-        .kanban-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--primary); }
-        .kanban-card::before { content:''; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 0 4px 4px 0; background: #ccc; }
-        .kc-p-Yüksek::before { background: #EF4444; } .kc-p-Orta::before { background: #F97316; } .kc-p-Düşük::before { background: #10B981; }
+        .cal-day:hover { border-color: var(--primary); background: #fff; }
+        .cal-day.selected { border: 2px solid var(--primary); background: #fff; }
+        .cal-day.today { background: var(--primary-light); color: var(--primary); font-weight: 700; border-color: var(--primary-light); }
+        .cal-num { font-size: 14px; margin-bottom: 4px; }
         
-        .k-tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; background: var(--bg-body); color: var(--text-secondary); border: 1px solid var(--border-color); display: inline-block; margin-bottom: 8px; }
-        .k-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; }
-        .k-footer { display: flex; justify-content: space-between; margin-top: 12px; font-size: 11px; color: var(--text-secondary); align-items: center; }
+        .task-dots { display: flex; gap: 4px; flex-wrap: wrap; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot.Yüksek { background: var(--danger); }
+        .dot.Orta { background: var(--warning); }
+        .dot.Düşük { background: var(--success); }
 
-        /* --- MODAL (BOTTOM SHEET ON MOBILE) --- */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
-        .modal.show { display: flex; opacity: 1; }
-        .modal-content { 
-            background: var(--card-bg); width: 500px; padding: 30px; 
-            border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); 
-            transform: scale(0.95); transition: transform 0.3s;
+        /* Sağ Panel (Seçili Gün Listesi) */
+        .side-panel {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 24px; display: flex; flex-direction: column; height: 100%;
         }
-        .modal.show .modal-content { transform: scale(1); }
+        .selected-date-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; color: var(--primary); }
+        .selected-date-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
         
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
-        .form-input { 
-            width: 100%; padding: 12px; border: 1px solid var(--border-color); 
-            border-radius: 8px; background: var(--bg-body); color: var(--text-primary); 
-            font-size: 14px; font-family: inherit; transition: 0.2s; 
+        .task-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+        .task-item {
+            padding: 16px; border: 1px solid var(--border); border-radius: 8px;
+            background: #fff; cursor: pointer; transition: 0.2s; border-left: 4px solid transparent;
         }
-        .form-input:focus { border-color: var(--primary); background: var(--card-bg); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .task-item:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .task-item.p-Yüksek { border-left-color: var(--danger); }
+        .task-item.p-Orta { border-left-color: var(--warning); }
+        .task-item.p-Düşük { border-left-color: var(--success); }
+        
+        .ti-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+        .ti-desc { font-size: 12px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .ti-meta { display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: var(--text-muted); font-weight: 500; }
 
-        /* --- MOBILE BOTTOM NAV --- */
+        /* --- KANBAN VIEW --- */
+        .kanban-board { display: flex; gap: 24px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
+        .kanban-col { min-width: 320px; background: var(--bg-body); border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .kc-head { padding: 16px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--border); background: var(--bg-card); border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; }
+        .kc-body { padding: 12px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+        
+        .k-card { background: var(--bg-card); padding: 16px; border-radius: 8px; border: 1px solid var(--border); cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .k-tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--bg-body); font-weight: 700; border: 1px solid var(--border); display: inline-block; margin-bottom: 8px; }
+
+        /* --- MODAL --- */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal.show { display: flex; animation: fadeModal 0.2s ease; }
+        @keyframes fadeModal { from { opacity: 0; } to { opacity: 1; } }
+        
+        .modal-box { background: var(--bg-card); width: 500px; border-radius: 16px; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .form-group { margin-bottom: 16px; }
+        .form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--secondary); }
+        .form-input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-body); color: var(--text-main); font-family: inherit; }
+        
+        /* MOBİL ALT MENÜ */
         .bottom-nav { display: none; }
 
-        /* --- RESPONSIVE CSS --- */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .sidebar { display: none; } /* Desktop menüyü gizle */
+            .sidebar { display: none; }
             .topbar { padding: 0 16px; }
-            .content-scroll { padding: 16px; padding-bottom: 100px; } /* Alt menü payı */
+            .view-container { padding: 16px; padding-bottom: 90px; }
             
-            /* Mobil Alt Menü */
+            /* Dashboard Mobile: Stack Layout */
+            .dashboard-grid { grid-template-columns: 1fr; display: flex; flex-direction: column; height: auto; }
+            .calendar-card { height: auto; padding: 16px; }
+            .cal-day { min-height: 50px; }
+            .side-panel { height: auto; min-height: 300px; }
+            
+            /* Kanban Mobile */
+            .kanban-board { padding-right: 16px; scroll-snap-type: x mandatory; }
+            .kanban-col { min-width: 85vw; scroll-snap-align: center; }
+            
+            /* Bottom Nav */
             .bottom-nav {
-                display: flex; position: fixed; bottom: 0; left: 0; width: 100%;
-                height: var(--bottom-nav-height); background: var(--card-bg);
-                border-top: 1px solid var(--border-color); z-index: 100;
-                justify-content: space-around; align-items: center;
-                padding-bottom: env(safe-area-inset-bottom);
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+                display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: var(--bottom-nav-height);
+                background: var(--bg-card); border-top: 1px solid var(--border); z-index: 100;
+                justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom);
             }
-            .bn-item {
-                display: flex; flex-direction: column; align-items: center; gap: 4px;
-                color: var(--text-secondary); font-size: 10px; font-weight: 600;
-                background: none; border: none; width: 60px;
-            }
+            .bn-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 10px; border: none; background: none; gap: 4px; }
+            .bn-item.active { color: var(--primary); font-weight: 600; }
             .bn-item i { font-size: 20px; }
-            .bn-item.active { color: var(--primary); }
             
-            /* Gridler Mobilde Tek Kolon */
-            .grid-dashboard { grid-template-columns: 1fr 1fr; gap: 12px; }
-            .daily-wrapper { grid-template-columns: 1fr; display: flex; flex-direction: column; gap: 20px; }
-            
-            /* Takvim Mobilde Üstte */
-            .daily-col:first-child { height: auto; }
-            .daily-col:last-child { flex: 1; }
-            
-            /* Kanban Yatay Kaydırma */
-            .kanban-container { 
-                padding-right: 16px; scroll-snap-type: x mandatory; 
-                gap: 16px; 
-            }
-            .kanban-col { 
-                min-width: 85vw; /* Ekrana otursun */
-                scroll-snap-align: center;
-            }
-            
-            /* Modal Bottom Sheet */
-            .modal { align-items: flex-end; }
-            .modal-content { 
-                width: 100%; border-radius: 24px 24px 0 0; 
-                padding: 24px; max-height: 90vh; overflow-y: auto;
-                animation: slideUp 0.3s ease-out;
-            }
-            @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+            .modal-box { width: 100%; height: 100%; max-height: 100vh; border-radius: 0; }
         }
     </style>
 </head>
 <body onload="initApp()">
 
 <div id="loginOverlay" style="position:fixed; inset:0; background:var(--bg-body); z-index:2000; display:flex; align-items:center; justify-content:center;">
-    <div style="background:var(--card-bg); padding:40px; border-radius:24px; border:1px solid var(--border-color); width:90%; max-width:360px; text-align:center; box-shadow:var(--shadow-md);">
-        <img src="logo.png" style="width:64px; margin-bottom:24px;">
-        <h2 style="margin:0 0 8px 0; color:var(--text-primary); font-size:22px;">BT Portal</h2>
-        <p style="color:var(--text-secondary); font-size:14px; margin-bottom:32px;">Halk Faktoring A.Ş.</p>
-        <div style="text-align:left; display:flex; flex-direction:column; gap:16px;">
-            <input type="email" id="email" class="form-input" placeholder="E-posta Adresi">
-            <input type="password" id="password" class="form-input" placeholder="Şifre">
-        </div>
-        <button class="btn-primary" style="width:100%; justify-content:center; margin-top:24px; height:48px;" onclick="login()">Giriş Yap</button>
-        <div id="loginError" style="color:red; margin-top:16px; font-size:13px;"></div>
+    <div style="background:var(--bg-card); padding:40px; border-radius:16px; border:1px solid var(--border); width:90%; max-width:350px; text-align:center;">
+        <img src="logo.png" style="width:60px; margin-bottom:20px;">
+        <h2 style="margin:0 0 10px 0; color:var(--primary);">Halk Faktoring</h2>
+        <p style="color:var(--text-muted); font-size:14px; margin-bottom:24px;">BT Yönetim Portalı</p>
+        <input type="email" id="email" class="form-input" placeholder="E-posta" style="margin-bottom:12px;">
+        <input type="password" id="password" class="form-input" placeholder="Şifre" style="margin-bottom:24px;">
+        <button class="btn-primary" style="width:100%; justify-content:center; height:44px;" onclick="login()">Giriş Yap</button>
     </div>
 </div>
 
 <nav class="sidebar">
-    <div class="logo-area">
-        <img src="logo.png" style="width:24px; filter:brightness(0) invert(1);">
-        <span>HALK BT</span>
-    </div>
-    <div class="nav-menu">
-        <div class="nav-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Özet</div>
-        <div class="nav-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> Pano</div>
-        <div class="nav-item" onclick="showView('daily', this)"><i class="fa-solid fa-calendar-day"></i> Günlük</div>
-        <div class="nav-item" onclick="showView('list', this)"><i class="fa-solid fa-list"></i> Liste</div>
+    <div class="logo-area"><i class="fa-solid fa-cube"></i> BT PORTAL</div>
+    <div class="nav-links">
+        <div class="nav-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-calendar-check"></i> Ajanda & Pano</div>
+        <div class="nav-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> Kanban Tahtası</div>
+        <div class="nav-item" onclick="showView('list', this)"><i class="fa-solid fa-list-check"></i> Tüm Liste</div>
+        <div class="nav-item" onclick="showView('reports', this)"><i class="fa-solid fa-chart-line"></i> Raporlar</div>
     </div>
     <div class="user-profile">
         <div class="avatar">CK</div>
-        <div class="u-det">
-            <h4 id="uName">Kullanıcı</h4>
-            <p>BT Yönetici</p>
+        <div style="flex:1;">
+            <div style="font-size:14px; font-weight:600;">Cengiz K.</div>
+            <div style="font-size:11px; color:var(--text-muted);">Yönetici</div>
         </div>
-        <i class="fa-solid fa-power-off" style="margin-left:auto; cursor:pointer;" onclick="logout()"></i>
+        <i class="fa-solid fa-right-from-bracket" style="cursor:pointer; color:var(--text-muted);" onclick="logout()"></i>
     </div>
 </nav>
 
-<div class="main-wrapper">
+<div class="main-content">
     
     <div class="topbar">
-        <div class="page-header">
-            <h1 id="pageTitle">Genel Bakış</h1>
-            <p id="todayDate">12 Aralık 2025</p>
+        <div class="page-title">
+            <h1 id="pageHeader">Yönetim Paneli</h1>
+            <p id="currentDate">--</p>
         </div>
-        <div class="top-actions">
-            <div class="icon-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></div>
+        <div style="display:flex; gap:12px;">
+            <div class="action-btn" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></div>
             <button class="btn-primary" onclick="newTask()">
-                <i class="fa-solid fa-plus"></i> <span>Yeni Görev</span>
+                <i class="fa-solid fa-plus"></i> <span style="display:none; display:md-block;">Yeni Görev</span>
             </button>
         </div>
     </div>
 
-    <div class="content-scroll">
-        
-        <div id="view-dashboard" class="view-section active">
-            <div class="grid-dashboard">
-                <div class="card stat-card">
-                    <div class="stat-icon" style="background:#EFF6FF; color:#2563EB"><i class="fa-solid fa-folder-open"></i></div>
-                    <div class="stat-val" id="dTotal">0</div>
-                    <div class="stat-label">Toplam Görev</div>
-                </div>
-                <div class="card stat-card">
-                    <div class="stat-icon" style="background:#FFF7ED; color:#EA580C"><i class="fa-solid fa-clock"></i></div>
-                    <div class="stat-val" id="dTodo">0</div>
-                    <div class="stat-label">Bekleyen</div>
-                </div>
-                <div class="card stat-card">
-                    <div class="stat-icon" style="background:#F0FDF4; color:#16A34A"><i class="fa-solid fa-spinner"></i></div>
-                    <div class="stat-val" id="dProg">0</div>
-                    <div class="stat-label">İşlemde</div>
-                </div>
-                <div class="card stat-card">
-                    <div class="stat-icon" style="background:#F5F3FF; color:#7C3AED"><i class="fa-solid fa-check-circle"></i></div>
-                    <div class="stat-val" id="dDone">0</div>
-                    <div class="stat-label">Tamamlanan</div>
-                </div>
-            </div>
-            
-            <div style="display:grid; grid-template-columns: 2fr 1fr; gap:24px;">
-                <div class="card" style="height:350px;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                        <span style="font-weight:700;">Haftalık Performans</span>
-                        <div class="icon-btn" onclick="exportExcel()" style="width:32px; height:32px;"><i class="fa-solid fa-download"></i></div>
-                    </div>
-                    <canvas id="chartStatus"></canvas>
-                </div>
-                <div class="card" id="dashCalendar">
-                    </div>
-            </div>
-        </div>
-
-        <div id="view-kanban" class="view-section" style="height:100%;">
-            <div class="kanban-container">
-                <div class="kanban-col">
-                    <div class="kc-header">YAPILACAKLAR <span id="k-todo-cnt">0</span></div>
-                    <div class="kc-body" id="col-todo" data-status="todo"></div>
-                </div>
-                <div class="kanban-col">
-                    <div class="kc-header" style="color:#2563EB;">İŞLEMDE <span id="k-prog-cnt">0</span></div>
-                    <div class="kc-body" id="col-progress" data-status="progress"></div>
-                </div>
-                <div class="kanban-col">
-                    <div class="kc-header" style="color:#16A34A;">TAMAMLANDI <span id="k-done-cnt">0</span></div>
-                    <div class="kc-body" id="col-done" data-status="done"></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="view-daily" class="view-section" style="height:100%;">
-            <div class="daily-wrapper">
-                <div class="daily-col" style="flex:0 0 auto;">
-                    <div class="calendar-widget">
-                        <div class="cal-header">
-                            <div class="icon-btn" onclick="navCal(-1)"><i class="fa-solid fa-chevron-left"></i></div>
-                            <div class="cal-title" id="calTitle">Aralık 2025</div>
-                            <div class="icon-btn" onclick="navCal(1)"><i class="fa-solid fa-chevron-right"></i></div>
-                        </div>
-                        <div class="cal-grid">
-                            <div class="cal-head">Pt</div><div class="cal-head">Sa</div><div class="cal-head">Ça</div>
-                            <div class="cal-head">Pe</div><div class="cal-head">Cu</div><div class="cal-head" style="color:#ef4444">Ct</div><div class="cal-head" style="color:#ef4444">Pa</div>
-                        </div>
-                        <div class="cal-grid" id="mainCalendar" style="margin-top:8px;"></div>
-                    </div>
-                    
-                    <div class="card" style="padding:20px;">
-                        <h4 style="margin:0 0 10px 0; font-size:14px;">Günün Özeti</h4>
-                        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;">
-                            <span style="color:var(--text-secondary);">Planlanan İş:</span>
-                            <span style="font-weight:700;" id="dayTotal">0</span>
-                        </div>
-                        <button class="btn-primary" style="width:100%; margin-top:15px; justify-content:center;" onclick="newTaskForDate()">+ Bu Güne Ekle</button>
+    <div id="view-dashboard" class="view-container active">
+        <div class="dashboard-grid">
+            <div class="calendar-card">
+                <div class="cal-header">
+                    <h3 class="cal-title" style="margin:0; font-size:18px;" id="calTitle">--</h3>
+                    <div class="cal-nav">
+                        <div class="action-btn" style="width:32px; height:32px;" onclick="navCal(-1)"><i class="fa-solid fa-chevron-left"></i></div>
+                        <div class="action-btn" style="width:32px; height:32px;" onclick="navCal(1)"><i class="fa-solid fa-chevron-right"></i></div>
                     </div>
                 </div>
-
-                <div class="daily-col">
-                    <h3 style="margin:0; font-size:18px;">Seçili Tarih: <span id="selectedDateDisp" style="color:var(--primary);">Bugün</span></h3>
-                    <div class="task-list-wrapper" id="dailyTaskList"></div>
+                <div class="cal-grid" style="margin-bottom:8px;">
+                    <div class="cal-head">Pt</div><div class="cal-head">Sa</div><div class="cal-head">Ça</div><div class="cal-head">Pe</div><div class="cal-head">Cu</div><div class="cal-head" style="color:var(--danger)">Ct</div><div class="cal-head" style="color:var(--danger)">Pa</div>
                 </div>
+                <div class="cal-grid" id="mainCalendar"></div>
+            </div>
+
+            <div class="side-panel">
+                <div>
+                    <div class="selected-date-title" id="selDateTitle">Bugün</div>
+                    <div class="selected-date-sub" id="selDateSub">--</div>
+                </div>
+                <div class="task-list" id="selectedDayList"></div>
+                <button class="btn-primary" style="width:100%; justify-content:center; margin-top:16px;" onclick="newTaskForDate()">+ Bu Güne Ekle</button>
             </div>
         </div>
-
-        <div id="view-list" class="view-section">
-            <div class="card" style="padding:0; overflow:hidden;">
-                <div style="padding:20px; border-bottom:1px solid var(--border-color); display:flex; gap:12px;">
-                    <input type="text" id="searchInput" placeholder="Görev ara..." class="form-input" style="width:250px;">
-                    <select class="form-input" style="width:150px;" onchange="renderList(this.value)">
-                        <option value="all">Tümü</option>
-                        <option value="todo">Bekleyen</option>
-                        <option value="done">Biten</option>
-                    </select>
-                </div>
-                <div id="fullListContainer" style="max-height:600px; overflow-y:auto;"></div>
-            </div>
-        </div>
-
     </div>
+
+    <div id="view-kanban" class="view-container">
+        <div class="kanban-board">
+            <div class="kanban-col">
+                <div class="kc-head">YAPILACAKLAR <span id="cnt-todo">0</span></div>
+                <div class="kc-body" id="col-todo" data-status="todo"></div>
+            </div>
+            <div class="kanban-col">
+                <div class="kc-head" style="color:var(--primary)">İŞLEMDE <span id="cnt-prog">0</span></div>
+                <div class="kc-body" id="col-progress" data-status="progress"></div>
+            </div>
+            <div class="kanban-col">
+                <div class="kc-head" style="color:var(--success)">TAMAMLANDI <span id="cnt-done">0</span></div>
+                <div class="kc-body" id="col-done" data-status="done"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-list" class="view-container">
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:20px;">
+            <div style="display:flex; gap:12px; margin-bottom:20px;">
+                <input type="text" id="searchInp" class="form-input" placeholder="Görev ara..." onkeyup="renderList()">
+                <select id="filterStatus" class="form-input" style="width:150px;" onchange="renderList()">
+                    <option value="all">Tümü</option>
+                    <option value="todo">Bekleyen</option>
+                    <option value="done">Biten</option>
+                </select>
+            </div>
+            <div id="fullList" style="display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+    </div>
+
+    <div id="view-reports" class="view-container">
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:24px;">
+            <div style="background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); text-align:center;">
+                <div style="font-size:24px; font-weight:700;" id="statTotal">0</div>
+                <div style="font-size:12px; color:var(--text-muted);">Toplam</div>
+            </div>
+            <div style="background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); text-align:center;">
+                <div style="font-size:24px; font-weight:700; color:var(--warning);" id="statTodo">0</div>
+                <div style="font-size:12px; color:var(--text-muted);">Bekleyen</div>
+            </div>
+            <div style="background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); text-align:center;">
+                <div style="font-size:24px; font-weight:700; color:var(--primary);" id="statProg">0</div>
+                <div style="font-size:12px; color:var(--text-muted);">İşlemde</div>
+            </div>
+            <div style="background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); text-align:center;">
+                <div style="font-size:24px; font-weight:700; color:var(--success);" id="statDone">0</div>
+                <div style="font-size:12px; color:var(--text-muted);">Biten</div>
+            </div>
+        </div>
+        <div style="background:#fff; padding:20px; border-radius:12px; border:1px solid var(--border); height:300px;">
+            <canvas id="chartCanvas"></canvas>
+        </div>
+    </div>
+
 </div>
 
-<nav class="bottom-nav">
-    <button class="bn-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Özet</span></button>
+<div class="bottom-nav">
+    <button class="bn-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-calendar-check"></i><span>Ajanda</span></button>
     <button class="bn-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
-    <button class="bn-item" style="color:var(--primary)" onclick="newTask()"><i class="fa-solid fa-circle-plus" style="font-size:28px;"></i><span>Ekle</span></button>
-    <button class="bn-item" onclick="showView('daily', this)"><i class="fa-solid fa-calendar-day"></i><span>Günlük</span></button>
-    <button class="bn-item" onclick="showView('list', this)"><i class="fa-solid fa-list"></i><span>Liste</span></button>
-</nav>
+    <button class="bn-item" style="color:var(--primary);" onclick="newTask()"><i class="fa-solid fa-circle-plus" style="font-size:32px;"></i></button>
+    <button class="bn-item" onclick="showView('list', this)"><i class="fa-solid fa-list-ul"></i><span>Liste</span></button>
+    <button class="bn-item" onclick="showView('reports', this)"><i class="fa-solid fa-chart-pie"></i><span>Rapor</span></button>
+</div>
 
 <div id="modal" class="modal">
-    <div class="modal-content">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
-            <h2 style="margin:0; font-size:20px;">Görev Detayı</h2>
-            <div class="icon-btn" onclick="closeModal()">✕</div>
+    <div class="modal-box">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h3 style="margin:0;">Görev Detayı</h3>
+            <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:20px;" onclick="closeModal()"></i>
         </div>
-        
         <input type="hidden" id="tId">
-        
         <div class="form-group">
-            <label class="form-label">Konu</label>
-            <select id="tTitle" class="form-input"></select>
+            <label class="form-label">Konu Başlığı</label>
+            <input type="text" id="tTitle" class="form-input">
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
             <div class="form-group">
                 <label class="form-label">Durum</label>
                 <select id="tStatus" class="form-input">
@@ -464,8 +383,7 @@
                 </select>
             </div>
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
             <div class="form-group">
                 <label class="form-label">Tarih</label>
                 <input type="date" id="tDate" class="form-input">
@@ -475,15 +393,13 @@
                 <input type="time" id="tTime" class="form-input">
             </div>
         </div>
-
         <div class="form-group">
             <label class="form-label">Açıklama</label>
             <textarea id="tDesc" class="form-input" rows="3"></textarea>
         </div>
-
-        <div style="display:flex; justify-content:space-between; margin-top:24px;">
-            <button class="icon-btn" style="border-color:#ef4444; color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
-            <button class="btn-primary" style="padding:0 32px;" onclick="saveTask()">Kaydet</button>
+        <div style="display:flex; justify-content:space-between; margin-top:20px;">
+            <button class="action-btn" style="color:var(--danger); border-color:var(--danger);" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-primary" onclick="saveTask()">Kaydet & Kapat</button>
         </div>
     </div>
 </div>
@@ -496,19 +412,14 @@
     const firebaseConfig = { apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s", authDomain: "it-tasks-bc974.firebaseapp.com", projectId: "it-tasks-bc974", storageBucket: "it-tasks-bc974.firebasestorage.app", messagingSenderId: "978679373454", appId: "1:978679373454:web:3ee1c689cf1ca321af33df" };
     let app, db, auth; try { app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); } catch (e) {}
 
-    const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
     let tasks = []; let calDate = new Date(); let activeDate = new Date();
 
     window.initApp = () => {
-        // Dropdown doldur
-        const sel = document.getElementById('tTitle'); TOPICS.forEach(t=>sel.innerHTML+=`<option>${t}</option>`);
-        document.getElementById('todayDate').innerText = new Date().toLocaleDateString('tr-TR', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-        
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('tr-TR', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('uName').innerText = user.email.split('@')[0];
-                listenTasks();
+                listenData();
             } else { document.getElementById('loginOverlay').style.display = 'flex'; }
         });
     }
@@ -516,7 +427,7 @@
     window.login = () => { const e = document.getElementById('email').value; const p = document.getElementById('password').value; signInWithEmailAndPassword(auth, e, p).catch(err => { if(err.code.includes('not-found')) createUserWithEmailAndPassword(auth, e, p); else alert(err.message); }); }
     window.logout = () => signOut(auth).then(()=>window.location.reload());
 
-    function listenTasks() {
+    function listenData() {
         if(!db) return;
         onSnapshot(query(collection(db, "tasks"), orderBy("code", "desc")), (snap) => {
             tasks = snap.docs.map(d => ({ id: d.id, ...d.data() }));
@@ -525,207 +436,171 @@
     }
 
     function renderAll() {
-        renderDashboard();
+        renderCalendar();
+        renderDayList();
         renderKanban();
-        renderDaily(activeDate);
-        renderList();
+        renderStats();
     }
 
-    // --- DASHBOARD ---
-    function renderDashboard() {
-        const c = {todo:0, progress:0, done:0}; 
-        tasks.forEach(t => { if(c[t.status]!==undefined) c[t.status]++ });
-        document.getElementById('dTotal').innerText = tasks.length;
-        document.getElementById('dTodo').innerText = c.todo;
-        document.getElementById('dProg').innerText = c.progress;
-        document.getElementById('dDone').innerText = c.done;
-        
-        if(window.chartInstance) window.chartInstance.destroy();
-        const ctx = document.getElementById('chartStatus').getContext('2d');
-        window.chartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Bekleyen', 'İşlemde', 'Biten'],
-                datasets: [{ label:'İş', data:[c.todo, c.progress, c.done], backgroundColor:['#EA580C','#2563EB','#16A34A'], borderRadius:6 }]
-            },
-            options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, grid:{color:'#e5e7eb'}}, x:{grid:{display:false}}} }
-        });
-    }
-
-    // --- KANBAN ---
-    function renderKanban() {
-        const cols = { todo: document.getElementById('col-todo'), progress: document.getElementById('col-progress'), done: document.getElementById('col-done') };
-        Object.values(cols).forEach(e => e.innerHTML = '');
-        const cnt = {todo:0, progress:0, done:0};
-        
-        tasks.forEach(t => {
-            if(cols[t.status]) {
-                cnt[t.status]++;
-                const pClass = `kc-p-${t.priority}`;
-                cols[t.status].innerHTML += `
-                <div class="kanban-card ${pClass}" onclick="openModal('${t.id}')">
-                    <span class="k-tag">${t.code}</span>
-                    <div class="k-title">${t.title}</div>
-                    <div class="k-footer">
-                        <span><i class="fa-regular fa-clock"></i> ${t.date||'--'}</span>
-                        <div class="avatar" style="width:24px; height:24px; font-size:10px;">CK</div>
-                    </div>
-                </div>`;
-            }
-        });
-        document.getElementById('k-todo-cnt').innerText = cnt.todo;
-        document.getElementById('k-prog-cnt').innerText = cnt.progress;
-        document.getElementById('k-done-cnt').innerText = cnt.done;
-
-        // Desktop Sortable
-        if(window.innerWidth > 768) {
-            ['col-todo','col-progress','col-done'].forEach(id => {
-                new Sortable(document.getElementById(id), { group:'kanban', animation:150, onEnd: async(e)=>{
-                    await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')});
-                }});
-            });
-        }
-    }
-
-    // --- DAILY & CALENDAR ---
-    function renderDaily(dateObj) {
-        // Render Calendar Grid
-        const y = dateObj.getFullYear(), m = dateObj.getMonth();
-        document.getElementById('calTitle').innerText = dateObj.toLocaleDateString('tr-TR', {month:'long', year:'numeric'});
+    // --- 1. DASHBOARD & CALENDAR LOGIC ---
+    function renderCalendar() {
+        const y = calDate.getFullYear(), m = calDate.getMonth();
+        document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR', {month:'long', year:'numeric'});
         const g = document.getElementById('mainCalendar'); g.innerHTML = '';
         
-        const fDay = new Date(y, m, 1).getDay(); const off = fDay===0?6:fDay-1;
+        const firstDay = new Date(y, m, 1).getDay(); const off = firstDay === 0 ? 6 : firstDay - 1;
         const days = new Date(y, m+1, 0).getDate();
         
         for(let i=0; i<off; i++) g.innerHTML += '<div></div>';
         
-        const todayStr = new Date().toDateString();
-        const activeStr = activeDate.toDateString();
-        
         for(let i=1; i<=days; i++) {
             const dStr = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
-            const hasTask = tasks.some(t => t.date === dStr);
-            const isToday = new Date(y,m,i).toDateString() === todayStr;
-            const isSel = new Date(y,m,i).toDateString() === activeStr;
+            const dayTasks = tasks.filter(t => t.date === dStr && t.status !== 'done');
+            
+            let dots = '';
+            dayTasks.forEach(t => { dots += `<div class="dot ${t.priority}"></div>`; });
+            
+            const isSel = activeDate.toDateString() === new Date(y, m, i).toDateString();
+            const isToday = new Date().toDateString() === new Date(y, m, i).toDateString();
             
             const div = document.createElement('div');
-            div.className = `cal-cell ${isToday?'today':''} ${hasTask?'has-task':''}`;
-            if(isSel && !isToday) div.style.background = '#DBEAFE'; // Light Blue Selection
-            div.innerText = i;
-            div.onclick = () => { activeDate = new Date(y, m, i); renderDaily(activeDate); };
+            div.className = `cal-day ${isSel ? 'selected' : ''} ${isToday ? 'today' : ''}`;
+            div.innerHTML = `<div class="cal-num">${i}</div><div class="task-dots">${dots}</div>`;
+            div.onclick = () => { activeDate = new Date(y, m, i); renderAll(); };
             g.appendChild(div);
         }
-
-        // Render List
-        const dateStrISO = `${activeDate.getFullYear()}-${String(activeDate.getMonth()+1).padStart(2,'0')}-${String(activeDate.getDate()).padStart(2,'0')}`;
-        document.getElementById('selectedDateDisp').innerText = activeDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long'});
+    }
+    
+    function renderDayList() {
+        const dateStr = `${activeDate.getFullYear()}-${String(activeDate.getMonth()+1).padStart(2,'0')}-${String(activeDate.getDate()).padStart(2,'0')}`;
+        document.getElementById('selDateTitle').innerText = activeDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long'});
+        document.getElementById('selDateSub').innerText = activeDate.toLocaleDateString('tr-TR', {weekday:'long'});
         
-        const dayTasks = tasks.filter(t => t.date === dateStrISO);
-        document.getElementById('dayTotal').innerText = dayTasks.length;
+        const list = document.getElementById('selectedDayList'); list.innerHTML = '';
+        const dayTasks = tasks.filter(t => t.date === dateStr);
         
-        const list = document.getElementById('dailyTaskList'); list.innerHTML = '';
-        if(dayTasks.length===0) list.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-secondary);">Görev bulunamadı.</div>';
+        if(dayTasks.length === 0) list.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted)">Görev yok.</div>';
         
         dayTasks.forEach(t => {
-            const stColor = t.status==='done'?'var(--tag-done-text)':(t.status==='progress'?'var(--tag-norm-text)':'var(--tag-critical-text)');
-            const stBg = t.status==='done'?'var(--tag-done-bg)':(t.status==='progress'?'var(--tag-norm-bg)':'var(--tag-critical-bg)');
             list.innerHTML += `
-            <div class="daily-task-item" onclick="openModal('${t.id}')">
-                <div class="dti-time">${t.time||'--:--'}</div>
-                <div class="dti-content">
-                    <div class="dti-title">${t.title}</div>
-                    <div class="dti-sub">${t.desc||''}</div>
+            <div class="task-item p-${t.priority}" onclick="openModal('${t.id}')">
+                <div class="ti-title">${t.title}</div>
+                <div class="ti-desc">${t.desc || ''}</div>
+                <div class="ti-meta">
+                    <span>${t.time || '--:--'}</span>
+                    <span style="text-transform:uppercase; color:var(--primary)">${t.status}</span>
                 </div>
-                <div class="dti-status" style="background:${stBg}; color:${stColor}">${t.status}</div>
             </div>`;
         });
     }
-    window.navCal = (d) => { activeDate.setMonth(activeDate.getMonth()+d); renderDaily(activeDate); }
-    window.newTaskForDate = () => { document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; 
+    
+    window.navCal = (d) => { calDate.setMonth(calDate.getMonth()+d); renderCalendar(); }
+    window.newTaskForDate = () => { 
+        document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; 
         const ds = `${activeDate.getFullYear()}-${String(activeDate.getMonth()+1).padStart(2,'0')}-${String(activeDate.getDate()).padStart(2,'0')}`;
-        document.getElementById('tDate').value = ds; document.getElementById('modal').classList.add('show');
+        document.getElementById('tDate').value = ds; 
+        document.getElementById('modal').classList.add('show');
     }
 
-    // --- LIST VIEW ---
-    window.renderList = (filter='all') => {
-        const c = document.getElementById('fullListContainer'); c.innerHTML = '';
-        const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
+    // --- 2. KANBAN LOGIC ---
+    function renderKanban() {
+        const cols = { todo: document.getElementById('col-todo'), progress: document.getElementById('col-progress'), done: document.getElementById('col-done') };
+        Object.values(cols).forEach(e => e.innerHTML = '');
+        const c = {todo:0, progress:0, done:0};
         
-        let filtered = tasks.filter(t => (filter==='all' || t.status===filter) && t.title.toLowerCase().includes(search));
+        tasks.forEach(t => {
+            if(cols[t.status]) {
+                c[t.status]++;
+                cols[t.status].innerHTML += `
+                <div class="k-card" onclick="openModal('${t.id}')">
+                    <span class="k-tag" style="background:${t.priority==='Yüksek'?'#FEF2F2':'#F1F5F9'}; color:${t.priority==='Yüksek'?'#DC2626':'#64748B'}">${t.priority}</span>
+                    <div style="font-weight:600; font-size:14px; margin-bottom:5px;">${t.title}</div>
+                    <div style="font-size:11px; color:var(--text-muted);">${t.date||''}</div>
+                </div>`;
+            }
+        });
+        document.getElementById('cnt-todo').innerText = c.todo;
+        document.getElementById('cnt-prog').innerText = c.progress;
+        document.getElementById('cnt-done').innerText = c.done;
         
-        if(filtered.length === 0) c.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-secondary)">Kayıt yok.</div>';
+        if(window.innerWidth > 768) {
+            ['col-todo','col-progress','col-done'].forEach(id => {
+                new Sortable(document.getElementById(id), { group:'kanban', animation:150, onEnd: async(e)=>{ await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')}); }});
+            });
+        }
+    }
+
+    // --- 3. LIST & STATS ---
+    window.renderList = () => {
+        const term = document.getElementById('searchInp').value.toLowerCase();
+        const stat = document.getElementById('filterStatus').value;
+        const con = document.getElementById('fullList'); con.innerHTML = '';
         
+        const filtered = tasks.filter(t => (stat==='all' || t.status===stat) && t.title.toLowerCase().includes(term));
         filtered.forEach(t => {
-            c.innerHTML += `
-            <div style="display:flex; justify-content:space-between; padding:16px; border-bottom:1px solid var(--border-color); align-items:center; cursor:pointer;" onclick="openModal('${t.id}')">
-                <div>
-                    <div style="font-weight:600; color:var(--text-primary);">${t.title}</div>
-                    <div style="font-size:12px; color:var(--text-secondary);">${t.code} • ${t.date}</div>
+            con.innerHTML += `
+            <div class="task-item" onclick="openModal('${t.id}')" style="border-left:4px solid var(--primary);">
+                <div style="display:flex; justify-content:space-between;">
+                    <div style="font-weight:600;">${t.title}</div>
+                    <div style="font-size:12px; font-weight:700;">${t.status}</div>
                 </div>
-                <span class="k-tag">${t.status}</span>
+                <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">${t.date} • ${t.code}</div>
             </div>`;
         });
     }
-    document.getElementById('searchInput').addEventListener('input', ()=>window.renderList());
 
-    // --- NAVIGATION ---
-    window.showView = (v, btn) => {
-        document.querySelectorAll('.view-section').forEach(e => e.classList.remove('active'));
-        document.getElementById('view-'+v).classList.add('active');
-        document.getElementById('pageTitle').innerText = (v==='dashboard'?'Genel Bakış':(v==='kanban'?'İş Panosu':(v==='daily'?'Günlük Plan':'Tüm Liste')));
+    function renderStats() {
+        const c = {todo:0, progress:0, done:0}; tasks.forEach(t=>{if(c[t.status]!==undefined)c[t.status]++});
+        document.getElementById('statTotal').innerText = tasks.length;
+        document.getElementById('statTodo').innerText = c.todo;
+        document.getElementById('statProg').innerText = c.progress;
+        document.getElementById('statDone').innerText = c.done;
         
-        if(btn) {
-            document.querySelectorAll('.nav-item, .bn-item').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-        renderAll();
+        if(window.chart) window.chart.destroy();
+        window.chart = new Chart(document.getElementById('chartCanvas'), {
+            type:'doughnut', 
+            data: { labels:['Bekleyen','İşlemde','Biten'], datasets:[{data:[c.todo,c.progress,c.done], backgroundColor:['#F59E0B','#0065B3','#10B981']}] },
+            options: { maintainAspectRatio:false }
+        });
     }
 
-    // --- MODAL & CRUD ---
+    // --- ACTIONS ---
+    window.showView = (v, btn) => {
+        document.querySelectorAll('.view-container').forEach(e => e.classList.remove('active'));
+        document.getElementById('view-'+v).classList.add('active');
+        document.getElementById('pageHeader').innerText = (v==='dashboard'?'Ajanda':(v==='kanban'?'Pano':(v==='list'?'Liste':'Raporlar')));
+        document.querySelectorAll('.nav-item, .bn-item').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        if(v==='list') renderList();
+    }
+
     window.newTask = () => { document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; document.getElementById('modal').classList.add('show'); }
     window.closeModal = () => document.getElementById('modal').classList.remove('show');
     
     window.openModal = (id) => {
         const t = tasks.find(x=>x.id===id);
         if(t) {
-            document.getElementById('tId').value=t.id;
-            document.getElementById('tTitle').value=t.title;
-            document.getElementById('tStatus').value=t.status;
-            document.getElementById('tPriority').value=t.priority;
-            document.getElementById('tDate').value=t.date;
-            document.getElementById('tTime').value=t.time||'';
-            document.getElementById('tDesc').value=t.desc;
-            document.getElementById('modal').classList.add('show');
+            document.getElementById('tId').value=t.id; document.getElementById('tTitle').value=t.title;
+            document.getElementById('tStatus').value=t.status; document.getElementById('tPriority').value=t.priority;
+            document.getElementById('tDate').value=t.date; document.getElementById('tTime').value=t.time||'';
+            document.getElementById('tDesc').value=t.desc; document.getElementById('modal').classList.add('show');
         }
     }
 
     window.saveTask = async () => {
         const id = document.getElementById('tId').value;
-        const d = {
-            title: document.getElementById('tTitle').value,
-            status: document.getElementById('tStatus').value,
-            priority: document.getElementById('tPriority').value,
-            date: document.getElementById('tDate').value,
-            time: document.getElementById('tTime').value,
-            desc: document.getElementById('tDesc').value
-        };
-        
+        const d = { title: document.getElementById('tTitle').value, status: document.getElementById('tStatus').value, priority: document.getElementById('tPriority').value, date: document.getElementById('tDate').value, time: document.getElementById('tTime').value, desc: document.getElementById('tDesc').value };
         if(id) await updateDoc(doc(db,"tasks",id), d);
         else {
             await runTransaction(db, async(t) => {
                 const ref = doc(db,"meta","counters"); const snap = await t.get(ref);
-                const seq = (snap.exists()?snap.data().taskSeq:0)+1;
-                t.set(ref, {taskSeq:seq}, {merge:true}); d.code = 'GRV-'+seq;
-                await addDoc(collection(db,"tasks"), d);
+                const seq = (snap.exists()?snap.data().taskSeq:0)+1; t.set(ref, {taskSeq:seq}, {merge:true});
+                d.code = 'GRV-'+seq; await addDoc(collection(db,"tasks"), d);
             });
         }
         closeModal();
     }
-    
     window.delTask = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,"tasks", document.getElementById('tId').value)); closeModal(); } }
-    
-    window.exportExcel = () => { const ws = XLSX.utils.json_to_sheet(tasks); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Tasks"); XLSX.writeFile(wb, "BT_Portal.xlsx"); }
-    
     window.toggleTheme = () => { const b=document.body; b.setAttribute('data-theme', b.getAttribute('data-theme')==='dark'?'light':'dark'); }
 </script>
 </body>
