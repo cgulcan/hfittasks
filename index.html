@@ -18,7 +18,7 @@
     
     <style>
         :root {
-            /* KURUMSAL TEMA (Clean Enterprise) */
+            /* KURUMSAL TEMA */
             --bg-body: #F9FAFB;
             --bg-sidebar: #FFFFFF;
             --bg-card: #FFFFFF;
@@ -111,8 +111,8 @@
         .cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .cal-nav i { cursor: pointer; padding: 5px; color: var(--text-muted); }
         .cg-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; flex: 1; }
-        .cg-day { border: 1px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; padding: 4px; font-size: 12px; font-weight: 600; position: relative; background: #fafafa; }
-        .cg-day:hover { background: #fff; border-color: var(--primary); }
+        .cg-day { border: 1px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; padding: 4px; font-size: 12px; font-weight: 600; position: relative; background: #fafafa; min-height: 60px; }
+        .cg-day:hover { background: #fff; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
         .cg-day.today { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
         .cg-dots { display: flex; gap: 2px; margin-top: auto; flex-wrap: wrap; }
         .cg-dot { width: 6px; height: 6px; border-radius: 50%; }
@@ -141,11 +141,22 @@
         .modal-mask.open { display: flex; animation: fadeUp 0.2s ease-out; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
         
-        .modal-win { background: var(--bg-card); width: 500px; max-height: 90vh; border-radius: 16px; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); overflow-y: auto; }
+        .modal-win { background: var(--bg-card); width: 500px; max-height: 90vh; border-radius: 16px; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); overflow-y: auto; display: flex; flex-direction: column;}
         .f-group { margin-bottom: 16px; }
         .f-lbl { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
         .f-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; }
         .f-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 101, 179, 0.1); }
+
+        /* DAY DETAILS ITEM (Modal İçi Liste) */
+        .day-task-row {
+            display: flex; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .day-task-row:hover { background: var(--bg-body); border-color: var(--primary); }
+        .dt-time { font-weight: 700; color: var(--primary); font-size: 12px; width: 50px; }
+        .dt-content { flex: 1; }
+        .dt-head { font-weight: 600; font-size: 14px; color: var(--text-main); }
+        .dt-sub { font-size: 11px; color: var(--text-muted); }
+        .dt-status { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
 
         .bottom-nav { display: none; }
 
@@ -172,7 +183,7 @@
             .bn-item.active { color: var(--primary); font-weight: 600; }
             .bn-item i { font-size: 20px; }
             
-            .modal-win { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; }
+            .modal-win { width: 100%; height: auto; border-radius: 20px 20px 0 0; max-height: 85vh; position: absolute; bottom: 0; }
         }
     </style>
 </head>
@@ -246,12 +257,6 @@
     </div>
 
     <div id="view-kanban" class="view-wrapper" style="height:100%;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-            <div style="display:flex; gap:10px;">
-                <button class="btn-icon" onclick="filterData('all')">Tümü</button>
-                <button class="btn-icon" onclick="filterData('today')">Bugün</button>
-            </div>
-        </div>
         <div class="kanban-layout">
             <div class="k-col">
                 <div class="kc-top">BEKLEYEN <span id="k-todo">0</span></div>
@@ -302,11 +307,33 @@
             <div class="f-group"><label class="f-lbl">Durum</label><select id="tStatus" class="f-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
             <div class="f-group"><label class="f-lbl">Öncelik</label><select id="tPriority" class="f-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
         </div>
-        <div class="f-group"><label class="f-lbl">Bitiş Tarihi</label><input type="date" id="tDate" class="f-inp"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+            <div class="f-group"><label class="f-lbl">Bitiş Tarihi</label><input type="date" id="tDate" class="f-inp"></div>
+            <div class="f-group"><label class="f-lbl">Saat</label><input type="time" id="tTime" class="f-inp"></div>
+        </div>
         <div class="f-group"><label class="f-lbl">Açıklama</label><textarea id="tDesc" class="f-inp" rows="3"></textarea></div>
         <div style="display:flex; justify-content:space-between; margin-top:20px;">
             <button class="btn-icon" style="color:#ef4444; border-color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
             <button class="btn-main" onclick="saveTask()">Kaydet</button>
+        </div>
+    </div>
+</div>
+
+<div id="dayModal" class="modal-mask">
+    <div class="modal-win" style="max-height:80vh;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+            <div>
+                <h3 style="margin:0;" id="dmTitle">Gün Detayı</h3>
+                <p style="margin:0; font-size:12px; color:var(--text-muted);" id="dmDate">...</p>
+            </div>
+            <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px;" onclick="closeDayModal()"></i>
+        </div>
+        
+        <div id="dayTasksContainer" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+            </div>
+        
+        <div style="margin-top:15px; padding-top:10px; border-top:1px solid var(--border);">
+            <button class="btn-main" style="width:100%; justify-content:center;" onclick="newTaskForDay()">+ Bu Güne Görev Ekle</button>
         </div>
     </div>
 </div>
@@ -323,7 +350,7 @@
     try { app=initializeApp(firebaseConfig); db=getFirestore(app); auth=getAuth(app); } catch(e){console.error(e);}
 
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
-    let tasks = []; let calDate = new Date();
+    let tasks = []; let calDate = new Date(); let selectedDate = new Date();
 
     window.initApp = () => {
         const s = document.getElementById('tTitle'); TOPICS.forEach(t=>s.innerHTML+=`<option>${t}</option>`);
@@ -370,9 +397,7 @@
 
     function renderCalendar() {
         const y=calDate.getFullYear(), m=calDate.getMonth();
-        const titleEl = document.getElementById('calTitle');
-        if(titleEl) titleEl.innerText = calDate.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
-        
+        document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
         const g=document.getElementById('calendarGrid');
         if(!g) return;
         g.innerHTML='';
@@ -385,29 +410,62 @@
             const dayTasks = tasks.filter(t=>t.date===ds && t.status!=='done');
             let dots = ''; dayTasks.forEach(t=> { let c = t.priority==='Yüksek'?'#EF4444':(t.priority==='Orta'?'#F59E0B':'#10B981'); dots+=`<div class="cg-dot" style="background:${c}"></div>`; });
             const isToday = new Date().toDateString() === new Date(y,m,i).toDateString();
-            g.innerHTML += `<div class="cg-day ${isToday?'today':''}" onclick="filterByDate('${ds}')">${i}<div class="cg-dots">${dots}</div></div>`;
+            g.innerHTML += `<div class="cg-day ${isToday?'today':''}" onclick="openDayModal('${ds}')">${i}<div class="cg-dots">${dots}</div></div>`;
         }
     }
     window.navCal = (d) => { calDate.setMonth(calDate.getMonth()+d); renderCalendar(); }
-    window.filterByDate = (date) => { alert('Seçili tarih: ' + date); /* Filtreleme eklenebilir */ }
 
-    // --- KANBAN ---
-    window.filterData = (mode) => {
-        // Basit filtreleme simülasyonu
-        if(mode==='all') renderKanban(tasks);
-        else if(mode==='today') {
-            const today = new Date().toISOString().split('T')[0];
-            renderKanban(tasks.filter(t=>t.date===today));
+    // --- DAY MODAL ---
+    window.openDayModal = (dateStr) => {
+        selectedDate = new Date(dateStr);
+        document.getElementById('dmTitle').innerText = "Günün Görevleri";
+        document.getElementById('dmDate').innerText = selectedDate.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        
+        const container = document.getElementById('dayTasksContainer');
+        container.innerHTML = '';
+        
+        const dayTasks = tasks.filter(t => t.date === dateStr);
+        
+        if(dayTasks.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Bu güne ait görev bulunamadı.</div>';
+        } else {
+            dayTasks.forEach(t => {
+                const stText = t.status==='todo'?'BEKLEYEN':(t.status==='progress'?'İŞLEMDE':'BİTEN');
+                const stColor = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
+                const stBg = t.status==='todo'?'#FEF3C7':(t.status==='progress'?'#DBEAFE':'#D1FAE5');
+                
+                container.innerHTML += `
+                <div class="day-task-row" onclick="openModal('${t.id}')">
+                    <div class="dt-time">${t.time || '--:--'}</div>
+                    <div class="dt-content">
+                        <div class="dt-head">${t.title}</div>
+                        <div class="dt-sub">${t.desc || ''}</div>
+                    </div>
+                    <div class="dt-status" style="background:${stBg}; color:${stColor}">${stText}</div>
+                </div>`;
+            });
         }
+        
+        document.getElementById('dayModal').classList.add('open');
+    }
+    window.closeDayModal = () => document.getElementById('dayModal').classList.remove('open');
+    window.newTaskForDay = () => {
+        closeDayModal();
+        const dStr = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth()+1).padStart(2,'0')}-${String(selectedDate.getDate()).padStart(2,'0')}`;
+        document.getElementById('tId').value=''; 
+        document.getElementById('tTitle').value=''; 
+        document.getElementById('tDate').value = dStr;
+        document.getElementById('modal').classList.add('open');
     }
 
-    function renderKanban(data = tasks) {
+    // --- KANBAN ---
+    function renderKanban() {
         const cols={todo:document.getElementById('col-todo'), progress:document.getElementById('col-progress'), done:document.getElementById('col-done')};
         if(!cols.todo) return;
         Object.values(cols).forEach(e=>e.innerHTML='');
         const c={todo:0, progress:0, done:0};
         
-        data.forEach(t=>{
+        tasks.forEach(t=>{
             if(cols[t.status]) {
                 c[t.status]++;
                 cols[t.status].innerHTML += `
@@ -417,9 +475,13 @@
                 </div>`;
             }
         });
-        const elT=document.getElementById('k-todo'); if(elT) elT.innerText=c.todo;
-        const elP=document.getElementById('k-prog'); if(elP) elP.innerText=c.progress;
-        const elD=document.getElementById('k-done'); if(elD) elD.innerText=c.done;
+        document.getElementById('k-todo').innerText = c.todo;
+        document.getElementById('k-prog').innerText = c.progress;
+        document.getElementById('k-done').innerText = c.done;
+        
+        if(window.innerWidth > 768) {
+            ['col-todo','col-progress','col-done'].forEach(id => new Sortable(document.getElementById(id), { group:'k', animation:150, onEnd: async(e)=>{ await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')}); }}));
+        }
     }
 
     // --- LIST ---
