@@ -18,322 +18,307 @@
     
     <style>
         :root {
-            /* KURUMSAL TEMA */
-            --bg-body: #F9FAFB;
+            /* MODERN KURUMSAL PALET */
+            --bg-body: #F3F4F6;
             --bg-sidebar: #FFFFFF;
             --bg-card: #FFFFFF;
+            --bg-header: #FFFFFF;
             
             --primary: #0065B3;
-            --primary-hover: #004d8a;
+            --primary-hover: #005091;
             --primary-light: #E0F2FE;
             
-            --text-main: #1F2937;
+            --text-main: #111827;
             --text-muted: #6B7280;
             --border: #E5E7EB;
             
-            --radius: 12px;
-            --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --radius: 10px;
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
             
-            --st-todo: #F59E0B;
-            --st-prog: #3B82F6;
-            --st-done: #10B981;
+            /* Durum Renkleri */
+            --st-todo-bg: #FEF3C7; --st-todo-tx: #D97706;
+            --st-prog-bg: #DBEAFE; --st-prog-tx: #2563EB;
+            --st-done-bg: #D1FAE5; --st-done-tx: #059669;
             
+            /* Priority */
+            --pr-high: #EF4444;
+            --pr-mid: #F59E0B;
+            --pr-low: #10B981;
+
             --header-h: 64px;
             --sidebar-w: 260px;
-            --bottom-nav-h: 70px;
+            --sidebar-w-collapsed: 70px;
         }
 
         [data-theme="dark"] {
             --bg-body: #0F172A;
             --bg-sidebar: #1E293B;
             --bg-card: #1E293B;
+            --bg-header: #1E293B;
             --text-main: #F3F4F6;
             --text-muted: #9CA3AF;
             --border: #374151;
-            --shadow-card: none;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
 
         /* SIDEBAR */
-        .sidebar {
-            width: var(--sidebar-w); background: var(--bg-sidebar); border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; z-index: 50; flex-shrink: 0;
-        }
-        .logo-box {
-            height: var(--header-h); display: flex; align-items: center; padding: 0 20px;
-            font-weight: 800; font-size: 18px; color: var(--primary); border-bottom: 1px solid var(--border); gap: 10px;
-        }
-        .nav-list { flex: 1; padding: 20px 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
-        .nav-item {
-            padding: 12px 16px; border-radius: 8px; cursor: pointer; color: var(--text-muted);
-            font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 12px; transition: 0.2s;
-        }
+        .sidebar { width: var(--sidebar-w); background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; transition: width 0.3s ease; z-index: 50; flex-shrink: 0; }
+        .sidebar.collapsed { width: var(--sidebar-w-collapsed); }
+        .logo-area { height: var(--header-h); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid var(--border); overflow: hidden; white-space: nowrap; color: var(--primary); font-weight: 800; font-size: 18px; gap: 12px; }
+        .sidebar.collapsed .logo-text { display: none; }
+        .nav-menu { flex: 1; padding: 15px 10px; display: flex; flex-direction: column; gap: 5px; overflow-y: auto; overflow-x: hidden; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; color: var(--text-muted); font-size: 14px; font-weight: 500; border-radius: 8px; cursor: pointer; transition: 0.2s; white-space: nowrap; }
         .nav-item:hover { background: var(--bg-body); color: var(--primary); }
         .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 600; }
-        .user-box { padding: 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-        .avatar { width: 36px; height: 36px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+        .nav-item i { font-size: 18px; min-width: 24px; text-align: center; }
+        .sidebar.collapsed .nav-text { display: none; }
+        .sidebar-toggle { padding: 15px; text-align: center; cursor: pointer; color: var(--text-muted); border-top: 1px solid var(--border); }
+        .sidebar-toggle:hover { color: var(--primary); }
 
         /* MAIN CONTENT */
-        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-        
-        .header {
-            height: var(--header-h); background: var(--bg-card); border-bottom: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
-        }
-        .h-title h2 { margin: 0; font-size: 18px; font-weight: 700; }
-        .h-title p { margin: 0; font-size: 12px; color: var(--text-muted); }
-        
-        .actions { display: flex; gap: 10px; }
-        .btn-icon { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: var(--bg-card); color: var(--text-muted); transition: 0.2s; }
-        .btn-icon:hover { color: var(--primary); border-color: var(--primary); }
-        .btn-main { background: var(--primary); color: #fff; border: none; height: 36px; padding: 0 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; font-size: 13px; }
-        .btn-main:hover { background: var(--primary-hover); }
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .topbar { height: var(--header-h); background: var(--bg-header); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+        .page-header h2 { margin: 0; font-size: 18px; font-weight: 700; }
+        .page-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+        .top-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-icon { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); background: var(--bg-card); transition: 0.2s; }
+        .btn-icon:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-primary { background: var(--primary); color: #fff; border: none; height: 36px; padding: 0 20px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
 
-        /* VIEWS CONTAINER */
-        .view-wrapper { flex: 1; overflow-y: auto; padding: 24px; display: none; }
-        .view-wrapper.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(5px)} to{opacity:1;transform:translateY(0)} }
+        /* --- FILTERS (NEW) --- */
+        .filter-wrapper { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 15px; }
+        .filter-group { display: flex; gap: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+        .filter-btn { padding: 8px 16px; border: none; background: transparent; font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer; border-right: 1px solid var(--border); transition: 0.2s; }
+        .filter-btn:last-child { border-right: none; }
+        .filter-btn.active { background: var(--primary-light); color: var(--primary); }
+        
+        /* Dropdown & Input Styling for Filters */
+        .filter-select, .filter-date { padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); color: var(--text-main); font-size: 12px; font-family: inherit; outline: none; height: 34px; }
+        .filter-select:focus, .filter-date:focus { border-color: var(--primary); }
 
-        /* 1. DASHBOARD */
+        /* VIEWS */
+        .view-section { flex: 1; padding: 24px; overflow-y: auto; display: none; flex-direction: column; }
+        .view-section.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* DASHBOARD */
         .dash-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 24px; }
-        .stat-card { background: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-card); display: flex; align-items: center; gap: 15px; }
+        .stat-card { background: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow-sm); }
         .sc-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
         .sc-info div:first-child { font-size: 24px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
-        .sc-info div:last-child { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+        .sc-info div:last-child { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
 
-        .dash-split { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
-        .chart-card { background: var(--bg-card); padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); height: 350px; }
-        
-        /* Büyük Takvim Widget */
-        .cal-widget { background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; height: 100%; }
-        .cal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .cal-nav i { cursor: pointer; padding: 5px; color: var(--text-muted); }
-        .cg-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; flex: 1; }
-        .cg-day { border: 1px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; padding: 4px; font-size: 12px; font-weight: 600; position: relative; background: #fafafa; min-height: 60px; }
-        .cg-day:hover { background: #fff; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
-        .cg-day.today { background: var(--primary-light); color: var(--primary); border-color: var(--primary); }
-        .cg-dots { display: flex; gap: 2px; margin-top: auto; flex-wrap: wrap; }
-        .cg-dot { width: 6px; height: 6px; border-radius: 50%; }
+        /* KANBAN */
+        .kanban-container { display: flex; gap: 20px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
+        .kanban-col { min-width: 300px; width: 300px; background: #F8FAFC; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; height: 100%; }
+        [data-theme="dark"] .kanban-col { background: #1E293B; }
+        .kc-header { padding: 16px; border-bottom: 1px solid var(--border); background: var(--bg-card); border-radius: 12px 12px 0 0; font-size: 13px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .kc-body { padding: 12px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .k-card { background: var(--bg-card); padding: 16px; border-radius: 8px; border: 1px solid var(--border); cursor: grab; position: relative; box-shadow: var(--shadow-sm); transition: 0.2s; border-left: 4px solid transparent; }
+        .k-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        .k-p-Yüksek { border-left-color: var(--pr-high); } .k-p-Orta { border-left-color: var(--pr-mid); } .k-p-Düşük { border-left-color: var(--pr-low); }
+        .kc-meta { display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; color: var(--text-muted); }
 
-        /* 2. KANBAN */
-        .kanban-layout { display: flex; gap: 20px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
-        .k-col { min-width: 300px; width: 300px; background: #F3F4F6; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
-        [data-theme="dark"] .k-col { background: #111827; }
-        .kc-top { padding: 16px; border-bottom: 1px solid var(--border); background: var(--bg-card); border-radius: 12px 12px 0 0; font-weight: 700; font-size: 13px; display: flex; justify-content: space-between; }
-        .kc-list { padding: 12px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        
-        .k-card { background: var(--bg-card); padding: 16px; border-radius: 8px; border: 1px solid var(--border); cursor: grab; box-shadow: var(--shadow-card); border-left: 4px solid transparent; transition: 0.2s; }
-        .k-card:hover { transform: translateY(-2px); border-color: var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .kp-Yüksek { border-left-color: #EF4444; } .kp-Orta { border-left-color: #F59E0B; } .kp-Düşük { border-left-color: #10B981; }
+        /* LIST */
+        .table-container { background: var(--bg-card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+        .custom-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .custom-table th { text-align: left; padding: 16px; background: #F9FAFB; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+        .custom-table td { padding: 16px; border-bottom: 1px solid var(--border); color: var(--text-main); }
+        .custom-table tr:hover td { background: var(--bg-body); cursor: pointer; }
+        [data-theme="dark"] .custom-table th { background: #1F2937; }
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .badge-todo { background: var(--st-todo-bg); color: var(--st-todo-tx); }
+        .badge-prog { background: var(--st-prog-bg); color: var(--st-prog-tx); }
+        .badge-done { background: var(--st-done-bg); color: var(--st-done-tx); }
 
-        /* 3. LISTE */
-        .table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .data-table th { text-align: left; padding: 16px; background: #F9FAFB; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); }
-        .data-table td { padding: 16px; border-bottom: 1px solid var(--border); color: var(--text-main); }
-        .data-table tr:hover td { background: var(--bg-body); cursor: pointer; }
-        [data-theme="dark"] .data-table th { background: #1F2937; }
+        /* CALENDAR */
+        .calendar-large { height: 100%; display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+        .cl-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; flex: 1; }
+        .cl-day { border: 1px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; flex-direction: column; padding: 6px; font-size: 12px; font-weight: 600; position: relative; background: #fafafa; }
+        .cl-day:hover { background: #fff; border-color: var(--primary); }
+        .cl-day.today { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
+        .cl-dots { display: flex; gap: 2px; margin-top: 4px; flex-wrap: wrap; }
+        .cl-dot { width: 6px; height: 6px; border-radius: 50%; }
 
         /* MODAL */
-        .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
-        .modal-mask.open { display: flex; animation: fadeUp 0.2s ease-out; }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; animation: fade 0.2s; }
+        .modal-card { background: var(--bg-card); width: 500px; padding: 24px; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .inp-group { margin-bottom: 16px; }
+        .inp-label { font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; }
+        .inp-field { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; }
         
-        .modal-win { background: var(--bg-card); width: 500px; max-height: 90vh; border-radius: 16px; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); overflow-y: auto; display: flex; flex-direction: column;}
-        .f-group { margin-bottom: 16px; }
-        .f-lbl { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
-        .f-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 14px; }
-        .f-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0, 101, 179, 0.1); }
-
-        /* DAY DETAILS ITEM (Modal İçi Liste) */
-        .day-task-row {
-            display: flex; align-items: center; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: 0.2s;
-        }
-        .day-task-row:hover { background: var(--bg-body); border-color: var(--primary); }
-        .dt-time { font-weight: 700; color: var(--primary); font-size: 12px; width: 50px; }
-        .dt-content { flex: 1; }
-        .dt-head { font-weight: 600; font-size: 14px; color: var(--text-main); }
-        .dt-sub { font-size: 11px; color: var(--text-muted); }
-        .dt-status { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; text-transform: uppercase; }
-
         .bottom-nav { display: none; }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .sidebar { display: none; }
-            .header { padding: 0 16px; }
-            .view-wrapper { padding: 16px; padding-bottom: 90px; }
-            
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: var(--bg-card); border-top: 1px solid var(--border); justify-content: space-around; align-items: center; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
+            .bn-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 10px; }
+            .bn-item.active { color: var(--primary); }
             .dash-grid { grid-template-columns: 1fr 1fr; }
-            .dash-split { grid-template-columns: 1fr; display: flex; flex-direction: column; }
-            .cal-widget { height: auto; min-height: 350px; }
-            .cg-day { min-height: 50px; }
+            .main-content { padding-bottom: 80px; }
+            .topbar { padding: 0 16px; }
+            .view-section { padding: 16px; }
+            .modal-card { width: 100%; height: 100%; border-radius: 0; max-height: 100vh; }
             
-            .kanban-layout { padding-right: 16px; scroll-snap-type: x mandatory; }
-            .k-col { min-width: 85vw; scroll-snap-align: center; }
-            
-            .bottom-nav { 
-                display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: var(--bottom-nav-height);
-                background: var(--bg-card); border-top: 1px solid var(--border); z-index: 1000;
-                justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom);
-            }
-            .bn-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 10px; gap: 4px; }
-            .bn-item.active { color: var(--primary); font-weight: 600; }
-            .bn-item i { font-size: 20px; }
-            
-            .modal-win { width: 100%; height: auto; border-radius: 20px 20px 0 0; max-height: 85vh; position: absolute; bottom: 0; }
+            /* Mobilde filtreleri alt alta alabiliriz */
+            .filter-wrapper { gap: 8px; }
+            .filter-select, .filter-date { width: 100%; }
         }
     </style>
 </head>
 <body onload="initApp()">
 
 <div id="loginScreen" style="position:fixed; inset:0; background:var(--bg-body); z-index:5000; display:flex; align-items:center; justify-content:center;">
-    <div style="background:var(--bg-card); padding:40px; border-radius:16px; border:1px solid var(--border); width:320px; text-align:center;">
+    <div style="background:var(--bg-card); padding:40px; border-radius:16px; border:1px solid var(--border); text-align:center; width:320px;">
         <img src="logo.png" style="width:60px; margin-bottom:20px;">
         <h2 style="margin:0 0 10px; color:var(--primary);">BT Portal</h2>
-        <input type="email" id="email" class="f-inp" placeholder="E-posta" style="margin-bottom:12px;">
-        <input type="password" id="password" class="f-inp" placeholder="Şifre" style="margin-bottom:20px;">
-        <button class="btn-main" style="width:100%; justify-content:center; height:44px;" onclick="login()">Giriş Yap</button>
+        <input type="email" id="email" class="inp-field" placeholder="E-posta" style="margin-bottom:12px;">
+        <input type="password" id="password" class="inp-field" placeholder="Şifre" style="margin-bottom:20px;">
+        <button class="btn-primary" style="width:100%; justify-content:center; height:44px;" onclick="login()">Giriş Yap</button>
         <div id="loginError" style="color:red; font-size:12px; margin-top:10px;"></div>
     </div>
 </div>
 
-<aside class="sidebar">
-    <div class="logo-box"><i class="fa-solid fa-cube"></i> HALK BT</div>
-    <div class="nav-list">
-        <div class="nav-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Özet</div>
-        <div class="nav-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> İş Panosu</div>
-        <div class="nav-item" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i> Tüm Liste</div>
+<aside class="sidebar" id="sidebar">
+    <div class="logo-area">
+        <i class="fa-solid fa-layer-group"></i> <span class="logo-text">HALK BT</span>
     </div>
-    <div class="user-box">
-        <div class="avatar">CK</div>
-        <div style="flex:1; font-size:13px; font-weight:600;" id="uName">Kullanıcı</div>
-        <i class="fa-solid fa-power-off" style="cursor:pointer; color:var(--text-muted);" onclick="logout()"></i>
+    <div class="nav-menu">
+        <div class="nav-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-simple"></i> <span class="nav-text">Genel Bakış</span></div>
+        <div class="nav-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> <span class="nav-text">İş Panosu</span></div>
+        <div class="nav-item" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i> <span class="nav-text">Tüm Liste</span></div>
     </div>
+    <div class="sidebar-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-chevron-left" id="toggleIcon"></i></div>
 </aside>
 
-<main class="main">
-    <header class="header">
-        <div class="h-title">
+<div class="main-content">
+    <header class="topbar">
+        <div class="page-header">
             <h2 id="pageTitle">Genel Bakış</h2>
             <p id="dateStr">...</p>
         </div>
-        <div class="actions">
-            <button class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></button>
-            <button class="btn-main" onclick="newTask()"><i class="fa-solid fa-plus"></i> Yeni İş</button>
+        <div class="top-actions">
+            <div class="btn-icon" onclick="toggleTheme()"><i class="fa-solid fa-moon"></i></div>
+            <button class="btn-primary" onclick="newTask()"><i class="fa-solid fa-plus"></i> Yeni İş</button>
         </div>
     </header>
 
-    <div id="view-dashboard" class="view-wrapper active">
+    <div id="view-dashboard" class="view-section active">
         <div class="dash-grid">
-            <div class="stat-card"><div class="sc-icon" style="background:#EFF6FF; color:#2563EB"><i class="fa-solid fa-list"></i></div><div class="sc-info"><div id="dTotal">0</div><div>Toplam</div></div></div>
+            <div class="stat-card"><div class="sc-icon" style="background:#EFF6FF; color:#2563EB"><i class="fa-solid fa-clipboard-list"></i></div><div class="sc-info"><div id="dTotal">0</div><div>Toplam</div></div></div>
             <div class="stat-card"><div class="sc-icon" style="background:#FFF7ED; color:#EA580C"><i class="fa-solid fa-clock"></i></div><div class="sc-info"><div id="dTodo">0</div><div>Bekleyen</div></div></div>
             <div class="stat-card"><div class="sc-icon" style="background:#E0F2FE; color:#0284C7"><i class="fa-solid fa-spinner"></i></div><div class="sc-info"><div id="dProg">0</div><div>İşlemde</div></div></div>
             <div class="stat-card"><div class="sc-icon" style="background:#D1FAE5; color:#059669"><i class="fa-solid fa-check"></i></div><div class="sc-info"><div id="dDone">0</div><div>Biten</div></div></div>
         </div>
         
-        <div class="dash-split">
-            <div class="cal-widget">
-                <div class="cal-head">
-                    <span style="font-weight:700;" id="calTitle">...</span>
-                    <div class="cal-nav">
-                        <i class="fa-solid fa-chevron-left" onclick="navCal(-1)"></i>
-                        <i class="fa-solid fa-chevron-right" onclick="navCal(1)"></i>
-                    </div>
-                </div>
-                <div class="cg-grid" style="text-align:center; font-size:10px; color:var(--text-muted); margin-bottom:5px;">
-                    <div>PT</div><div>SA</div><div>ÇA</div><div>PE</div><div>CU</div><div style="color:#ef4444">CT</div><div style="color:#ef4444">PA</div>
-                </div>
-                <div class="cg-grid" id="calendarGrid"></div>
-            </div>
-            
-            <div class="chart-card">
-                <h3 style="margin:0 0 15px; font-size:14px;">Durum Özeti</h3>
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:20px; height:100%;">
+            <div style="background:var(--bg-card); padding:20px; border:1px solid var(--border); border-radius:12px;">
+                <h3 style="margin:0 0 15px; font-size:14px;">İş Dağılımı</h3>
                 <div style="height:250px;"><canvas id="chartCanvas"></canvas></div>
             </div>
-        </div>
-    </div>
-
-    <div id="view-kanban" class="view-wrapper" style="height:100%;">
-        <div class="kanban-layout">
-            <div class="k-col">
-                <div class="kc-top">BEKLEYEN <span id="k-todo">0</span></div>
-                <div class="kc-list" id="col-todo" data-status="todo"></div>
-            </div>
-            <div class="k-col">
-                <div class="kc-top" style="color:#2563EB">İŞLEMDE <span id="k-prog">0</span></div>
-                <div class="kc-list" id="col-progress" data-status="progress"></div>
-            </div>
-            <div class="k-col">
-                <div class="kc-top" style="color:#10B981">BİTEN <span id="k-done">0</span></div>
-                <div class="kc-list" id="col-done" data-status="done"></div>
+            <div class="calendar-large">
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span style="font-weight:700;" id="calTitle">...</span>
+                    <div>
+                        <i class="fa-solid fa-chevron-left" style="cursor:pointer; margin-right:10px;" onclick="navCal(-1)"></i>
+                        <i class="fa-solid fa-chevron-right" style="cursor:pointer;" onclick="navCal(1)"></i>
+                    </div>
+                </div>
+                <div class="cl-grid" style="text-align:center; font-size:10px; font-weight:700; color:var(--text-muted); margin-bottom:5px;">
+                    <div>PT</div><div>SA</div><div>ÇA</div><div>PE</div><div>CU</div><div style="color:#ef4444">CT</div><div style="color:#ef4444">PA</div>
+                </div>
+                <div class="cl-grid" id="mainCalGrid"></div>
             </div>
         </div>
     </div>
 
-    <div id="view-list" class="view-wrapper">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-            <input type="text" id="search" class="f-inp" placeholder="Ara..." style="width:250px;" onkeyup="renderList()">
-            <button class="btn-icon" onclick="exportExcel()"><i class="fa-solid fa-download"></i></button>
+    <div id="view-kanban" class="view-section" style="height:100%;">
+        <div class="filter-wrapper">
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="setFilterTime('all', this)">Tümü</button>
+                <button class="filter-btn" onclick="setFilterTime('today', this)">Bugün</button>
+                <button class="filter-btn" onclick="setFilterTime('week', this)">Hafta</button>
+                <button class="filter-btn" onclick="setFilterTime('month', this)">Ay</button>
+            </div>
+            <select id="kTopicFilter" class="filter-select" onchange="renderKanban()">
+                <option value="">Tüm Konular</option>
+            </select>
+            <input type="date" id="kDateFilter" class="filter-date" onchange="renderKanban()">
+            <button class="btn-icon" style="height:34px; width:34px;" onclick="clearKanbanFilters()"><i class="fa-solid fa-filter-circle-xmark"></i></button>
         </div>
-        <div class="table-wrap">
-            <table class="data-table">
-                <thead><tr><th>Durum</th><th>Konu</th><th>Tarih</th><th>Açıklama</th></tr></thead>
+
+        <div class="kanban-container">
+            <div class="kanban-col">
+                <div class="kc-header">YAPILACAKLAR <span id="k-todo-c" style="background:#FEF3C7; padding:2px 6px; border-radius:4px; font-size:11px;">0</span></div>
+                <div class="kc-body" id="col-todo" data-status="todo"></div>
+            </div>
+            <div class="kanban-col">
+                <div class="kc-header" style="color:#2563EB;">İŞLEMDE <span id="k-prog-c" style="background:#DBEAFE; padding:2px 6px; border-radius:4px; font-size:11px;">0</span></div>
+                <div class="kc-body" id="col-progress" data-status="progress"></div>
+            </div>
+            <div class="kanban-col">
+                <div class="kc-header" style="color:#16A34A;">TAMAMLANDI <span id="k-done-c" style="background:#D1FAE5; padding:2px 6px; border-radius:4px; font-size:11px;">0</span></div>
+                <div class="kc-body" id="col-done" data-status="done"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-list" class="view-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:10px;">
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="setListFilter('all', this)">Tümü</button>
+                <button class="filter-btn" onclick="setListFilter('week', this)">Bu Hafta</button>
+                <button class="filter-btn" onclick="setListFilter('month', this)">Bu Ay</button>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="searchInp" class="inp-field" placeholder="Ara..." onkeyup="renderList()" style="width:200px; padding:6px 12px; height:34px;">
+                <button class="btn-icon" style="height:34px; width:34px;" onclick="exportExcel()"><i class="fa-solid fa-download"></i></button>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="custom-table">
+                <thead>
+                    <tr><th>Durum</th><th>Konu</th><th>Öncelik</th><th>Tarih</th><th>Açıklama</th></tr>
+                </thead>
                 <tbody id="listBody"></tbody>
             </table>
         </div>
     </div>
 
-</main>
-
-<div class="bottom-nav">
-    <button class="bn-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Özet</span></button>
-    <button class="bn-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
-    <button class="bn-item" style="color:var(--primary)" onclick="newTask()"><i class="fa-solid fa-plus-circle" style="font-size:28px;"></i></button>
-    <button class="bn-item" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i><span>Liste</span></button>
 </div>
 
-<div id="modal" class="modal-mask">
-    <div class="modal-win">
+<div class="bottom-nav">
+    <button class="bn-item" onclick="showView('dashboard')"><i class="fa-solid fa-chart-pie"></i></button>
+    <button class="bn-item" onclick="showView('kanban')"><i class="fa-solid fa-columns"></i></button>
+    <button class="bn-item" onclick="newTask()" style="color:var(--primary);"><i class="fa-solid fa-circle-plus" style="font-size:32px;"></i></button>
+    <button class="bn-item" onclick="showView('list')"><i class="fa-solid fa-list"></i></button>
+</div>
+
+<div id="modal" class="modal-overlay">
+    <div class="modal-card">
         <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-            <h3 style="margin:0;">İş Detayı</h3>
+            <h3 style="margin:0;">İş Kaydı</h3>
             <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal()"></i>
         </div>
         <input type="hidden" id="tId">
-        <div class="f-group"><label class="f-lbl">Konu</label><select id="tTitle" class="f-inp"></select></div>
+        <div class="inp-group"><label class="inp-label">Konu</label><select id="tTitle" class="inp-field"></select></div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-            <div class="f-group"><label class="f-lbl">Durum</label><select id="tStatus" class="f-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
-            <div class="f-group"><label class="f-lbl">Öncelik</label><select id="tPriority" class="f-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
+            <div class="inp-group"><label class="inp-label">Durum</label><select id="tStatus" class="inp-field"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
+            <div class="inp-group"><label class="inp-label">Öncelik</label><select id="tPriority" class="inp-field"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-            <div class="f-group"><label class="f-lbl">Bitiş Tarihi</label><input type="date" id="tDate" class="f-inp"></div>
-            <div class="f-group"><label class="f-lbl">Saat</label><input type="time" id="tTime" class="f-inp"></div>
+            <div class="inp-group"><label class="inp-label">Tarih</label><input type="date" id="tDate" class="inp-field"></div>
+            <div class="inp-group"><label class="inp-label">Saat</label><input type="time" id="tTime" class="inp-field"></div>
         </div>
-        <div class="f-group"><label class="f-lbl">Açıklama</label><textarea id="tDesc" class="f-inp" rows="3"></textarea></div>
+        <div class="inp-group"><label class="inp-label">Detay</label><textarea id="tDesc" class="inp-field" rows="3"></textarea></div>
         <div style="display:flex; justify-content:space-between; margin-top:20px;">
-            <button class="btn-icon" style="color:#ef4444; border-color:#ef4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
-            <button class="btn-main" onclick="saveTask()">Kaydet</button>
-        </div>
-    </div>
-</div>
-
-<div id="dayModal" class="modal-mask">
-    <div class="modal-win" style="max-height:80vh;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
-            <div>
-                <h3 style="margin:0;" id="dmTitle">Gün Detayı</h3>
-                <p style="margin:0; font-size:12px; color:var(--text-muted);" id="dmDate">...</p>
-            </div>
-            <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px;" onclick="closeDayModal()"></i>
-        </div>
-        
-        <div id="dayTasksContainer" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
-            </div>
-        
-        <div style="margin-top:15px; padding-top:10px; border-top:1px solid var(--border);">
-            <button class="btn-main" style="width:100%; justify-content:center;" onclick="newTaskForDay()">+ Bu Güne Görev Ekle</button>
+            <button class="btn-icon" style="border-color:#EF4444; color:#EF4444;" onclick="delTask()"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn-primary" onclick="saveTask()">Kaydet</button>
         </div>
     </div>
 </div>
@@ -343,22 +328,31 @@
     import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // --- AYARLAR ---
     const firebaseConfig = { apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s", authDomain: "it-tasks-bc974.firebaseapp.com", projectId: "it-tasks-bc974", storageBucket: "it-tasks-bc974.firebasestorage.app", messagingSenderId: "978679373454", appId: "1:978679373454:web:3ee1c689cf1ca321af33df" };
-    
-    let app, db, auth;
-    try { app=initializeApp(firebaseConfig); db=getFirestore(app); auth=getAuth(app); } catch(e){console.error(e);}
+    let app, db, auth; try { app = initializeApp(firebaseConfig); db = getFirestore(app); auth = getAuth(app); } catch (e) {}
 
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
-    let tasks = []; let calDate = new Date(); let selectedDate = new Date();
+    let tasks = []; let calDate = new Date(); 
+    
+    // Filtre Değişkenleri
+    let kTimeFilter = 'all'; // Kanban zaman filtresi
+    let lTimeFilter = 'all'; // Liste zaman filtresi
 
     window.initApp = () => {
-        const s = document.getElementById('tTitle'); TOPICS.forEach(t=>s.innerHTML+=`<option>${t}</option>`);
+        // Dropdownları doldur
+        const s=document.getElementById('tTitle'); 
+        const kFilter = document.getElementById('kTopicFilter');
+        
+        TOPICS.forEach(t=>{
+            s.innerHTML+=`<option>${t}</option>`;
+            kFilter.innerHTML+=`<option value="${t}">${t}</option>`;
+        });
+
         document.getElementById('dateStr').innerText = new Date().toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+        
         onAuthStateChanged(auth, (user) => {
-            if(user) {
+            if (user) {
                 document.getElementById('loginScreen').style.display='none';
-                document.getElementById('uName').innerText = user.email.split('@')[0];
                 listenData();
                 if(window.innerWidth > 768 && typeof Sortable !== 'undefined') initSortable();
             } else document.getElementById('loginScreen').style.display='flex';
@@ -380,12 +374,129 @@
         renderStats(); renderCalendar(); renderKanban(); renderList();
     }
 
-    // --- DASHBOARD ---
+    // --- FİLTRELEME YARDIMCILARI ---
+    function filterByTime(dataset, mode) {
+        const now = new Date();
+        if(mode === 'today') {
+            const today = now.toISOString().split('T')[0];
+            return dataset.filter(t => t.date === today);
+        }
+        if(mode === 'week') {
+            const first = now.getDate() - now.getDay() + 1; 
+            const last = first + 6;
+            const start = new Date(now.setDate(first)); start.setHours(0,0,0,0);
+            const end = new Date(now.setDate(last)); end.setHours(23,59,59,999);
+            // Tarihi geri düzelt (mutation fix)
+            now.setDate(new Date().getDate());
+            return dataset.filter(t => { 
+                if(!t.date) return false;
+                const d = new Date(t.date); 
+                return d >= start && d <= end; 
+            });
+        }
+        if(mode === 'month') {
+            const m = now.getMonth();
+            const y = now.getFullYear();
+            return dataset.filter(t => {
+                if(!t.date) return false;
+                const d = new Date(t.date);
+                return d.getMonth() === m && d.getFullYear() === y;
+            });
+        }
+        return dataset;
+    }
+
+    // --- KANBAN LOGIC ---
+    window.setFilterTime = (mode, btn) => {
+        kTimeFilter = mode;
+        const group = btn.parentElement;
+        Array.from(group.children).forEach(c=>c.classList.remove('active'));
+        btn.classList.add('active');
+        renderKanban();
+    }
+
+    window.clearKanbanFilters = () => {
+        document.getElementById('kTopicFilter').value = "";
+        document.getElementById('kDateFilter').value = "";
+        // Zaman filtresini 'Tümü'ne çek
+        kTimeFilter = 'all';
+        const btns = document.querySelectorAll('.filter-group .filter-btn');
+        btns.forEach(b => b.classList.remove('active'));
+        btns[0].classList.add('active');
+        renderKanban();
+    }
+
+    function renderKanban() {
+        // 1. Zaman Filtresi
+        let filtered = filterByTime(tasks, kTimeFilter);
+
+        // 2. Konu Filtresi
+        const topic = document.getElementById('kTopicFilter').value;
+        if(topic) filtered = filtered.filter(t => t.title === topic);
+
+        // 3. Özel Tarih Filtresi
+        const dateInput = document.getElementById('kDateFilter').value;
+        if(dateInput) filtered = filtered.filter(t => t.date === dateInput);
+
+        const cols={todo:document.getElementById('col-todo'), progress:document.getElementById('col-progress'), done:document.getElementById('col-done')};
+        if(!cols.todo) return;
+        Object.values(cols).forEach(e=>e.innerHTML='');
+        const c={todo:0, progress:0, done:0};
+        
+        filtered.forEach(t=>{
+            if(cols[t.status]) {
+                c[t.status]++;
+                cols[t.status].innerHTML += `
+                <div class="k-card k-p-${t.priority}" onclick="openModal('${t.id}')">
+                    <div style="font-weight:600; margin-bottom:5px;">${t.title}</div>
+                    <div class="kc-meta"><span>${t.code}</span><span>${t.date||''}</span></div>
+                </div>`;
+            }
+        });
+        document.getElementById('k-todo-c').innerText = c.todo;
+        document.getElementById('k-prog-c').innerText = c.progress;
+        document.getElementById('k-done-c').innerText = c.done;
+        
+        if(window.innerWidth > 768) {
+            ['col-todo','col-progress','col-done'].forEach(id => new Sortable(document.getElementById(id), { group:'k', animation:150, onEnd: async(e)=>{ await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')}); }}));
+        }
+    }
+
+    // --- LIST LOGIC ---
+    window.setListFilter = (mode, btn) => {
+        lTimeFilter = mode;
+        const group = btn.parentElement;
+        Array.from(group.children).forEach(c=>c.classList.remove('active'));
+        btn.classList.add('active');
+        renderList();
+    }
+
+    window.renderList = () => {
+        let filtered = filterByTime(tasks, lTimeFilter);
+        
+        const s = document.getElementById('searchInp').value.toLowerCase();
+        const b = document.getElementById('listBody'); if(!b) return;
+        b.innerHTML='';
+        
+        filtered.filter(t => t.title.toLowerCase().includes(s)).forEach(t => {
+            const stClass = t.status==='todo'?'badge-todo':(t.status==='progress'?'badge-prog':'badge-done');
+            const stText = t.status==='todo'?'Bekleyen':(t.status==='progress'?'İşlemde':'Biten');
+            b.innerHTML += `
+            <tr onclick="openModal('${t.id}')">
+                <td><span class="badge ${stClass}">${stText}</span></td>
+                <td style="font-weight:600;">${t.title}</td>
+                <td><span style="color:${t.priority==='Yüksek'?'#EF4444':'inherit'}">${t.priority}</span></td>
+                <td>${t.date||'-'}</td>
+                <td style="color:var(--text-muted); font-size:12px;">${t.desc||''}</td>
+            </tr>`;
+        });
+    }
+
+    // --- DASHBOARD & CALENDAR (UNCHANGED) ---
     function renderStats() {
         const c={todo:0, progress:0, done:0}; tasks.forEach(t=>{if(c[t.status]!==undefined)c[t.status]++});
         document.getElementById('dTotal').innerText = tasks.length;
         document.getElementById('dTodo').innerText = c.todo; document.getElementById('dProg').innerText = c.progress; document.getElementById('dDone').innerText = c.done;
-        
         if(window.chart) window.chart.destroy();
         const ctx = document.getElementById('chartCanvas');
         if(ctx) window.chart = new Chart(ctx, {
@@ -397,112 +508,36 @@
 
     function renderCalendar() {
         const y=calDate.getFullYear(), m=calDate.getMonth();
-        document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
-        const g=document.getElementById('calendarGrid');
-        if(!g) return;
+        const titleEl = document.getElementById('calTitle'); if(titleEl) titleEl.innerText = calDate.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
+        const g=document.getElementById('mainCalGrid'); if(!g) return;
         g.innerHTML='';
-        
         const fDay=new Date(y,m,1).getDay(), off=fDay===0?6:fDay-1, days=new Date(y,m+1,0).getDate();
         for(let i=0; i<off; i++) g.innerHTML+='<div></div>';
-        
         for(let i=1; i<=days; i++) {
             const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
             const dayTasks = tasks.filter(t=>t.date===ds && t.status!=='done');
-            let dots = ''; dayTasks.forEach(t=> { let c = t.priority==='Yüksek'?'#EF4444':(t.priority==='Orta'?'#F59E0B':'#10B981'); dots+=`<div class="cg-dot" style="background:${c}"></div>`; });
+            let dots = ''; dayTasks.forEach(t=> { let c = t.priority==='Yüksek'?'#EF4444':(t.priority==='Orta'?'#F59E0B':'#10B981'); dots+=`<div class="cl-dot" style="background:${c}"></div>`; });
             const isToday = new Date().toDateString() === new Date(y,m,i).toDateString();
-            g.innerHTML += `<div class="cg-day ${isToday?'today':''}" onclick="openDayModal('${ds}')">${i}<div class="cg-dots">${dots}</div></div>`;
+            g.innerHTML += `<div class="cl-day ${isToday?'today':''}" onclick="alert('Bu güne ait ${dayTasks.length} görev var.')">${i}<div class="cl-dots">${dots}</div></div>`;
         }
     }
     window.navCal = (d) => { calDate.setMonth(calDate.getMonth()+d); renderCalendar(); }
 
-    // --- DAY MODAL ---
-    window.openDayModal = (dateStr) => {
-        selectedDate = new Date(dateStr);
-        document.getElementById('dmTitle').innerText = "Günün Görevleri";
-        document.getElementById('dmDate').innerText = selectedDate.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
-        
-        const container = document.getElementById('dayTasksContainer');
-        container.innerHTML = '';
-        
-        const dayTasks = tasks.filter(t => t.date === dateStr);
-        
-        if(dayTasks.length === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">Bu güne ait görev bulunamadı.</div>';
-        } else {
-            dayTasks.forEach(t => {
-                const stText = t.status==='todo'?'BEKLEYEN':(t.status==='progress'?'İŞLEMDE':'BİTEN');
-                const stColor = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
-                const stBg = t.status==='todo'?'#FEF3C7':(t.status==='progress'?'#DBEAFE':'#D1FAE5');
-                
-                container.innerHTML += `
-                <div class="day-task-row" onclick="openModal('${t.id}')">
-                    <div class="dt-time">${t.time || '--:--'}</div>
-                    <div class="dt-content">
-                        <div class="dt-head">${t.title}</div>
-                        <div class="dt-sub">${t.desc || ''}</div>
-                    </div>
-                    <div class="dt-status" style="background:${stBg}; color:${stColor}">${stText}</div>
-                </div>`;
-            });
-        }
-        
-        document.getElementById('dayModal').classList.add('open');
-    }
-    window.closeDayModal = () => document.getElementById('dayModal').classList.remove('open');
-    window.newTaskForDay = () => {
-        closeDayModal();
-        const dStr = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth()+1).padStart(2,'0')}-${String(selectedDate.getDate()).padStart(2,'0')}`;
-        document.getElementById('tId').value=''; 
-        document.getElementById('tTitle').value=''; 
-        document.getElementById('tDate').value = dStr;
-        document.getElementById('modal').classList.add('open');
-    }
-
-    // --- KANBAN ---
-    function renderKanban() {
-        const cols={todo:document.getElementById('col-todo'), progress:document.getElementById('col-progress'), done:document.getElementById('col-done')};
-        if(!cols.todo) return;
-        Object.values(cols).forEach(e=>e.innerHTML='');
-        const c={todo:0, progress:0, done:0};
-        
-        tasks.forEach(t=>{
-            if(cols[t.status]) {
-                c[t.status]++;
-                cols[t.status].innerHTML += `
-                <div class="k-card kp-${t.priority}" onclick="openModal('${t.id}')">
-                    <div style="font-weight:600; margin-bottom:5px;">${t.title}</div>
-                    <div style="font-size:12px; color:var(--text-muted);">${t.date||''}</div>
-                </div>`;
-            }
-        });
-        document.getElementById('k-todo').innerText = c.todo;
-        document.getElementById('k-prog').innerText = c.progress;
-        document.getElementById('k-done').innerText = c.done;
-        
-        if(window.innerWidth > 768) {
-            ['col-todo','col-progress','col-done'].forEach(id => new Sortable(document.getElementById(id), { group:'k', animation:150, onEnd: async(e)=>{ await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')}); }}));
-        }
-    }
-
-    // --- LIST ---
-    window.renderList = () => {
-        const s = document.getElementById('search') ? document.getElementById('search').value.toLowerCase() : '';
-        const b = document.getElementById('listBody'); if(!b) return;
-        b.innerHTML='';
-        tasks.filter(t => t.title.toLowerCase().includes(s)).forEach(t => {
-            const stMap = {'todo':'Bekleyen', 'progress':'İşlemde', 'done':'Tamamlandı'};
-            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td>${stMap[t.status]}</td><td style="font-weight:600;">${t.title}</td><td>${t.date||'-'}</td><td style="color:var(--text-muted);">${t.desc||''}</td></tr>`;
-        });
-    }
-
-    // --- ACTIONS ---
+    // --- GENERAL ---
     window.showView = (v, btn) => {
-        document.querySelectorAll('.view-wrapper').forEach(e=>e.classList.remove('active'));
+        document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active'));
         const el = document.getElementById('view-'+v); if(el) el.classList.add('active');
         document.getElementById('pageTitle').innerText = (v==='dashboard'?'Genel Bakış':(v==='kanban'?'İş Panosu':'Liste'));
         document.querySelectorAll('.nav-item, .bn-item').forEach(b=>b.classList.remove('active'));
         if(btn) btn.classList.add('active');
-        renderAll();
+        if(v==='list') renderList();
+        if(v==='kanban') renderKanban();
+    }
+    
+    window.toggleSidebar = () => { 
+        document.getElementById('sidebar').classList.toggle('collapsed'); 
+        const icon = document.getElementById('toggleIcon');
+        icon.classList.toggle('fa-chevron-left'); icon.classList.toggle('fa-chevron-right');
     }
 
     window.newTask = () => { document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; document.getElementById('modal').classList.add('open'); }
@@ -516,7 +551,6 @@
             document.getElementById('modal').classList.add('open');
         }
     }
-    
     window.saveTask = async () => {
         const id = document.getElementById('tId').value;
         const d = { title:document.getElementById('tTitle').value, status:document.getElementById('tStatus').value, priority:document.getElementById('tPriority').value, date:document.getElementById('tDate').value, desc:document.getElementById('tDesc').value };
