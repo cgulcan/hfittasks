@@ -17,8 +17,8 @@
     
     <style>
         :root {
-            /* --- KURUMSAL RENK PALETİ --- */
-            --bg-body: #F8FAFC;
+            /* --- KURUMSAL GRİ TEMA --- */
+            --bg-body: #E2E8F0;  /* Hafif Gri Arka Plan */
             --bg-sidebar: #FFFFFF;
             --bg-card: #FFFFFF;
             
@@ -28,11 +28,11 @@
             
             --text-main: #0F172A;
             --text-muted: #64748B;
-            --border: #E2E8F0;
+            --border: #CBD5E1;   /* Kenarlıklar biraz daha belirgin */
             
-            --radius: 8px; /* Daha keskin, kompakt radius */
-            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --radius: 8px;
+            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
             
             /* Durum Renkleri */
             --c-high-bg: #FEF2F2; --c-high-tx: #B91C1C;
@@ -65,7 +65,7 @@
             color: var(--text-muted); font-weight: 500; font-size: 13px; border-radius: 6px; 
             cursor: pointer; transition: 0.2s; margin-bottom: 2px; 
         }
-        .nav-item:hover { background: var(--bg-body); color: var(--primary); }
+        .nav-item:hover { background: #F1F5F9; color: var(--primary); }
         .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 700; }
         .user-box { padding: 15px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
         .avatar { width: 32px; height: 32px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
@@ -81,7 +81,8 @@
         .btn-primary { 
             background: var(--primary); color: #fff; border: none; height: 36px; padding: 0 16px; 
             border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; 
-            display: flex; align-items: center; gap: 6px; transition: 0.2s;
+            display: flex; align-items: center; gap: 6px; transition: 0.2s; 
+            box-shadow: var(--shadow-sm);
         }
         .btn-primary:active { transform: scale(0.98); }
 
@@ -92,10 +93,9 @@
         /* --- 1. DASHBOARD (TAKVİM GÖREVLERİ GÖRÜNÜR) --- */
         .dash-grid { display: grid; grid-template-columns: 3fr 1fr; gap: 20px; height: 100%; min-height: 500px; }
         
-        /* Takvim Sol Panel */
         .calendar-wrapper { 
             background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); 
-            display: flex; flex-direction: column; padding: 20px; height: 100%; overflow: hidden; 
+            display: flex; flex-direction: column; padding: 20px; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm);
         }
         .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .cal-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 5px; text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); }
@@ -110,11 +110,10 @@
             background: #fff; display: flex; flex-direction: column; padding: 4px; 
             cursor: pointer; transition: 0.1s; min-height: 0; overflow: hidden; position: relative;
         }
-        .c-cell:hover { background: #f8fafc; }
-        .c-cell.today { background: #eff6ff; }
+        .c-cell:hover { background: #F8FAFC; }
+        .c-cell.today { background: #F0F9FF; }
         .c-num { font-size: 11px; font-weight: 700; margin-bottom: 2px; color: var(--text-main); text-align: right; padding-right: 4px; }
         
-        /* Takvim İçi Görev Şeridi */
         .c-task { 
             font-size: 10px; padding: 2px 4px; border-radius: 3px; margin-bottom: 2px; 
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
@@ -126,9 +125,8 @@
         .ct-Düşük { background: var(--c-low-bg); color: var(--c-low-tx); border-left-color: var(--c-low-tx); }
         .c-more { font-size: 9px; text-align: center; color: var(--text-muted); font-weight: 600; margin-top: auto; }
 
-        /* Sağ Panel (İstatistikler) */
         .side-panel { display: flex; flex-direction: column; gap: 15px; }
-        .mini-stat { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: space-between; }
+        .mini-stat { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); }
         .ms-val { font-size: 20px; font-weight: 800; color: var(--text-main); }
         .ms-lbl { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
 
@@ -137,9 +135,9 @@
             display: flex; gap: 15px; height: 100%; overflow-x: auto; padding-bottom: 5px; 
         }
         .kb-col { 
-            flex: 1; /* Ekranı doldur */
-            min-width: 320px; /* Çok küçülmesin */
-            background: #F1F5F9; border: 1px solid var(--border); border-radius: 8px; 
+            flex: 1; min-width: 320px; 
+            background: #E2E8F0; /* Sütunlar hafif koyu gri */
+            border: 1px solid var(--border); border-radius: 8px; 
             display: flex; flex-direction: column; height: 100%; 
         }
         .kb-head { 
@@ -147,13 +145,12 @@
             border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 700; color: var(--text-muted); 
             display: flex; justify-content: space-between; align-items: center; 
         }
-        .kb-count { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 10px; color: var(--text-main); }
+        .kb-count { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 10px; color: var(--text-main); }
         .kb-list { 
             flex: 1; overflow-y: auto; padding: 10px; 
             display: flex; flex-direction: column; gap: 10px; 
         }
 
-        /* DETAYLI KART TASARIMI */
         .kb-card {
             background: #fff; border: 1px solid var(--border); border-radius: 6px;
             padding: 12px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.03);
@@ -167,31 +164,37 @@
         .kb-pri-Düşük { border-left-color: #16A34A; }
 
         .kbc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-        .kbc-code { font-size: 10px; font-weight: 700; color: var(--text-muted); background: #f1f5f9; padding: 1px 4px; border-radius: 3px; font-family: monospace; }
+        .kbc-code { font-size: 10px; font-weight: 700; color: var(--text-muted); background: #F1F5F9; padding: 1px 4px; border-radius: 3px; font-family: monospace; }
         .kbc-date { font-size: 10px; color: var(--text-muted); font-weight: 500; }
         
         .kbc-title { font-size: 13px; font-weight: 700; color: var(--text-main); line-height: 1.3; }
-        
-        /* AÇIKLAMA: Tam görünür */
         .kbc-desc { 
             font-size: 12px; color: var(--text-muted); line-height: 1.5; 
-            white-space: pre-wrap; /* Alt satıra geç */
+            white-space: pre-wrap; 
             background: #F8FAFC; padding: 6px; border-radius: 4px; 
             border: 1px solid #F1F5F9; margin-top: 2px;
         }
-
-        .kbc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 6px; border-top: 1px solid #f1f5f9; }
+        .kbc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 6px; border-top: 1px solid #F1F5F9; }
         .kbc-user { width: 20px; height: 20px; background: var(--primary); color: #fff; font-size: 9px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .kbc-status { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
 
-        /* --- 3. LISTE --- */
-        .list-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        /* --- 3. LISTE (SIRALANABİLİR & TIKLANABİLİR HEADER) --- */
+        .list-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
         .list-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .list-table th { text-align: left; padding: 12px; background: #f8fafc; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+        
+        /* Tıklanabilir Başlıklar */
+        .list-table th { 
+            text-align: left; padding: 12px; background: #F8FAFC; color: var(--text-muted); 
+            font-weight: 700; border-bottom: 1px solid var(--border); 
+            cursor: pointer; user-select: none; transition: 0.2s;
+        }
+        .list-table th:hover { background: #EFF6FF; color: var(--primary); }
+        .list-table th i { margin-left: 5px; opacity: 0.5; font-size: 11px; }
+        
         .list-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-main); vertical-align: top; }
         .list-table tr:hover td { background: #f1f5f9; cursor: pointer; }
 
-        /* --- MODAL (POPUP) --- */
+        /* --- MODAL --- */
         .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-mask.open { display: flex; }
         .modal-box { background: #fff; width: 500px; padding: 24px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
@@ -200,7 +203,7 @@
         .f-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: inherit; }
         .f-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
 
-        /* GÜN DETAY MODALI */
+        /* DAY DETAIL */
         .day-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; max-height: 400px; overflow-y: auto; }
         .day-task { 
             padding: 12px; border: 1px solid var(--border); border-radius: 8px; 
@@ -215,30 +218,25 @@
 
         .bottom-nav { display: none; }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .dash-grid { display: flex; flex-direction: column; }
             .side-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
             .main-content { padding-bottom: 80px; }
-            
-            /* Mobil Pano: Yatay Kaydırma */
             .kanban-wrapper { scroll-snap-type: x mandatory; padding-right: 20px; gap: 15px; }
             .kb-col { min-width: 88vw; scroll-snap-align: center; }
-            
-            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background: #fff; border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #fff; border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
             .bn-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 9px; gap: 3px; }
             .bn-btn.active { color: var(--primary); }
-            
             .modal-box { width: 100%; height: auto; max-height: 85vh; border-radius: 16px 16px 0 0; position: absolute; bottom: 0; }
-            .c-cell { min-height: 70px; } /* Mobilde takvim hücreleri */
+            .c-cell { min-height: 70px; }
         }
     </style>
 </head>
 <body onload="initApp()">
 
-<div id="loginScreen" style="position:fixed; inset:0; background:#f1f5f9; z-index:5000; display:flex; align-items:center; justify-content:center;">
-    <div style="background:#fff; padding:30px; border-radius:12px; border:1px solid #e2e8f0; width:300px; text-align:center;">
+<div id="loginScreen" style="position:fixed; inset:0; background:#E2E8F0; z-index:5000; display:flex; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:30px; border-radius:12px; border:1px solid #e2e8f0; width:300px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
         <img src="logo.png" style="width:60px; margin-bottom:15px;">
         <h2 style="margin:0 0 10px; color:#0065B3;">BT Portal</h2>
         <input type="email" id="email" class="f-inp" placeholder="E-posta" style="margin-bottom:10px;">
@@ -323,7 +321,15 @@
         </div>
         <div class="list-wrap">
             <table class="list-table">
-                <thead><tr><th>DURUM</th><th>KONU</th><th>TARİH</th><th>AÇIKLAMA</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th onclick="setSort('status')">DURUM <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="setSort('title')">KONU <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="setSort('priority')">ÖNCELİK <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="setSort('date')">TARİH <i class="fa-solid fa-sort"></i></th>
+                        <th>AÇIKLAMA</th>
+                    </tr>
+                </thead>
                 <tbody id="listBody"></tbody>
             </table>
         </div>
@@ -331,10 +337,10 @@
 </main>
 
 <div class="bottom-nav">
-    <button class="bn-btn active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i>Özet</button>
-    <button class="bn-btn" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i>Pano</button>
+    <button class="bn-btn active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Özet</span></button>
+    <button class="bn-btn" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
     <button class="bn-btn" onclick="newTask()" style="color:var(--primary)"><i class="fa-solid fa-circle-plus" style="font-size:24px;"></i></button>
-    <button class="bn-btn" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i>Liste</button>
+    <button class="bn-btn" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i><span>Liste</span></button>
 </div>
 
 <div id="modal" class="modal-mask">
@@ -363,11 +369,8 @@
 
 <div id="dayModal" class="modal-mask">
     <div class="modal-box">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
-            <div>
-                <h3 style="margin:0;" id="dmTitle">Günün Görevleri</h3>
-                <p style="margin:0; font-size:11px; color:#666;" id="dmDate">...</p>
-            </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:10px; border-bottom:1px solid #eee;">
+            <h3 style="margin:0;" id="dmTitle">Gün Detayı</h3>
             <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeDayModal()"></i>
         </div>
         <div id="dayListContent" class="day-list"></div>
@@ -380,13 +383,14 @@
     import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // BURAYA KENDİ CONFIG BİLGİLERİNİZİ YAZIN
     const firebaseConfig = { apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s", authDomain: "it-tasks-bc974.firebaseapp.com", projectId: "it-tasks-bc974", storageBucket: "it-tasks-bc974.firebasestorage.app", messagingSenderId: "978679373454", appId: "1:978679373454:web:3ee1c689cf1ca321af33df" };
-    
     let app, db, auth; try { app=initializeApp(firebaseConfig); db=getFirestore(app); auth=getAuth(app); } catch(e){console.error(e);}
 
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
     let tasks = []; let calDate = new Date(); let selectedDate = new Date();
+    
+    // SIRALAMA AYARLARI
+    let currentSort = { field: 'date', order: 'desc' };
 
     window.initApp = () => {
         const s = document.getElementById('tTitle'); TOPICS.forEach(t=>s.innerHTML+=`<option>${t}</option>`);
@@ -414,6 +418,7 @@
 
     function renderAll() { renderStats(); renderCalendar(); renderKanban(); renderList(); }
 
+    // --- DASHBOARD ---
     function renderStats() {
         const c={todo:0, progress:0, done:0}; tasks.forEach(t=>{if(c[t.status]!==undefined)c[t.status]++});
         document.getElementById('dTotal').innerText = tasks.length;
@@ -441,7 +446,6 @@
             const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
             const dayTasks = tasks.filter(t=>t.date===ds && t.status!=='done');
             
-            // TAKVİM İÇİ GÖREVLER
             let taskHtml = '';
             dayTasks.slice(0,3).forEach(t => {
                 let pCls = t.priority==='Yüksek'?'ct-Yüksek':(t.priority==='Orta'?'ct-Orta':'ct-Düşük');
@@ -455,10 +459,9 @@
     }
     window.navCal = (d) => { calDate.setMonth(calDate.getMonth()+d); renderCalendar(); }
 
-    // --- GÜN DETAY MODALI (DETAYLI GÖSTERİM) ---
     window.openDayDetails = (dateStr) => {
         selectedDate = new Date(dateStr);
-        document.getElementById('dmDate').innerText = selectedDate.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        document.getElementById('dmTitle').innerText = selectedDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
         const cont = document.getElementById('dayListContent'); cont.innerHTML = '';
         const dayTasks = tasks.filter(t=>t.date === dateStr);
         
@@ -467,7 +470,6 @@
             dayTasks.forEach(t => {
                 let priColor = t.priority==='Yüksek'?'#DC2626':(t.priority==='Orta'?'#EA580C':'#16A34A');
                 let stColor = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
-                let borderCol = t.priority==='Yüksek'?'#FECACA':(t.priority==='Orta'?'#FED7AA':'#BBF7D0');
                 
                 cont.innerHTML += `
                 <div class="day-task" onclick="openModal('${t.id}')" style="border-left-color:${priColor};">
@@ -485,7 +487,7 @@
     window.closeDayModal = () => document.getElementById('dayModal').classList.remove('open');
     window.newTaskForDay = () => { closeDayModal(); const ds=`${selectedDate.getFullYear()}-${String(selectedDate.getMonth()+1).padStart(2,'0')}-${String(selectedDate.getDate()).padStart(2,'0')}`; document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; document.getElementById('tDate').value=ds; document.getElementById('modal').classList.add('open'); }
 
-    // --- KANBAN (FULL DETAIL & AUTO HEIGHT) ---
+    // --- KANBAN ---
     function renderKanban() {
         const cols={todo:document.getElementById('col-todo'), progress:document.getElementById('col-progress'), done:document.getElementById('col-done')};
         if(!cols.todo) return;
@@ -524,19 +526,58 @@
         }
     }
 
-    // --- LIST ---
+    // --- LISTE SIRALAMA MANTIĞI ---
+    window.setSort = (field) => {
+        if (currentSort.field === field) {
+            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.field = field;
+            currentSort.order = 'asc';
+        }
+        renderList();
+    }
+
     window.renderList = () => {
         const s = document.getElementById('search').value.toLowerCase();
         const b = document.getElementById('listBody'); if(!b) return;
         b.innerHTML='';
-        tasks.filter(t => t.title.toLowerCase().includes(s)).forEach(t => {
+        
+        let filtered = tasks.filter(t => t.title.toLowerCase().includes(s));
+        
+        // Sorting
+        filtered.sort((a, b) => {
+            let valA = a[currentSort.field] || '';
+            let valB = b[currentSort.field] || '';
+            let order = currentSort.order === 'asc' ? 1 : -1;
+
+            if (currentSort.field === 'date') {
+                valA = new Date(valA || 0); valB = new Date(valB || 0);
+            } else {
+                valA = valA.toString().toLowerCase(); valB = valB.toString().toLowerCase();
+            }
+
+            if (valA < valB) return -1 * order;
+            if (valA > valB) return 1 * order;
+            return 0;
+        });
+
+        filtered.forEach(t => {
             const stMap = {'todo':'Bekleyen', 'progress':'İşlemde', 'done':'Tamamlandı'};
             const col = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
             const bg = t.status==='todo'?'#FEF3C7':(t.status==='progress'?'#DBEAFE':'#D1FAE5');
-            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td><td style="font-weight:600;">${t.title}</td><td>${t.date||'-'}</td><td style="color:#666;">${(t.desc||'').substring(0,40)}</td></tr>`;
+            const priCol = t.priority==='Yüksek'?'#DC2626':(t.priority==='Orta'?'#D97706':'#16A34A');
+
+            b.innerHTML += `<tr onclick="openModal('${t.id}')">
+                <td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td>
+                <td style="font-weight:600;">${t.title}</td>
+                <td style="color:${priCol}; font-weight:600; font-size:11px;">${t.priority}</td>
+                <td>${t.date||'-'}</td>
+                <td style="color:#666;">${(t.desc||'').substring(0,40)}</td>
+            </tr>`;
         });
     }
 
+    // --- ACTIONS ---
     window.showView = (v, btn) => {
         document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active'));
         document.getElementById('view-'+v).classList.add('active');
