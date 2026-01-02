@@ -4,12 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#ffffff">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Halk BT">
     <title>Halk Faktoring | BT Yönetim</title>
-    
-    <link rel="manifest" href='data:application/manifest+json;base64,eyJuYW1lIjoiSGFsayBCVCBQb3J0YWwiLCJzaG9ydF9uYW1lIjoiSGFsayBCVCIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3IiOiIjRjhGQUZDIiwidGhlbWVfY29sb3IiOiIjZmZmZmZmIiwiaWNvbnMiOlt7InNyYyI6Imh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzkxMzEvOTEzMTU0Ni5wbmciLCJzaXplcyI6IjUxMng1MTIiLCJ0eXBlIjoiaW1hZ2UvcG5nIn1dfQ=='>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +18,7 @@
     
     <style>
         :root {
+            /* --- VARSAYILAN TEMA (KURUMSAL MAVİ) --- */
             --bg-body: #E2E8F0;
             --bg-sidebar: #FFFFFF;
             --bg-card: #FFFFFF;
@@ -38,70 +34,94 @@
             --radius: 8px;
             --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1);
             
-            --c-high-bg: #FEF2F2; --c-high-tx: #B91C1C;
-            --c-mid-bg: #FFF7ED; --c-mid-tx: #C2410C;
-            --c-low-bg: #F0FDF4; --c-low-tx: #15803D;
-            
             --header-h: 60px;
             --sidebar-w: 250px;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); height: 100dvh; display: flex; overflow: hidden; font-size: 13px; }
-
-        /* --- TOAST BİLDİRİM STİLİ (YENİ) --- */
-        .toast-container {
-            position: fixed; top: 20px; right: 20px; z-index: 9999;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .toast {
-            background: #fff; padding: 12px 16px; border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 4px solid #ccc;
-            display: flex; align-items: center; gap: 10px; min-width: 250px;
-            animation: slideIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            font-weight: 500;
-        }
-        .toast.success { border-left-color: #10B981; }
-        .toast.success i { color: #10B981; }
-        .toast.error { border-left-color: #EF4444; }
-        .toast.error i { color: #EF4444; }
-        .toast.info { border-left-color: #3B82F6; }
-        .toast.info i { color: #3B82F6; }
+        /* --- TEMA SEÇENEKLERİ --- */
         
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
+        /* 1. EMERALD (YEŞİL) */
+        [data-theme="emerald"] {
+            --primary: #059669;
+            --primary-light: #D1FAE5;
+            --primary-dark: #047857;
+            --bg-body: #ECFDF5;
+        }
 
-        /* SIDEBAR */
+        /* 2. ROYAL (MOR) */
+        [data-theme="royal"] {
+            --primary: #7C3AED;
+            --primary-light: #EDE9FE;
+            --primary-dark: #6D28D9;
+            --bg-body: #F3F4F6;
+        }
+
+        /* 3. GECE MODU (DARK) */
+        [data-theme="dark"] {
+            --bg-body: #0F172A;
+            --bg-sidebar: #1E293B;
+            --bg-card: #1E293B;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #334151;
+            --primary: #38BDF8;
+            --primary-light: rgba(56, 189, 248, 0.1);
+            --primary-dark: #0EA5E9;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); height: 100dvh; display: flex; overflow: hidden; font-size: 13px; transition: background 0.3s, color 0.3s; }
+
+        /* --- SIDEBAR --- */
         .sidebar { width: var(--sidebar-w); background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 50; flex-shrink: 0; }
         .logo-box { height: var(--header-h); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid var(--border); font-weight: 800; font-size: 16px; color: var(--primary); gap: 8px; }
         .nav-menu { flex: 1; padding: 15px 10px; overflow-y: auto; }
         .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-muted); font-weight: 500; font-size: 13px; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-bottom: 2px; }
-        .nav-item:hover { background: #F1F5F9; color: var(--primary); }
+        .nav-item:hover { background: var(--bg-body); color: var(--primary); }
         .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 700; }
         .user-box { padding: 15px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
         .avatar { width: 32px; height: 32px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
 
-        /* MAIN */
+        /* --- MAIN --- */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
         .topbar { height: var(--header-h); background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
-        .page-title h2 { margin: 0; font-size: 18px; font-weight: 700; }
+        .page-title h2 { margin: 0; font-size: 18px; font-weight: 700; color: var(--text-main); }
         .page-title p { margin: 0; font-size: 11px; color: var(--text-muted); }
+        
+        .top-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-icon { width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); background: var(--bg-card); position: relative; }
+        .btn-icon:hover { border-color: var(--primary); color: var(--primary); }
+
         .btn-primary { background: var(--primary); color: #fff; border: none; height: 36px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; box-shadow: var(--shadow-sm); }
         .btn-primary:active { transform: scale(0.98); }
+
+        /* TEMA MENÜSÜ DROPDOWN */
+        .theme-dropdown {
+            position: absolute; top: 50px; right: 0; width: 180px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 8px; display: none; z-index: 2000;
+        }
+        .theme-dropdown.show { display: block; animation: slideDown 0.2s; }
+        @keyframes slideDown { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
+        
+        .theme-opt { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 6px; cursor: pointer; color: var(--text-main); font-weight: 500; font-size: 12px; }
+        .theme-opt:hover { background: var(--bg-body); }
+        .color-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
 
         .view-section { flex: 1; padding: 20px; overflow-y: auto; display: none; flex-direction: column; gap: 20px; }
         .view-section.active { display: flex; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 1. DASHBOARD */
+        /* --- DASHBOARD --- */
         .dash-grid { display: grid; grid-template-columns: 3fr 1fr; gap: 20px; height: 100%; min-height: 500px; }
         .calendar-wrapper { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; padding: 20px; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); }
         .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .cal-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 5px; text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); }
         .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; flex: 1; overflow: hidden; }
-        .c-cell { background: #fff; display: flex; flex-direction: column; padding: 4px; cursor: pointer; transition: 0.1s; min-height: 0; overflow: hidden; position: relative; }
-        .c-cell:hover { background: #F8FAFC; }
-        .c-cell.today { background: #F0F9FF; }
+        .c-cell { background: var(--bg-card); display: flex; flex-direction: column; padding: 4px; cursor: pointer; transition: 0.1s; min-height: 0; overflow: hidden; position: relative; }
+        .c-cell:hover { background: var(--bg-body); }
+        .c-cell.today { background: var(--primary-light); }
         .c-num { font-size: 11px; font-weight: 700; margin-bottom: 2px; color: var(--text-main); text-align: right; padding-right: 4px; }
         .c-task { font-size: 10px; padding: 2px 4px; border-radius: 3px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; background: var(--primary-light); color: var(--primary); border-left: 3px solid var(--primary); display: block; }
         .c-more { font-size: 9px; text-align: center; color: var(--text-muted); font-weight: 600; margin-top: auto; }
@@ -111,56 +131,69 @@
         .ms-val { font-size: 20px; font-weight: 800; color: var(--text-main); }
         .ms-lbl { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
 
-        /* 2. KANBAN */
+        /* --- KANBAN --- */
         .kanban-wrapper { display: flex; gap: 15px; height: 100%; overflow-x: auto; padding-bottom: 5px; }
-        .kb-col { flex: 1; min-width: 320px; background: #E2E8F0; border: 1px solid var(--border); border-radius: 8px; display: flex; flex-direction: column; height: 100%; }
-        .kb-head { padding: 10px 12px; background: #fff; border-bottom: 1px solid var(--border); border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 700; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
-        .kb-count { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 10px; color: var(--text-main); }
+        .kb-col { flex: 1; min-width: 320px; background: var(--bg-body); border: 1px solid var(--border); border-radius: 8px; display: flex; flex-direction: column; height: 100%; }
+        .kb-head { padding: 10px 12px; background: var(--bg-card); border-bottom: 1px solid var(--border); border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 700; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
+        .kb-count { background: var(--bg-body); padding: 2px 6px; border-radius: 4px; font-size: 10px; color: var(--text-main); }
         .kb-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
-        .kb-card { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 12px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 3px solid transparent; transition: 0.1s; display: flex; flex-direction: column; gap: 6px; }
+        
+        .kb-card { 
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; 
+            padding: 12px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.03); 
+            border-left: 3px solid transparent; transition: 0.1s; display: flex; flex-direction: column; gap: 6px; 
+        }
         .kb-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); border-color: var(--primary); }
         .kb-pri-Yüksek { border-left-color: #DC2626; } .kb-pri-Orta { border-left-color: #EA580C; } .kb-pri-Düşük { border-left-color: #16A34A; }
+        
         .kbc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-        .kbc-code { font-size: 10px; font-weight: 700; color: var(--text-muted); background: #F1F5F9; padding: 1px 4px; border-radius: 3px; font-family: monospace; }
+        .kbc-code { font-size: 10px; font-weight: 700; color: var(--text-muted); background: var(--bg-body); padding: 1px 4px; border-radius: 3px; font-family: monospace; }
         .kbc-date { font-size: 10px; color: var(--text-muted); font-weight: 500; }
         .kbc-title { font-size: 13px; font-weight: 700; color: var(--text-main); line-height: 1.3; }
-        .kbc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap; background: #F8FAFC; padding: 6px; border-radius: 4px; border: 1px solid #F1F5F9; margin-top: 2px; }
-        .kbc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 6px; border-top: 1px solid #F1F5F9; }
+        .kbc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap; background: var(--bg-body); padding: 6px; border-radius: 4px; border: 1px solid var(--border); margin-top: 2px; }
+        .kbc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 6px; border-top: 1px solid var(--bg-body); }
         .kbc-user { width: 20px; height: 20px; background: var(--primary); color: #fff; font-size: 9px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .kbc-status { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
 
-        /* 3. LISTE */
+        /* --- LISTE --- */
         .list-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
         .list-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .list-table th { text-align: left; padding: 12px; background: #F8FAFC; color: var(--text-muted); font-weight: 700; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
-        .list-table th:hover { background: #EFF6FF; color: var(--primary); }
+        .list-table th { text-align: left; padding: 12px; background: var(--bg-body); color: var(--text-muted); font-weight: 700; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+        .list-table th:hover { background: var(--primary-light); color: var(--primary); }
         .list-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-main); vertical-align: top; }
-        .list-table tr:hover td { background: #f1f5f9; cursor: pointer; }
+        .list-table tr:hover td { background: var(--bg-body); cursor: pointer; }
 
-        /* MODAL */
+        /* --- MODAL --- */
         .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-mask.open { display: flex; }
-        .modal-box { background: #fff; width: 550px; padding: 24px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-box { background: var(--bg-card); width: 550px; padding: 24px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
         .f-group { margin-bottom: 12px; }
         .f-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block; text-transform: uppercase; }
-        .f-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: inherit; }
+        .f-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: inherit; background: var(--bg-body); color: var(--text-main); }
         .f-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
 
         .comments-area { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; display: flex; flex-direction: column; flex: 1; min-height: 200px; }
-        .cm-list { flex: 1; overflow-y: auto; background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; }
-        .cm-item { background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #eee; font-size: 12px; }
+        .cm-list { flex: 1; overflow-y: auto; background: var(--bg-body); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .cm-item { background: var(--bg-card); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; }
         .cm-header { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-bottom: 4px; font-weight: 700; }
         .cm-text { color: var(--text-main); line-height: 1.4; }
         .cm-input-row { display: flex; gap: 8px; }
         .cm-input-row input { flex: 1; }
 
         .day-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; max-height: 400px; overflow-y: auto; }
-        .day-task { padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: 0.2s; background: #fff; border-left: 4px solid transparent; }
-        .day-task:hover { border-color: var(--primary); background: #F8FAFC; }
+        .day-task { padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: 0.2s; background: var(--bg-card); border-left: 4px solid transparent; }
+        .day-task:hover { border-color: var(--primary); background: var(--bg-body); }
         .dt-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
-        .dt-title { font-weight: 700; font-size: 14px; }
+        .dt-title { font-weight: 700; font-size: 14px; color: var(--text-main); }
         .dt-time { font-size: 11px; color: var(--text-muted); }
-        .dt-desc { font-size: 12px; color: #555; line-height: 1.4; background: #f9f9f9; padding: 6px; border-radius: 4px; }
+        .dt-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; background: var(--bg-body); padding: 6px; border-radius: 4px; }
+
+        /* TOAST */
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: #fff; padding: 12px 16px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 4px solid #ccc; display: flex; align-items: center; gap: 10px; min-width: 250px; font-weight: 500; animation: slideIn 0.3s; color: #333; }
+        .toast.success { border-left-color: #10B981; } .toast.success i { color: #10B981; }
+        .toast.error { border-left-color: #EF4444; } .toast.error i { color: #EF4444; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         .bottom-nav { display: none; }
 
@@ -171,7 +204,7 @@
             .main-content { padding-bottom: 80px; }
             .kanban-wrapper { scroll-snap-type: x mandatory; padding-right: 20px; gap: 15px; }
             .kb-col { min-width: 88vw; scroll-snap-align: center; }
-            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #fff; border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: var(--bg-card); border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
             .bn-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 9px; gap: 3px; }
             .bn-btn.active { color: var(--primary); }
             .modal-box { width: 100%; height: auto; max-height: 85vh; border-radius: 16px 16px 0 0; position: absolute; bottom: 0; }
@@ -184,10 +217,10 @@
 
 <div class="toast-container" id="toastContainer"></div>
 
-<div id="loginScreen" style="position:fixed; inset:0; background:#E2E8F0; z-index:5000; display:flex; align-items:center; justify-content:center;">
-    <div style="background:#fff; padding:30px; border-radius:12px; border:1px solid #e2e8f0; width:300px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+<div id="loginScreen" style="position:fixed; inset:0; background:var(--bg-body); z-index:5000; display:flex; align-items:center; justify-content:center;">
+    <div style="background:var(--bg-card); padding:30px; border-radius:12px; border:1px solid var(--border); width:300px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
         <img src="logo.png" style="width:60px; margin-bottom:15px;">
-        <h2 style="margin:0 0 10px; color:#0065B3;">BT Portal</h2>
+        <h2 style="margin:0 0 10px; color:var(--primary);">BT Portal</h2>
         <input type="email" id="email" class="f-inp" placeholder="E-posta" style="margin-bottom:10px;">
         <input type="password" id="password" class="f-inp" placeholder="Şifre" style="margin-bottom:20px;">
         <button class="btn-primary" style="width:100%; justify-content:center;" onclick="login()">Giriş Yap</button>
@@ -204,8 +237,8 @@
     </div>
     <div class="user-box">
         <div class="avatar">CK</div>
-        <div style="flex:1; font-size:12px; font-weight:600;" id="uName">Kullanıcı</div>
-        <i class="fa-solid fa-power-off" style="cursor:pointer; color:#999;" onclick="logout()"></i>
+        <div style="flex:1; font-size:12px; font-weight:600; color:var(--text-main);" id="uName">Kullanıcı</div>
+        <i class="fa-solid fa-power-off" style="cursor:pointer; color:var(--text-muted);" onclick="logout()"></i>
     </div>
 </aside>
 
@@ -215,7 +248,19 @@
             <h2 id="pageTitle">Genel Bakış</h2>
             <p id="dateStr">...</p>
         </div>
-        <button class="btn-primary" onclick="newTask()">+ Yeni İş</button>
+        
+        <div class="top-actions">
+            <div style="position:relative;">
+                <button class="btn-icon" onclick="toggleThemeMenu()"><i class="fa-solid fa-palette"></i></button>
+                <div class="theme-dropdown" id="themeMenu">
+                    <div class="theme-opt" onclick="setTheme('light')"><span class="color-dot" style="background:#0065B3"></span> Kurumsal</div>
+                    <div class="theme-opt" onclick="setTheme('emerald')"><span class="color-dot" style="background:#059669"></span> Emerald</div>
+                    <div class="theme-opt" onclick="setTheme('royal')"><span class="color-dot" style="background:#7C3AED"></span> Royal</div>
+                    <div class="theme-opt" onclick="setTheme('dark')"><span class="color-dot" style="background:#0F172A"></span> Gece Modu</div>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="newTask()">+ Yeni İş</button>
+        </div>
     </header>
 
     <div id="view-dashboard" class="view-section active">
@@ -224,8 +269,8 @@
                 <div class="cal-header">
                     <span style="font-weight:800; font-size:16px; color:var(--primary);" id="calTitle">...</span>
                     <div>
-                        <button onclick="navCal(-1)" style="border:none; background:transparent; cursor:pointer;"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button onclick="navCal(1)" style="border:none; background:transparent; cursor:pointer;"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button onclick="navCal(-1)" style="border:none; background:transparent; cursor:pointer; color:var(--text-muted);"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button onclick="navCal(1)" style="border:none; background:transparent; cursor:pointer; color:var(--text-muted);"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
                 </div>
                 <div class="cal-week-row">
@@ -239,7 +284,7 @@
                 <div class="mini-stat"><div class="sb-icon"><i class="fa-solid fa-clock" style="color:#EA580C"></i></div><div><div class="ms-val" id="dTodo">0</div><div class="ms-lbl">Bekleyen</div></div></div>
                 <div class="mini-stat"><div class="sb-icon"><i class="fa-solid fa-spinner" style="color:#0284C7"></i></div><div><div class="ms-val" id="dProg">0</div><div class="ms-lbl">İşlemde</div></div></div>
                 <div class="mini-stat"><div class="sb-icon"><i class="fa-solid fa-check-circle" style="color:#16A34A"></i></div><div><div class="ms-val" id="dDone">0</div><div class="ms-lbl">Biten</div></div></div>
-                <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:10px; height:180px;">
+                <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:10px; height:180px;">
                     <canvas id="chartCanvas"></canvas>
                 </div>
             </div>
@@ -253,7 +298,7 @@
                 <div class="kb-list" id="col-todo" data-status="todo"></div>
             </div>
             <div class="kb-col">
-                <div class="kb-head"><span style="color:#2563EB">İŞLEMDE</span><span class="kb-count" id="c-prog" style="background:#DBEAFE; color:#2563EB;">0</span></div>
+                <div class="kb-head"><span style="color:var(--primary)">İŞLEMDE</span><span class="kb-count" id="c-prog" style="background:#DBEAFE; color:#2563EB;">0</span></div>
                 <div class="kb-list" id="col-progress" data-status="progress"></div>
             </div>
             <div class="kb-col">
@@ -295,8 +340,8 @@
 <div id="modal" class="modal-mask">
     <div class="modal-box">
         <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-            <h3 style="margin:0;">İş Detayı</h3>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal()"></i>
+            <h3 style="margin:0; color:var(--text-main);">İş Detayı</h3>
+            <i class="fa-solid fa-xmark" style="cursor:pointer; color:var(--text-muted);" onclick="closeModal()"></i>
         </div>
         
         <div style="flex:1; overflow-y:auto; padding-right:5px;">
@@ -331,12 +376,12 @@
 
 <div id="dayModal" class="modal-mask">
     <div class="modal-box">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:5px;">
             <div>
-                <h3 style="margin:0;" id="dmTitle">Günün Görevleri</h3>
-                <p style="margin:0; font-size:11px; color:#666;" id="dmDate">...</p>
+                <h3 style="margin:0; color:var(--text-main);" id="dmTitle">Günün Görevleri</h3>
+                <p style="margin:0; font-size:11px; color:var(--text-muted);" id="dmDate">...</p>
             </div>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeDayModal()"></i>
+            <i class="fa-solid fa-xmark" style="cursor:pointer; color:var(--text-muted);" onclick="closeDayModal()"></i>
         </div>
         <div id="dayListContent" class="day-list"></div>
         <button class="btn-primary" style="width:100%; justify-content:center; margin-top:15px;" onclick="newTaskForDay()">+ Bu Güne Ekle</button>
@@ -348,7 +393,7 @@
     import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // LÜTFEN KENDİ FIREBASE AYARLARINIZI GİRİNİZ
+    // BURAYA KENDİ CONFIG BİLGİLERİNİZİ YAZIN
     const firebaseConfig = { apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s", authDomain: "it-tasks-bc974.firebaseapp.com", projectId: "it-tasks-bc974", storageBucket: "it-tasks-bc974.firebasestorage.app", messagingSenderId: "978679373454", appId: "1:978679373454:web:3ee1c689cf1ca321af33df" };
     
     let app, db, auth, currentUser;
@@ -358,20 +403,29 @@
     let tasks = []; let calDate = new Date(); let selectedDate = new Date();
     let currentSort = { field: 'date', order: 'desc' };
 
-    // --- TOAST FUNCTION ---
     window.showToast = (msg, type = 'success') => {
         const con = document.getElementById('toastContainer');
         const t = document.createElement('div');
         t.className = `toast ${type}`;
-        
         let icon = type==='success'?'check-circle':(type==='error'?'exclamation-circle':'info-circle');
         t.innerHTML = `<i class="fa-solid fa-${icon}"></i> <span>${msg}</span>`;
-        
         con.appendChild(t);
-        setTimeout(() => { t.style.animation = 'slideOut 0.3s forwards'; setTimeout(() => t.remove(), 300); }, 3000);
+        setTimeout(() => { t.style.animation='slideOut 0.3s forwards'; setTimeout(() => t.remove(), 300); }, 3000);
+    }
+
+    // THEME HANDLING
+    window.toggleThemeMenu = () => { document.getElementById('themeMenu').classList.toggle('show'); }
+    window.setTheme = (themeName) => {
+        document.body.setAttribute('data-theme', themeName);
+        localStorage.setItem('selectedTheme', themeName);
+        document.getElementById('themeMenu').classList.remove('show');
     }
 
     window.initApp = () => {
+        // Load Saved Theme
+        const savedTheme = localStorage.getItem('selectedTheme');
+        if(savedTheme) document.body.setAttribute('data-theme', savedTheme);
+
         const s = document.getElementById('tTitle'); TOPICS.forEach(t=>s.innerHTML+=`<option>${t}</option>`);
         document.getElementById('dateStr').innerText = new Date().toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
         onAuthStateChanged(auth, (user) => {
@@ -402,6 +456,7 @@
         const c={todo:0, progress:0, done:0}; tasks.forEach(t=>{if(c[t.status]!==undefined)c[t.status]++});
         document.getElementById('dTotal').innerText = tasks.length;
         document.getElementById('dTodo').innerText = c.todo; document.getElementById('dProg').innerText = c.progress; document.getElementById('dDone').innerText = c.done;
+        
         if(window.chart) window.chart.destroy();
         const ctx = document.getElementById('chartCanvas');
         if(ctx) window.chart = new Chart(ctx, {
@@ -435,17 +490,17 @@
 
     window.openDayDetails = (dateStr) => {
         selectedDate = new Date(dateStr);
-        document.getElementById('dmDate').innerText = selectedDate.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        document.getElementById('dmTitle').innerText = selectedDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
         const cont = document.getElementById('dayListContent'); cont.innerHTML = '';
         const dayTasks = tasks.filter(t=>t.date === dateStr);
-        if(dayTasks.length===0) cont.innerHTML='<div style="text-align:center; color:#999; padding:20px;">İş yok.</div>';
+        if(dayTasks.length===0) cont.innerHTML='<div style="text-align:center; color:var(--text-muted); padding:20px;">İş yok.</div>';
         else {
             dayTasks.forEach(t => {
                 let priColor = t.priority==='Yüksek'?'#DC2626':(t.priority==='Orta'?'#EA580C':'#16A34A');
                 let stColor = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
                 cont.innerHTML += `
                 <div class="day-task" onclick="openModal('${t.id}')" style="border-left-color:${priColor};">
-                    <div class="dt-top"><div class="dt-title">${t.title} <span style="font-size:10px; color:${priColor};">(${t.priority})</span></div><div class="dt-time">${t.time||'--:--'}</div></div>
+                    <div class="dt-top"><div class="dt-title">${t.title}</div><div class="dt-time">${t.time||'--:--'}</div></div>
                     <div class="dt-desc">${t.desc||'Açıklama yok.'}</div>
                     <div style="font-size:10px; color:${stColor}; font-weight:700; margin-top:4px;">${t.status.toUpperCase()}</div>
                 </div>`;
@@ -513,7 +568,7 @@
             const stMap = {'todo':'Bekleyen', 'progress':'İşlemde', 'done':'Tamamlandı'};
             const col = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
             const bg = t.status==='todo'?'#FEF3C7':(t.status==='progress'?'#DBEAFE':'#D1FAE5');
-            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td><td style="font-weight:600;">${t.title}</td><td>${t.priority}</td><td>${t.date||'-'}</td><td style="color:#666;">${(t.desc||'').substring(0,40)}</td></tr>`;
+            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td><td style="font-weight:600;">${t.title}</td><td>${t.priority}</td><td>${t.date||'-'}</td><td style="color:var(--text-muted); font-size:12px;">${(t.desc||'').substring(0,40)}</td></tr>`;
         });
     }
 
