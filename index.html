@@ -14,11 +14,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
             /* --- KURUMSAL GRİ TEMA --- */
-            --bg-body: #E2E8F0;  /* Hafif Gri Arka Plan */
+            --bg-body: #E2E8F0;
             --bg-sidebar: #FFFFFF;
             --bg-card: #FFFFFF;
             
@@ -28,188 +29,109 @@
             
             --text-main: #0F172A;
             --text-muted: #64748B;
-            --border: #CBD5E1;   /* Kenarlıklar biraz daha belirgin */
+            --border: #CBD5E1;
             
             --radius: 8px;
-            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.1);
             
-            /* Durum Renkleri */
-            --c-high-bg: #FEF2F2; --c-high-tx: #B91C1C;
-            --c-mid-bg: #FFF7ED; --c-mid-tx: #C2410C;
-            --c-low-bg: #F0FDF4; --c-low-tx: #15803D;
+            /* Durumlar */
+            --st-todo-bg: #FEF3C7; --st-todo-tx: #D97706;
+            --st-prog-bg: #DBEAFE; --st-prog-tx: #2563EB;
+            --st-done-bg: #D1FAE5; --st-done-tx: #059669;
             
             --header-h: 60px;
             --sidebar-w: 250px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
-        body { 
-            margin: 0; padding: 0; font-family: 'Inter', sans-serif; 
-            background: var(--bg-body); color: var(--text-main); 
-            height: 100dvh; display: flex; overflow: hidden; font-size: 13px; 
-        }
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); height: 100dvh; display: flex; overflow: hidden; font-size: 13px; }
 
-        /* --- SIDEBAR --- */
-        .sidebar { 
-            width: var(--sidebar-w); background: var(--bg-sidebar); border-right: 1px solid var(--border); 
-            display: flex; flex-direction: column; z-index: 50; flex-shrink: 0; 
-        }
-        .logo-box { 
-            height: var(--header-h); display: flex; align-items: center; padding: 0 20px; 
-            border-bottom: 1px solid var(--border); font-weight: 800; font-size: 16px; color: var(--primary); gap: 8px; 
-        }
+        /* SIDEBAR */
+        .sidebar { width: var(--sidebar-w); background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 50; flex-shrink: 0; }
+        .logo-box { height: var(--header-h); display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid var(--border); font-weight: 800; font-size: 16px; color: var(--primary); gap: 8px; }
         .nav-menu { flex: 1; padding: 15px 10px; overflow-y: auto; }
-        .nav-item { 
-            display: flex; align-items: center; gap: 10px; padding: 10px 12px; 
-            color: var(--text-muted); font-weight: 500; font-size: 13px; border-radius: 6px; 
-            cursor: pointer; transition: 0.2s; margin-bottom: 2px; 
-        }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-muted); font-weight: 500; font-size: 13px; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-bottom: 2px; }
         .nav-item:hover { background: #F1F5F9; color: var(--primary); }
         .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 700; }
         .user-box { padding: 15px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
         .avatar { width: 32px; height: 32px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
 
-        /* --- MAIN CONTENT --- */
+        /* MAIN */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-        .topbar { 
-            height: var(--header-h); background: var(--bg-card); border-bottom: 1px solid var(--border); 
-            display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; 
-        }
+        .topbar { height: var(--header-h); background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
         .page-title h2 { margin: 0; font-size: 18px; font-weight: 700; }
         .page-title p { margin: 0; font-size: 11px; color: var(--text-muted); }
-        .btn-primary { 
-            background: var(--primary); color: #fff; border: none; height: 36px; padding: 0 16px; 
-            border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; 
-            display: flex; align-items: center; gap: 6px; transition: 0.2s; 
-            box-shadow: var(--shadow-sm);
-        }
+        .btn-primary { background: var(--primary); color: #fff; border: none; height: 36px; padding: 0 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; box-shadow: var(--shadow-sm); }
         .btn-primary:active { transform: scale(0.98); }
 
         .view-section { flex: 1; padding: 20px; overflow-y: auto; display: none; flex-direction: column; gap: 20px; }
         .view-section.active { display: flex; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* --- 1. DASHBOARD (TAKVİM GÖREVLERİ GÖRÜNÜR) --- */
+        /* 1. DASHBOARD */
         .dash-grid { display: grid; grid-template-columns: 3fr 1fr; gap: 20px; height: 100%; min-height: 500px; }
-        
-        .calendar-wrapper { 
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); 
-            display: flex; flex-direction: column; padding: 20px; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm);
-        }
+        .calendar-wrapper { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; padding: 20px; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); }
         .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .cal-week-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; margin-bottom: 5px; text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); }
-        
-        .cal-body { 
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; 
-            background: var(--border); border: 1px solid var(--border); border-radius: 8px; 
-            flex: 1; overflow: hidden; 
-        }
-        
-        .c-cell { 
-            background: #fff; display: flex; flex-direction: column; padding: 4px; 
-            cursor: pointer; transition: 0.1s; min-height: 0; overflow: hidden; position: relative;
-        }
+        .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; flex: 1; overflow: hidden; }
+        .c-cell { background: #fff; display: flex; flex-direction: column; padding: 4px; cursor: pointer; transition: 0.1s; min-height: 0; overflow: hidden; position: relative; }
         .c-cell:hover { background: #F8FAFC; }
         .c-cell.today { background: #F0F9FF; }
         .c-num { font-size: 11px; font-weight: 700; margin-bottom: 2px; color: var(--text-main); text-align: right; padding-right: 4px; }
-        
-        .c-task { 
-            font-size: 10px; padding: 2px 4px; border-radius: 3px; margin-bottom: 2px; 
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
-            font-weight: 600; background: var(--primary-light); color: var(--primary); 
-            border-left: 3px solid var(--primary); display: block;
-        }
-        .ct-Yüksek { background: var(--c-high-bg); color: var(--c-high-tx); border-left-color: var(--c-high-tx); }
-        .ct-Orta { background: var(--c-mid-bg); color: var(--c-mid-tx); border-left-color: var(--c-mid-tx); }
-        .ct-Düşük { background: var(--c-low-bg); color: var(--c-low-tx); border-left-color: var(--c-low-tx); }
+        .c-task { font-size: 10px; padding: 2px 4px; border-radius: 3px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; background: var(--primary-light); color: var(--primary); border-left: 3px solid var(--primary); display: block; }
         .c-more { font-size: 9px; text-align: center; color: var(--text-muted); font-weight: 600; margin-top: auto; }
-
         .side-panel { display: flex; flex-direction: column; gap: 15px; }
         .mini-stat { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: var(--radius); display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm); }
         .ms-val { font-size: 20px; font-weight: 800; color: var(--text-main); }
         .ms-lbl { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
 
-        /* --- 2. KANBAN (TAM EKRAN & DETAYLI) --- */
-        .kanban-wrapper { 
-            display: flex; gap: 15px; height: 100%; overflow-x: auto; padding-bottom: 5px; 
-        }
-        .kb-col { 
-            flex: 1; min-width: 320px; 
-            background: #E2E8F0; /* Sütunlar hafif koyu gri */
-            border: 1px solid var(--border); border-radius: 8px; 
-            display: flex; flex-direction: column; height: 100%; 
-        }
-        .kb-head { 
-            padding: 10px 12px; background: #fff; border-bottom: 1px solid var(--border); 
-            border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 700; color: var(--text-muted); 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
+        /* 2. KANBAN */
+        .kanban-wrapper { display: flex; gap: 15px; height: 100%; overflow-x: auto; padding-bottom: 5px; }
+        .kb-col { flex: 1; min-width: 320px; background: #E2E8F0; border: 1px solid var(--border); border-radius: 8px; display: flex; flex-direction: column; height: 100%; }
+        .kb-head { padding: 10px 12px; background: #fff; border-bottom: 1px solid var(--border); border-radius: 8px 8px 0 0; font-size: 12px; font-weight: 700; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
         .kb-count { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 10px; color: var(--text-main); }
-        .kb-list { 
-            flex: 1; overflow-y: auto; padding: 10px; 
-            display: flex; flex-direction: column; gap: 10px; 
-        }
-
-        .kb-card {
-            background: #fff; border: 1px solid var(--border); border-radius: 6px;
-            padding: 12px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-            border-left: 3px solid transparent; transition: 0.1s;
-            display: flex; flex-direction: column; gap: 6px;
-        }
+        .kb-list { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .kb-card { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 12px; cursor: grab; box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 3px solid transparent; transition: 0.1s; display: flex; flex-direction: column; gap: 6px; }
         .kb-card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.08); border-color: var(--primary); }
-        
-        .kb-pri-Yüksek { border-left-color: #DC2626; }
-        .kb-pri-Orta { border-left-color: #EA580C; }
-        .kb-pri-Düşük { border-left-color: #16A34A; }
-
+        .kb-pri-Yüksek { border-left-color: #DC2626; } .kb-pri-Orta { border-left-color: #EA580C; } .kb-pri-Düşük { border-left-color: #16A34A; }
         .kbc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
         .kbc-code { font-size: 10px; font-weight: 700; color: var(--text-muted); background: #F1F5F9; padding: 1px 4px; border-radius: 3px; font-family: monospace; }
         .kbc-date { font-size: 10px; color: var(--text-muted); font-weight: 500; }
-        
         .kbc-title { font-size: 13px; font-weight: 700; color: var(--text-main); line-height: 1.3; }
-        .kbc-desc { 
-            font-size: 12px; color: var(--text-muted); line-height: 1.5; 
-            white-space: pre-wrap; 
-            background: #F8FAFC; padding: 6px; border-radius: 4px; 
-            border: 1px solid #F1F5F9; margin-top: 2px;
-        }
+        .kbc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap; background: #F8FAFC; padding: 6px; border-radius: 4px; border: 1px solid #F1F5F9; margin-top: 2px; }
         .kbc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 6px; border-top: 1px solid #F1F5F9; }
         .kbc-user { width: 20px; height: 20px; background: var(--primary); color: #fff; font-size: 9px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .kbc-status { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
 
-        /* --- 3. LISTE (SIRALANABİLİR & TIKLANABİLİR HEADER) --- */
+        /* 3. LISTE */
         .list-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
         .list-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        
-        /* Tıklanabilir Başlıklar */
-        .list-table th { 
-            text-align: left; padding: 12px; background: #F8FAFC; color: var(--text-muted); 
-            font-weight: 700; border-bottom: 1px solid var(--border); 
-            cursor: pointer; user-select: none; transition: 0.2s;
-        }
+        .list-table th { text-align: left; padding: 12px; background: #F8FAFC; color: var(--text-muted); font-weight: 700; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
         .list-table th:hover { background: #EFF6FF; color: var(--primary); }
         .list-table th i { margin-left: 5px; opacity: 0.5; font-size: 11px; }
-        
         .list-table td { padding: 12px; border-bottom: 1px solid var(--border); color: var(--text-main); vertical-align: top; }
         .list-table tr:hover td { background: #f1f5f9; cursor: pointer; }
 
-        /* --- MODAL --- */
+        /* MODAL */
         .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
         .modal-mask.open { display: flex; }
-        .modal-box { background: #fff; width: 500px; padding: 24px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+        .modal-box { background: #fff; width: 550px; padding: 24px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
         .f-group { margin-bottom: 12px; }
         .f-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; display: block; text-transform: uppercase; }
         .f-inp { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-family: inherit; }
         .f-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
 
-        /* DAY DETAIL */
+        /* YORUM ALANI (YENİ) */
+        .comments-area { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px; display: flex; flex-direction: column; flex: 1; min-height: 200px; }
+        .cm-list { flex: 1; overflow-y: auto; background: #F8FAFC; border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .cm-item { background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid #eee; font-size: 12px; }
+        .cm-header { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-bottom: 4px; font-weight: 700; }
+        .cm-text { color: var(--text-main); line-height: 1.4; }
+        .cm-input-row { display: flex; gap: 8px; }
+        .cm-input-row input { flex: 1; }
+
         .day-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; max-height: 400px; overflow-y: auto; }
-        .day-task { 
-            padding: 12px; border: 1px solid var(--border); border-radius: 8px; 
-            cursor: pointer; transition: 0.2s; background: #fff;
-            border-left: 4px solid transparent;
-        }
+        .day-task { padding: 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: 0.2s; background: #fff; border-left: 4px solid transparent; }
         .day-task:hover { border-color: var(--primary); background: #F8FAFC; }
         .dt-top { display: flex; justify-content: space-between; margin-bottom: 4px; }
         .dt-title { font-weight: 700; font-size: 14px; }
@@ -300,15 +222,15 @@
     <div id="view-kanban" class="view-section" style="height:100%; padding-bottom:5px;">
         <div class="kanban-wrapper">
             <div class="kb-col">
-                <div class="kb-head"><span>BEKLEYEN</span><span class="kb-count" id="c-todo" style="background:#FEF3C7; color:#D97706;">0</span></div>
+                <div class="kb-head"><span>BEKLEYEN</span><span class="kb-count" id="c-todo">0</span></div>
                 <div class="kb-list" id="col-todo" data-status="todo"></div>
             </div>
             <div class="kb-col">
-                <div class="kb-head"><span style="color:#2563EB">İŞLEMDE</span><span class="kb-count" id="c-prog" style="background:#DBEAFE; color:#2563EB;">0</span></div>
+                <div class="kb-head"><span style="color:#2563EB">İŞLEMDE</span><span class="kb-count" id="c-prog">0</span></div>
                 <div class="kb-list" id="col-progress" data-status="progress"></div>
             </div>
             <div class="kb-col">
-                <div class="kb-head"><span style="color:#10B981">TAMAMLANDI</span><span class="kb-count" id="c-done" style="background:#D1FAE5; color:#059669;">0</span></div>
+                <div class="kb-head"><span style="color:#10B981">TAMAMLANDI</span><span class="kb-count" id="c-done">0</span></div>
                 <div class="kb-list" id="col-done" data-status="done"></div>
             </div>
         </div>
@@ -337,40 +259,57 @@
 </main>
 
 <div class="bottom-nav">
-    <button class="bn-btn active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i><span>Özet</span></button>
-    <button class="bn-btn" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i><span>Pano</span></button>
+    <button class="bn-btn active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i>Özet</button>
+    <button class="bn-btn" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i>Pano</button>
     <button class="bn-btn" onclick="newTask()" style="color:var(--primary)"><i class="fa-solid fa-circle-plus" style="font-size:24px;"></i></button>
-    <button class="bn-btn" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i><span>Liste</span></button>
+    <button class="bn-btn" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i>Liste</button>
 </div>
 
 <div id="modal" class="modal-mask">
     <div class="modal-box">
         <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-            <h3 style="margin:0;">İş Kaydı</h3>
+            <h3 style="margin:0;">İş Detayı</h3>
             <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeModal()"></i>
         </div>
-        <input type="hidden" id="tId">
-        <div class="f-group"><label class="f-lbl">Konu</label><select id="tTitle" class="f-inp"></select></div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div class="f-group"><label class="f-lbl">Durum</label><select id="tStatus" class="f-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
-            <div class="f-group"><label class="f-lbl">Öncelik</label><select id="tPriority" class="f-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-            <div class="f-group"><label class="f-lbl">Tarih</label><input type="date" id="tDate" class="f-inp"></div>
-            <div class="f-group"><label class="f-lbl">Saat</label><input type="time" id="tTime" class="f-inp"></div>
-        </div>
-        <div class="f-group"><label class="f-lbl">Açıklama</label><textarea id="tDesc" class="f-inp" rows="3"></textarea></div>
-        <div style="display:flex; justify-content:space-between; margin-top:15px;">
-            <button class="btn-primary" style="background:#EF4444;" onclick="delTask()">Sil</button>
-            <button class="btn-primary" onclick="saveTask()">Kaydet</button>
+        
+        <div style="flex:1; overflow-y:auto; padding-right:5px;">
+            <input type="hidden" id="tId">
+            <div class="f-group"><label class="f-lbl">Konu</label><select id="tTitle" class="f-inp"></select></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="f-group"><label class="f-lbl">Durum</label><select id="tStatus" class="f-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
+                <div class="f-group"><label class="f-lbl">Öncelik</label><select id="tPriority" class="f-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="f-group"><label class="f-lbl">Tarih</label><input type="date" id="tDate" class="f-inp"></div>
+                <div class="f-group"><label class="f-lbl">Saat</label><input type="time" id="tTime" class="f-inp"></div>
+            </div>
+            <div class="f-group"><label class="f-lbl">Açıklama</label><textarea id="tDesc" class="f-inp" rows="3"></textarea></div>
+            
+            <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                <button class="btn-primary" style="background:#EF4444;" onclick="delTask()">Sil</button>
+                <button class="btn-primary" onclick="saveTask()">Kaydet</button>
+            </div>
+
+            <div class="comments-area">
+                <label class="f-lbl">Hareketler & Yorumlar</label>
+                <div id="commentList" class="cm-list">
+                    </div>
+                <div class="cm-input-row">
+                    <input type="text" id="newComment" class="f-inp" placeholder="Yorum yaz...">
+                    <button class="btn-primary" onclick="postComment()">Gönder</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div id="dayModal" class="modal-mask">
     <div class="modal-box">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:10px; border-bottom:1px solid #eee;">
-            <h3 style="margin:0;" id="dmTitle">Gün Detayı</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;">
+            <div>
+                <h3 style="margin:0;" id="dmTitle">Günün Görevleri</h3>
+                <p style="margin:0; font-size:11px; color:#666;" id="dmDate">...</p>
+            </div>
             <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeDayModal()"></i>
         </div>
         <div id="dayListContent" class="day-list"></div>
@@ -380,16 +319,17 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, runTransaction, query, orderBy, arrayUnion } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
+    // BURAYA KENDİ FIREBASE AYARLARINIZI GİRİN
     const firebaseConfig = { apiKey: "AIzaSyAvPpg1Qa6XF8kPV_VZXq7BE04geXLqo4s", authDomain: "it-tasks-bc974.firebaseapp.com", projectId: "it-tasks-bc974", storageBucket: "it-tasks-bc974.firebasestorage.app", messagingSenderId: "978679373454", appId: "1:978679373454:web:3ee1c689cf1ca321af33df" };
-    let app, db, auth; try { app=initializeApp(firebaseConfig); db=getFirestore(app); auth=getAuth(app); } catch(e){console.error(e);}
+    
+    let app, db, auth, currentUser;
+    try { app=initializeApp(firebaseConfig); db=getFirestore(app); auth=getAuth(app); } catch(e){console.error(e);}
 
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
     let tasks = []; let calDate = new Date(); let selectedDate = new Date();
-    
-    // SIRALAMA AYARLARI
     let currentSort = { field: 'date', order: 'desc' };
 
     window.initApp = () => {
@@ -397,6 +337,7 @@
         document.getElementById('dateStr').innerText = new Date().toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
         onAuthStateChanged(auth, (user) => {
             if(user) {
+                currentUser = user;
                 document.getElementById('loginScreen').style.display='none';
                 document.getElementById('uName').innerText = user.email.split('@')[0];
                 listenData();
@@ -418,7 +359,6 @@
 
     function renderAll() { renderStats(); renderCalendar(); renderKanban(); renderList(); }
 
-    // --- DASHBOARD ---
     function renderStats() {
         const c={todo:0, progress:0, done:0}; tasks.forEach(t=>{if(c[t.status]!==undefined)c[t.status]++});
         document.getElementById('dTotal').innerText = tasks.length;
@@ -438,21 +378,18 @@
         document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
         const g=document.getElementById('mainCalGrid'); g.innerHTML='';
         const fDay=new Date(y,m,1).getDay(), off=fDay===0?6:fDay-1, days=new Date(y,m+1,0).getDate();
-        
         for(let i=0; i<off; i++) g.innerHTML+='<div></div>';
         const nowStr = new Date().toDateString();
 
         for(let i=1; i<=days; i++) {
             const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
             const dayTasks = tasks.filter(t=>t.date===ds && t.status!=='done');
-            
             let taskHtml = '';
             dayTasks.slice(0,3).forEach(t => {
                 let pCls = t.priority==='Yüksek'?'ct-Yüksek':(t.priority==='Orta'?'ct-Orta':'ct-Düşük');
                 taskHtml += `<div class="c-task ${pCls}">${t.title}</div>`;
             });
             if(dayTasks.length>3) taskHtml += `<div class="c-more">+${dayTasks.length-3} daha</div>`;
-
             const isToday = new Date(y,m,i).toDateString() === nowStr;
             g.innerHTML += `<div class="c-cell ${isToday?'today':''}" onclick="openDayDetails('${ds}')"><div class="c-num">${i}</div>${taskHtml}</div>`;
         }
@@ -461,7 +398,7 @@
 
     window.openDayDetails = (dateStr) => {
         selectedDate = new Date(dateStr);
-        document.getElementById('dmTitle').innerText = selectedDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long', year:'numeric'});
+        document.getElementById('dmDate').innerText = selectedDate.toLocaleDateString('tr-TR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
         const cont = document.getElementById('dayListContent'); cont.innerHTML = '';
         const dayTasks = tasks.filter(t=>t.date === dateStr);
         
@@ -470,13 +407,9 @@
             dayTasks.forEach(t => {
                 let priColor = t.priority==='Yüksek'?'#DC2626':(t.priority==='Orta'?'#EA580C':'#16A34A');
                 let stColor = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
-                
                 cont.innerHTML += `
                 <div class="day-task" onclick="openModal('${t.id}')" style="border-left-color:${priColor};">
-                    <div class="dt-top">
-                        <div class="dt-title">${t.title} <span style="font-size:10px; color:${priColor};">(${t.priority})</span></div>
-                        <div class="dt-time">${t.time||'--:--'}</div>
-                    </div>
+                    <div class="dt-top"><div class="dt-title">${t.title}</div><div class="dt-time">${t.time||'--:--'}</div></div>
                     <div class="dt-desc">${t.desc||'Açıklama yok.'}</div>
                     <div style="font-size:10px; color:${stColor}; font-weight:700; margin-top:4px;">${t.status.toUpperCase()}</div>
                 </div>`;
@@ -498,42 +431,21 @@
             if(cols[t.status]) {
                 c[t.status]++;
                 let pClass = `kb-pri-${t.priority}`;
-                
                 cols[t.status].innerHTML += `
                 <div class="kb-card ${pClass}" onclick="openModal('${t.id}')">
-                    <div class="kbc-top">
-                        <span class="kbc-code">${t.code}</span>
-                        <span class="kbc-date">${t.date||''}</span>
-                    </div>
+                    <div class="kbc-top"><span class="kbc-code">${t.code}</span><span class="kbc-date">${t.date||''}</span></div>
                     <div class="kbc-title">${t.title}</div>
                     <div class="kbc-desc">${t.desc||''}</div>
-                    <div class="kbc-footer">
-                        <div class="kbc-user">CK</div>
-                        <div class="kbc-status">${t.priority}</div>
-                    </div>
+                    <div class="kbc-footer"><div class="kbc-user">CK</div><div class="kbc-status">${t.priority}</div></div>
                 </div>`;
             }
         });
-        document.getElementById('c-todo').innerText = c.todo; document.getElementById('c-prog').innerText = c.progress; document.getElementById('c-done').innerText = c.done;
-        
-        if(window.innerWidth > 768 && typeof Sortable !== 'undefined') {
-            ['col-todo','col-progress','col-done'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el && !el.sortableInstance) {
-                    el.sortableInstance = new Sortable(el, { group:'k', animation:150, onEnd: async(e)=>{ await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')}); }});
-                }
-            });
-        }
     }
 
-    // --- LISTE SIRALAMA MANTIĞI ---
+    // --- LISTE ---
     window.setSort = (field) => {
-        if (currentSort.field === field) {
-            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
-        } else {
-            currentSort.field = field;
-            currentSort.order = 'asc';
-        }
+        if (currentSort.field === field) currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        else { currentSort.field = field; currentSort.order = 'asc'; }
         renderList();
     }
 
@@ -544,40 +456,24 @@
         
         let filtered = tasks.filter(t => t.title.toLowerCase().includes(s));
         
-        // Sorting
         filtered.sort((a, b) => {
             let valA = a[currentSort.field] || '';
             let valB = b[currentSort.field] || '';
             let order = currentSort.order === 'asc' ? 1 : -1;
-
-            if (currentSort.field === 'date') {
-                valA = new Date(valA || 0); valB = new Date(valB || 0);
-            } else {
-                valA = valA.toString().toLowerCase(); valB = valB.toString().toLowerCase();
-            }
-
-            if (valA < valB) return -1 * order;
-            if (valA > valB) return 1 * order;
-            return 0;
+            if (currentSort.field === 'date') { valA = new Date(valA||0); valB = new Date(valB||0); } 
+            else { valA = valA.toString().toLowerCase(); valB = valB.toString().toLowerCase(); }
+            if (valA < valB) return -1 * order; if (valA > valB) return 1 * order; return 0;
         });
 
         filtered.forEach(t => {
             const stMap = {'todo':'Bekleyen', 'progress':'İşlemde', 'done':'Tamamlandı'};
             const col = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
             const bg = t.status==='todo'?'#FEF3C7':(t.status==='progress'?'#DBEAFE':'#D1FAE5');
-            const priCol = t.priority==='Yüksek'?'#DC2626':(t.priority==='Orta'?'#D97706':'#16A34A');
-
-            b.innerHTML += `<tr onclick="openModal('${t.id}')">
-                <td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td>
-                <td style="font-weight:600;">${t.title}</td>
-                <td style="color:${priCol}; font-weight:600; font-size:11px;">${t.priority}</td>
-                <td>${t.date||'-'}</td>
-                <td style="color:#666;">${(t.desc||'').substring(0,40)}</td>
-            </tr>`;
+            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td><td style="font-weight:600;">${t.title}</td><td>${t.priority}</td><td>${t.date||'-'}</td><td style="color:#666;">${(t.desc||'').substring(0,40)}</td></tr>`;
         });
     }
 
-    // --- ACTIONS ---
+    // --- ACTIONS & MODAL & COMMENTS ---
     window.showView = (v, btn) => {
         document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active'));
         document.getElementById('view-'+v).classList.add('active');
@@ -588,22 +484,77 @@
         if(v==='kanban') renderKanban();
     }
 
-    window.newTask = () => { document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; document.getElementById('modal').classList.add('open'); }
+    window.newTask = () => { document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; document.getElementById('commentList').innerHTML=''; document.getElementById('modal').classList.add('open'); }
     window.closeModal = () => document.getElementById('modal').classList.remove('open');
+    
     window.openModal = (id) => {
         const t = tasks.find(x=>x.id===id);
         if(t) {
             document.getElementById('tId').value=t.id; document.getElementById('tTitle').value=t.title;
             document.getElementById('tStatus').value=t.status; document.getElementById('tPriority').value=t.priority;
             document.getElementById('tDate').value=t.date; document.getElementById('tTime').value=t.time||'';
-            document.getElementById('tDesc').value=t.desc; document.getElementById('modal').classList.add('open');
+            document.getElementById('tDesc').value=t.desc; 
+            
+            // Yorumları Listele
+            const cList = document.getElementById('commentList');
+            cList.innerHTML = '';
+            if(t.comments && t.comments.length > 0) {
+                t.comments.forEach(cm => {
+                    cList.innerHTML += `
+                    <div class="cm-item">
+                        <div class="cm-header"><span>${cm.user}</span><span>${new Date(cm.date).toLocaleString('tr-TR')}</span></div>
+                        <div class="cm-text">${cm.text}</div>
+                    </div>`;
+                });
+            } else {
+                cList.innerHTML = '<div style="text-align:center; color:#999; font-size:11px;">Henüz yorum yok.</div>';
+            }
+            
+            document.getElementById('modal').classList.add('open');
         }
     }
+
+    window.postComment = async () => {
+        const id = document.getElementById('tId').value;
+        const txt = document.getElementById('newComment').value;
+        if(!id || !txt) return;
+        
+        const newCm = {
+            text: txt,
+            date: new Date().toISOString(),
+            user: currentUser ? currentUser.email.split('@')[0] : 'Anonim'
+        };
+        
+        await updateDoc(doc(db, "tasks", id), {
+            comments: arrayUnion(newCm)
+        });
+        
+        document.getElementById('newComment').value = '';
+        // UI'ı manuel güncelle (hızlı görünüm için)
+        const t = tasks.find(x=>x.id===id);
+        if(t) {
+            if(!t.comments) t.comments = [];
+            t.comments.push(newCm);
+            window.openModal(id); // Yeniden render et
+        }
+    }
+
     window.saveTask = async () => {
         const id = document.getElementById('tId').value;
-        const d = { title:document.getElementById('tTitle').value, status:document.getElementById('tStatus').value, priority:document.getElementById('tPriority').value, date:document.getElementById('tDate').value, time:document.getElementById('tTime').value, desc:document.getElementById('tDesc').value };
-        if(id) await updateDoc(doc(db,"tasks",id),d);
-        else { await runTransaction(db, async(t)=>{ const r=doc(db,"meta","counters"); const s=await t.get(r); const n=(s.exists()?s.data().taskSeq:0)+1; t.set(r,{taskSeq:n},{merge:true}); d.code='GRV-'+n; await addDoc(collection(db,"tasks"),d); }); }
+        const oldTask = tasks.find(x => x.id === id);
+        const newStatus = document.getElementById('tStatus').value;
+        
+        const d = { title:document.getElementById('tTitle').value, status:newStatus, priority:document.getElementById('tPriority').value, date:document.getElementById('tDate').value, time:document.getElementById('tTime').value, desc:document.getElementById('tDesc').value };
+        
+        if(id) {
+            await updateDoc(doc(db,"tasks",id),d);
+            // Konfeti Kontrolü: Eski durum done değilse ve yeni durum done ise
+            if(oldTask && oldTask.status !== 'done' && newStatus === 'done') {
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            }
+        } else { 
+            await runTransaction(db, async(t)=>{ const r=doc(db,"meta","counters"); const s=await t.get(r); const n=(s.exists()?s.data().taskSeq:0)+1; t.set(r,{taskSeq:n},{merge:true}); d.code='GRV-'+n; await addDoc(collection(db,"tasks"),d); }); 
+        }
         closeModal();
     }
     window.delTask = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,"tasks",document.getElementById('tId').value)); closeModal(); } }
@@ -612,7 +563,14 @@
     function initSortable() {
         ['col-todo','col-progress','col-done'].forEach(id => {
             const el = document.getElementById(id);
-            if(el) new Sortable(el, { group:'k', animation:150, onEnd: async(e)=>{ await updateDoc(doc(db,"tasks",e.item.getAttribute('onclick').split("'")[1]), {status:e.to.getAttribute('data-status')}); }});
+            if(el && !el.sortableInstance) {
+                el.sortableInstance = new Sortable(el, { group:'k', animation:150, onEnd: async(e)=>{ 
+                    const itemId = e.item.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    const newStatus = e.to.getAttribute('data-status');
+                    await updateDoc(doc(db,"tasks",itemId), {status:newStatus});
+                    if(newStatus === 'done') confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                }});
+            }
         });
     }
 </script>
