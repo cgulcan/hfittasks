@@ -9,7 +9,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,11 +19,8 @@
     
     <style>
         :root {
-            --bg-body: #F8FAFC;
-            --bg-glass: rgba(255, 255, 255, 0.85);
-            --border-glass: 1px solid rgba(255, 255, 255, 0.5);
-            --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
-            
+            --bg-body: #F1F5F9;
+            --bg-glass: rgba(255, 255, 255, 0.9);
             --primary: #0065B3;
             --primary-light: #E0F2FE;
             --text-main: #0F172A;
@@ -32,156 +29,156 @@
             --radius: 12px;
             
             --pri-high: #DC2626; --pri-high-bg: #FEF2F2;
-            --pri-mid: #EA580C; --pri-mid-bg: #FFF7ED;
+            --pri-mid: #D97706; --pri-mid-bg: #FFFBEB;
             --pri-low: #16A34A; --pri-low-bg: #F0FDF4;
             
-            --header-h: 60px;
+            --header-h: 64px;
             --sidebar-w: 260px;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background: var(--bg-body); color: var(--text-main); height: 100dvh; display: flex; overflow: hidden; font-size: 13px; }
 
-        /* --- GLASSMORPHISM SIDEBAR --- */
-        .sidebar {
-            width: var(--sidebar-w); background: var(--bg-glass); backdrop-filter: blur(10px);
-            border-right: var(--border-glass); display: flex; flex-direction: column; z-index: 50; flex-shrink: 0;
-        }
+        /* --- SIDEBAR --- */
+        .sidebar { width: var(--sidebar-w); background: #fff; border-right: 1px solid var(--border); display: flex; flex-direction: column; z-index: 50; flex-shrink: 0; }
         .logo-box { height: var(--header-h); display: flex; align-items: center; padding: 0 24px; border-bottom: 1px solid var(--border); font-weight: 800; font-size: 18px; color: var(--primary); gap: 10px; }
         .nav-menu { flex: 1; padding: 20px 12px; overflow-y: auto; }
         .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--text-muted); font-weight: 500; font-size: 13px; border-radius: 8px; cursor: pointer; transition: 0.2s; margin-bottom: 4px; }
-        .nav-item:hover { background: #F1F5F9; color: var(--primary); transform: translateX(4px); }
-        .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 700; box-shadow: 0 4px 12px rgba(0, 101, 179, 0.1); }
+        .nav-item:hover { background: #F8FAFC; color: var(--primary); }
+        .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 700; }
         .user-box { padding: 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
-        .avatar { width: 36px; height: 36px; background: var(--primary); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; box-shadow: 0 4px 10px rgba(0, 101, 179, 0.3); }
+        .avatar { width: 36px; height: 36px; background: var(--primary); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
-        /* --- MAIN CONTENT --- */
+        /* --- MAIN --- */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
-        .topbar { height: var(--header-h); background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
-        .page-title h2 { margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-        .btn-primary { 
-            background: linear-gradient(135deg, #0065B3, #005091); color: #fff; border: none; height: 40px; padding: 0 20px; 
-            border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; 
-            transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 101, 179, 0.25); 
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 101, 179, 0.35); }
+        .topbar { height: var(--header-h); background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+        .page-title h2 { margin: 0; font-size: 20px; font-weight: 700; }
+        .btn-primary { background: var(--primary); color: #fff; border: none; height: 38px; padding: 0 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 4px 10px rgba(0, 101, 179, 0.2); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 15px rgba(0, 101, 179, 0.3); }
 
         .view-section { flex: 1; padding: 24px; overflow-y: auto; display: none; flex-direction: column; gap: 24px; }
-        .view-section.active { display: flex; animation: fadeScale 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-        @keyframes fadeScale { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .view-section.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 1. DASHBOARD */
+        /* --- DASHBOARD & CALENDAR (GELİŞMİŞ) --- */
         .dash-grid { display: grid; grid-template-columns: 3fr 1fr; gap: 24px; height: 100%; min-height: 500px; }
-        .calendar-wrapper { background: #fff; border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; padding: 24px; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); }
-        .cal-body { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; flex: 1; overflow: hidden; }
-        .c-cell { background: #fff; display: flex; flex-direction: column; padding: 6px; cursor: pointer; transition: 0.2s; position: relative; }
-        .c-cell:hover { background: #F8FAFC; z-index: 1; transform: scale(1.02); box-shadow: 0 0 10px rgba(0,0,0,0.05); }
-        .c-cell.today { background: #EFF6FF; }
-        .c-num { font-size: 12px; font-weight: 700; margin-bottom: 4px; color: var(--text-main); text-align: right; }
-        .c-task { font-size: 10px; padding: 3px 6px; border-radius: 4px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; background: var(--primary-light); color: var(--primary); border-left: 3px solid var(--primary); }
+        
+        .calendar-wrapper { 
+            background: #fff; border: 1px solid var(--border); border-radius: 16px; 
+            display: flex; flex-direction: column; padding: 24px; height: 100%; 
+            overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cal-nav-btn { width: 32px; height: 32px; border: 1px solid var(--border); background: #fff; border-radius: 8px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .cal-nav-btn:hover { border-color: var(--primary); color: var(--primary); }
 
-        .side-panel { display: flex; flex-direction: column; gap: 15px; }
-        .mini-stat { background: #fff; padding: 20px; border: 1px solid var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.02); transition: 0.3s; }
-        .mini-stat:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .ms-val { font-size: 28px; font-weight: 800; color: var(--text-main); }
+        /* Grid Yapısı */
+        .cal-week-row { 
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; 
+            margin-bottom: 8px; text-align: center; font-size: 12px; 
+            font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        
+        .cal-body { 
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; 
+            background: var(--border); border: 1px solid var(--border); border-radius: 12px; 
+            flex: 1; overflow: hidden; /* Taşmayı engelle */
+        }
+        
+        /* Takvim Hücresi */
+        .c-cell { 
+            background: #fff; display: flex; flex-direction: column; padding: 6px; 
+            cursor: pointer; transition: 0.2s; min-height: 0; position: relative;
+        }
+        .c-cell:hover { background: #F8FAFC; z-index: 2; box-shadow: inset 0 0 0 1px var(--primary); }
+        
+        /* Haftasonu Renklendirmesi */
+        .c-cell.weekend { background: #FAFAFA; }
+        
+        /* Bugün Vurgusu */
+        .c-cell.today { background: #F0F9FF; }
+        .c-num { 
+            font-size: 12px; font-weight: 600; margin-bottom: 6px; 
+            color: var(--text-main); align-self: flex-end; 
+            width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
+        .c-cell.today .c-num { background: var(--primary); color: #fff; box-shadow: 0 2px 5px rgba(0, 101, 179, 0.4); }
 
-        /* 2. KANBAN (SOFT SHADOWS & UX) */
+        /* Görev Çubuğu (Pill) */
+        .c-task-pill { 
+            font-size: 10px; padding: 3px 6px; border-radius: 4px; margin-bottom: 3px; 
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+            font-weight: 600; display: block; border-left: 3px solid transparent;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: 0.1s;
+        }
+        .c-task-pill:hover { transform: translateX(2px); }
+        
+        .ct-High { background: #FEF2F2; color: #991B1B; border-left-color: #DC2626; }
+        .ct-Mid { background: #FFF7ED; color: #9A3412; border-left-color: #EA580C; }
+        .ct-Low { background: #F0FDF4; color: #166534; border-left-color: #16A34A; }
+        
+        .c-more { font-size: 10px; text-align: center; color: var(--text-muted); font-weight: 600; margin-top: auto; padding-top: 2px; }
+
+        /* Sağ İstatistikler */
+        .side-panel { display: flex; flex-direction: column; gap: 16px; }
+        .mini-stat { background: #fff; padding: 20px; border: 1px solid var(--border); border-radius: 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .ms-val { font-size: 26px; font-weight: 800; color: var(--text-main); }
+        .ms-lbl { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+
+        /* --- KANBAN --- */
         .kanban-wrapper { display: flex; gap: 20px; height: 100%; overflow-x: auto; padding-bottom: 10px; }
-        .kb-col { flex: 1; min-width: 320px; background: #F1F5F9; border-radius: 16px; display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border); }
-        .kb-head { padding: 16px; background: #fff; border-bottom: 1px solid var(--border); border-radius: 16px 16px 0 0; font-size: 13px; font-weight: 800; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
+        .kb-col { flex: 1; min-width: 320px; background: #F1F5F9; border-radius: 12px; display: flex; flex-direction: column; height: 100%; border: 1px solid var(--border); }
+        .kb-head { padding: 14px 16px; background: #fff; border-bottom: 1px solid var(--border); border-radius: 12px 12px 0 0; font-size: 13px; font-weight: 700; color: var(--text-muted); display: flex; justify-content: space-between; }
         .kb-list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px; }
-
-        /* KART TASARIMI (PREMIUM) */
-        .kb-card {
-            background: #fff; border-radius: 12px; padding: 16px; cursor: grab; 
-            border: 1px solid transparent; border-left: 4px solid transparent; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden;
-        }
         
-        /* Renkli Gölgeler */
-        .kb-pri-Yüksek { border-left-color: #EF4444; } 
-        .kb-pri-Yüksek:hover { box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3); transform: translateY(-4px); }
-        .kb-pri-Orta { border-left-color: #F97316; } 
-        .kb-pri-Orta:hover { box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.3); transform: translateY(-4px); }
-        .kb-pri-Düşük { border-left-color: #22C55E; } 
-        .kb-pri-Düşük:hover { box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.3); transform: translateY(-4px); }
-
-        /* Geciken Görev Uyarısı */
-        .kb-overdue { border: 1px solid #EF4444; animation: pulseRed 2s infinite; }
-        @keyframes pulseRed { 0% {box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);} 70% {box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);} 100% {box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);} }
-
-        .kbc-top { display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; color: var(--text-muted); }
-        .kbc-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
-        .tag-badge { font-size: 9px; padding: 2px 6px; border-radius: 4px; background: #E2E8F0; color: #475569; font-weight: 600; }
+        .kb-card { background: #fff; padding: 14px; border-radius: 8px; border: 1px solid transparent; box-shadow: 0 2px 4px rgba(0,0,0,0.04); cursor: grab; display: flex; flex-direction: column; gap: 6px; transition: 0.2s; border-left: 4px solid transparent; }
+        .kb-card:hover { transform: translateY(-3px); box-shadow: 0 8px 16px rgba(0,0,0,0.08); border-color: var(--primary-light); }
         
-        .kbc-title { font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.4; }
-        .kbc-desc { font-size: 12px; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        
-        /* Progress Bar */
-        .progress-track { height: 4px; background: #F1F5F9; border-radius: 2px; overflow: hidden; margin-top: 4px; display: none; }
-        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.3s; }
-        .has-subs .progress-track { display: block; }
+        .pri-Yüksek { border-left-color: var(--pri-high); }
+        .pri-Orta { border-left-color: var(--pri-mid); }
+        .pri-Düşük { border-left-color: var(--pri-low); }
 
-        .kbc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; border-top: 1px solid #F1F5F9; padding-top: 8px; font-size: 11px; color: var(--text-muted); }
+        .kbc-top { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .kbc-title { font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.3; }
+        .kbc-desc { font-size: 12px; color: #475569; background: #F8FAFC; padding: 6px; border-radius: 4px; line-height: 1.4; border: 1px solid #F1F5F9; white-space: pre-wrap; }
+        .kbc-foot { display: flex; justify-content: space-between; margin-top: 4px; padding-top: 6px; border-top: 1px solid #F1F5F9; align-items: center; font-size: 11px; color: var(--text-muted); }
 
-        /* --- MODAL (BOTTOM SHEET MOBILE) --- */
-        .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; }
+        /* --- LISTE --- */
+        .list-wrap { background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .list-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .list-table th { text-align: left; padding: 14px; background: #F8FAFC; color: var(--text-muted); font-weight: 700; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+        .list-table th:hover { background: #F1F5F9; color: var(--primary); }
+        .list-table td { padding: 14px; border-bottom: 1px solid var(--border); color: var(--text-main); vertical-align: top; }
+        .list-table tr:hover td { background: #F8FAFC; cursor: pointer; }
+
+        /* MODAL */
+        .modal-mask { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
         .modal-mask.open { display: flex; }
-        .modal-box { 
-            background: #fff; width: 600px; padding: 30px; border-radius: 20px; 
-            box-shadow: 0 25px 80px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; 
-            display: flex; flex-direction: column; animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .f-group { margin-bottom: 16px; }
-        .f-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
-        .f-inp { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; transition: 0.2s; }
+        .modal-box { background: #fff; width: 550px; padding: 24px; border-radius: 16px; box-shadow: 0 25px 50px rgba(0,0,0,0.25); max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+        .f-group { margin-bottom: 14px; }
+        .f-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; display: block; text-transform: uppercase; }
+        .f-inp { width: 100%; padding: 11px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; }
         .f-inp:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-
-        /* CHECKLIST UI */
-        .checklist-area { background: #F8FAFC; border-radius: 12px; padding: 15px; margin-top: 10px; border: 1px solid var(--border); }
-        .cl-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #eee; }
-        .cl-item input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--primary); }
-        .cl-text { flex: 1; font-size: 13px; }
-        .cl-text.done { text-decoration: line-through; color: #aaa; }
-        .cl-add { display: flex; gap: 10px; margin-top: 10px; }
-
-        /* TOAST */
-        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: #fff; padding: 14px 20px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border-left: 5px solid #ccc; display: flex; align-items: center; gap: 12px; min-width: 280px; font-weight: 600; animation: slideInRight 0.3s; }
-        .toast.success { border-left-color: #10B981; } .toast.success i { color: #10B981; }
-        .toast.error { border-left-color: #EF4444; } .toast.error i { color: #EF4444; }
-        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         .bottom-nav { display: none; }
 
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .dash-grid { display: flex; flex-direction: column; }
-            .main-content { padding-bottom: 90px; }
+            .side-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .main-content { padding-bottom: 80px; }
             .kanban-wrapper { scroll-snap-type: x mandatory; padding-right: 20px; gap: 15px; }
             .kb-col { min-width: 88vw; scroll-snap-align: center; }
-            
-            /* Bottom Sheet Effect on Mobile */
-            .modal-box { 
-                width: 100%; height: auto; max-height: 85vh; 
-                border-radius: 24px 24px 0 0; position: absolute; bottom: 0; 
-                margin: 0; padding-bottom: 40px;
-            }
-            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 75px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: flex-start; padding-top: 12px; }
-            .bn-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 10px; gap: 4px; font-weight: 600; }
-            .bn-btn.active { color: var(--primary); }
-            .bn-btn i { font-size: 20px; }
-            .c-cell { min-height: 60px; }
-            .toast-container { right: 50%; transform: translateX(50%); top: 10px; width: 90%; }
+            .bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: #fff; border-top: 1px solid var(--border); z-index: 1000; justify-content: space-around; align-items: center; padding-bottom: env(safe-area-inset-bottom); }
+            .bn-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); background: none; border: none; font-size: 10px; gap: 4px; }
+            .bn-btn.active { color: var(--primary); font-weight: 700; }
+            .modal-box { width: 100%; height: auto; max-height: 85vh; border-radius: 24px 24px 0 0; position: absolute; bottom: 0; }
+            .c-cell { min-height: 65px; }
         }
     </style>
 </head>
 <body onload="initApp()">
-
-<div class="toast-container" id="toastContainer"></div>
 
 <div id="loginScreen" style="position:fixed; inset:0; background:#E2E8F0; z-index:5000; display:flex; align-items:center; justify-content:center;">
     <div style="background:#fff; padding:40px; border-radius:20px; border:1px solid #fff; width:340px; text-align:center; box-shadow:0 10px 40px rgba(0,0,0,0.1);">
@@ -189,15 +186,15 @@
         <h2 style="margin:0 0 10px; color:#0065B3; font-weight:800;">BT Portal</h2>
         <input type="email" id="email" class="f-inp" placeholder="E-posta" style="margin-bottom:12px;">
         <input type="password" id="password" class="f-inp" placeholder="Şifre" style="margin-bottom:24px;">
-        <button class="btn-primary" style="width:100%; justify-content:center; height:48px;" onclick="login()">Giriş Yap</button>
+        <button class="btn-primary" style="width:100%; justify-content:center; height:44px;" onclick="login()">Giriş Yap</button>
         <div id="loginError" style="color:red; font-size:11px; margin-top:10px;"></div>
     </div>
 </div>
 
 <aside class="sidebar">
-    <div class="logo-box"><i class="fa-solid fa-cube"></i> HALK BT</div>
+    <div class="logo-box"><i class="fa-solid fa-layer-group"></i> HALK BT</div>
     <div class="nav-menu">
-        <div class="nav-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-chart-pie"></i> Genel Bakış</div>
+        <div class="nav-item active" onclick="showView('dashboard', this)"><i class="fa-solid fa-calendar-days"></i> Genel Bakış</div>
         <div class="nav-item" onclick="showView('kanban', this)"><i class="fa-solid fa-columns"></i> İş Panosu</div>
         <div class="nav-item" onclick="showView('list', this)"><i class="fa-solid fa-table-list"></i> Tüm Liste</div>
     </div>
@@ -222,9 +219,10 @@
             <div class="calendar-wrapper">
                 <div class="cal-header">
                     <span style="font-weight:800; font-size:18px; color:var(--primary);" id="calTitle">...</span>
-                    <div>
-                        <button onclick="navCal(-1)" style="border:none; background:transparent; cursor:pointer;"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button onclick="navCal(1)" style="border:none; background:transparent; cursor:pointer;"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div style="display:flex; gap:8px;">
+                        <button class="cal-nav-btn" onclick="navCal(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="cal-nav-btn" onclick="navCal(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                        <button class="cal-nav-btn" onclick="goToToday()" style="width:auto; padding:0 10px; font-size:12px; font-weight:600;">Bugün</button>
                     </div>
                 </div>
                 <div class="cal-week-row">
@@ -248,28 +246,36 @@
     <div id="view-kanban" class="view-section" style="height:100%; padding-bottom:5px;">
         <div class="kanban-wrapper">
             <div class="kb-col">
-                <div class="kb-head"><span>BEKLEYEN</span><span class="kb-count" id="c-todo" style="color:#D97706; background:#FEF3C7;">0</span></div>
+                <div class="kb-head"><span>BEKLEYEN</span><span class="kb-count" id="c-todo" style="background:#FEF3C7; color:#D97706;">0</span></div>
                 <div class="kb-list" id="col-todo" data-status="todo"></div>
             </div>
             <div class="kb-col">
-                <div class="kb-head"><span style="color:#2563EB">İŞLEMDE</span><span class="kb-count" id="c-prog" style="color:#2563EB; background:#DBEAFE;">0</span></div>
+                <div class="kb-head"><span style="color:#2563EB">İŞLEMDE</span><span class="kb-count" id="c-prog" style="background:#DBEAFE; color:#2563EB;">0</span></div>
                 <div class="kb-list" id="col-progress" data-status="progress"></div>
             </div>
             <div class="kb-col">
-                <div class="kb-head"><span style="color:#10B981">TAMAMLANDI</span><span class="kb-count" id="c-done" style="color:#059669; background:#D1FAE5;">0</span></div>
+                <div class="kb-head"><span style="color:#10B981">TAMAMLANDI</span><span class="kb-count" id="c-done" style="background:#D1FAE5; color:#059669;">0</span></div>
                 <div class="kb-list" id="col-done" data-status="done"></div>
             </div>
         </div>
     </div>
 
     <div id="view-list" class="view-section">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
             <input type="text" id="search" class="f-inp" placeholder="Ara..." style="width:250px;" onkeyup="renderList()">
             <button class="btn-primary" onclick="exportExcel()">Excel</button>
         </div>
         <div class="list-wrap">
             <table class="list-table">
-                <thead><tr><th>DURUM</th><th>KONU</th><th>TARİH</th><th>AÇIKLAMA</th></tr></thead>
+                <thead>
+                    <tr>
+                        <th onclick="setSort('status')">DURUM <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="setSort('title')">KONU <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="setSort('priority')">ÖNCELİK <i class="fa-solid fa-sort"></i></th>
+                        <th onclick="setSort('date')">TARİH <i class="fa-solid fa-sort"></i></th>
+                        <th>AÇIKLAMA</th>
+                    </tr>
+                </thead>
                 <tbody id="listBody"></tbody>
             </table>
         </div>
@@ -289,36 +295,23 @@
             <h3 style="margin:0; font-size:18px; font-weight:800; color:var(--primary);">İş Detayı</h3>
             <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px;" onclick="closeModal()"></i>
         </div>
+        
         <div style="flex:1; overflow-y:auto; padding-right:5px;">
             <input type="hidden" id="tId">
             <div class="f-group"><label class="f-lbl">Konu</label><select id="tTitle" class="f-inp"></select></div>
-            
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div class="f-group"><label class="f-lbl">Durum</label><select id="tStatus" class="f-inp"><option value="todo">Bekliyor</option><option value="progress">İşlemde</option><option value="done">Tamamlandı</option></select></div>
                 <div class="f-group"><label class="f-lbl">Öncelik</label><select id="tPriority" class="f-inp"><option value="Düşük">Düşük</option><option value="Orta">Orta</option><option value="Yüksek">Yüksek</option></select></div>
             </div>
-            
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                 <div class="f-group"><label class="f-lbl">Tarih</label><input type="date" id="tDate" class="f-inp"></div>
                 <div class="f-group"><label class="f-lbl">Saat</label><input type="time" id="tTime" class="f-inp"></div>
             </div>
-            
-            <div class="f-group">
-                <label class="f-lbl">Etiketler (Virgülle ayırın)</label>
-                <input type="text" id="tTags" class="f-inp" placeholder="Yazılım, Ağ, Acil...">
-            </div>
-
             <div class="f-group"><label class="f-lbl">Açıklama</label><textarea id="tDesc" class="f-inp" rows="3"></textarea></div>
             
-            <div class="f-group">
-                <label class="f-lbl">Alt Görevler</label>
-                <div class="checklist-area">
-                    <div id="subtaskList"></div>
-                    <div class="cl-add">
-                        <input type="text" id="newSubtask" class="f-inp" placeholder="Alt görev ekle..." style="font-size:12px; padding:8px;">
-                        <button class="btn-primary" style="height:34px; padding:0 12px;" onclick="addSubtask()">Ekle</button>
-                    </div>
-                </div>
+            <div style="display:flex; justify-content:space-between; margin-top:20px;">
+                <button class="btn-primary" style="background:#EF4444;" onclick="delTask()">Sil</button>
+                <button class="btn-primary" onclick="saveTask()">Kaydet</button>
             </div>
 
             <div class="comments-area">
@@ -329,11 +322,6 @@
                     <button class="btn-primary" onclick="postComment()">Gönder</button>
                 </div>
             </div>
-            
-            <div style="display:flex; justify-content:space-between; margin-top:20px;">
-                <button class="btn-primary" style="background:#EF4444; box-shadow:none;" onclick="delTask()">Sil</button>
-                <button class="btn-primary" onclick="saveTask()">Kaydet</button>
-            </div>
         </div>
     </div>
 </div>
@@ -342,13 +330,13 @@
     <div class="modal-box">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
             <div>
-                <h3 style="margin:0;" id="dmTitle">...</h3>
+                <h3 style="margin:0; font-size:16px; font-weight:700;" id="dmTitle">Günün Görevleri</h3>
                 <p style="margin:0; font-size:12px; color:#666;" id="dmDate">...</p>
             </div>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="closeDayModal()"></i>
+            <i class="fa-solid fa-xmark" style="cursor:pointer; font-size:18px;" onclick="closeDayModal()"></i>
         </div>
         <div id="dayListContent" class="day-list"></div>
-        <button class="btn-primary" style="width:100%; justify-content:center; margin-top:15px;" onclick="newTaskForDay()">+ Ekle</button>
+        <button class="btn-primary" style="width:100%; justify-content:center; margin-top:20px;" onclick="newTaskForDay()">+ Bu Güne Ekle</button>
     </div>
 </div>
 
@@ -364,18 +352,8 @@
     try { app=initializeApp(firebaseConfig); db=getFirestore(app); auth=getAuth(app); } catch(e){console.error(e);}
 
     const TOPICS = ["Infact", "Rating", "Dijital Mizan", "KDS", "Mobil Uygulama", "Kullanıcı Talepleri", "Satın Alım", "RM/KKB", "Halkbank", "Denetim", "Diğer"];
-    let tasks = []; let calDate = new Date(); let selectedDate = new Date(); let currentSubtasks = [];
-
-    // --- TOAST ---
-    window.showToast = (msg, type = 'success') => {
-        const con = document.getElementById('toastContainer');
-        const t = document.createElement('div');
-        t.className = `toast ${type}`;
-        let icon = type==='success'?'check-circle':(type==='error'?'exclamation-circle':'info-circle');
-        t.innerHTML = `<i class="fa-solid fa-${icon}"></i> <span>${msg}</span>`;
-        con.appendChild(t);
-        setTimeout(() => { t.style.animation='slideOut 0.3s forwards'; setTimeout(() => t.remove(), 300); }, 3000);
-    }
+    let tasks = []; let calDate = new Date(); let selectedDate = new Date();
+    let currentSort = { field: 'date', order: 'desc' };
 
     window.initApp = () => {
         const s = document.getElementById('tTitle'); TOPICS.forEach(t=>s.innerHTML+=`<option>${t}</option>`);
@@ -391,7 +369,7 @@
         });
     }
 
-    window.login = () => { const e=document.getElementById('email').value, p=document.getElementById('password').value; signInWithEmailAndPassword(auth,e,p).catch(err=>{ if(err.code.includes('not-found')) createUserWithEmailAndPassword(auth,e,p); else showToast(err.message, 'error'); }); }
+    window.login = () => { const e=document.getElementById('email').value, p=document.getElementById('password').value; signInWithEmailAndPassword(auth,e,p).catch(err=>{ if(err.code.includes('not-found')) createUserWithEmailAndPassword(auth,e,p); else alert(err.message); }); }
     window.logout = () => signOut(auth).then(()=>location.reload());
 
     function listenData() {
@@ -404,6 +382,7 @@
 
     function renderAll() { renderStats(); renderCalendar(); renderKanban(); renderList(); }
 
+    // --- DASHBOARD (GELİŞMİŞ TAKVİM) ---
     function renderStats() {
         const c={todo:0, progress:0, done:0}; tasks.forEach(t=>{if(c[t.status]!==undefined)c[t.status]++});
         document.getElementById('dTotal').innerText = tasks.length;
@@ -422,30 +401,47 @@
         const y=calDate.getFullYear(), m=calDate.getMonth();
         document.getElementById('calTitle').innerText = calDate.toLocaleDateString('tr-TR',{month:'long',year:'numeric'});
         const g=document.getElementById('mainCalGrid'); g.innerHTML='';
-        const fDay=new Date(y,m,1).getDay(), off=fDay===0?6:fDay-1, days=new Date(y,m+1,0).getDate();
-        for(let i=0; i<off; i++) g.innerHTML+='<div></div>';
+        
+        // Pazartesi Başlangıç Ayarı
+        const fDay=new Date(y,m,1).getDay();
+        const offset = fDay === 0 ? 6 : fDay - 1; // Pazar(0)->6, Pzt(1)->0
+        const days=new Date(y,m+1,0).getDate();
+        
+        for(let i=0; i<offset; i++) g.innerHTML+='<div></div>';
         const nowStr = new Date().toDateString();
+
         for(let i=1; i<=days; i++) {
             const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(i).padStart(2,'0')}`;
             const dayTasks = tasks.filter(t=>t.date===ds && t.status!=='done');
+            
+            // Hafta sonu kontrolü
+            const checkDay = new Date(y,m,i).getDay();
+            const isWeekend = (checkDay === 0 || checkDay === 6);
+            const weekendClass = isWeekend ? 'weekend' : '';
+
+            // Görev Pilleri
             let taskHtml = '';
             dayTasks.slice(0,3).forEach(t => {
-                let pCls = t.priority==='Yüksek'?'ct-Yüksek':(t.priority==='Orta'?'ct-Orta':'ct-Düşük');
-                taskHtml += `<div class="c-task ${pCls}">${t.title}</div>`;
+                let pClass = t.priority==='Yüksek'?'ct-High':(t.priority==='Orta'?'ct-Mid':'ct-Low');
+                taskHtml += `<div class="c-task-pill ${pClass}">${t.title}</div>`;
             });
-            if(dayTasks.length>3) taskHtml += `<div class="c-more">+${dayTasks.length-3} daha</div>`;
+            if(dayTasks.length>3) taskHtml += `<div class="c-more">+${dayTasks.length-3}</div>`;
+
             const isToday = new Date(y,m,i).toDateString() === nowStr;
-            g.innerHTML += `<div class="c-cell ${isToday?'today':''}" onclick="openDayDetails('${ds}')"><div class="c-num">${i}</div>${taskHtml}</div>`;
+            g.innerHTML += `<div class="c-cell ${isToday?'today':''} ${weekendClass}" onclick="openDayDetails('${ds}')"><div class="c-num">${i}</div>${taskHtml}</div>`;
         }
     }
     window.navCal = (d) => { calDate.setMonth(calDate.getMonth()+d); renderCalendar(); }
+    window.goToToday = () => { calDate = new Date(); renderCalendar(); }
 
     window.openDayDetails = (dateStr) => {
         selectedDate = new Date(dateStr);
-        document.getElementById('dmTitle').innerText = selectedDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long'});
+        document.getElementById('dmTitle').innerText = selectedDate.toLocaleDateString('tr-TR', {day:'numeric', month:'long'}) + " Görevleri";
         document.getElementById('dmDate').innerText = selectedDate.toLocaleDateString('tr-TR', {weekday:'long', year:'numeric'});
+        
         const cont = document.getElementById('dayListContent'); cont.innerHTML = '';
         const dayTasks = tasks.filter(t=>t.date === dateStr);
+        
         if(dayTasks.length===0) cont.innerHTML='<div style="text-align:center; color:#999; padding:20px;">İş yok.</div>';
         else {
             dayTasks.forEach(t => {
@@ -474,42 +470,14 @@
         tasks.forEach(t=>{
             if(cols[t.status]) {
                 c[t.status]++;
-                let pClass = `kb-pri-${t.priority}`;
+                let pClass = `pri-${t.priority}`;
                 
-                // Gecikme Kontrolü
-                let isOverdue = false;
-                if(t.date && t.status !== 'done') {
-                    const dDate = new Date(t.date);
-                    const today = new Date(); today.setHours(0,0,0,0);
-                    if(dDate < today) isOverdue = true;
-                }
-                let overdueClass = isOverdue ? 'kb-overdue' : '';
-
-                // Etiketler
-                let tagsHtml = '';
-                if(t.tags) {
-                    const tagArr = t.tags.split(',');
-                    tagArr.forEach(tg => tagsHtml += `<span class="tag-badge">${tg.trim()}</span>`);
-                }
-
-                // Subtasks Progress
-                let progHtml = '';
-                let hasSubs = '';
-                if(t.subtasks && t.subtasks.length > 0) {
-                    hasSubs = 'has-subs';
-                    const doneCnt = t.subtasks.filter(s=>s.done).length;
-                    const pct = (doneCnt / t.subtasks.length) * 100;
-                    progHtml = `<div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>`;
-                }
-
                 cols[t.status].innerHTML += `
-                <div class="kb-card ${pClass} ${overdueClass} ${hasSubs}" onclick="openModal('${t.id}')">
+                <div class="kb-card ${pClass}" onclick="openModal('${t.id}')">
                     <div class="kbc-top"><span class="kbc-code">${t.code}</span><span class="kbc-date">${t.date||''}</span></div>
                     <div class="kbc-title">${t.title}</div>
-                    <div class="kbc-tags">${tagsHtml}</div>
-                    ${progHtml}
                     <div class="kbc-desc">${t.desc||''}</div>
-                    <div class="kbc-footer"><div class="kbc-user">CK</div><div class="kbc-status">${t.priority}</div></div>
+                    <div class="kbc-foot"><div class="kbc-user">CK</div><div class="kbc-status">${t.priority}</div></div>
                 </div>`;
             }
         });
@@ -523,28 +491,41 @@
                         const itemId = e.item.getAttribute('onclick').match(/'([^']+)'/)[1];
                         const newStatus = e.to.getAttribute('data-status');
                         await updateDoc(doc(db,"tasks",itemId), {status:newStatus});
-                        if(newStatus==='done') { confetti({particleCount:100, spread:70, origin:{y:0.6}}); showToast("Görev Tamamlandı!", "success"); }
+                        if(newStatus==='done') { confetti({particleCount:100, spread:70, origin:{y:0.6}}); }
                     }});
                 }
             });
         }
     }
 
-    // --- LIST ---
+    // --- LISTE ---
+    window.setSort = (field) => {
+        if (currentSort.field === field) currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        else { currentSort.field = field; currentSort.order = 'asc'; }
+        renderList();
+    }
+
     window.renderList = () => {
         const s = document.getElementById('search').value.toLowerCase();
         const b = document.getElementById('listBody'); if(!b) return;
         b.innerHTML='';
         let filtered = tasks.filter(t => t.title.toLowerCase().includes(s));
+        filtered.sort((a, b) => {
+            let valA = a[currentSort.field] || ''; let valB = b[currentSort.field] || '';
+            let order = currentSort.order === 'asc' ? 1 : -1;
+            if (currentSort.field === 'date') { valA = new Date(valA||0); valB = new Date(valB||0); } 
+            else { valA = valA.toString().toLowerCase(); valB = valB.toString().toLowerCase(); }
+            if (valA < valB) return -1 * order; if (valA > valB) return 1 * order; return 0;
+        });
         filtered.forEach(t => {
             const stMap = {'todo':'Bekleyen', 'progress':'İşlemde', 'done':'Tamamlandı'};
             const col = t.status==='todo'?'#D97706':(t.status==='progress'?'#2563EB':'#059669');
             const bg = t.status==='todo'?'#FEF3C7':(t.status==='progress'?'#DBEAFE':'#D1FAE5');
-            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td><td style="font-weight:600;">${t.title}</td><td>${t.date||'-'}</td><td style="color:#666;">${(t.desc||'').substring(0,40)}</td></tr>`;
+            b.innerHTML += `<tr onclick="openModal('${t.id}')"><td><span style="background:${bg}; color:${col}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:10px;">${stMap[t.status]}</span></td><td style="font-weight:600;">${t.title}</td><td>${t.priority}</td><td>${t.date||'-'}</td><td style="color:#666;">${(t.desc||'').substring(0,40)}</td></tr>`;
         });
     }
 
-    // --- ACTIONS & MODAL ---
+    // --- ACTIONS ---
     window.showView = (v, btn) => {
         document.querySelectorAll('.view-section').forEach(e=>e.classList.remove('active'));
         document.getElementById('view-'+v).classList.add('active');
@@ -554,11 +535,7 @@
         if(v==='list') renderList(); if(v==='kanban') renderKanban();
     }
 
-    window.newTask = () => { 
-        document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; 
-        document.getElementById('commentList').innerHTML=''; currentSubtasks = []; renderSubtasks();
-        document.getElementById('modal').classList.add('open'); 
-    }
+    window.newTask = () => { document.getElementById('tId').value=''; document.getElementById('tTitle').value=''; document.getElementById('commentList').innerHTML=''; document.getElementById('modal').classList.add('open'); }
     window.closeModal = () => document.getElementById('modal').classList.remove('open');
     
     window.openModal = (id) => {
@@ -567,13 +544,8 @@
             document.getElementById('tId').value=t.id; document.getElementById('tTitle').value=t.title;
             document.getElementById('tStatus').value=t.status; document.getElementById('tPriority').value=t.priority;
             document.getElementById('tDate').value=t.date; document.getElementById('tTime').value=t.time||'';
-            document.getElementById('tDesc').value=t.desc; document.getElementById('tTags').value = t.tags || '';
+            document.getElementById('tDesc').value=t.desc; 
             
-            // Subtasks
-            currentSubtasks = t.subtasks || [];
-            renderSubtasks();
-
-            // Comments
             const cList = document.getElementById('commentList'); cList.innerHTML = '';
             if(t.comments && t.comments.length > 0) {
                 t.comments.forEach(cm => { cList.innerHTML += `<div class="cm-item"><div class="cm-header"><span>${cm.user}</span><span>${new Date(cm.date).toLocaleString('tr-TR')}</span></div><div class="cm-text">${cm.text}</div></div>`; });
@@ -582,28 +554,6 @@
             document.getElementById('modal').classList.add('open');
         }
     }
-
-    // --- SUBTASK LOGIC ---
-    window.renderSubtasks = () => {
-        const list = document.getElementById('subtaskList'); list.innerHTML = '';
-        currentSubtasks.forEach((st, idx) => {
-            list.innerHTML += `
-            <div class="cl-item">
-                <input type="checkbox" ${st.done ? 'checked' : ''} onchange="toggleSubtask(${idx})">
-                <span class="cl-text ${st.done ? 'done' : ''}">${st.text}</span>
-                <i class="fa-solid fa-trash" style="color:#ef4444; cursor:pointer;" onclick="removeSubtask(${idx})"></i>
-            </div>`;
-        });
-    }
-    window.addSubtask = () => {
-        const txt = document.getElementById('newSubtask').value;
-        if(!txt) return;
-        currentSubtasks.push({ text: txt, done: false });
-        document.getElementById('newSubtask').value = '';
-        renderSubtasks();
-    }
-    window.toggleSubtask = (idx) => { currentSubtasks[idx].done = !currentSubtasks[idx].done; renderSubtasks(); }
-    window.removeSubtask = (idx) => { currentSubtasks.splice(idx, 1); renderSubtasks(); }
 
     window.postComment = async () => {
         const id = document.getElementById('tId').value;
@@ -620,31 +570,19 @@
         const id = document.getElementById('tId').value;
         const oldTask = tasks.find(x => x.id === id);
         const newStatus = document.getElementById('tStatus').value;
-        
-        const d = { 
-            title:document.getElementById('tTitle').value, 
-            status:newStatus, 
-            priority:document.getElementById('tPriority').value, 
-            date:document.getElementById('tDate').value, 
-            time:document.getElementById('tTime').value, 
-            desc:document.getElementById('tDesc').value,
-            tags: document.getElementById('tTags').value,
-            subtasks: currentSubtasks
-        };
+        const d = { title:document.getElementById('tTitle').value, status:newStatus, priority:document.getElementById('tPriority').value, date:document.getElementById('tDate').value, time:document.getElementById('tTime').value, desc:document.getElementById('tDesc').value };
         
         if(id) {
             await updateDoc(doc(db,"tasks",id),d);
             if(oldTask && oldTask.status !== 'done' && newStatus === 'done') {
                 confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-                showToast("Tebrikler! Görev Tamamlandı.", "success");
-            } else { showToast("Kayıt Güncellendi", "success"); }
+            }
         } else { 
             await runTransaction(db, async(t)=>{ const r=doc(db,"meta","counters"); const s=await t.get(r); const n=(s.exists()?s.data().taskSeq:0)+1; t.set(r,{taskSeq:n},{merge:true}); d.code='GRV-'+n; await addDoc(collection(db,"tasks"),d); }); 
-            showToast("Yeni Görev Oluşturuldu", "success");
         }
         closeModal();
     }
-    window.delTask = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,"tasks",document.getElementById('tId').value)); showToast("Kayıt Silindi", "info"); closeModal(); } }
+    window.delTask = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,"tasks",document.getElementById('tId').value)); closeModal(); } }
     window.exportExcel = () => { const ws=XLSX.utils.json_to_sheet(tasks); const wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Tasks"); XLSX.writeFile(wb,"Data.xlsx"); }
     
     function initSortable() {
@@ -655,7 +593,7 @@
                     const itemId = e.item.getAttribute('onclick').match(/'([^']+)'/)[1];
                     const newStatus = e.to.getAttribute('data-status');
                     await updateDoc(doc(db,"tasks",itemId), {status:newStatus});
-                    if(newStatus==='done') { confetti({particleCount:100, spread:70, origin:{y:0.6}}); showToast("Görev Tamamlandı!", "success"); }
+                    if(newStatus==='done') confetti({particleCount:100, spread:70, origin:{y:0.6}});
                 }});
             }
         });
